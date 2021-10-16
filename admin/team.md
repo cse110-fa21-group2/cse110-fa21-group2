@@ -11,12 +11,12 @@
 ##### [Team Manager] Sanat Bhandarkar
 
 ##### Alex Nguyen
-[Github](https://github.com/AlexNguyenJJ)
-Year: 3rd
-Major: ECE Computer Engineering
-Role: 
-Likes: Video Games, Tennis, Volleyball, Food
-Dislikes: Writing essays
+[Github](https://github.com/AlexNguyenJJ)  
+Year: 3rd  
+Major: ECE Computer Engineering  
+Role:  
+Likes: Video Games, Tennis, Volleyball, Food  
+Dislikes: Writing essays  
 
 
 
