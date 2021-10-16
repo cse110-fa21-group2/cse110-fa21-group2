@@ -11,9 +11,12 @@
 ##### [Team Manager] Sanat Bhandarkar
 
 ##### Alex Nguyen
-3rd year, Computer Engineering
-Tea, Video games, music
-[Github](https://github.com/AlexNguyenJJ)
+[Github](https://github.com/AlexNguyenJJ)  
+Year: 3rd  
+Major: ECE Computer Engineering  
+Role:  
+Likes: Video Games, Tennis, Volleyball, Food  
+Dislikes: Writing essays  
 
 ##### Britney Vi
 4th year, Computer Science 
