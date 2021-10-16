@@ -51,3 +51,7 @@
  - Communication
  - Reliability
  - Teamwork
+ - Trust
+ - Perserverance
+ - Growth
+ - Excitement
