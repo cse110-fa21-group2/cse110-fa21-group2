@@ -56,3 +56,7 @@ Dislikes: Writing essays
  - Communication
  - Reliability
  - Teamwork
+ - Trust
+ - Perserverance
+ - Growth
+ - Excitement
