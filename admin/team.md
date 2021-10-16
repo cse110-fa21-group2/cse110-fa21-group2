@@ -7,6 +7,11 @@
 
 ##### Alex Nguyen
 [Github](https://github.com/AlexNguyenJJ)
+Year: 3rd
+Major: ECE Computer Engineering
+Role: 
+Likes: Video Games, Tennis, Volleyball, Food
+Dislikes: Writing essays
 
 ##### Britney Vi
 [Github](https://github.com/BritneyVi)
