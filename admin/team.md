@@ -1,7 +1,12 @@
 # Team H20
 ![H20_Logo](./branding/team_logo.png)
+## Simple. Clean. Pure.
+<br>
 
-### Roster
+### Team Intro Video:
+[Get to know our team here.](./videos/video.md)
+
+### Roster:
 
 ##### [Team Manager] Sanat Bhandarkar
 
@@ -12,6 +17,8 @@ Major: ECE Computer Engineering
 Role: 
 Likes: Video Games, Tennis, Volleyball, Food
 Dislikes: Writing essays
+
+
 
 ##### Britney Vi
 [Github](https://github.com/BritneyVi)
