@@ -46,4 +46,8 @@
 [Github](https://github.com/hzhfred)
 
 ### Values
-
+ - Responsibility
+ - Respect
+ - Communication
+ - Reliability
+ - Teamwork
