@@ -3,7 +3,7 @@
 ## Simple. Clean. Pure.
 <br>
 
-## Team Intro Video:
+### Team Intro Video:
 [Get to know our team here.](./videos/video.md)
 
 ### Roster:
