@@ -77,7 +77,7 @@ Dislikes: Writing essays
 
 [Github](https://github.com/AlexNguyenJJ)
 ## Antonia Manshi Yang
-![antonia](./headshots/antonia.jpg =250x)
+![antonia](./headshots/antonia.jpg)
 
 Year: 3rd year
 
