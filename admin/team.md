@@ -83,7 +83,7 @@ Year: 3rd year
 
 Major: Probability & Statistics
 
-Role:
+Role: Developer
 
 Likes: Dancing, Cats & Dogs, Music
 
