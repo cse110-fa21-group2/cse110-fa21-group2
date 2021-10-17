@@ -69,7 +69,7 @@ Year: 3rd year
 
 Major: ECE Computer Engineering  
 
-Role: 
+Role: Developer
 
 Likes: Video Games, Tennis, Volleyball, Food  
 
@@ -95,7 +95,7 @@ Year: 4th year
 
 Major: Computer Science
 
-Role:
+Role: Test
 
 Likes: Cooking, Petting Dogs, Snacking
 
@@ -119,7 +119,7 @@ Year: 3rd Year
 
 Major: Computer Science 
 
-Role:
+Role: Test
 
 Likes: Gaming, Running, Drawing
 
@@ -143,7 +143,7 @@ Year: 3rd year
 
 Major: Computer Science
 
-Role:
+Role: Designer
 
 Likes: sleeping, soccer, surfing, water
 
@@ -156,7 +156,7 @@ Year: 3rd year
 
 Major: Computer Science
 
-Role: 
+Role: Test
 
 Likes: Eating, Photography, Soccer, Chess
 
@@ -170,7 +170,7 @@ Year: 3rd year
 
 Major: Computer Engineering
 
-Role:
+Role: Designer
 
 Likes: Mountain Biking, Basketball, Guitar
 
