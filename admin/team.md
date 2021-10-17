@@ -46,7 +46,7 @@ Year: 3rd year
 
 Major: Computer Engineering & Neurobiology
 
-Role: 
+Role: Project Leader
 
 Likes: Hiking, Cooking, Music, Painting
 
@@ -58,7 +58,7 @@ Year: 4th year
 
 Major: Course Science
 
-Role: 
+Role: Project Leader
 
 Likes: Video games, anime, snowboarding
 
@@ -95,7 +95,7 @@ Year: 4th year
 
 Major: Computer Science
 
-Role: Test
+Role: Tester
 
 Likes: Cooking, Petting Dogs, Snacking
 
@@ -119,7 +119,7 @@ Year: 3rd Year
 
 Major: Computer Science 
 
-Role: Test
+Role: Designer
 
 Likes: Gaming, Running, Drawing
 
@@ -156,7 +156,7 @@ Year: 3rd year
 
 Major: Computer Science
 
-Role: Test
+Role: Tester
 
 Likes: Eating, Photography, Soccer, Chess
 
