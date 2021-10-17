@@ -125,7 +125,6 @@ Likes: Gaming, Running, Drawing
 
 [Github](https://github.com/fjontran)
 ## Kaiwen Tsou
-![kaiwen](./headshots/kaiwen.png)
 <img src="./headshots/kaiwen.png" alt="kaiwen" width="200"/>
 
 Year: 4th year
@@ -138,7 +137,6 @@ Likes: Ghouls, magnets, milk steak
 
 [Github](https://github.com/RainbowPangolin)
 ## Laurence D'ercole
-![laurence](./headshots/laurence.jpg)
 <img src="./headshots/laurence.jpg" alt="laurence" width="200"/>
 
 Year: 3rd year
@@ -166,7 +164,6 @@ Likes: Eating, Photography, Soccer, Chess
 
 
 ## Robert Jiang
-![robert](./headshots/robert.jpg)
 <img src="./headshots/robert.jpg" alt="robert" width="200"/>
 
 Year: 3rd year
