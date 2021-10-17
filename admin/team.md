@@ -64,7 +64,8 @@ Likes: Video games, anime, snowboarding
 
 [Github](https://github.com/Hay-Harry)
 ## Alex Nguyen
-![alex](./headshots/alex.jpg)
+
+<img src="./headshots/alex.jpg" alt="alex" width="200"/>
 Year: 3rd year
 
 Major: ECE Computer Engineering  
