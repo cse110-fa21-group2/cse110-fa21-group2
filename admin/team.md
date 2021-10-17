@@ -40,7 +40,7 @@ Get to know our team by watching our video [here!](./videos/teamintro.mp4)
 
 # Member Descriptions
 ## Ziheng Huang (Fred)
-![fred](./headshots/ziheng.jpeg)
+<img src="./headshots/ziheng.jpeg" alt="fred" width="200"/>
 
 Year: 3rd year
 
@@ -52,7 +52,7 @@ Likes: Hiking, Cooking, Music, Painting
 
 [Github](https://github.com/hzhfred)
 ## Hanran Yang (Harry)
-![harry](./headshots/hanran.jpg)
+<img src="./headshots/hanran.jpg" alt="harry" width="200"/>
 
 Year: 4th year
 
@@ -64,7 +64,6 @@ Likes: Video games, anime, snowboarding
 
 [Github](https://github.com/Hay-Harry)
 ## Alex Nguyen
-
 <img src="./headshots/alex.jpg" alt="alex" width="200"/>
 Year: 3rd year
 
@@ -78,7 +77,7 @@ Dislikes: Writing essays
 
 [Github](https://github.com/AlexNguyenJJ)
 ## Antonia Manshi Yang
-![antonia](./headshots/antonia.jpg)
+<img src="./headshots/antonia.jpg" alt="antonia" width="200"/>
 
 Year: 3rd year
 
@@ -90,7 +89,7 @@ Likes: Dancing, Cats & Dogs, Music
 
 [Github](https://github.com/AntoniaY31)
 ## Britney Vi
-![britney](./headshots/britney.png)
+<img src="./headshots/britney.png" alt="britney" width="200"/>
 
 Year: 4th year
 
@@ -102,7 +101,7 @@ Likes: Cooking, Petting Dogs, Snacking
 
 [Github](https://github.com/BritneyVi)
 ## Faris Ashai
-![faris](./headshots/faris.png)
+<img src="./headshots/faris.png" alt="faris" width="200"/>
 
 Year: 3rd year
 
@@ -114,7 +113,7 @@ Likes: Skiing, tennis, music
 
 [Github](https://github.com/farisashai)
 ## Jon Tran
-![jon](./headshots/jon.png)
+<img src="./headshots/jon.png" alt="jon" width="200"/>
 
 Year: 3rd Year
 
@@ -127,6 +126,7 @@ Likes: Gaming, Running, Drawing
 [Github](https://github.com/fjontran)
 ## Kaiwen Tsou
 ![kaiwen](./headshots/kaiwen.png)
+<img src="./headshots/kaiwen.png" alt="kaiwen" width="200"/>
 
 Year: 4th year
 
@@ -139,6 +139,7 @@ Likes: Ghouls, magnets, milk steak
 [Github](https://github.com/RainbowPangolin)
 ## Laurence D'ercole
 ![laurence](./headshots/laurence.jpg)
+<img src="./headshots/laurence.jpg" alt="laurence" width="200"/>
 
 Year: 3rd year
 
@@ -151,7 +152,7 @@ Likes: sleeping, soccer, surfing, water
 [Github](https://github.com/Laurence777)
 
 ## Misha Reswick
-![misha](./headshots/misha.jpg)
+<img src="./headshots/misha.jpg" alt="misha" width="200"/>
 
 Year: 3rd year
 
@@ -166,6 +167,7 @@ Likes: Eating, Photography, Soccer, Chess
 
 ## Robert Jiang
 ![robert](./headshots/robert.jpg)
+<img src="./headshots/robert.jpg" alt="robert" width="200"/>
 
 Year: 3rd year
 
