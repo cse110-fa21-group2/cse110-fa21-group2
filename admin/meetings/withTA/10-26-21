@@ -1,0 +1,52 @@
+**About Data Store and Log-in:**
+
+- Don’t need a log-in
+
+- Data store: no log-in no database
+
+- how to update the recipe: use local storage
+
+- Multiple user concurrently use the app - need log-in
+
+- If just local to the phone, no need to login - user’s browser locally
+
+- **Prob**: Local storage can not store all of the recipes - capped
+
+- API for database: **indexedDB**
+
+  - Most user friendly one
+
+  
+
+**Prob with UI’s:Web app**
+
+- open on the desktopUi also for the desktop - separate Ui?
+- Need to open it on the desktop - scale
+- Smart approach to focus UI primarily on mobile
+- Make sure it looks okay on desktop
+- Try to toggle between diff devices while debugging
+
+**Missing Elements:**
+
+- **User story** - focus on **features** that the user want in the app
+  - Acceptance criteriaNeed to be added!!!
+- **User persona** - bio/ general info about the people themselves
+  - Which we already have
+  - Example in the slides **“Brainstorming**” shared on slack
+
+**Other things:**
+
+- Timeline for the project
+- Start with **Pitch** assignment
+  - *Shape Up*
+    - Go over the chapter about how to write pitch document
+- Must finish Pitch and show that to TA and then start coding!
+- Can start style coding based on the UI drawn using HTML
+- Assign the rolesInternal roles:
+  - Front-end
+    - UI
+    - Javascript according to UI…
+  - Back-end：no database, no backend lol…
+- Subteams
+  - I.e.: 2 front-end work on one UI…
+- Can start now!
