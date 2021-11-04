@@ -1,0 +1,181 @@
+{
+  "vegetarian": false,
+  "vegan": false,
+  "glutenFree": false,
+  "dairyFree": false,
+  "veryHealthy": false,
+  "cheap": false,
+  "veryPopular": false,
+  "sustainable": false,
+  "weightWatcherSmartPoints": 26,
+  "gaps": "no",
+  "lowFodmap": false,
+  "aggregateLikes": 1,
+  "spoonacularScore": 83,
+  "healthScore": 36,
+  "creditsText": "Foodista.com – The Cooking Encyclopedia Everyone Can Edit",
+  "license": "CC BY 3.0",
+  "sourceName": "Foodista",
+  "pricePerServing": 171.51,
+  "extendedIngredients": [
+      {
+          "id": 18079,
+          "aisle": "Pasta and Rice",
+          "image": "breadcrumbs.jpg",
+          "consistency": "solid",
+          "name": "bread crumbs",
+          "nameClean": "breadcrumbs",
+          "original": "1 cup Fresh bread crumbs",
+          "originalString": "1 cup Fresh bread crumbs",
+          "originalName": "Fresh bread crumbs",
+          "amount": 1,
+          "unit": "cup",
+          "meta": [
+              "fresh"
+          ],
+          "metaInformation": [
+              "fresh"
+          ],
+          "measures": {
+              "us": {
+                  "amount": 1,
+                  "unitShort": "cup",
+                  "unitLong": "cup"
+              },
+              "metric": {
+                  "amount": 236.588,
+                  "unitShort": "ml",
+                  "unitLong": "milliliters"
+              }
+          }
+      },
+      {
+          "id": 1123,
+          "aisle": "Milk, Eggs, Other Dairy",
+          "image": "egg.png",
+          "consistency": "solid",
+          "name": "eggs",
+          "nameClean": "egg",
+          "original": "4 Eggs",
+          "originalString": "4 Eggs",
+          "originalName": "Eggs",
+          "amount": 4,
+          "unit": "",
+          "meta": [],
+          "metaInformation": [],
+          "measures": {
+              "us": {
+                  "amount": 4,
+                  "unitShort": "",
+                  "unitLong": ""
+              },
+              "metric": {
+                  "amount": 4,
+                  "unitShort": "",
+                  "unitLong": ""
+              }
+          }
+      },
+      {
+          "id": 1077,
+          "aisle": "Milk, Eggs, Other Dairy",
+          "image": "milk.png",
+          "consistency": "liquid",
+          "name": "milk",
+          "nameClean": "milk",
+          "original": "1 cup Boiled milk",
+          "originalString": "1 cup Boiled milk",
+          "originalName": "Boiled milk",
+          "amount": 1,
+          "unit": "cup",
+          "meta": [
+              "boiled"
+          ],
+          "metaInformation": [
+              "boiled"
+          ],
+          "measures": {
+              "us": {
+                  "amount": 1,
+                  "unitShort": "cup",
+                  "unitLong": "cup"
+              },
+              "metric": {
+                  "amount": 236.588,
+                  "unitShort": "ml",
+                  "unitLong": "milliliters"
+              }
+          }
+      },
+      {
+          "id": 2047,
+          "aisle": "Spices and Seasonings",
+          "image": "salt.jpg",
+          "consistency": "solid",
+          "name": "salt",
+          "nameClean": "salt",
+          "original": "1 pch Salt",
+          "originalString": "1 pch Salt",
+          "originalName": "pch Salt",
+          "amount": 1,
+          "unit": "",
+          "meta": [],
+          "metaInformation": [],
+          "measures": {
+              "us": {
+                  "amount": 1,
+                  "unitShort": "",
+                  "unitLong": ""
+              },
+              "metric": {
+                  "amount": 1,
+                  "unitShort": "",
+                  "unitLong": ""
+              }
+          }
+      }
+  ],
+  "id": 635964,
+  "title": "Bread Omlette",
+  "readyInMinutes": 45,
+  "servings": 1,
+  "sourceUrl": "http://www.foodista.com/recipe/2M6MVKZT/bread-omlette",
+  "image": "https://spoonacular.com/recipeImages/635964-556x370.jpg",
+  "imageType": "jpg",
+  "summary": "Bread Omlette might be just the main course you are searching for. One serving contains <b>827 calories</b>, <b>44g of protein</b>, and <b>30g of fat</b>. This recipe serves 1 and costs $1.72 per serving. 1 person has made this recipe and would make it again. Head to the store and pick up bread crumbs, pch salt, milk, and a few other things to make it today. To use up the salt you could follow this main course with the <a href=\"https://spoonacular.com/recipes/apple-turnovers-recipe-48175\">Apple Turnovers Recipe</a> as a dessert. From preparation to the plate, this recipe takes about <b>45 minutes</b>. All things considered, we decided this recipe <b>deserves a spoonacular score of 84%</b>. This score is awesome. Try <a href=\"https://spoonacular.com/recipes/ihop-colorado-omlette-600219\">IHOP Colorado Omlette</a>, <a href=\"https://spoonacular.com/recipes/clean-and-simple-egg-white-omlette-521458\">Clean and Simple Egg White \"Omlette</a>, and <a href=\"https://spoonacular.com/recipes/oatmeal-bread-bread-machine-bread-maker-132629\">Oatmeal Bread (Bread Machine/Bread Maker)</a> for similar recipes.",
+  "cuisines": [],
+  "dishTypes": [],
+  "diets": [],
+  "occasions": [],
+  "winePairing": {},
+  "instructions": "<ol><li>Pahile, pan garma garam kijiye....phir ek murga ka anda laiye....use sohlaiye.....phir chamach layiye....phir ande se sorry kahiye.....phir usko phod dijiye ..phir brad laiye .....use katiye aur uspar fevikol lagaiye aur ande se chipka dijiye .....phir palat dijiye ............phir bina plate mein rakhe..apne jaha man kare waha dal dijiye.........aur message kijiy.e</li></ol>",
+  "analyzedInstructions": [
+      {
+          "name": "",
+          "steps": [
+              {
+                  "number": 1,
+                  "step": "Pahile, pan garma garam kijiye....phir ek murga ka anda laiye....use sohlaiye.....phir chamach layiye....phir ande se sorry kahiye.....phir usko phod dijiye ..phir brad laiye .....use katiye aur uspar fevikol lagaiye aur ande se chipka dijiye .....phir palat dijiye ............phir bina plate mein rakhe..apne jaha man kare waha dal dijiye.........aur message kijiy.e",
+                  "ingredients": [
+                      {
+                          "id": 10316069,
+                          "name": "lentils",
+                          "localizedName": "lentils",
+                          "image": "lentils-brown.jpg"
+                      }
+                  ],
+                  "equipment": [
+                      {
+                          "id": 404645,
+                          "name": "frying pan",
+                          "localizedName": "frying pan",
+                          "image": "pan.png"
+                      }
+                  ]
+              }
+          ]
+      }
+  ],
+  "originalId": null,
+  "spoonacularSourceUrl": "https://spoonacular.com/bread-omlette-635964"
+}
