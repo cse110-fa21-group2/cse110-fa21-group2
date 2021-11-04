@@ -8,7 +8,7 @@
 4. [Miro Planning Board](https://miro.com/app/board/o9J_lpl-XMA=/)
 5. [Project Pitch](https://docs.google.com/presentation/d/11jF1oKp75DLx46tuGD6EQLSZYdLSG2OP50iHBZg_Hf0/edit?usp=sharing)
 6. [GANTT Chart](https://docs.google.com/spreadsheets/d/1SmLbdnKe8qh5n3MxefshZGN7vzQVhQEA7gFJ1xP9oeg/edit?usp=sharing)
-
+7. [HTML Style Guide and Coding Conventions](https://www.w3schools.com/html/html5_syntax.asp)
 
 ## Team Members
 
