@@ -131,7 +131,7 @@ Year: 4th year
 
 Major: Computer Engineering
 
-Role: Tester
+Role: Tester, Manager
 
 Likes: Ghouls, magnets, milk steak
 
