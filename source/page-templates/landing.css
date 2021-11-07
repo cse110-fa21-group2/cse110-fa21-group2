@@ -42,14 +42,14 @@ main {
 
 .landing {
   min-height: calc(100vh - 4rem);
-  background-image: url('../images/background-1.jpg');
+  background-image: url('../images/background-2.jpg');
   background-size: cover;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
 .landing-container {
-  grid-column: 1;
+  grid-column: 2;
   padding: 5rem;
   margin-top: 25%;
 }
