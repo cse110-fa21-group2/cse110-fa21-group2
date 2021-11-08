@@ -47,8 +47,7 @@ main {
 }
 
 .row-title {
-  margin: 0;
-  margin-top: 2rem;
+  margin: 2rem 0 0 0;
 }
 
 .recipe-card {
@@ -56,6 +55,6 @@ main {
   height: 10rem;
   background-color: white;
   border: 1px solid black;
-  margin: 10px;
+  margin: 0 10px 10px 0;
   display: inline-block;
 }
