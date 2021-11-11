@@ -1,0 +1,17 @@
+## Context and Problem Statement
+
+We want to record design decision for this project.
+Which design should we use ?
+
+## Considered Options
+(Both designs on Miro: https://miro.com/app/board/o9J_lpl-XMA=/)
+* 1. Original design with blue background
+* 2. New design Faris implemented
+
+
+## Decision Outcome
+
+Chosen option: design 2, because
+
+* The new minimalized design is a lot cleaner than the old one.
+* Since we already have a lot of the skeleton code for the new design, switching to the new design won't hurt our progress.
