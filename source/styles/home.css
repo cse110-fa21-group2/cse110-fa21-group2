@@ -1,7 +1,6 @@
 /* home.css */
 
-
-.random-recipes--wrapper {
+.random-recipes-wrapper {
   column-gap: 30px;
   display: flex;
   flex-wrap: wrap;
@@ -12,23 +11,23 @@
   width: 100%;
 }
 
-.button--wrapper {
+.button-wrapper {
   display: grid;
   justify-items: center;
   margin: 20px 0 0 30px;
   width: 696px;
 }
 
-.button--wrapper>button {
+.button-wrapper > button {
   background-color: white;
-  border: 1px solid rgb(223, 225, 229);
+  border: 1px solid rgb(223 225 229);
   border-radius: 40px;
   padding: 8px 10px;
   position: relative;
   z-index: 2;
 }
 
-.button--wrapper>img {
+.button-wrapper > img {
   filter: opacity(0.7);
   margin-left: -120px;
   margin-top: 11px;
@@ -42,20 +41,18 @@
 }
 
 .search-bar {
-  display:flex;
-
+  display: flex;
 }
 
 nav {
-  position: fixed;
+  align-items: center;
+  border-bottom: 2px solid black;
+  display: flex;
+  height: 3.5rem;
+  justify-content: space-evenly;
   left: 0;
+  position: fixed;
   right: 0;
   top: 0;
-  height: 3.5rem;
-  border-bottom: 2px solid black;
   z-index: 999;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
 }
-
