@@ -1,0 +1,27 @@
+{
+  "name": "cse110-fa21-group2",
+  "version": "1.0.0",
+  "description": "## Important Team Links",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cse110-fa21-group2/cse110-fa21-group2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cse110-fa21-group2/cse110-fa21-group2/issues"
+  },
+  "homepage": "https://github.com/cse110-fa21-group2/cse110-fa21-group2#readme",
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "stylelint": "^14.0.1",
+    "stylelint-config-standard": "^23.0.0",
+    "stylelint-order": "^5.0.0"
+  }
+}
