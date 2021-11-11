@@ -4,7 +4,11 @@
   "description": "## Important Team Links",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lintjs": "npx eslint '**/*.js'",
+    "lintcss": "npx stylelint '**/*.css'",
+    "lint": "npm run lintjs; npm run lintcss"
+
   },
   "repository": {
     "type": "git",
