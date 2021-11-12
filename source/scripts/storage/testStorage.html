@@ -5,21 +5,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" href="styles/home.css" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-      crossorigin="anonymous"
-    />
-
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   </head>
 
   <body>
     <script type="text/javascript">
-      localStorage.clear();
+      //storage {
+      //   categories: {cat1:[names],cat2:[names]}
+      //   savedLists: {list1:[names],list2:[names]}
+      //   recipeName1: json object
+      //   recipeName2: json object
+      // }
+
+      // store recipe to local storage
+      // add recipe name to category
+      // input: category of api fetch, array of recipe json object
       function storeRecipeData(category, recipeArray) {
         try {
           // store recipe
@@ -34,10 +33,9 @@
           // add to category list
           let catData = JSON.parse(localStorage.getItem("categories"));
           if (catData == null) {
-            localStorage.setItem(
-              "categories",
-              JSON.stringify({ category: allRecipeName })
-            );
+            catData = {};
+            catData[category] = allRecipeName;
+            localStorage.setItem("categories", JSON.stringify(catData));
           } else {
             if (category in catData) {
               catData[category] = catData[category].concat(allRecipeName);
@@ -52,16 +50,117 @@
         }
       }
 
-      storeRecipeData("testcat", [
-        { title: "testrecipe1" },
-        { title: "testrecipe2" },
-      ]);
+      function saveRecipeToList(listName, recipeName) {
+        try {
+          let listData = JSON.parse(localStorage.getItem("savedLists"));
+          if (listData == null) {
+            listData = {};
+            listData[listName] = [recipeName];
+            localStorage.setItem("savedLists", JSON.stringify(listData));
+          } else {
+            if (listName in listData) {
+              if (!(listData[listName].includes(recipeName))) {
+                listData[listName].push(recipeName);
+                localStorage.setItem("savedLists", JSON.stringify(listData));
+              }
+            } else {
+              listData[listName] = [recipeName];
+              localStorage.setItem("savedLists", JSON.stringify(listData));
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // remove recipe in a list (remove recipename from savedlist)
+      // input: list name to store recipe to, edited recipeObject
+      function removeRecipeFromList(listName, recipeName) {
+        try {
+          let listData = JSON.parse(localStorage.getItem("savedLists"));
+          if (listData != null && listName in listData) {
+            listData[listName] = listData[listName].filter(
+              (name) => name != recipeName
+            );
+            localStorage.setItem("savedLists", JSON.stringify(listData));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // if list already exist, do nothing. else create list in savedLists
+      // input: list name to create.
+      function createList(listName) {
+        try {
+          let listData = JSON.parse(localStorage.getItem("savedLists"));
+          if (listData == null) {
+            localStorage.setItem(
+              "savedLists",
+              JSON.stringify({ listName: [] })
+            );
+          } else {
+            if (!(listName in listData)) {
+              listData[listName] = [];
+              localStorage.setItem("savedLists", JSON.stringify(listData));
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // delete all the stored info of the list.
+      // input: list name to delete.
+      function deleteList(listName) {
+        try {
+          let listData = JSON.parse(localStorage.getItem("savedLists"));
+          if (listData != null && listName in listData) {
+            delete listData[listName];
+            localStorage.setItem("savedLists", JSON.stringify(listData));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // return recipe name in categories
+      // input: none
+      // output: {category1:[recipe names],category2:[recipe names]}
       function getCategoryRecipes() {
         return JSON.parse(localStorage.getItem("categories"));
       }
-      let results = getCategoryRecipes();
 
-      console.log(results);
+      // return recipe name in saved lists
+      // input: none
+      // output: {category1:[recipe names],category2:[recipe names]}
+      function getSavedRecipes() {
+        return JSON.parse(localStorage.getItem("savedLists"));
+      }
+
+      // return a specific json object from recipe name
+      // input: none
+      // output: {category1:[recipe names],category2:[recipe names]}
+      function getRecipe(recipeName) {
+        return JSON.parse(localStorage.getItem(recipeName));
+      }
+
+      localStorage.clear();
+      storeRecipeData("test", [
+        { title: "testrecipe1" },
+        { title: "testrecipe2" },
+      ]);
+      storeRecipeData("test2", [
+        { title: "testrecipe3" },
+        { title: "testrecipe4" },
+      ]);
+      saveRecipeToList("list1", "testrecipe1");
+      saveRecipeToList("list2", "testrecipe4");
+      createList('list4')
+
+      console.log(getCategoryRecipes());
+      console.log(getSavedRecipes());
+      console.log(getRecipe('testrecipe4'));
     </script>
   </body>
 </html>

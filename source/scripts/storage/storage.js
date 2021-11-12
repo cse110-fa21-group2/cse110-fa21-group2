@@ -22,10 +22,9 @@ export function storeRecipeData(category, recipeArray) {
     // add to category list
     let catData = JSON.parse(localStorage.getItem("categories"));
     if (catData == null) {
-      localStorage.setItem(
-        "categories",
-        JSON.stringify({ category: allRecipeName })
-      );
+      catData = {};
+      catData[category] = allRecipeName;
+      localStorage.setItem("categories", JSON.stringify(catData));
     } else {
       if (category in catData) {
         catData[category] = catData[category].concat(allRecipeName);
@@ -46,14 +45,15 @@ export function saveRecipeToList(listName, recipeName) {
   try {
     let listData = JSON.parse(localStorage.getItem("savedLists"));
     if (listData == null) {
-      localStorage.setItem(
-        "savedLists",
-        JSON.stringify({ listName: [recipeName] })
-      );
+      listData = {};
+      listData[listName] = [recipeName];
+      localStorage.setItem("savedLists", JSON.stringify(listData));
     } else {
       if (listName in listData) {
-        listData[listName].push(recipeName);
-        localStorage.setItem("savedLists", JSON.stringify(listData));
+        if (!listData[listName].includes(recipeName)) {
+          listData[listName].push(recipeName);
+          localStorage.setItem("savedLists", JSON.stringify(listData));
+        }
       } else {
         listData[listName] = [recipeName];
         localStorage.setItem("savedLists", JSON.stringify(listData));
