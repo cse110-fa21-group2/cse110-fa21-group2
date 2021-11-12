@@ -6,27 +6,33 @@
 // }
 
 // store recipe to local storage
-// add recipe name to category 
+// add recipe name to category
 // input: category of api fetch, array of recipe json object
 export function storeRecipeData(category, recipeArray) {
   try {
     // store recipe
     for (let i = 0; i < recipeArray.length; i++) {
-      localStorage.setItem(recipeArray[i]["title"], recipeArray[i]);
+      localStorage.setItem(
+        recipeArray[i]["title"],
+        JSON.stringify(recipeArray[i])
+      );
     }
 
     let allRecipeName = recipeArray.map((recipe) => recipe["title"]);
     // add to category list
-    let catData = localStorage.getItem("categories");
+    let catData = JSON.parse(localStorage.getItem("categories"));
     if (catData == null) {
-      localStorage.setItem("categories", { category: allRecipeName });
+      localStorage.setItem(
+        "categories",
+        JSON.stringify({ category: allRecipeName })
+      );
     } else {
       if (category in catData) {
         catData[category] = catData[category].concat(allRecipeName);
       } else {
         catData[category] = allRecipeName;
       }
-      localStorage.setItem("categories", catData);
+      localStorage.setItem("categories", JSON.stringify(catData));
     }
   } catch (e) {
     // storage might be full
@@ -38,16 +44,19 @@ export function storeRecipeData(category, recipeArray) {
 // input: list name to store recipe to, edited recipeObject
 export function saveRecipeToList(listName, recipeName) {
   try {
-    let listData = localStorage.getItem("savedLists");
+    let listData = JSON.parse(localStorage.getItem("savedLists"));
     if (listData == null) {
-      localStorage.setItem("savedLists", { listName: [recipeName] });
+      localStorage.setItem(
+        "savedLists",
+        JSON.stringify({ listName: [recipeName] })
+      );
     } else {
       if (listName in listData) {
         listData[listName].push(recipeName);
-        localStorage.setItem("savedLists", listData);
+        localStorage.setItem("savedLists", JSON.stringify(listData));
       } else {
         listData[listName] = [recipeName];
-        localStorage.setItem("savedLists", listData);
+        localStorage.setItem("savedLists", JSON.stringify(listData));
       }
     }
   } catch (e) {
@@ -59,12 +68,12 @@ export function saveRecipeToList(listName, recipeName) {
 // input: list name to store recipe to, edited recipeObject
 export function removeRecipeFromList(listName, recipeName) {
   try {
-    let listData = localStorage.getItem("savedLists");
+    let listData = JSON.parse(localStorage.getItem("savedLists"));
     if (listData != null && listName in listData) {
       listData[listName] = listData[listName].filter(
         (name) => name != recipeName
       );
-      localStorage.setItem("savedLists", listData);
+      localStorage.setItem("savedLists", JSON.stringify(listData));
     }
   } catch (e) {
     console.error(e);
@@ -75,13 +84,13 @@ export function removeRecipeFromList(listName, recipeName) {
 // input: list name to create.
 export function createList(listName) {
   try {
-    let listData = localStorage.getItem("savedLists");
+    let listData = JSON.parse(localStorage.getItem("savedLists"));
     if (listData == null) {
-      localStorage.setItem("savedLists", { listName: [] });
+      localStorage.setItem("savedLists", JSON.stringify({ listName: [] }));
     } else {
       if (!(listName in listData)) {
         listData[listName] = [];
-        localStorage.setItem("savedLists", listData);
+        localStorage.setItem("savedLists", JSON.stringify(listData));
       }
     }
   } catch (e) {
@@ -93,10 +102,10 @@ export function createList(listName) {
 // input: list name to delete.
 export function deleteList(listName) {
   try {
-    let listData = localStorage.getItem("savedLists");
+    let listData = JSON.parse(localStorage.getItem("savedLists"));
     if (listData != null && listName in listData) {
       delete listData[listName];
-      localStorage.setItem("savedLists", listData);
+      localStorage.setItem("savedLists", JSON.stringify(listData));
     }
   } catch (e) {
     console.error(e);

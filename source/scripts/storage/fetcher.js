@@ -9,19 +9,19 @@
 // input: none
 // output: {category1:[recipe names],category2:[recipe names]}
 export function getCategoryRecipes() {
-  return localStorage.getItem("categories");
+  return JSON.parse(localStorage.getItem("categories"));
 }
 
 // return recipe name in saved lists
 // input: none
 // output: {category1:[recipe names],category2:[recipe names]}
 export function getSavedRecipes() {
-  return localStorage.getItem("savedLists");
+  return JSON.parse(localStorage.getItem("savedLists"));
 }
 
 // return a specific json object from recipe name
 // input: none
 // output: {category1:[recipe names],category2:[recipe names]}
 export function getRecipe(recipeName) {
-  return localStorage.getItem(recipeName);
+  return JSON.parse(localStorage.getItem(recipeName));
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Test html</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles/home.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      localStorage.clear();
+      function storeRecipeData(category, recipeArray) {
+        try {
+          // store recipe
+          for (let i = 0; i < recipeArray.length; i++) {
+            localStorage.setItem(
+              recipeArray[i]["title"],
+              JSON.stringify(recipeArray[i])
+            );
+          }
+
+          let allRecipeName = recipeArray.map((recipe) => recipe["title"]);
+          // add to category list
+          let catData = JSON.parse(localStorage.getItem("categories"));
+          if (catData == null) {
+            localStorage.setItem(
+              "categories",
+              JSON.stringify({ category: allRecipeName })
+            );
+          } else {
+            if (category in catData) {
+              catData[category] = catData[category].concat(allRecipeName);
+            } else {
+              catData[category] = allRecipeName;
+            }
+            localStorage.setItem("categories", JSON.stringify(catData));
+          }
+        } catch (e) {
+          // storage might be full
+          console.log(e);
+        }
+      }
+
+      storeRecipeData("testcat", [
+        { title: "testrecipe1" },
+        { title: "testrecipe2" },
+      ]);
+      function getCategoryRecipes() {
+        return JSON.parse(localStorage.getItem("categories"));
+      }
+      let results = getCategoryRecipes();
+
+      console.log(results);
+    </script>
+  </body>
+</html>
