@@ -3,12 +3,7 @@
 ## New Changes
 - 
 - 
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Testing
-- [ ] Documentation
-- [ ] Other
+
 ## Checklist
 - [ ] I have requested 2+ code reviewers
 - [ ] I have reviewed and commented my own code.
