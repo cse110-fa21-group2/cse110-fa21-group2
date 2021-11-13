@@ -27,12 +27,11 @@ export function storeRecipeData(category, recipeArray) {
       localStorage.setItem("categories", JSON.stringify(catData));
     } else {
       if (category in catData) {
-        allRecipeName.forEach((Rname)=>{
-          if(!(Rname in catData[category])){
-            catData[category].push(Rname)
+        for (let i = 0 ;i < allRecipeName.length ; i++){
+          if(!(catData[category].includes(allRecipeName[i]))){
+            catData[category].push(allRecipeName[i])
           }
-        })
-        catData[category] = catData[category].concat(allRecipeName);
+        }
       } else {
         catData[category] = allRecipeName;
       }
