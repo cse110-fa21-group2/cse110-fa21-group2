@@ -28,7 +28,7 @@ export function storeRecipeData(category, recipeArray) {
     } else {
       if (category in catData) {
         allRecipeName.forEach((Rname)=>{
-          if(!(Rname in catData[category])){
+          if(!(catData[category].includes(Rname))){
             catData[category].push(Rname)
           }
         })
