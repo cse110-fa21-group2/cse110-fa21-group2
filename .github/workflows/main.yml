@@ -34,3 +34,14 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      # Runs installation commands
+      - name: Install npm dependencies and testing frameworks
+        run: |
+          npm install --save-dev jest babel-jest @babel/core @babel/preset-env puppeteer jest-puppeteer
+          npm install
+
+      # Runs a set of commands using the runners shell
+      - name: Run jest unit tests 
+        run: |
+          npm run test
