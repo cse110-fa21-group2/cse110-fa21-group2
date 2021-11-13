@@ -101,7 +101,7 @@ function extractIDs(data){
 }
 
 
-console.log(await getRandomRecipes(3));
+//console.log(await getRandomRecipes(3));
 
 
 
