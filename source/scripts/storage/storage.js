@@ -32,7 +32,6 @@ export function storeRecipeData(category, recipeArray) {
             catData[category].push(Rname)
           }
         })
-        catData[category] = catData[category].concat(allRecipeName);
       } else {
         catData[category] = allRecipeName;
       }
