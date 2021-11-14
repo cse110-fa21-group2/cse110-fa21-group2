@@ -1,17 +1,19 @@
 //helper functions for Spoonacular API
-import fetch from "node-fetch";
+//all these functions fetch for most popular recipes
+
+import fetch from "node-fetch";   //this is so it works on my local node js
 const API_KEY = 'd780fb789d0440ac90b3330628c2e117';
 const URL = 'https://api.spoonacular.com/recipes/';
 /**
- * Get recipes by keywords
+ * Get recipes by keywords(user searching for recipes)
  * @param {int} num - max number of recipes to get
  * @param {string} query - Keywords to search for.
- * @returns {dict} list of recipes 
+ * @returns {dict} list of recipes with detailed info
  */
 async function getRecipesByName(query,num){
   return new Promise((resolve, reject) =>{
     let queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`${URL}complexSearch?apiKey=${API_KEY}&query=${queryFormatted}&number=${num}&sort=popularity`) //TODO:sort by popularity?
+    fetch(`${URL}complexSearch?apiKey=${API_KEY}&query=${queryFormatted}&number=${num}&sort=popularity`) 
       .then(response => response.json())
       .then(data =>{  
         let ids = extractIDs(data);
@@ -28,7 +30,7 @@ async function getRecipesByName(query,num){
  * Get recipe by cuisine
  * @param {string} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines)
  * @param {int} num - max number of recipes to get
- * @returns {dict} list of recipes 
+ * @returns {dict} list of recipes with detailed info
  */
  async function getRecipesByCuisine(cuisine, num){
   return new Promise((resolve, reject) =>{
@@ -46,10 +48,10 @@ async function getRecipesByName(query,num){
 }
 
 /**
- * Get recipe by type
- * @param {string} type - type of meal (can only use types specified here https://spoonacular.com/food-api/docs#Meal-Types)
+ * Get recipe by type(can use this to grab a bunch of recipes when user first enters site)
+ * @param {string} type - type of meal
  * @param num - max number of recipes to get
- * @returns {dict} list of recipes
+ * @returns {dict} list of recipes with deatiled info
  */
  async function getRecipesByType(type, num){
   return new Promise((resolve, reject) =>{
@@ -75,7 +77,7 @@ async function getRecipesByName(query,num){
 async function getDetailedRecipeInfoBulk(ids){
   return new Promise((resolve, reject) => {
     let idsFormatted = ids.join(',');
-    fetch(`https://api.spoonacular.com/recipes/informationBulk?apiKey=${API_KEY}&ids=${idsFormatted}`)
+    fetch(`${URL}informationBulk?apiKey=${API_KEY}&ids=${idsFormatted}`)
       .then(response => {
         resolve(response.json());
       })
@@ -86,6 +88,25 @@ async function getDetailedRecipeInfoBulk(ids){
  });
 }
 
+/**
+ * Get anaylzed recipe instructions.
+ * (seems like different recipes have different instructions formats)
+ * This functions should standardize the format into a list of steps
+ * @param {int} id - id of recipe
+ * @returns [ { name: '', steps: [ [Object], [Object], [Object], [Object] ] } ] TODO:Figure out what this is
+ */
+ async function getAnalyzedInstructions(id){
+  return new Promise((resolve, reject) => {
+    fetch(`${URL}${id}/analyzedInstructions?apiKey=${API_KEY}`)
+      .then(response => {
+        resolve(response.json());
+      })
+      .catch(err => {
+        console.log(`Error getting detailed recipe info`);
+        reject(err);
+      });
+ });
+}
 /**
  * Helper function to extract recipe ids
  * @param {dict} - dictionary of search data
@@ -100,9 +121,6 @@ function extractIDs(data){
   return ids;
 }
 
-
-//console.log(await getRandomRecipes(3));
-
-
-
+//console.log(await getAnalyzedInstructions(775585)['steps']);
+//console.log(await getRecipesByType("snack",2));
 
