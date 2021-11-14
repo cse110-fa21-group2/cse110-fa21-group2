@@ -93,7 +93,7 @@ async function getDetailedRecipeInfoBulk(ids){
  * (seems like different recipes have different instructions formats)
  * This functions should standardize the format into a list of steps
  * @param {int} id - id of recipe
- * @returns [ { name: '', steps: [ [Object], [Object], [Object], [Object] ] } ] TODO:Figure out what this is
+ * @returns [ { name: '', steps: [] } ] analyzed instructions
  */
  async function getAnalyzedInstructions(id){
   return new Promise((resolve, reject) => {
@@ -121,6 +121,6 @@ function extractIDs(data){
   return ids;
 }
 let thing = await getAnalyzedInstructions(775585);
-console.log(thing[0]);
+console.log(thing[0]['steps']);
 //console.log(await getRecipesByType("snack",2));
 
