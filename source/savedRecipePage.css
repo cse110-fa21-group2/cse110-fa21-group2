@@ -44,6 +44,7 @@ main {
 .saved-recipes {
   margin-left: 5%;
   min-height: calc(100vh - 4rem);
+  position: relative;
   width: 90%;
 }
 
@@ -59,3 +60,15 @@ main {
   margin: 0 10px 10px 0;
   width: 10rem;
 }
+
+.edit-option {
+  border: 2px solid blue;
+  border-radius: 4px;
+  margin: auto;
+  padding: 1px 5px;
+  position: absolute;
+  top: 8px;
+  right: 5%;
+  background-color: rgb(228, 226, 226);
+}
+
