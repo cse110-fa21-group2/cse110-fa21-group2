@@ -134,52 +134,96 @@ class ExpandedRecipe extends HTMLElement {
 
 
     // Need to determine format of recipe card
-    // (Here it is based on Britney's ../source/recipePage.html)
+    // (Here it is based both on Britney's ../source/recipePage.html)
+    // and on the more recent Figma design (as of 11/14)
     article.innerHTML = `
     <main>
+      <!-- Top header: -->
         <section id="header">
-            <div class="recipe-favorite-button">
-                    <!-- Like/Unlike recipe -->
-            </div>
-            
-            <p class = "title">
-                <!--Name of the Recipe to be populated by JS -->
-                <h1>recipeName</h1>
-            </p>
 
-            <!-- Image of recipe -->
-            <img src="" class="main-recipe-image" alt="autopopulated by script">
+            <!-- Return button -->
+            <div class="button-return-wrapper">
+                <button class="placeholder" type="button">
+                    Return
+                </button>
+            </div>
+            <!-- Title -->
+            <!--Name of the Recipe to be populated by JS -->
+            <div class="title">
+                <h2 class="recipe-header-tile">
+                    <!-- Put recipe title here -->
+                </h2>
+            </div>
+            <!-- Edit button: -->
+            <div class="button-edit-wrapper">
+                <button class="placeholder" type="button">
+                    Edit
+                </button>
+            </div>
+            <!-- Rating: -->
+            <div class="rating-stars">
+                <!-- NEED TO DETERMINE HOW RATING STARS FEATURE DISPLAYS -->
+                <!-- PUT RATING STARS HERE -->
+            </div>
+
+            <!-- Save recipe button: -->
+            <div class="button-save-recipe-wrapper">
+                <!-- Like/Unlike recipe -->
+                <button class="placeholder" type="button">
+                    Save Recipe
+                </button>
+            </div>
+        </section>
         
+
+        <section id="main-body">
+            <!-- Image of recipe -->
+            <!-- **NEED TO UPDATE WITH PATH TO RECIPE IMAGE** --> 
+            <img src="" class="main-recipe-image" alt="Recipe Header Image">
+
             <div class="recipe-description-wrapper">
-                <!-- Short blurb about recipe -->  
+                <!-- Short blurb about recipe --> 
+                <p> **PLACEHOLDER TEXT**</p>  
             </div>
         
+            <div class="ingredients-list-wrapper">
+                <!-- Ingredients list. **ADDED VIA JS SIMILAR TO IN LAB 6** -->
+            </div>
+
             <div class="quick-facts-wrapper">
-                <!-- QuickFacts.  Added via js similar to in Lab 6  -->
+                <!-- QuickFacts.  **ADDED VIA JS SIMILAR TO IN LAB 6**  -->
+            </div>
+
+            <!-- Measurements "section" of recipe page: -->
+            <div class="measurements-wrapper">
+                <div class="units-wrapper">
+                    <!-- **ADD JS TO FILL IN UNITS** -->
+                </div>
+                <div class="servings-wrapper">
+                    <!-- **ADD JS TO FILL IN SERVINGS AND TO HANDLE ITS FUNCTIONALITY** -->
+                </div>
+            </div>
+
+            <!-- 
+
+            <div class="instructions-wrapper">
+                <!-- Instructions. **ADDED VIA JS SIMILAR TO IN LAB 6**  -->
             </div>
         </section>
 
-        <div class="ingredients-list-wrapper">
-            <!-- Ingredients list. Added via js similar to in Lab 6 -->
-        </div>
-
-        <div class="instructions-wrapper">
-            <!-- Instructions. Added via js similar to in Lab 6  -->
-        </div>
 
         <section id="footer">
             <div class="nutrition-wrapper">
                 <!-- Nutrition information -->
             </div>
         
+            <!-- **BELOW ARE POTENTIAL EXTRA FEATURES CARRIED OVER; REMOVE IF NOT NECESSARY** -->
             <div class="recipe-tags-wrapper">
                 <!-- Tags // Possible extra feature- see related recipes by tag-->
             </div>
-        
             <div class="recipe-related-tags-wrapper">
                 <!-- Related tags EXTRA FEATURE -->
             </div>
-            
             <div class="related-recipes-wrapper">
                 <!-- Related recipes EXTRA FEATURE -->
             </div>
@@ -190,8 +234,6 @@ class ExpandedRecipe extends HTMLElement {
     // to shadow root for expanded recipe element:
     this.shadowRoot.append(styles);
     this.shadowRoot.append(article);
-
-    
   }
 
  
