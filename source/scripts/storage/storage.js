@@ -17,26 +17,22 @@ export function storeRecipeData(category, recipeArray) {
         JSON.stringify(recipeArray[i])
       );
     }
-
     let allRecipeName = recipeArray.map((recipe) => recipe["title"]);
     // add to category list
     let catData = JSON.parse(localStorage.getItem("categories"));
     if (catData == null) {
       catData = {};
-      catData[category] = allRecipeName;
-      localStorage.setItem("categories", JSON.stringify(catData));
-    } else {
-      if (category in catData) {
-        allRecipeName.forEach((Rname)=>{
-          if(!(catData[category].includes(Rname))){
-            catData[category].push(Rname)
-          }
-        })
-      } else {
-        catData[category] = allRecipeName;
-      }
-      localStorage.setItem("categories", JSON.stringify(catData));
     }
+    if (!(category in catData)) {
+      catData[category] = [];
+    }
+
+    allRecipeName.forEach((Rname) => {
+      if (!catData[category].includes(Rname)) {
+        catData[category].push(Rname);
+      }
+    });
+    localStorage.setItem("categories", JSON.stringify(catData));
   } catch (e) {
     // storage might be full
     console.log(e);
