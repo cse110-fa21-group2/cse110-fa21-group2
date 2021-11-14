@@ -232,7 +232,7 @@
       ]);
       storeRecipeData("cat2", [{ title: "cat2_recipe1" }]);
       console.log("duplicate Test: add existed recipes to existed Category:");
-      console.log(getCategoryRecipes()); //Object { cat1: (7) […], cat2: (4) […] } //duplicated
+      console.log(getCategoryRecipes()); //Object { cat1: (5) […], cat2: (3) […] } //FIXED
       //storeRecipeData duplicate mix Test: add existed & new recipes to existed Category-------------
       storeRecipeData("cat1", [
         { title: "cat1_recipe1" },
@@ -241,7 +241,7 @@
       console.log(
         "duplicate mix Test: add existed & new recipes to existed Category:"
       );
-      console.log(getCategoryRecipes()); //Object { cat1: (9) […], cat2: (4) […] } ////duplicated
+      console.log(getCategoryRecipes()); //Object { cat1: (6) […], cat2: (3) […] } //duplicated FIXED
 
       //===TEST saveRecipeToList & getSavedRecipes function=================================================================================
       localStorage.clear();
