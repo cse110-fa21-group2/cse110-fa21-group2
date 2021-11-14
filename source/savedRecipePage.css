@@ -67,8 +67,34 @@ main {
   margin: auto;
   padding: 1px 5px;
   position: absolute;
-  top: 8px;
+  top: 30%;
   right: 5%;
   background-color: rgb(228, 226, 226);
 }
 
+.header {
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+#savedLists {
+  border-radius: 4px;
+  font-size: 20px;
+  margin: auto;
+  padding: 7px 50px;
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  background-color: rgb(228, 226, 226);
+}
+
+#savedLists option {
+  font-size: 14px;
+  padding: 5px;
+}
+
+.recipe-display-grid {
+  border: 2px solid;
+  
+}

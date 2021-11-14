@@ -30,12 +30,18 @@
     </form>
   </nav>
   <main>
-    <section class="saved-recipes">
-      <h1>Saved Recipes</h1>
+    <section class="header">
+      <select name="savedLists" id="savedLists">
+        <option value="List 1">List 1</option>
+        <option value="List 2">List 2</option>
+        <option value="List 3">List 3</option>
+      </select>
       <!--TODO: Replace word edit with icon of pencil-->
       <div class="edit-option">
-        <span class="edit-word">Edit</span>
+        <span class="edit-word">Manage Lists</span>
       </div>
+    </section>
+    <section class="saved-recipes">
       <div class="recipe-display-grid">
         <div class="recipe-card"></div>
         <div class="recipe-card"></div>
