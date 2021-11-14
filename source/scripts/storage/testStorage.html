@@ -149,6 +149,7 @@
       #TEST report#
       --------------------------------------------------------------------------------------------------------
       @function storeRecipeData(category, recipeArray) 
+      FIXED
       when adding a recipe that has the same title as the recipe existed in the category, it create a recipe 
         with same title. This might be a desgin descion. 
       Potential risks: might cause problem/confusion when you want to search a recipe by title
@@ -186,6 +187,7 @@
       Test case location(search word): TEST saveRecipeToList & getSavedRecipes function
       --------------------------------------------------------------------------------------------------------
       @function getRecipe(recipeName)
+      FIXED by  storeRecipeData
       When geting a recipe from a category that have duplicate(same title name) Recipes, it only return one of
       the recipe. 
       Potential risks: only return one of the recipe that the same title, you might not get what you want
