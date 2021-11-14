@@ -1,279 +1,57 @@
+<!--Based off Faris Ashai's Code-->
 <!DOCTYPE html>
-<html lang="en"></html>
-<html>
-  <head>
-      <!-- metas:-->
-    <meta charset="UTF-8"> </meta>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Saved Recipes</title> 
-
-    <!-- CSS:-->
-    <link rel="stylesheet" href="" />
-    
-    <!-- JS: -->
-    <script src="" type="module"> </script>
-
-    <!-- Bootstrap -->
-    <!-- Bootstrap CSS: -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <!-- Bootstrap JS: -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-  </head>
-
-  <body>
-      <main>
-        <article>
-            <!-- Top Nav/Title/Search Bar: Region #1 -->
-            <section>
-
-                <!-- Sidenav -->
-                <nav id="sidenav-1" class="sidenav" data-mdb-hidden="false">
-                  <ul class="sidenav-menu">
-                    <li class="sidenav-item">
-                      <a class="sidenav-link" href="#"> Home Page </a>
-                    </li>
-                    <li class="sidenav-item">
-                      <a class="sidenav-link" href="#">Browse Recipes</a>
-                    </li>
-                    <li class="sidenav-item">
-                      <a class="sidenav-link" href="#">Recommendations</a>
-                    </li>
-                    <li class="sidenav-item">
-                      <a class="sidenav-link" href="#">Survey</a>
-                    </li>
-                    <li class="sidenav-item" >
-                      <a class="sidenav-link" href="#">Lists</a>
-                    </li>
-                    <li class="sidenav-item">
-                      <a class="sidenav-link" href="#">Saved Recipes</a>
-                    </li>
-                    <!-- Optional: -->
-                    <li class="sidenav-item">
-                      <a class="sidenav-link" href="#">Meal Planner</a>
-                    </li>
-                  </ul>
-                </nav>
-                <!-- Sidenav -->
-
-                <!-- Toggler -->
-                <button data-mdb-toggle="sidenav" data-mdb-target="#sidenav-1" class="btn btn-primary"
-                  aria-controls="#sidenav-1" aria-haspopup="true">
-                  <i class="fas fa-bars"></i>
-                </button>
-                <!-- Toggler --> 
-
-                <!-- Page Title-->
-                <h1> 
-                    EzPzRecipez
-                </h1>
-
-              <!-- Search Bar: -->
-              <div class="input-group">
-                <div class="form-outline">
-                  <input type="search" id="form1" class="form-control" />
-                  <label class="form-label" for="form1">Search</label>
-                </div>
-                <button type="button" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                </button>
-              </div>
-
-              <!-- Right Side Navigation Menu: -->
-              <!--Navbar-->
-              <nav class="navbar navbar-light light-blue lighten-4">
-
-                <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">Navbar</a>
-            
-                <!-- Collapse button -->
-                <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
-                aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
-                    class="fas fa-bars fa-1x"></i></span></button>
-            
-                <!-- Collapsible content -->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-            
-                <!-- Links -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <h3>Filters:</h3>
-                    </li>
-                    <li class="nav-item">
-                      <!-- Categories:-->
-                      <!-- (Replace PLACE_HOLDERs with list items)-->
-                      <h4>Categories:</h4>
-                      <input type="checkbox" id="category1" name="category1" value="PLACE_HOLDER_1">
-                      <label for="category1"> PLACE_HOLDER_1</label>
-                      <input type="checkbox" id="category2" name="category2" value="PLACE_HOLDER_2">
-                      <label for="category1"> PLACE_HOLDER_2</label>
-                      <input type="checkbox" id="category3" name="category3" value="PLACE_HOLDER_3">
-                      <label for="category1"> PLACE_HOLDER_3</label>
-                      <input type="checkbox" id="category4" name="category4" value="PLACE_HOLDER_4">
-                      <label for="category1"> PLACE_HOLDER_4</label>
-                      <input type="checkbox" id="category5" name="category5" value="PLACE_HOLDER_5">
-                      <label for="category1"> PLACE_HOLDER_5</label>
-                      <input type="checkbox" id="category6" name="category6" value="PLACE_HOLDER_6">
-                      <label for="category1"> PLACE_HOLDER_6</label>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Recommendations</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Survey</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Lists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Saved Recipes</a>
-                    </li>
-                    <!-- Optional: -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Meal Planner</a>
-                    </li>
-
-                </ul>
-                <!-- Links -->
-            
-                </div>
-                <!-- Collapsible content -->
-            
-            </nav>
-        
-            <!-- Saved Recipes: Region #2-->
-            </section>
-                <h3>
-                    Saved Recipes
-                </h3>
-                <div class="button--wrapper">
-                    <!-- Button trigger modal -->
-                    <!-- (+-button next to saved recipes to open pop-up of lists of recipes)-->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        <i class="fa fa-folder"></i> +
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Saved Recipes:</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            
-                            <!-- File Structure displays for editing saved recipes (as in pop-up on slide 12 of pitch slides):-->
-                            <div class="modal-body">
-                                <!-- Top folder as drop-down-->
-                                <div class="dropdown">
-                                    <!-- Top-folder: -->
-                                    <!-- Folder icon with button for drop-down in pop-up:-->
-                                    
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonTop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-folder"></i> Saved Recipes (Top-Folder #1)
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <!-- Drop down item of subsequent folders in pop-up:-->
-                                        <div class="dropdown-item">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonSub1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-folder"></i> Sub-Folder #1
-                                            </button>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonSub2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-folder"></i> Sub-Folder #2
-                                            </button>
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonSub2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-folder"></i> Sub-Folder #3
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- For subsequent folders and sub-folders, repeat above format starting with <div class="modal body"> -->
-
-                            </div>
-                            <!-- Modal footer:-->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-
-                <!-- Arrow buttons to navigate saved recipes -->
-                <!--  -->
-
-                <p>
-                    <a href="#">
-                        <img src="/source/images/arrow-up.png" alt="hi" width="20" height="20">
-                    </a>
-                </p>
-
-                <p>
-                    <a href="#">
-                    <img src="/source/images/arrow-down.png" alt="hi" width="20" height="20">
-                    </a>
-                </p>
-
-                <!-- List of Saved Recipe Lists-->
-                <ul>
-                    <li><a href="#">Breakfast</a></li>                    
-                    <li><a href="#">Lunch</a></li>
-                    <li><a href="#">Dinner</a></li>
-                </ul>
-                
-            </section>
-
-            <!-- Favorites + Recipe Cards: Region #3 -->
-            <section>
-                <!-- Simple bar containing an "Add" and "Edit" button -->
-                <!-- Not-->
-                <div>
-                    Favorites
-                    <div>
-                        <button type="button">Add</button>
-                    </div>
-                    
-                    <div>
-                        <button type="button">Edit</button>
-                    </div>
-                    
-                </div>
-                
-                
-            </section>
-
-            <!-- EXTRA: Grocery List: Region #4-->
-            <section>
-
-            </section>
-
-        </article> 
-      </main>
-  </body>
-
-
-
-
-
-
-
-
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./savedRecipePage.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+    crossorigin="anonymous">
+  <link rel="shortcut icon" href=".//favicon.ico" type="image/x-icon">
+  <title>Recipe Book</title>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      <img src="./images/pot.svg" alt="" class="nav-icon">
+      <span class="nav-title">Recipe Book</span>
+    </div>
+    <!--TODO: Refactor paths later-->
+    <a href="./page-templates/landing.html">Home</a>
+    <a href="./page-templates/explore.html">Explore</a>
+    <a href="./savedRecipePage.html">Saved Recipes</a>
+    <form action="" class="search-bar">
+      <input type="text" name="" id="" placeholder="Search recipes">
+      <button type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+    </form>
+  </nav>
+  <main>
+    <section class="saved-recipes">
+      <h1>Saved Recipes</h1>
+      <div class="recipe-display-grid">
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+        <div class="recipe-card"></div>
+      </div>
+    </section>
+  </main>
+</body>
 </html>
-
