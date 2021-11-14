@@ -1,7 +1,7 @@
 //helper functions for Spoonacular API
 //all these functions fetch for most popular recipes
 
-import fetch from "node-fetch";   //this is so it works on my local node js
+import fetch from 'node-fetch';   //this is so it works on my local node js
 const API_KEY = 'd780fb789d0440ac90b3330628c2e117';
 const URL = 'https://api.spoonacular.com/recipes/';
 /**
@@ -20,7 +20,7 @@ async function getRecipesByName(query,num){
         resolve(getDetailedRecipeInfoBulk(ids));
       })
       .catch(err => {
-        console.log("Error in searching for recipes by name.");
+        console.log('Error in searching for recipes by name.');
         reject(err);
       });
   });
@@ -41,7 +41,7 @@ async function getRecipesByName(query,num){
         resolve(getDetailedRecipeInfoBulk(ids));
       })
       .catch(err => {
-        console.log("Error in searching for recipes by cuisine.");
+        console.log('Error in searching for recipes by cuisine.');
         reject(err);
       });
   });
@@ -62,7 +62,7 @@ async function getRecipesByName(query,num){
       resolve(getDetailedRecipeInfoBulk(ids));
     })
       .catch(err => {
-        console.log("Error in searching for recipes by type.");
+        console.log('Error in searching for recipes by type.');
         reject(err);
       });
   });
@@ -82,7 +82,7 @@ async function getDetailedRecipeInfoBulk(ids){
         resolve(response.json());
       })
       .catch(err => {
-        console.log(`Error getting detailed recipe info`);
+        console.log('Error getting detailed recipe info');
         reject(err);
       });
  });
@@ -93,7 +93,7 @@ async function getDetailedRecipeInfoBulk(ids){
  * (seems like different recipes have different instructions formats)
  * This functions should standardize the format into a list of steps
  * @param {int} id - id of recipe
- * @returns [ { name: '', steps: [] } ] analyzed instructions
+ * @returns [ { name: '', steps: [{step 1},{step 2},...] } ] analyzed instructions
  */
  async function getAnalyzedInstructions(id){
   return new Promise((resolve, reject) => {
@@ -102,7 +102,7 @@ async function getDetailedRecipeInfoBulk(ids){
         resolve(response.json());
       })
       .catch(err => {
-        console.log(`Error getting detailed recipe info`);
+        console.log('Error getting analyzed instructions');
         reject(err);
       });
  });
@@ -120,7 +120,7 @@ function extractIDs(data){
   });
   return ids;
 }
-let thing = await getAnalyzedInstructions(775585);
-console.log(thing[0]['steps']);
+//let thing = await getAnalyzedInstructions(775585);
+//console.log(thing[0]['steps']);
 //console.log(await getRecipesByType("snack",2));
 
