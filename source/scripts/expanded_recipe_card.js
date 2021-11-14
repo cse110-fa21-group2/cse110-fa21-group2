@@ -214,7 +214,7 @@ class ExpandedRecipe extends HTMLElement {
 
         <section id="footer">
             <div class="nutrition-wrapper">
-                <!-- Nutrition information -->
+                <!-- Nutrition information (per serving)-->
             </div>
         
             <!-- **BELOW ARE POTENTIAL EXTRA FEATURES CARRIED OVER; REMOVE IF NOT NECESSARY** -->
