@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lintjs": "npx eslint '**/*.js' ",
-    "lintcss": "npx stylelint '**/*.css'",
-    "lint": "npm run lintjs; npm run lintcss"
+    "lintjs": "npx eslint \"**/*.js\"",
+    "lintcss": "npx stylelint \"**/*.css\"",
+    "lint": "npm run lintjs && npm run lintcss"
   },
   "jest": {
     "preset": "jest-puppeteer",
