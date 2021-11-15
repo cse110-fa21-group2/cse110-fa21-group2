@@ -6,7 +6,7 @@ We are a team of students taking Thomas Powell's CSE110 Software Engineering cla
 
 ## Documentation
 
-This GitHub serves as the single-source-of-truth for the project. All documentation is organized in the [GitHub Wiki](https://github.com/cse110-fa21-group2/cse110-fa21-group2/wiki). Meeting minutes, and other specifically-archived information can be found in their respective folders in this repo. 
+This GitHub serves as the single-source-of-truth for the project. All documentation is organized in the [GitHub Wiki](https://github.com/cse110-fa21-group2/cse110-fa21-group2/wiki). Meeting minutes, and other archived information can be found in their respective folders in this repo. 
 
 ## Important Team Links
 
