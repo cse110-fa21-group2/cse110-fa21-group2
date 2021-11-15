@@ -135,7 +135,7 @@ class ExpandedRecipe extends HTMLElement {
 
     // Need to determine format of recipe card
     // (Here it is based both on Britney's ../source/recipePage.html)
-    // and on the more recent Figma design (as of 11/14)
+    // and on the more recent Figma design (as of 11/14))
     article.innerHTML = `
     <main>
       <!-- Top header: -->
