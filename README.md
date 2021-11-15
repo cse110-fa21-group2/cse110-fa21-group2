@@ -1,4 +1,4 @@
-# UC San Diego CSE110 Fall 2021 Group 2 (Team H2O)
+# Fall 2021 Group 2 (Team H2O)
 
 ## Overview
 
