@@ -120,7 +120,12 @@ function extractIDs(data){
   });
   return ids;
 }
-//let thing = await getAnalyzedInstructions(775585);
+//let thing = await getAnalyzedInstructions(715569);
 //console.log(thing[0]['steps']);
-//console.log(await getRecipesByType("snack",2));
+
+
+let thing = await getRecipesByCuisine("mexican",2);
+console.log(thing[0]['analyzedInstructions']);
+//console.log(await getRecipesByName("eggs",2));
+//console.log(await getRecipesByCuisine("mexican",2));
 
