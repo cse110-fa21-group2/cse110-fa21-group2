@@ -2,7 +2,7 @@
 
 ## Overview
 
-We are a team of students taking Thomas Powell's Software Engineering class. Our project for the quarter is to create a recipe manager (EzPzRecipez)
+We are a team of students taking Thomas Powell's CSE110 Software Engineering class. Our project for the quarter is to create a recipe manager (EzPzRecipez)
 
 ## Documentation
 
