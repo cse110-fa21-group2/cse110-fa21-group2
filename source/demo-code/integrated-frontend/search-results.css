@@ -1,0 +1,9 @@
+.search-results {
+  margin-left: 5%;
+  min-height: calc(100vh - 4rem);
+  width: 90%;
+}
+
+.row-title {
+  margin: 2rem 0 0;
+}
