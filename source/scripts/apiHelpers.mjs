@@ -4,6 +4,9 @@
 import fetch from 'node-fetch';   //this is so it works on my local node js
 const API_KEY = 'd780fb789d0440ac90b3330628c2e117';
 const URL = 'https://api.spoonacular.com/recipes/';
+
+
+
 /**
  * Get recipes by keywords(user searching for recipes)
  * @param {int} num - max number of recipes to get
@@ -77,32 +80,13 @@ async function getRecipesByName(query,num){
 async function getDetailedRecipeInfoBulk(ids){
   return new Promise((resolve, reject) => {
     let idsFormatted = ids.join(',');
+    console.log(idsFormatted);
     fetch(`${URL}informationBulk?apiKey=${API_KEY}&ids=${idsFormatted}`)
       .then(response => {
         resolve(response.json());
       })
       .catch(err => {
         console.log('Error getting detailed recipe info');
-        reject(err);
-      });
- });
-}
-
-/**
- * Get anaylzed recipe instructions.
- * (seems like different recipes have different instructions formats)
- * This functions should standardize the format into a list of steps
- * @param {int} id - id of recipe
- * @returns [ { name: '', steps: [{step 1},{step 2},...] } ] analyzed instructions
- */
- async function getAnalyzedInstructions(id){
-  return new Promise((resolve, reject) => {
-    fetch(`${URL}${id}/analyzedInstructions?apiKey=${API_KEY}`)
-      .then(response => {
-        resolve(response.json());
-      })
-      .catch(err => {
-        console.log('Error getting analyzed instructions');
         reject(err);
       });
  });
@@ -124,8 +108,6 @@ function extractIDs(data){
 //console.log(thing[0]['steps']);
 
 
-let thing = await getRecipesByCuisine("mexican",2);
-console.log(thing[0]['analyzedInstructions']);
-//console.log(await getRecipesByName("eggs",2));
+await getRecipesByName("eggs",10);
 //console.log(await getRecipesByCuisine("mexican",2));
 
