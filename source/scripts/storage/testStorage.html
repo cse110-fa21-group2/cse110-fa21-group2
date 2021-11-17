@@ -53,12 +53,9 @@
       Potential risks: non
       Test case location(search word): TEST saveRecipeToList & getSavedRecipes function
       --------------------------------------------------------------------------------------------------------
-      @function getRecipe(recipeName)
-      FIXED by  storeRecipeData
-      When geting a recipe from a category that have duplicate(same title name) Recipes, it only return one of
-      the recipe. 
-      Potential risks: only return one of the recipe that the same title, you might not get what you want
-      Test case location(search word): getRecip() duplicate test
+      @function getAllRecipes()
+      no bug found
+      Potential risks: 
       --------------------------------------------------------------------------------------------------------
       */
 
@@ -270,48 +267,64 @@
       console.log("add recipe after all recipes removed");
       console.log(getSavedRecipes()); 
 
-      //===TEST getRecipe function======================================================
+      //===TEST getAllRecipes function======================================================
       localStorage.clear();
       console.log();
-      console.log("===TEST getRecipe function===");
+      console.log("===TEST getAllRecipes function===");
       //init data
       storeRecipeData("cat1", [
-        { title: "cat1_recipe1" },
-        { title: "cat1_recipe2" },
-        { title: "cat1_recipe3" },
+        { id:1, title: "cat1_recipe1" },
+        { id:2, title: "cat1_recipe2" },
       ]);
       storeRecipeData("cat2", [
-        { title: "cat2_recipe1" },
-        { title: "cat2_recipe2" },
+        { id:1, title: "cat1_recipe1" },
+        { id:2, title: "cat1_recipe2" },
       ]);
+      console.log("getAllRecipes");
+      console.log(getAllRecipes()); 
 
-      //get existed recipe
-      console.log("get existed recipe");
-      console.log(getRecipe("cat1_recipe1")); 
-      console.log(getRecipe("cat1_recipe3")); 
-      console.log(getRecipe("cat2_recipe1")); 
-      console.log(getRecipe("cat2_recipe2")); 
+      saveRecipeToList("cat1", "cat1_recipe1");
+      console.log(getAllRecipes()); 
 
-      //get non exist recipe
-      console.log("get non exist recipe");
-      console.log(getRecipe("cat1_recipe999")); 
-      console.log(getRecipe("cat1_recipe666")); 
 
-      localStorage.clear();
-      console.log();
-      console.log("localStorage.clear();");
-      console.log("getRecip() duplicate test");
-      storeRecipeData("cat1", [
-        { title: "cat1_recipe1" },
-        { title: "cat1_recipe2" },
-        { title: "cat1_recipe1" },
-      ]);
-      console.log(" a category that have duplicate(same title name) Recipes");
-      console.log(getCategoryRecipes());
-      console.log(
-        "get recipe from a category that have duplicate(same title name) Recipes"
-      );
-      console.log(getRecipe("cat1_recipe1")); 
+
+      // storeRecipeData("cat1", [
+      //   { title: "cat1_recipe1" },
+      //   { title: "cat1_recipe2" },
+      //   { title: "cat1_recipe3" },
+      // ]);
+      // storeRecipeData("cat2", [
+      //   { title: "cat2_recipe1" },
+      //   { title: "cat2_recipe2" },
+      // ]);
+
+      // //get existed recipe
+      // console.log("get existed recipe");
+      // console.log(getRecipe("cat1_recipe1")); 
+      // console.log(getRecipe("cat1_recipe3")); 
+      // console.log(getRecipe("cat2_recipe1")); 
+      // console.log(getRecipe("cat2_recipe2")); 
+
+      // //get non exist recipe
+      // console.log("get non exist recipe");
+      // console.log(getRecipe("cat1_recipe999")); 
+      // console.log(getRecipe("cat1_recipe666")); 
+
+      // localStorage.clear();
+      // console.log();
+      // console.log("localStorage.clear();");
+      // console.log("getRecip() duplicate test");
+      // storeRecipeData("cat1", [
+      //   { title: "cat1_recipe1" },
+      //   { title: "cat1_recipe2" },
+      //   { title: "cat1_recipe1" },
+      // ]);
+      // console.log(" a category that have duplicate(same title name) Recipes");
+      // console.log(getCategoryRecipes());
+      // console.log(
+      //   "get recipe from a category that have duplicate(same title name) Recipes"
+      // );
+      // console.log(getRecipe("cat1_recipe1")); 
 
     </script>
   </body>
