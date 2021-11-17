@@ -2,10 +2,10 @@
 //all these functions fetch for most popular recipes
 
 import fetch from 'node-fetch';   //this is so it works on my local node js
-const API_KEY = 'd780fb789d0440ac90b3330628c2e117';
-const URL = 'https://api.spoonacular.com/recipes/';
 
 
+const API_KEY = '03eb75ad48msh8e103f36b70dd41p123f64jsn7077fe6257cf';
+const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get recipes by keywords(user searching for recipes)
@@ -16,7 +16,13 @@ const URL = 'https://api.spoonacular.com/recipes/';
 async function getRecipesByName(query,num){
   return new Promise((resolve, reject) =>{
     let queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`${URL}complexSearch?apiKey=${API_KEY}&query=${queryFormatted}&number=${num}&sort=popularity`) 
+    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=popularity`, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": HOST,
+        "x-rapidapi-key": API_KEY
+      }
+    })
       .then(response => response.json())
       .then(data =>{  
         let ids = extractIDs(data);
@@ -37,7 +43,13 @@ async function getRecipesByName(query,num){
  */
  async function getRecipesByCuisine(cuisine, num){
   return new Promise((resolve, reject) =>{
-    fetch(`${URL}complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=popularity`)
+    fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=popularity`,{
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": HOST,
+        "x-rapidapi-key": API_KEY
+      }
+    })
       .then(response => response.json())
       .then(data =>{  
         let ids = extractIDs(data);
@@ -54,11 +66,17 @@ async function getRecipesByName(query,num){
  * Get recipe by type(can use this to grab a bunch of recipes when user first enters site)
  * @param {string} type - type of meal
  * @param num - max number of recipes to get
- * @returns {dict} list of recipes with deatiled info
+ * @returns {dict} list of recipes with detailed info
  */
  async function getRecipesByType(type, num){
   return new Promise((resolve, reject) =>{
-    fetch(`${URL}complexSearch?apiKey=${API_KEY}&type=${type}&number=${num}&sort=popularity`)
+    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity`, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": HOST,
+        "x-rapidapi-key": API_KEY
+      }
+    })
     .then(response => response.json())
     .then(data =>{  
       let ids = extractIDs(data);
@@ -80,8 +98,13 @@ async function getRecipesByName(query,num){
 async function getDetailedRecipeInfoBulk(ids){
   return new Promise((resolve, reject) => {
     let idsFormatted = ids.join(',');
-    console.log(idsFormatted);
-    fetch(`${URL}informationBulk?apiKey=${API_KEY}&ids=${idsFormatted}`)
+    fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`,{
+      "method": "GET",
+	    "headers": {
+		    "x-rapidapi-host": HOST,
+		    "x-rapidapi-key": API_KEY
+      }
+    })
       .then(response => {
         resolve(response.json());
       })
@@ -93,7 +116,7 @@ async function getDetailedRecipeInfoBulk(ids){
 }
 /**
  * Helper function to extract recipe ids
- * @param {dict} - dictionary of search data
+ * @param {dict} - dictionary of recipes search results from complex search
  * @returns {int[]} - list of recipe ids
  */
 function extractIDs(data){
@@ -108,6 +131,6 @@ function extractIDs(data){
 //console.log(thing[0]['steps']);
 
 
-await getRecipesByName("eggs",10);
+console.log(await getRecipesByType("lunch",3));
 //console.log(await getRecipesByCuisine("mexican",2));
 
