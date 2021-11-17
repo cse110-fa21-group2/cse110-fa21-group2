@@ -33,22 +33,22 @@
 //   }
 // }
 
-
-// store recipe to local storage
-// add recipeid to category
-// input: category of api fetch, array of recipe json object
+/**
+ *
+ * @param {*} category
+ * @param {*} recipeArray
+ */
 export function storeRecipeData(category, recipeArray) {
   try {
     let allData = JSON.parse(localStorage.getItem("recipeData"));
     if (allData == null) {
       allData = {};
     }
-    let currNumElement = Object.keys(allData).length;
 
     // store recipe
     let allRecipeId = [];
     for (let i = 0; i < recipeArray.length; i++) {
-      const uid = currNumElement + i;
+      const uid = recipeArray[i].id;
       allRecipeId.push(uid);
       allData[uid] = recipeArray[i];
     }
@@ -63,7 +63,9 @@ export function storeRecipeData(category, recipeArray) {
     }
 
     allRecipeId.forEach((rid) => {
-      catData[category].push(rid);
+      if (!allRecipeId.includes(rid)){
+        catData[category].push(rid);
+      }
     });
 
     localStorage.setItem("categories", JSON.stringify(catData));
@@ -74,8 +76,11 @@ export function storeRecipeData(category, recipeArray) {
   }
 }
 
-// save recipe to a list(add recipeId to savedlist)
-// input: list name to store recipe to, edited recipeObject
+/**
+ * save recipe to a list(add recipeId to savedlist)
+ * @param {*} listName
+ * @param {*} recipeId
+ */
 export function saveRecipeToList(listName, recipeId) {
   try {
     let listData = JSON.parse(localStorage.getItem("savedLists"));
@@ -98,8 +103,11 @@ export function saveRecipeToList(listName, recipeId) {
   }
 }
 
-// remove recipe in a list (remove recipeId from savedlist)
-// input: list name to store recipe to, edited recipeObject
+/**
+ * remove recipe in a list (remove recipeId from savedlist)
+ * @param {*} listName
+ * @param {*} recipeId
+ */
 export function removeRecipeFromList(listName, recipeId) {
   try {
     let listData = JSON.parse(localStorage.getItem("savedLists"));
@@ -112,8 +120,10 @@ export function removeRecipeFromList(listName, recipeId) {
   }
 }
 
-// if list already exist, do nothing. else create list in savedLists
-// input: list name to create.
+/**
+ * if list already exist, do nothing. else create list in savedLists
+ * @param {*} listName
+ */
 export function createList(listName) {
   try {
     let listData = JSON.parse(localStorage.getItem("savedLists"));
@@ -130,8 +140,10 @@ export function createList(listName) {
   }
 }
 
-// delete all the stored info of the list.
-// input: list name to delete.
+/**
+ * delete all the stored info of the list.
+ * @param {*} listName
+ */
 export function deleteList(listName) {
   try {
     let listData = JSON.parse(localStorage.getItem("savedLists"));

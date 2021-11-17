@@ -33,23 +33,26 @@
 //   }
 // }
 
-// return recipe id in categories
-// input: none
-// output: {category1:[recipe ids],category2:[recipe ids]}
+/**
+ *
+ * @returns recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
+ */
 export function getCategoryRecipes() {
   return JSON.parse(localStorage.getItem("categories"));
 }
 
-// return recipe id in saved lists
-// input: none
-// output: {category1:[recipe ids],category2:[recipe ids]}
+/**
+ *
+ * @returns recipe id in saved lists {category1:[recipe ids],category2:[recipe ids]}
+ */
 export function getSavedRecipes() {
   return JSON.parse(localStorage.getItem("savedLists"));
 }
 
-// return all recipes
-// input: none
-// output: {uid:recipe json,uid:recipe json}
+/**
+ *
+ * @returns all recipes {uid:recipe json,uid:recipe json}
+ */
 export function getAllRecipes() {
   return JSON.parse(localStorage.getItem("recipeData"));
 }
