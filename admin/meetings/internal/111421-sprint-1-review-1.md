@@ -5,7 +5,7 @@ Date: 11/14/2021
 
 Time: 3pm to 4:00pm
 
-Topic: Checkpoint #1
+Topic: First Sprint Review
 
 Type: Zoom
 
