@@ -128,7 +128,9 @@ export function createList(listName) {
   try {
     let listData = JSON.parse(localStorage.getItem("savedLists"));
     if (listData == null) {
-      localStorage.setItem("savedLists", JSON.stringify({ listName: [] }));
+      listData = {}
+      listData[listName] = []
+      localStorage.setItem("savedLists", JSON.stringify(listData));
     } else {
       if (!(listName in listData)) {
         listData[listName] = [];
