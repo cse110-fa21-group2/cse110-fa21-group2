@@ -48,7 +48,7 @@ export function storeRecipeData(category, recipeArray) {
     // store recipe
     let allRecipeId = [];
     for (let i = 0; i < recipeArray.length; i++) {
-      const uid = recipeArray[i].id;
+      const uid = recipeArray[i]['id'];
       allRecipeId.push(uid);
       allData[uid] = recipeArray[i];
     }
@@ -63,7 +63,7 @@ export function storeRecipeData(category, recipeArray) {
     }
 
     allRecipeId.forEach((rid) => {
-      if (!allRecipeId.includes(rid)){
+      if (!catData[category].includes(rid)){
         catData[category].push(rid);
       }
     });
