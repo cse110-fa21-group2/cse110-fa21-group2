@@ -37,16 +37,56 @@
  *
  * @returns recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
  */
-export function getCategoryRecipes() {
+export function getAllCategoryRecipeId() {
   return JSON.parse(localStorage.getItem("categories"));
 }
 
 /**
  *
- * @returns recipe id in saved lists {category1:[recipe ids],category2:[recipe ids]}
+ * @returns recipe in categories {category1:[recipe json],category2:[recipe json]}
  */
-export function getSavedRecipes() {
+export function getAllCategoryRecipe() {
+  const categoryId = getAllCategoryRecipesId();
+  const recipes = getAllRecipes();
+  let output = {};
+  if (categoryId == null || recipes == null) {
+    return null;
+  }
+  Object.keys(categoryId).forEach((category) => {
+    output[category] = [];
+    categoryId[category].forEach((id) => {
+      output[category].push(recipes[id]);
+    });
+  });
+  return output;
+}
+
+/**
+ *
+ * @returns recipe id in saved lists {list1:[recipe ids],list2:[recipe ids]}
+ */
+export function getAllSavedRecipeId() {
   return JSON.parse(localStorage.getItem("savedLists"));
+}
+
+/**
+ *
+ * @returns recipe in saved lists {list1:[recipe json],list2:[recipe json]}
+ */
+export function getAllSavedRecipe() {
+  const savedId = getAllSavedRecipeId();
+  const recipes = getAllRecipes();
+  let output = {};
+  if (savedId == null || recipes == null) {
+    return null;
+  }
+  Object.keys(savedId).forEach((category) => {
+    output[category] = [];
+    savedId[category].forEach((id) => {
+      output[category].push(recipes[id]);
+    });
+  });
+  return output;
 }
 
 /**
@@ -55,4 +95,14 @@ export function getSavedRecipes() {
  */
 export function getAllRecipes() {
   return JSON.parse(localStorage.getItem("recipeData"));
+}
+
+/**
+ *
+ * @param {*} recipeid
+ * @returns json object of the recipe
+ */
+export function getSingleRecipe(recipeid) {
+  const recipes = getAllRecipes();
+  return recipes[recipeid];
 }
