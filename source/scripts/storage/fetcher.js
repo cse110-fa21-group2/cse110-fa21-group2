@@ -46,7 +46,7 @@ export function getAllCategoryRecipeId() {
  * @returns recipe in categories {category1:[recipe json],category2:[recipe json]}
  */
 export function getAllCategoryRecipe() {
-  const categoryId = getAllCategoryRecipesId();
+  const categoryId = getAllCategoryRecipeId();
   const recipes = getAllRecipes();
   let output = {};
   if (categoryId == null || recipes == null) {
