@@ -9,6 +9,8 @@ Topic: Checkpoint #1
 
 Type: Zoom
 
+MM Author: Misha
+
 Participants: 
 Hanran Yang, Ziheng Huang, Misha Reswick, Manshi Yang, Robert Jiang, 
 Laurence D'Ercole, Alex Nguyen, Jon Tran, Kaiwen Tsou, Britney Vi, Faris Ashai
