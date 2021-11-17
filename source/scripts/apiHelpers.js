@@ -133,6 +133,6 @@ function extractIDs(data){
 //console.log(thing[0]['steps']);
 
 
-console.log(await getRecipesByType("lunch",3));
+//console.log(getRecipesByType("lunch",3));
 //console.log(await getRecipesByCuisine("mexican",2));
 
