@@ -1,4 +1,3 @@
-<!--Based off Faris Ashai's Code-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,21 +5,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./saved-recipes.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="../../styles/recipe-card.css">
+  <link rel="stylesheet" href="../../styles/page-layout.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
   <link rel="shortcut icon" href=".//favicon.ico" type="image/x-icon">
   <title>Recipe Book</title>
 </head>
 <body>
   <nav>
     <div class="nav-logo">
-      <img src="./images/pot.svg" alt="" class="nav-icon">
+      <img src="../images/pot.svg" alt="" class="nav-icon">
       <span class="nav-title">Recipe Book</span>
     </div>
-    <!--TODO: Refactor paths later-->
-    <a href="./page-templates/landing.html">Home</a>
-    <a href="./page-templates/explore.html">Explore</a>
+    <a href="./landing.html">Home</a>
+    <a href="./explore.html">Explore</a>
     <a href="./saved-recipes.html">Saved Recipes</a>
     <form action="./search-results.html" class="search-bar">
       <input type="text" name="" id="" placeholder="Search recipes">
@@ -30,36 +28,233 @@
     </form>
   </nav>
   <main>
-    <section class="header">
-      <select name="savedLists" id="savedLists">
-        <option value="List 1">List 1</option>
-        <option value="List 2">List 2</option>
-        <option value="List 3">List 3</option>
-      </select>
-      <!--TODO: Replace word edit with icon of pencil-->
-      <div class="edit-option">
-        <span class="edit-word">Manage Lists</span>
-      </div>
-    </section>
     <section class="saved-recipes">
-      <div class="recipe-display-grid">
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
-        <div class="recipe-card"></div>
+      <div class="saved-recipe-header">
+        <select name="savedLists" class="list-dropdown">
+          <option value="List 1">List 1</option>
+          <option value="List 2">List 2</option>
+          <option value="List 3">List 3</option>
+        </select>
+        <button class="edit-btn">Manage Lists</button>
+      </div>
+      <div class="results-grid">
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
+        <div class="recipe-card card-shadow">
+
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
+          </div>
+
+          <div class="card-body">
+            <h1>Sausage & Pepperoni Stromboli</h1>
+          </div>
+
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="recipe-card card-shadow">
+          <div class="card-header card-img">
+            <img src="https://spoonacular.com/recipeImages/715560-556x370.jpg" alt="" srcset="">
+          </div>
+          <div class="card-body">
+            <h1>World’s Greatest Lasagna Roll Ups</h1>
+          </div>
+          <div class="card-footer">
+            <button class="card-btn">View Recipe</button>
+            <button class="card-btn card-btn-outline">Save Recipe</button>
+          </div>
+        </div>
       </div>
     </section>
   </main>

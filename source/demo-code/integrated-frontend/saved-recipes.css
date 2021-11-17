@@ -1,46 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-
-html,
-body {
-  font-family: Lato, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  color: black;
-  text-decoration: none;
-}
-
-nav {
-  align-items: center;
-  border-bottom: 2px solid black;
-  display: flex;
-  height: 4rem;
-  justify-content: space-evenly;
-  position: relative;
-  width: 100%;
-  z-index: 99;
-}
-
-.nav-logo {
-  align-items: center;
-  display: flex;
-}
-
-.nav-title {
-  font-size: 1.5em;
-}
-
-.nav-icon {
-  height: 3rem;
-}
-
-main {
-  min-height: calc(100vh - 4rem);
-  width: 100%;
-}
-
 .saved-recipes {
   margin-left: 5%;
   min-height: calc(100vh - 4rem);
@@ -48,53 +5,20 @@ main {
   width: 90%;
 }
 
-.row-title {
-  margin: 2rem 0 0;
+.saved-recipe-header {
+  height: 2rem;
+  margin: 2rem 0;
+  width: 75%;
 }
 
-.recipe-card {
-  background-color: white;
-  border: 1px solid black;
-  display: inline-block;
-  height: 10rem;
-  margin: 0 10px 10px 0;
-  width: 10rem;
+.list-dropdown {
+  float: left;
+  height: 1.5rem;
+  margin-right: 1rem;
+  min-width: 7rem;
 }
 
-.edit-option {
-  border: 2px solid blue;
-  border-radius: 4px;
-  margin: auto;
-  padding: 1px 5px;
-  position: absolute;
-  top: 30%;
-  right: 5%;
-  background-color: rgb(228, 226, 226);
-}
-
-.header {
-  position: relative;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-#savedLists {
-  border-radius: 4px;
-  font-size: 20px;
-  margin: auto;
-  padding: 7px 50px;
-  position: absolute;
-  top: 30%;
-  left: 5%;
-  background-color: rgb(228, 226, 226);
-}
-
-#savedLists option {
-  font-size: 14px;
-  padding: 5px;
-}
-
-.recipe-display-grid {
-  border: 2px solid;
-  
+.edit-btn {
+  height: 1.5rem;
+  min-width: 7rem;
 }
