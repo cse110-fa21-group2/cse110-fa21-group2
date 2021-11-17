@@ -5,9 +5,47 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const API_KEY = process.env.API_KEY;
-
-
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
+
+/**
+ * Get detailed info from recipe ID's
+ * @param {int[]} ids - ids of recipe
+ * @returns {dict} detailed info of recipes 
+ */
+ async function getDetailedRecipeInfoBulk(ids) {
+  return new Promise((resolve, reject) => {
+    const idsFormatted = ids.join(',');
+    fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`,{
+      "method": "GET",
+	    "headers": {
+		    "x-rapidapi-host": HOST,
+		    "x-rapidapi-key": API_KEY
+      }
+    })
+      .then(response => {
+        resolve(response.json());
+      })
+      .catch(err => {
+        console.log('Error getting detailed recipe info');
+        reject(err);
+      });
+ });
+}
+/**
+ * Helper function to extract recipe ids
+ * @param {dict} - dictionary of recipes search results from complex search
+ * @returns {int[]} - list of recipe ids
+ */
+function extractIDs(data){
+  let results = data['results'];
+  let ids = [];
+  results.forEach(result =>{
+    ids.push(result['id']);
+  });
+  return ids;
+}
+
+
 
 /**
  * Get recipes by keywords(user searching for recipes)
@@ -15,22 +53,22 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
  * @param {string} query - Keywords to search for.
  * @returns {dict} list of recipes with detailed info
  */
-async function getRecipesByName(query,num){
-  return new Promise((resolve, reject) =>{
-    let queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
+async function getRecipesByName(query, num) {
+  return new Promise((resolve, reject) => {
+    const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
     fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=popularity`, {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": HOST,
-        "x-rapidapi-key": API_KEY
-      }
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': HOST,
+        'x-rapidapi-key': API_KEY,
+      },
     })
-      .then(response => response.json())
-      .then(data =>{  
-        let ids = extractIDs(data);
+      .then((response) => response.json())
+      .then((data) => {
+        const ids = extractIDs(data);
         resolve(getDetailedRecipeInfoBulk(ids));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Error in searching for recipes by name.');
         reject(err);
       });
@@ -92,47 +130,23 @@ async function getRecipesByName(query,num){
 }
 
 
-/**
- * Get detailed info from recipe ID's
- * @param {int[]} ids - ids of recipe
- * @returns {dict} detailed info of recipes 
- */
-async function getDetailedRecipeInfoBulk(ids){
-  return new Promise((resolve, reject) => {
-    let idsFormatted = ids.join(',');
-    fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`,{
-      "method": "GET",
-	    "headers": {
-		    "x-rapidapi-host": HOST,
-		    "x-rapidapi-key": API_KEY
-      }
-    })
-      .then(response => {
-        resolve(response.json());
-      })
-      .catch(err => {
-        console.log('Error getting detailed recipe info');
-        reject(err);
-      });
- });
-}
-/**
- * Helper function to extract recipe ids
- * @param {dict} - dictionary of recipes search results from complex search
- * @returns {int[]} - list of recipe ids
- */
-function extractIDs(data){
-  let results = data['results'];
-  let ids = [];
-  results.forEach(result =>{
-    ids.push(result['id']);
-  });
-  return ids;
-}
+// export functions
+module.exports({
+  API_KEY,
+  HOST,
+  getRecipesByName,
+  getRecipesByType,
+  getRecipesByCuisine,
+  getDetailedRecipeInfoBulk,
+  extractIDs,
+});
+
+
 //let thing = await getAnalyzedInstructions(715569);
 //console.log(thing[0]['steps']);
 
 
 //console.log(getRecipesByType("lunch",3));
 //console.log(await getRecipesByCuisine("mexican",2));
+console.log(getRecipesByName("potato",2))
 
