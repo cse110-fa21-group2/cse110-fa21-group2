@@ -9,8 +9,8 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get detailed info from recipe ID's
- * @param {int[]} ids - ids of recipe
- * @returns {dict} detailed info of recipes
+ * @param {Object} ids - list of ids of recipes
+ * @returns {Object} list of detailed info of recipes
  */
 async function getDetailedRecipeInfoBulk(ids) {
   return new Promise((resolve, reject) => {
@@ -33,8 +33,8 @@ async function getDetailedRecipeInfoBulk(ids) {
 }
 /**
  * Helper function to extract recipe ids
- * @param {dict} - dictionary of recipes search results from complex search
- * @returns {int[]} - list of recipe ids
+ * @param {Object} - list of recipes search results from complex search
+ * @returns {Object} - list of recipe ids
  */
 function extractIDs(data) {
   const { results } = data;
@@ -47,9 +47,9 @@ function extractIDs(data) {
 
 /**
  * Get recipes by keywords(user searching for recipes)
- * @param {int} num - max number of recipes to get
- * @param {string} query - Keywords to search for.
- * @returns {dict} list of recipes with detailed info
+ * @param {Number} num - max number of recipes to get
+ * @param {String} query - Keywords to search for.
+ * @returns {Object} list of recipes with detailed info
  */
 async function getRecipesByName(query, num) {
   return new Promise((resolve, reject) => {
@@ -75,9 +75,9 @@ async function getRecipesByName(query, num) {
 
 /**
  * Get recipe by cuisine
- * @param {string} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines)
- * @param {int} num - max number of recipes to get
- * @returns {dict} list of recipes with detailed info
+ * @param {String} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines)
+ * @param {Number} num - max number of recipes to get
+ * @returns {Object} list of recipes with detailed info
  */
 async function getRecipesByCuisine(cuisine, num) {
   return new Promise((resolve, reject) => {
@@ -102,9 +102,9 @@ async function getRecipesByCuisine(cuisine, num) {
 
 /**
  * Get recipe by type(can use this to grab a bunch of recipes when user first enters site)
- * @param {string} type - type of meal
- * @param num - max number of recipes to get
- * @returns {dict} list of recipes with detailed info
+ * @param {String} type - type of meal
+ * @param {Number} num - max number of recipes to get
+ * @returns {Object} list of recipes with detailed info
  */
 async function getRecipesByType(type, num) {
   return new Promise((resolve, reject) => {
@@ -129,13 +129,7 @@ async function getRecipesByType(type, num) {
 
 // export functions
 // not sure how to integrate this yet
-
-// let thing = await getAnalyzedInstructions(715569);
-// console.log(thing[0]['steps']);
-
-// console.log(getRecipesByType("lunch",3));
-// console.log(await getRecipesByCuisine("mexican",2));
-// getRecipesByName('potato', 2)
-//  .then((data) => {
-//    console.log(data);
-//  });
+getRecipesByName('potato', 2)
+  .then((data) => {
+    console.log(typeof data);
+  });
