@@ -1,10 +1,10 @@
 // helper functions for Spoonacular API
 // all these functions fetch for most popular recipes
-// TODO: sort by random, look for easy recipe(maxReadyTime)
+// TODO: sort by random?, look for easy recipe(maxReadyTime)?
 
 require('dotenv').config();
-const fetch = require('node-fetch');
-const { API_KEY } = process.env;
+// const fetch = require('node-fetch');// uncomment if using with nodejs
+const { API_KEY } = process.env;// prevent exposing api key
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
@@ -127,12 +127,5 @@ async function getRecipesByType(type, num) {
   });
 }
 
-// export functions
-// not sure how to integrate this yet
-
-
-
-// getRecipesByName('potato', 2)
-//  .then((data) => {
-//    console.log(typeof data);
-//  });
+// export functions and API and HOST variables
+// not sure how to do this
