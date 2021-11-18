@@ -48,7 +48,7 @@ function extractIDs(data) {
 /**
  * Get recipes by keywords(user searching for recipes)
  * @param {Number} num - max number of recipes to get
- * @param {String} query - Keywords to search for.
+ * @param {String} query - Keywords to search for
  * @returns {Object} list of recipes with detailed info
  */
 async function getRecipesByName(query, num) {
@@ -75,7 +75,7 @@ async function getRecipesByName(query, num) {
 
 /**
  * Get recipe by cuisine
- * @param {String} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines)
+ * @param {String} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines
  * @param {Number} num - max number of recipes to get
  * @returns {Object} list of recipes with detailed info
  */
@@ -129,7 +129,10 @@ async function getRecipesByType(type, num) {
 
 // export functions
 // not sure how to integrate this yet
-getRecipesByName('potato', 2)
-  .then((data) => {
-    console.log(typeof data);
-  });
+
+
+
+// getRecipesByName('potato', 2)
+//  .then((data) => {
+//    console.log(typeof data);
+//  });
