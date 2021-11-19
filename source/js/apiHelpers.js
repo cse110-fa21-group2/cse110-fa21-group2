@@ -133,3 +133,33 @@ async function getRecipesByType(type, num) {
 
 // export functions and API and HOST variables
 // not sure how to do this
+
+
+/**
+ * Get recipe by cuisine
+ * @param {String} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines
+ * @param {Number} num - max number of recipes to get
+ * @param {String} sort - any Recipe Sorting Options here https://spoonacular.com/food-api/docs#Recipe-Sorting-Options
+ * @returns {Object} list of recipes with detailed info
+ */
+// eslint-disable-next-line no-unused-vars
+async function getRecipesByCuisine(cuisine, num, sort) {
+  return new Promise((resolve, reject) => {
+    fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=${sort}`, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': HOST,
+        'x-rapidapi-key': API_KEY,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const ids = extractIDs(data);
+        resolve(getDetailedRecipeInfoBulk(ids));
+      })
+      .catch((err) => {
+        console.log('Error in searching for recipes by cuisine.');
+        reject(err);
+      });
+  });
+}
