@@ -29,39 +29,110 @@
       </nav>
     <main>
         <section id="header">
+            <button>Return</button>
 
-            <div class="recipe-favorite-button">
-                <!-- Like/Unlike recipe -->
+            <div class="title-edit">
+                <p class = "title">RecipeName</p>
+                <button>Edit</button>
             </div>
 
-            <p class = "title">
-                <!--Name of the Recipe to be populated by JS -->
-                <h1>recipeName</h1>
-            </p>
+            <div class="rating-favorite">
+                <div class="rating">
+                    <img src="5-star.svg" class="rating" alt="autopopulated by script">
+                    <ul class="rating-stats">
+                        <li class="rating-stats">
+                            4.65 stars
+                            <span class="divider"></span>
+                        </li>
+                        <li class="rating-stats">
+                            55 reviews
+                        </li>
+                    </ul>
+                </div>
+                <button style="background-color: pink">Save Recipe</button>
+            </div>
 
-            <!-- Image of recipe -->
-            <img src="" class="main-recipe-image" alt="autopopulated by script">
+            <img src="image.webp" class="main-recipe-image" alt="autopopulated by script">
         
             <div class="recipe-description-wrapper">
-                <!-- Short blurb about recipe -->  
-            </div>
-        
-            <div class="quick-facts-wrapper">
-                <!-- QuickFacts.  Added via js similar to in Lab 6  -->
+                <p class="description">
+                    This chicken salad comes together fast using rotisserie chicken breasts. The herbs, along with the pecans, help to make this chicken salad flavorful. Serve on top of toasted croissants, or butter lettuce.
+                </p>
             </div>
         </section>
 
-        <div class="ingredients-list-wrapper">
-            <!-- Ingredients list. Added via js similar to in Lab 6 -->
-        </div>
+        <section id="sub-header">
+            <div class="sub-header">
+                <div class="ingredients">
+                    <p class="subtitle">Ingredients</p>
+                    <ul class="ingredients">
+                        <li class="item">1/2 cup mayonnaise</li>
+                        <li class="item">1/2 cup plain Greek yogurt</li>
+                        <li class="item">2 teaspoons white wine vinegar</li>
+                        <li class="item">1/2 teaspoon garlic powder</li>
+                        <li class="item">1/4 teaspoon dried thyme</li>
+                        <li class="item">2 cups chopped cooked chicken</li>
+                        <li class="item">2 stalks celery, sliced</li>
+                        <li class="item">1/2 cup mayonnaise</li>
+                        <li class="item">1/2 cup plain Greek yogurt</li>
+                        <li class="item">2 teaspoons white wine vinegar</li>
+                        <li class="item">1/2 teaspoon garlic powder</li>
+                        <li class="item">1/4 teaspoon dried thyme</li>
+                        <li class="item">2 cups chopped cooked chicken</li>
+                        <li class="item">2 stalks celery, sliced</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sub-header">
+                <div class="quick-facts">
+                    <p class="subtitle">Quick Facts</p>
+                        <ul class="facts">
+                            <li class="item">Prep: 20 minutes</li>
+                            <li class="item">Cook: N/A</li>
+                            <li class="item">Total: 20 minutes</li>
+                            <li class="item">Yield: 4 servings</li>
+                    </ul>
+                </div>
+                <div class="measurements">
+                    <p class="subtitle" style="margin-bottom: 1rem">Measurements</p>
+                    <button style="width: 100%;display: block;margin: auto;">Units: Imperial</button>
+                    <div class="serving-adjust" style="width: 100%;margin: auto;">
+                        <button style="width: 100%;margin-left: auto">-</button>
+                        <div class="serving-size" style="margin-top: 1rem; margin-bottom: 1rem; margin-left: 2rem; margin-right: 2rem">4</div>
+                        <button style="width: 100%;margin-right: auto;">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="instructions-wrapper">
-            <!-- Instructions. Added via js similar to in Lab 6  -->
-        </div>
+        <section id="body">
+            <div class="sub-body">
+                <p class="subtitle">Steps</p>
+                <ol class="steps">
+                    <li class="steps">
+                        Mix mayonnaise, Greek yogurt, vinegar, garlic powder, thyme, and maple pepper together in a bowl until well combined. Add chicken, celery, pecans, and red onion; stir well to incorporate.
+                    </li>
+                    <li class="steps">
+                        Serve immediately or refrigerate for up to 3 days.
+                    </li>
+                </ol>
+            </div>
 
-        <section id="footer">
-            <div class="nutrition-wrapper">
-                <!-- Nutrition information -->
+        </section>
+
+        <section id="body">
+            <div class="sub-body">
+                <p class="subtitle">Videos</p>
+                <!-- Include videos if any :D -->
+            </div>
+
+        </section>
+
+        <section id="body">
+            <div class="sub-body">
+                <p class="subtitle">Nutrition Facts</p>
+                <p>Per Serving: 458 calories; protein 20.2g; carbohydrates 4.6g; fat 40.3g; cholesterol 70.7mg; sodium 236mg.</p>
+                <button>Full Nutrition</button>
             </div>
         
             <div class="recipe-tags-wrapper">
