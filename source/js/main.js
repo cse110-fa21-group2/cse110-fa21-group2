@@ -51,7 +51,7 @@ async function init() {
   let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
   const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
   for (let i = 0; i < categoryNames.length; i++) {
-    if (!(categoryNames[i] in storageCategoryData) 
+    if (!(categoryNames[i] in storageCategoryData)
         || storageCategoryData[categoryNames[i]].length < 10) {
         // fetch from api for (categoryNames[i], 10)
        const fetchedData = [];
@@ -80,7 +80,7 @@ function prepRecipeForClick(rec, recPageName) {
 
 /**
  * Generates the <recipe-card> elements from fetched recipes and appends them to page
- * @param storageCategoryData a JSON Object
+ * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
  */
 function createExploreRecipeCards(storageCategoryData) {
 
