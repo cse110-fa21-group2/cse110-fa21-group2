@@ -35,20 +35,21 @@
 
 /**
  *
- * @returns recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
+ * @return recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
  */
 export function getAllCategoryRecipeId() {
-  return JSON.parse(localStorage.getItem("categories"));
+  return JSON.parse(localStorage.getItem('categories'));
 }
 
 /**
- *
- * @returns recipe in categories {category1:[recipe json],category2:[recipe json]}
+ * Gets all recipes sorted by categories where key=category and value=recipeJSON
+ * @return Object recipe in categories {category1:[recipe json],category2:[recipe json]}
  */
 export function getAllCategoryRecipe() {
   const categoryId = getAllCategoryRecipeId();
+  // eslint-disable-next-line no-use-before-define
   const recipes = getAllRecipes();
-  let output = {};
+  const output = {};
   if (categoryId == null || recipes == null) {
     return null;
   }
@@ -66,7 +67,7 @@ export function getAllCategoryRecipe() {
  * @returns recipe id in saved lists {list1:[recipe ids],list2:[recipe ids]}
  */
 export function getAllSavedRecipeId() {
-  return JSON.parse(localStorage.getItem("savedLists"));
+  return JSON.parse(localStorage.getItem('savedLists'));
 }
 
 /**
@@ -75,8 +76,9 @@ export function getAllSavedRecipeId() {
  */
 export function getAllSavedRecipe() {
   const savedId = getAllSavedRecipeId();
+  // eslint-disable-next-line no-use-before-define
   const recipes = getAllRecipes();
-  let output = {};
+  const output = {};
   if (savedId == null || recipes == null) {
     return null;
   }
@@ -94,7 +96,7 @@ export function getAllSavedRecipe() {
  * @returns all recipes {uid:recipe json,uid:recipe json}
  */
 export function getAllRecipes() {
-  return JSON.parse(localStorage.getItem("recipeData"));
+  return JSON.parse(localStorage.getItem('recipeData'));
 }
 
 /**

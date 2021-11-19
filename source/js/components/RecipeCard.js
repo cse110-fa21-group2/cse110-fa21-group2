@@ -6,6 +6,7 @@ class RecipeCard extends HTMLElement {
   }
 
   set data(data) {
+    // TODO: update info based on json data
     this.json = data;
 
     const styleElem = document.createElement('style');

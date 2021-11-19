@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 // helper functions for Spoonacular API
 // all these functions fetch for most popular recipes
 // TODO: sort by random?, look for easy recipe(maxReadyTime)?
 
+// eslint-disable-next-line import/no-unresolved
 require('dotenv').config();
 // const fetch = require('node-fetch');// uncomment if using with nodejs
 const { API_KEY } = process.env;// prevent exposing api key
@@ -51,6 +53,7 @@ function extractIDs(data) {
  * @param {String} query - Keywords to search for
  * @returns {Object} list of recipes with detailed info
  */
+// eslint-disable-next-line no-unused-vars
 async function getRecipesByName(query, num) {
   return new Promise((resolve, reject) => {
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
@@ -79,6 +82,7 @@ async function getRecipesByName(query, num) {
  * @param {Number} num - max number of recipes to get
  * @returns {Object} list of recipes with detailed info
  */
+// eslint-disable-next-line no-unused-vars
 async function getRecipesByCuisine(cuisine, num) {
   return new Promise((resolve, reject) => {
     fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=popularity`, {

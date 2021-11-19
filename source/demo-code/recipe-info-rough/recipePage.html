@@ -1,29 +1,38 @@
-<!DOCTYPE html> 
+
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>
-        <!-- Recipe Name and ID (to be used in Router Navigation as per Lab 7) -->
-    </title> 
-    <meta name = "" content = "">
-    <!-- TODO What goes in the meta tags? -->
-
-    <link>
-        <!-- Stylesheet -->
-    </link>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./recipe-page.css">
+    <title>Document</title>
 </head>
-
 <body>
-
-    <!-- Search Bar/Home Navigation -->
-
+    <nav>
+        <div class="nav-logo">
+          <img src="./images/pot.svg" alt="" class="nav-icon">
+          <span class="nav-title">Recipe Book</span>
+        </div>
+        <!-- TODO: Call Router -->
+        <a href="./landing.html">Home</a>
+        <a href="./explore.html">Explore</a>
+        <a href="./saved-recipes.html">Saved Recipes</a>
+        <!-- TODO: Search bar should call Router and display search results, fetch results -->
+        <form action="./search-results.html" class="search-bar">
+          <input type="text" name="" id="" placeholder="Search recipes">
+          <button type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </nav>
     <main>
-
         <section id="header">
+
             <div class="recipe-favorite-button">
                 <!-- Like/Unlike recipe -->
             </div>
-            
+
             <p class = "title">
                 <!--Name of the Recipe to be populated by JS -->
                 <h1>recipeName</h1>
@@ -67,8 +76,5 @@
             </div>
         </section>
     </main>
-
 </body>
-
-
 </html>

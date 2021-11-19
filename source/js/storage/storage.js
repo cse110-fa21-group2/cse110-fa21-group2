@@ -1,3 +1,6 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable dot-notation */
+/* eslint-disable no-plusplus */
 // localStorage = {
 //   categories: { // Used to populate explore page (only ids to reduce storage size)
 //       "breakfast": [
@@ -40,13 +43,13 @@
  */
 export function storeRecipeData(category, recipeArray) {
   try {
-    let allData = JSON.parse(localStorage.getItem("recipeData"));
+    let allData = JSON.parse(localStorage.getItem('recipeData'));
     if (allData == null) {
       allData = {};
     }
 
     // store recipe
-    let allRecipeId = [];
+    const allRecipeId = [];
     for (let i = 0; i < recipeArray.length; i++) {
       const uid = recipeArray[i]['id'];
       allRecipeId.push(uid);
@@ -54,7 +57,7 @@ export function storeRecipeData(category, recipeArray) {
     }
 
     // add to category list
-    let catData = JSON.parse(localStorage.getItem("categories"));
+    let catData = JSON.parse(localStorage.getItem('categories'));
     if (catData == null) {
       catData = {};
     }
@@ -63,13 +66,13 @@ export function storeRecipeData(category, recipeArray) {
     }
 
     allRecipeId.forEach((rid) => {
-      if (!catData[category].includes(rid)){
+      if (!catData[category].includes(rid)) {
         catData[category].push(rid);
       }
     });
 
-    localStorage.setItem("categories", JSON.stringify(catData));
-    localStorage.setItem("recipeData", JSON.stringify(allData));
+    localStorage.setItem('categories', JSON.stringify(catData));
+    localStorage.setItem('recipeData', JSON.stringify(allData));
   } catch (e) {
     // storage might be full
     console.log(e);
@@ -83,7 +86,7 @@ export function storeRecipeData(category, recipeArray) {
  */
 export function saveRecipeToList(listName, recipeId) {
   try {
-    let listData = JSON.parse(localStorage.getItem("savedLists"));
+    let listData = JSON.parse(localStorage.getItem('savedLists'));
 
     if (listData == null) {
       listData = {};
@@ -97,7 +100,7 @@ export function saveRecipeToList(listName, recipeId) {
       listData[listName].push(recipeId);
     }
 
-    localStorage.setItem("savedLists", JSON.stringify(listData));
+    localStorage.setItem('savedLists', JSON.stringify(listData));
   } catch (e) {
     console.error(e);
   }
@@ -110,10 +113,10 @@ export function saveRecipeToList(listName, recipeId) {
  */
 export function removeRecipeFromList(listName, recipeId) {
   try {
-    let listData = JSON.parse(localStorage.getItem("savedLists"));
+    const listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData != null && listName in listData) {
       listData[listName] = listData[listName].filter((id) => id != recipeId);
-      localStorage.setItem("savedLists", JSON.stringify(listData));
+      localStorage.setItem('savedLists', JSON.stringify(listData));
     }
   } catch (e) {
     console.error(e);
@@ -126,16 +129,16 @@ export function removeRecipeFromList(listName, recipeId) {
  */
 export function createList(listName) {
   try {
-    let listData = JSON.parse(localStorage.getItem("savedLists"));
+    let listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData == null) {
-      listData = {}
-      listData[listName] = []
-      localStorage.setItem("savedLists", JSON.stringify(listData));
-    } else {
-      if (!(listName in listData)) {
-        listData[listName] = [];
-        localStorage.setItem("savedLists", JSON.stringify(listData));
-      }
+      listData = {};
+      listData[listName] = [];
+      localStorage.setItem('savedLists', JSON.stringify(listData));
+    } else if (!(listName in listData)) {
+      // if (!(listName in listData)) {
+      listData[listName] = [];
+      localStorage.setItem('savedLists', JSON.stringify(listData));
+      // }
     }
   } catch (e) {
     console.error(e);
@@ -148,10 +151,10 @@ export function createList(listName) {
  */
 export function deleteList(listName) {
   try {
-    let listData = JSON.parse(localStorage.getItem("savedLists"));
+    const listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData != null && listName in listData) {
       delete listData[listName];
-      localStorage.setItem("savedLists", JSON.stringify(listData));
+      localStorage.setItem('savedLists', JSON.stringify(listData));
     }
   } catch (e) {
     console.error(e);
