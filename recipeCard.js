@@ -156,7 +156,7 @@ class RecipeCard extends HTMLElement {
   
   customElements.define('recipe-card', RecipeCard);
 
-// Misha/Laurence added:
+
 
 // from lab 7:
 function searchForKey(object, key) {
