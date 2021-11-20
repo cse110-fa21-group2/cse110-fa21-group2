@@ -58,6 +58,14 @@ button {
   text-decoration: none;
 }
 
+.back-btn {
+  background-color: #f1f7f7;
+}
+
+.org-btn {
+  background-color: #fff0d4;
+}
+
 /* header CSS style */
 
 div.title-edit-wrapper {
