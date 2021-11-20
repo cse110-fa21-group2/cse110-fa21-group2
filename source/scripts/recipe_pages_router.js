@@ -40,6 +40,12 @@
        * router instance using the 'this' keyword. Substitute 'home' for the variable
        * page
        */
+      
+      console.log("page:");
+      console.log(page);
+      console.log("type of func added:");
+      console.log(typeof pageFunc);
+      
       this[page] = pageFunc;
     }
   
@@ -75,9 +81,17 @@
       // 1.
       console.log("number of pages/properties of this: " + Object.keys(this).length);
       console.log("this's keys:");
+      console.log("this:");
+      console.log(this);
       console.log(Object.keys(this));
       console.log("Requested page's function value: " + this[page]);
       let func = this[page];
+      console.log("type of func:");
+      console.log(func);
+
+      // testing:
+      func();
+
       // page doesn't exist
       if(typeof this[page] != "function") { // note to self that checking if this[page] == undefined returns true even if the function this[page] is defined
         console.log('ERROR note to self: requested function for page: ', page, ' does not exist');

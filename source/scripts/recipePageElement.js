@@ -234,15 +234,15 @@ class RecipeExpand extends HTMLElement {
     <!-- Recipe Website Header -->
     <nav>
       <div class="nav-logo">
-        <img src="../../images/pot.svg" alt="" class="nav-icon">
+        <--! img src="" alt="" class="nav-icon" -->
         <span class="nav-title">Recipe Book</span>
       </div>
       <!-- TODO: Call Router -->
-        <a href="./landing.html">Home</a>
-        <a href="./explore.html">Explore</a>
-        <a href="./saved-recipes.html">Saved Recipes</a>
+        <a href="">Home</a>
+        <a href="">Explore</a>
+        <a href="">Saved Recipes</a>
       <!-- TODO: Search bar should call Router and display search results, fetch results -->
-      <form action="./search-results.html" class="search-bar">
+      <form action="" class="search-bar">
         <input type="text" name="" id="" placeholder="Search recipes">
         <button type="submit">
             <i class="fa fa-search"></i>
@@ -256,14 +256,14 @@ class RecipeExpand extends HTMLElement {
         <button> Return </button>
 
         <div class="title-edit">
-          <p class = "title"> </p>
+          <p class="title"> </p>
           <button> Edit </button>
         </div>
 
         <!-- Rating Info: -->
         <div class="rating-favorite">
           <div class = "rating">
-            <img src="5-star.svg" class="rating" alt="autpopulated by script">
+            <!-- img src="" class="rating" alt="autpopulated by script" -->
             <ul class="rating-states">
               <li class="rating-stats">
                 <!-- FILL IN WITH RATING STATS -->
@@ -344,7 +344,11 @@ class RecipeExpand extends HTMLElement {
       `;
   
       // Append elements to the shadow root
-      this.shadowRoot.append(styles, article);
+      this.shadowRoot.append(styles);
+      this.shadowRoot.append(article);
+
+      console.log("this.shadowRoot after article added:");
+      console.log(this.shadowRoot);
     }
   
     /**
@@ -354,119 +358,122 @@ class RecipeExpand extends HTMLElement {
     set data(data) {
       this.json = data;
   
+      console.log("this.shadowRoot before setting in set data(data):");
+      console.log(this.shadowRoot);
+
       // Reset HTML
       this.shadowRoot.querySelector('article').innerHTML = `
-        <section class='expanded-recipe>
-          <!-- Recipe Website Header -->
-          <nav>
-            <div class="nav-logo">
-              <img src="../../images/pot.svg" alt="" class="nav-icon">
-              <span class="nav-title">Recipe Book</span>
+      <section class='expanded-recipe>
+      <!-- Recipe Website Header -->
+      <nav>
+        <div class="nav-logo">
+          <img src="/source/scripts/images/pot.svg" alt="" class="nav-icon">
+          <span class="nav-title">Recipe Book</span>
+        </div>
+        <!-- TODO: Call Router -->
+          <a href="">Home</a>
+          <a href="">Explore</a>
+          <a href="">Saved Recipes</a>
+        <!-- TODO: Search bar should call Router and display search results, fetch results -->
+        <form action="" class="search-bar">
+          <input type="text" name="" id="" placeholder="Search recipes">
+          <button type="submit">
+              <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </nav>
+      
+      <!-- Recipe Content -->
+      <main>
+        <section id="header">
+          <button> Return </button>
+  
+          <div class="title-edit">
+            <p class="title"> </p>
+            <button> Edit </button>
+          </div>
+  
+          <!-- Rating Info: -->
+          <div class="rating-favorite">
+            <div class = "rating">
+              <img src="/source/images/5-star.svg" class="rating" alt="autpopulated by script">
+              <ul class="rating-states">
+                <li class="rating-stats">
+                  <!-- FILL IN WITH RATING STATS -->
+                  <span class="divider"></span>
+                </li>
+                <li class="rating-stats">
+                  <!-- FILL IN WITH NUMBER OF REVIEWS -->
+                </li>
+              </ul>
             </div>
-            <!-- TODO: Call Router -->
-              <a href="./landing.html">Home</a>
-              <a href="./explore.html">Explore</a>
-              <a href="./saved-recipes.html">Saved Recipes</a>
-            <!-- TODO: Search bar should call Router and display search results, fetch results -->
-            <form action="./search-results.html" class="search-bar">
-              <input type="text" name="" id="" placeholder="Search recipes">
-              <button type="submit">
-                  <i class="fa fa-search"></i>
-              </button>
-            </form>
-          </nav>
-          
-          <!-- Recipe Content -->
-          <main>
-            <section id="header">
-              <button> Return </button>
-
-              <div class="title-edit">
-                <p class = "title"> </p>
-                <button> Edit </buttoin>
-              </div>
-
-              <!-- Rating Info: -->
-              <div class="rating-favorite">
-                <div class = "rating">
-                  <img src="5-star.svg" class="rating" alt="autpopulated by script">
-                  <ul class="rating-states">
-                    <li class="rating-stats">
-                      <!-- FILL IN WITH RATING STATS -->
-                      <span class="divider"></span>
-                    </li>
-                    <li class="rating-stats">
-                      <!-- FILL IN WITH NUMBER OF REVIEWS -->
-                    </li>
-                  </ul>
-                </div>
-                <button style="background-color: pink">Save Recipe</button>
-              </div>
-
-              <!-- Recipe Image: -->
-              <img src="" class="main-recipe-image" alt="autpopulated by script">
-
-              <!-- Recipe Description: -->
-              <div class="recipe-description-wrapper">
-                <p class="description">
-                  <!-- FILL IN WITH RECIPE DESCRIPTION -->
-                </p>
-              </div>
-            </section>
-
-            <!-- **Recipe General Info:** -->
-            <!-- Recipe Ingredients + Measurements + Serving Size --> 
-            <section id="sub-header">
-              <div class="sub-header">
-                <p class="subtitle">Ingredients</p>
-                <ul class="ingredients">
-                  <!-- POPULATE WITH LIST ITEMS (<li>) OF INGREDIENTS -->
-                </ul>
-              </div>
-              <div class="sub-header">
-                <div class="quick-facts">
-                  <p class="subtitle">Quick Facts</p>
-                    <ul class="facts">
-                      <!-- POPULATE WITH LIST ITEMS (<li>) OF QUICK RECIPE INFO/FACTS -->
-                    </ul>
-                </div>
-                <div class="measurements">
-                  <p class="subtitle" style="margin-bottom: 1rem">Measurements</p>
-                  <button style="width: 100%;display: block;margin: auto;">Units: Imperial</button>
-                  <div class="serving-adjust" style="width: 100%;margin: auto;">
-                    <button style="width: 100%;margin-left: auto">-</button>
-                    <div class="serving-size" style="margin-top: 1rem; margin-bottom: 1rem; margin-left: 2rem; margin-right: 2rem">
-                      <!-- POPULATE WITH SERVING SIZE -->
-                    </div>
-                    <button style="width: 100%;margin-right: auto;">+</button>
-                  </div>
-                </div>
-              </div>
-            </section>
-            <!-- Recipe Preparation Instructions --> 
-            <section id="body">
-              <div class="sub-body">
-                <p class="subtitle">Steps</p>
-                <ol class="steps">
-                  <!-- POPULATE WITH LIST  ITEMS (<li>) of preparation steps
-                </ol>
-              </div>
-            </section>
-
-            <!-- SKIPPED VIDEO PART -->
-
-            <!-- Recipe Nutrition Info -->
-            <section id="body">
-              <div class="sub-body">
-                <p class="subtitle">Nutrition Facts</p>
-                <!-- POPULATE BELOW p-tag WITH NUTRITION FACTS>
-                <button>Full Nutrition</button>
-
-                <!-- SKIPPED THE EXTRA STUFF HERE -->
-                
-            </section>
-          </main>
+            <button style="background-color: pink">Save Recipe</button>
+          </div>
+  
+          <!-- Recipe Image: -->
+          <img src="" class="main-recipe-image" alt="autpopulated by script">
+  
+          <!-- Recipe Description: -->
+          <div class="recipe-description-wrapper">
+            <p class="description">
+              <!-- FILL IN WITH RECIPE DESCRIPTION -->
+            </p>
+          </div>
         </section>
+  
+        <!-- **Recipe General Info:** -->
+        <!-- Recipe Ingredients + Measurements + Serving Size --> 
+        <section id="sub-header">
+          <div class="sub-header">
+            <p class="subtitle">Ingredients</p>
+            <ul class="ingredients">
+              <!-- POPULATE WITH LIST ITEMS (<li>) OF INGREDIENTS -->
+            </ul>
+          </div>
+          <div class="sub-header">
+            <div class="quick-facts">
+              <p class="subtitle">Quick Facts</p>
+                <ul class="facts">
+                  <!-- POPULATE WITH LIST ITEMS (<li>) OF QUICK RECIPE INFO/FACTS -->
+                </ul>
+            </div>
+            <div class="measurements">
+              <p class="subtitle" style="margin-bottom: 1rem">Measurements</p>
+              <button style="width: 100%;display: block;margin: auto;">Units: Imperial</button>
+              <div class="serving-adjust" style="width: 100%;margin: auto;">
+                <button style="width: 100%;margin-left: auto">-</button>
+                <div class="serving-size" style="margin-top: 1rem; margin-bottom: 1rem; margin-left: 2rem; margin-right: 2rem">
+                  <!-- POPULATE WITH SERVING SIZE -->
+                </div>
+                <button style="width: 100%;margin-right: auto;">+</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Recipe Preparation Instructions --> 
+        <section id="body">
+          <div class="sub-body">
+            <p class="subtitle">Steps</p>
+            <ol class="steps">
+              <!-- POPULATE WITH LIST  ITEMS (<li>) of preparation steps
+            </ol>
+          </div>
+        </section>
+  
+        <!-- SKIPPED VIDEO PART -->
+  
+        <!-- Recipe Nutrition Info -->
+        <section id="body">
+          <div class="sub-body">
+            <p class="subtitle">Nutrition Facts</p>
+            <!-- POPULATE BELOW p-tag WITH NUTRITION FACTS>
+            <button>Full Nutrition</button>
+  
+            <!-- SKIPPED THE EXTRA STUFF HERE -->
+            
+        </section>
+      </main>
+    </section>
       `;
 
       // Assume we're passed a single recipe as data
@@ -474,7 +481,16 @@ class RecipeExpand extends HTMLElement {
       // Now start setting the data/properties of the html
       // after having declared its skeleton above:
 
-  
+
+    
+      console.log("testing this.shadowRoot.querySelector():");
+      console.log(this.shadowRoot.querySelector("p"));
+
+      console.log("this.shadowRoot.querySelector('article').innerHTML:");
+      console.log(this.shadowRoot.querySelector('article').innerHTML);
+      console.log(this.shadowRoot);
+
+
       // Set Title
       const title = getTitle(data).toUpperCase();
       this.shadowRoot.querySelector('div > p.title').innerHTML = title;
