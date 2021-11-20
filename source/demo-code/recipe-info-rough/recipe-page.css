@@ -48,54 +48,54 @@ main {
 /* generic button CSS style */
 
 button {
-  background-color: #ffffff;
-  border: 1px solid rgb(0, 0, 0);
-  color: rgb(0, 0, 0);
+  border: 1px solid rgb(0 0 0);
+  color: rgb(0 0 0);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
   padding: 5px 10px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  cursor: pointer;
 }
 
 /* header CSS style */
 
 div.title-edit-wrapper {
-  display: flex;
-  justify-content: space-between;
-  height: 2rem;
   align-items: center;
+  display: flex;
+  height: 2rem;
+  justify-content: space-between;
   margin-top: 1rem;
 }
 
 div.rating-favorite-wrapper {
-  display: flex;
-  justify-content: space-between;
-  height: 2rem;
   align-items: center;
+  display: flex;
+  height: 2rem;
+  justify-content: space-between;
   margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
 div.rating {
-  display: inline-flex;
   align-items: center;
+  display: inline-flex;
 }
 
 .divider {
+  align-items: center;
+  background: rgb(0 0 0);
   display: inline-block;
   height: 1.5rem;
-  width: 1px;
-  background: rgb(0, 0, 0);
-  margin-right: 1rem;
   margin-left: 1rem;
-  align-items: center;
+  margin-right: 1rem;
+  width: 1px;
 }
 
 div.recipe-description-wrapper {
-  margin-top: .5rem;
-  margin-bottom: .5rem;
-  outline: 1px solid rgb(0, 0, 0);
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  outline: 1px solid rgb(0 0 0);
   padding: 2rem;
 }
 
@@ -103,26 +103,27 @@ div.recipe-description-wrapper {
 
 #sub-header {
   display: flex;
-  outline: 1px solid rgb(0, 0, 0);
-  margin-top: .75rem;
-  padding: .5rem;
+  margin-top: 0.75rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 0.5rem;
 }
 
-div.sub-header{
-  padding: .5rem;
-  margin-top: .5rem;
-  margin-bottom: .5rem;
+div.sub-heade {
   display: grid;
-  outline: 0px solid rgb(0, 0, 0);
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  outline: 0 solid rgb(0 0 0);
+  padding: 0.5rem;
   width: 100%;
 }
 
 div.ingredients-wrapper {
-  border-right: 1px solid rgb(0, 0, 0);
+  border-right: 1px solid rgb(0 0 0);
+  overflow: scroll;
 }
 
 div.quick-facts-wrapper {
-  border-bottom: 1px solid rgb(0, 0, 0);
+  border-bottom: 1px solid rgb(0 0 0);
 }
 
 div.measurements-wrapper {
@@ -130,53 +131,53 @@ div.measurements-wrapper {
 }
 
 div.serving-adjust {
-  display: flex;
   align-items: center;
+  display: flex;
   margin: 1rem;
 }
 
 /* body CSS style */
 
-div.steps-wrapper{
-  padding: 1rem;
-  margin-top: 1.25rem;
-  margin-bottom: .5rem;
+div.steps-wrapper {
   display: grid;
-  outline: 1px solid rgb(0, 0, 0);
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  overflow: scroll;
+  padding: 1rem;
 }
 
-div.videos-wrapper{
-  padding: 1rem;
-  margin-top: 1.25rem;
-  margin-bottom: .5rem;
+div.videos-wrapper {
   display: grid;
-  outline: 1px solid rgb(0, 0, 0);
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 1rem;
 }
 
-div.nutrition-wrapper{
-  padding: 1rem;
-  margin-top: 1.25rem;
-  margin-bottom: .5rem;
+div.nutrition-wrapper {
   display: grid;
-  outline: 1px solid rgb(0, 0, 0);
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 1rem;
 }
 
 /* image CSS style */
 
 img.rating {
-  height: 1rem;
-  display:flex;
   align-items: center;
-
+  display: flex;
+  height: 1rem;
 }
 
-img.main-recipe-image{
-  object-fit: cover;
+img.main-recipe-image {
   height: auto;
+  margin: 0;
   max-height: 27rem;
+  object-fit: cover;
+  outline: 1px solid rgb(0 0 0);
   width: 100%;
-  outline: 1px solid rgb(0, 0, 0);
-  margin: 0rem;
 }
 
 /* text CSS style */
@@ -192,55 +193,55 @@ p.title {
 
 p.subtitle {
   font-size: 20px;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   text-decoration: underline;
   text-decoration-color: gold;
+  text-decoration-thickness: 3px;
+  text-underline-position: under;
 }
 
 p.description {
   font-size: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 p.quick-fact {
-  padding-left: 1.75rem;
   margin-bottom: 1rem;
+  padding-left: 1.75rem;
 }
 
 p.step {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* list CSS style */
 
-ul{
+ul {
   padding-left: 1rem;
   padding-right: 2rem;
 }
 
 ul.rating-stats {
+  align-items: center;
   display: flex;
   padding-left: 1rem;
-  align-items: center;
-
 }
 
 li.rating-stats {
-  display: flex;
-  margin: 0px;
-  padding: 0px;
   align-items: center;
-  color: rgb(121, 121, 121);
+  color: rgb(121 121 121);
+  display: flex;
   font-size: 14px;
-
+  margin: 0;
+  padding: 0;
 }
 
 li.item {
-  margin-bottom: 1rem;
   list-style: none;
+  margin-bottom: 1rem;
 }
 
 li.steps {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
