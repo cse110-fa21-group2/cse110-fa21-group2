@@ -471,18 +471,77 @@ class RecipeExpand extends HTMLElement {
 
       // Assume we're passed a single recipe as data
 
+      // Now start setting the data/properties of the html
+      // after having declared its skeleton above:
 
   
       // Set Title
       const title = getTitle(data).toUpperCase();
-      this.shadowRoot.querySelector('header > h1').innerHTML = title;
+      this.shadowRoot.querySelector('div > p.title').innerHTML = title;
   
       // Set the Servings yield
-      const servingsYield = getYield(data);
-      this.shadowRoot.querySelector('.meta--yield').innerHTML = servingsYield;
-  
-      // Set the total time
-      const totalTime = convertTime(searchForKey(data, 'totalTime'));
+      //const servingsYield = getYield(data);
+      // - Sets the serving size:
+      // this.shadowRoot.querySelector('ul > li.rating-stats').innerHTML = "Servings: " + numServings;
+      // 
+      const ratingLiArr = this.shadowRoot.querySelectorAll('ul > li.rating-stats');
+      ratingLiArr[0].innerHTML = getRatingStat(data) + "<span class='divider'></span>";
+      ratingLiArr[1].innerHTML = getNumLikes(data) + " likes.";
+
+      // Set image:
+      const recImg = this.shadowRoot.querySelector("section#header > img");
+      const recImgSrc = getImg(data);
+      recImg.setAttribute("src", recImgSrc);
+      recImg.setAttribute("alt", title); // set alt text for rec image to rec's title
+
+      // Set descriptoin:
+      const descrEl = this.shadowRoot.querySelector("div > p.description");
+      const descr = getSummary(data);
+      descrEl.innerHTML = descr;
+
+      // Set/create ingredients list
+      // (create list items, <li>'s, for individual ingredients
+      // and their amounts):
+      const ingUlEl = this.shadowRoot.querySelector("div > ul.ingredients");
+      const ingredArr = getIngredArray(data); // array of ingredients 
+      for(let i = 0; i < ingredArr.length; i++) {
+        let ingredListItem = document.createElement("li");
+        ingredListItem.setAttribute("class", "item");
+        ingredListItem.innerHTML = ingredArr[i];
+        ingUlEl.appendChild(ingredListItem);
+      }
+
+      // Set/create quick facts list
+      // (create list items, <li>'s, for individual quick facts
+      // and their amounts):
+      const qfUlEl = this.shadowRoot.querySelector("p.subtitle > ul.facts"); // qf list <ul>
+      const qfArr = this.getQuickFactsArr; // get quick facts array
+      for(let i = 0; i < qfArr.length; i++) {
+        let qfListItem = document.createElement("li");
+        qfListItem.setAttribute("class", "item");
+        qfListItem.innerHTML = qfArr[i];
+        qfUlEl.appendChild(qfListItem);
+      }
+      
+      // Set/create steps list
+      // (create list items, <li>'s, for individual steps):
+      const stepOlEl = document.querySelector('div.steps-wrapper > ol.steps'); // step list <ol>
+      const stepsArr = this.getRecInstrucitonsArr;
+      for(let i = 0; i < stepsArr.length; i++) {
+        let stepListItem = document.createElement("li");
+        stepListItem.setAttribute("class", "steps");
+        stepListItem.innerHTML = stepsArr[i];
+        stepOlEl.appendChild(stepListItem);
+      }
+
+
+      
+
+    /* 
+      // Set the total time (time is returned in minutes, as is stored
+      // as total number of minutes in .JSON file):
+      // const totalTime = convertTime(searchForKey(data, 'totalTime'));
+      const recTime = getRecTime(data);
       this.shadowRoot.querySelector('.meta--total-time').innerHTML = totalTime;
   
       // Set Categories
@@ -536,17 +595,19 @@ class RecipeExpand extends HTMLElement {
         this.shadowRoot.querySelector('.section--instructions > ol').append(listItem);
       });
     }
-  
+    */ 
     /**
      * Returns the object of the currect recipe being used.
      */
+    } 
+
     get data() {
       return this.json;
     }
-  }
+  } // end of class
   customElements.define('recipe-expand', RecipeExpand);
 
- // from lab 7:
+ // searchForKey() from lab 7:
 function searchForKey(object, key) {
   var value;
   Object.keys(object).some(function (k) {
@@ -583,13 +644,17 @@ function searchForKey(object, key) {
     let ingredListArr = []
     // populate ingredients list (append each time):
     for(let i = 0; i < ingredListLen; i++) {
-      ingredListArr[i] = ingredList[i]("name");
+      let currIngred = ingredList[i];
+      ingredListArr[i] = currIngred["amount"] + " "
+        + currIngred["units"] + " " + currIngred("name");
     }
     return ingredListArr;
   }
 
   // returns ingredients as single
-  // comma-separated string:
+  // comma-separated string
+  // (note that this method returns the ingredients
+  // without their amounts/units; getIngredArr(data) does, however)):
   function getIngredString(data) {
     // an array of ingredient objects:
     let ingredList = searchForKey(data, "extendedIngredients");
@@ -623,7 +688,7 @@ function searchForKey(object, key) {
   }
 
   // returns string of U.S. measurements:
-  function getUSMeasurArray(data) {
+  function getUSMeasurString(data) {
     // an array of ingredient objects:
     let ingredList = searchForKey(data, "extendedIngredients");
     ingredListLen = ingredList.length;
@@ -656,15 +721,97 @@ function searchForKey(object, key) {
     return searchForKey("summary");
   }
 
-  
 
-  function getUSMeasures(data) {
-    return searchForKey(data, )
+  // get quick recipe info/facts as array:
+  /**
+   * This function returns an array of the quick facts in following order of its indices:
+   * 0: readyInMinutes; 1: servings; 2: dishTypes
+   * @param {Object} data assumed to be the single recipe's data
+   */
+  function getQuickFactsArr(data) {
+    // populate array:
+    let arrOfQFacts = [];
+    arrOfQFacts[0] = "Time: " + searchForKey(data, "readyInMinutes");
+    arrOfQFacts[1] = " Servings: " + searchForKey(data, "servings");
+    arrOfQFacts[2] = "Dish Types: " + searchForKey(data, "dishTypes");
+    return arrOfQFacts;
+  }
+
+  // get quick recipe info/facts as string:
+  /**
+   * This function returns an array of the quick facts in following order of its indices:
+   * 0: readyInMinutes; 1: servings; 2: dishTypes
+   * @param {Object} data assumed to be the single recipe's data
+   */
+   function getQuickFactsStr(data) {
+    // populate array:
+    let strOfQFacts = "";
+    strOfQFacts += searchForKey(data, "readyInMinutes") + ", "
+      + searchForKey(data, "servings") + ", "
+      + searchForKey(data, "dishTypes");
+
+    return strOfQFacts;
+  }
+
+  // get serving size:
+  /**
+   * @param {Object} data a single recipe's data 
+   * @returns the serving size of recipe
+   */
+  function getServingSize(data) {
+    return searchForKey(data, "servings");
+  }
+
+  // get recipe prep instructions as array:
+  /**
+   * 
+   * @param {Object} data a single recipe's data 
+   * @returns an array of the recipe instructions in order
+   */
+  function getRecInstructionsArr(data) {
+    let analyInstructs = searchForKey(data, "analyzedInstructions");
+    let steps = analyInstructs["steps"];
+    let arrInstructs = [];
+    // add instructions to arr:
+    for(let i = 0; i < steps.length; i++) {
+      arrInstructs[i] = steps["step"];
+    }
+    return arrInstructs;
+  }
+
+  // get recipe prep instructions as string
+  // (this is already stored in the .JSON format of spoonacular):
+  /**
+   * 
+   * @param {Object} data a single recipe's data 
+   * @returns string of the rec's prep instructons as already stored
+   */
+  function getRecInstructionsStr(data) {
+    return searchForKey(data, "instructions");
+  }
+
+  // gets the preparation time ("readyInMinutes") returned as a string
+  /**
+   * 
+   * @param {Object} data a single recipe's data 
+   * @returns string of prep time ("readyInMinutes"'s value)
+   */
+  function getRecTime(data) {
+    return searchForKey(data, "readyInMinutes");
   }
 
 
+  // **NOTE: NUTRITION FACTS DON'T SEEM TO BE STORED
+  // IN THE .JSON FILES OF SPOONACULAR,
+  // SO NO FUNCTION IS WRITTEN TO POPULATE IT'S
+  // DATA HERE. 
 
 
+
+
+/*
+  **** IGNORE THE BELOW: IT IS UNUSED ********
+*/ 
 
   /**
    * 
