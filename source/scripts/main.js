@@ -203,8 +203,17 @@ function createExploreRecipeCards(storageCategoryData) {
 			prepRecipeForClick(recipeCard, recId);
 
 			// add to html: append to explore section element custom element: 
-			expSecEl.appendChild(recipeCard);
-		
+			// expSecEl.appendChild(recipeCard);
+			// test recipe cards not showing:
+			let recCardWrapperEl = document.querySelector("div.recipe-cards--wrapper");
+			recCardWrapperEl.appendChild(recipeCard);
+			// **Note: so when I do expSecEl.appendChild(recipeCard);, of appending
+			// the recipe cards to a custom html element also, then they won't show/appear
+			// on the webpage, even though their html is there; appending them
+			// to a "standard" html element (here, "div") seems to enable them both
+			// to have their html there but also appear visualyl on the page.
+
+
 			// document.querySelector('recipe-cards--wrapper').appendChild(recipeCard);
 		}
   })   

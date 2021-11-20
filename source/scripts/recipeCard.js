@@ -127,6 +127,7 @@ class RecipeCard extends HTMLElement {
       saveIcon.classList.add('far');
       saveIcon.classList.add('fa-heart');
   
+      /*
       const flipSaved = (element) => {
         if (this.saved) {
           element.children[0].classList.add('far');
@@ -137,8 +138,9 @@ class RecipeCard extends HTMLElement {
         }
         this.saved = !this.saved;
       };
+      */ 
   
-      saveRecipe.addEventListener('onclick', flipSaved);
+      // saveRecipe.addEventListener('onclick', flipSaved);
       saveRecipe.appendChild(saveIcon);
   
       footer.appendChild(viewRecipe);
@@ -176,7 +178,8 @@ return value;
 
 
 function getTitle(data) {
-    return searchForKey(data, "originalName");
+   // return searchForKey(data, "originalName");
+  return data["title"];
 }
 
 // gets img for recipe
