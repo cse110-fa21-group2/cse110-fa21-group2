@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/main.css">
+  <link rel="stylesheet" href="./styles/page-layout.css">
+  <link rel="stylesheet" href="./styles/recipe-card.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="..//favicon.ico" type="image/x-icon">
+	
+	<!-- Web Components -->
+  <script src="./source/scripts/recipeCard.js" type="module"></script>
+  <script src="./source/scripts/recipePageElement.js" type="module"></script>
+	<script src="./source/scripts/exploreSectionRecipes.js" type="module"></script>
+	<script src="./source/scripts/main.js" type="module"></script>
+	<!-- Router:-->
+	<script src="./source/scripts/recipe_pages_router.js" type="module"></script>
+
+  <title>Recipe Book</title>
+</head>
+<body>
+	<!-- Header of website:-->
+	<section class="website-header">
+		<nav>
+			<div class="nav-logo">
+				<img src="./images/pot.svg" alt="" class="nav-icon">
+				<span class="nav-title">Recipe Book</span>
+			</div>
+			<!-- TODO: Call Router -->
+			<a href="./landing.html">Home</a>
+			<a href="./explore.html">Explore</a>
+			<a href="./saved-recipes.html">Saved Recipes</a>
+			<!-- TODO: Search bar should call Router and display search results, fetch results -->
+			<form action="./search-results.html" class="search-bar">
+				<input type="text" name="" id="" placeholder="Search recipes">
+				<button type="submit">
+					<i class="fa fa-search"></i>
+				</button>
+			</form>
+		</nav>
+	</section>
+
+	<!-- Individual Pages/Cards:-->
+  <main>
+
+    <section class="landing">
+      <div class="landing-container">
+        <span class="landing-title">Recipe</span>
+        <br>
+        <span class="landing-title">Book</span>
+        <div class="landing-buttons">
+          <button>Explore</button>
+          <button>Saved Recipes</button>
+        </div>
+      </div>
+    </section>
+
+		<!-- Misha/Laurence added: -->
+    <section class="section--recipe-cards">
+      <div class="recipe-cards--wrapper">
+          <!-- Recipes Added Here -->
+					<explore-rec-section></explore-rec-section>
+      </div>
+    </section>
+    <section class="section--recipe-expand hidden">
+    	<recipe-expand></recipe-expand>
+    </section>
+
+  </main>
+</body>
+</html>
