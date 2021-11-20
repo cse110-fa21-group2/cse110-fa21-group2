@@ -5,7 +5,7 @@
 
 // eslint-disable-next-line import/no-unresolved
 require('dotenv').config();
-// const fetch = require('node-fetch');// uncomment if using with nodejs
+const fetch = require('node-fetch');// uncomment if using with nodejs
 const { API_KEY } = process.env;// prevent exposing api key
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
@@ -40,8 +40,12 @@ async function getDetailedRecipeInfoBulk(ids) {
  */
 function extractIDs(data) {
   const { results } = data;
+  if(!results){
+    return;
+  }
   const ids = [];
   results.forEach((result) => {
+    // TODO: figure out how to check if current id is already in local storage
     ids.push(result.id);
   });
   return ids;
@@ -67,7 +71,12 @@ async function getRecipesByName(query, num) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        resolve(getDetailedRecipeInfoBulk(ids));
+        if(!ids) {
+          resolve([]);
+        }
+        else {
+          resolve(getDetailedRecipeInfoBulk(ids));
+        }
       })
       .catch((err) => {
         console.log('Error in searching for recipes by name.');
@@ -75,6 +84,42 @@ async function getRecipesByName(query, num) {
       });
   });
 }
+
+/**
+ * Get recipes by autocompleting keywords
+ * (Use this if searching by query returned not enough results)
+ * @param {Number} num - max number of recipes to get
+ * @param {String} query - Query to autocomplete
+ * @returns {Object} list of recipes with detailed info
+ */
+// eslint-disable-next-line no-unused-vars
+async function getRecipesByAutocomplete(query, num) {
+  return new Promise((resolve, reject) => {
+    const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
+    fetch(`https://${HOST}/recipes/autocomplete?query=${queryFormatted}&number=${num}`, {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': HOST,
+        'x-rapidapi-key': API_KEY,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const ids = extractIDs(data);
+        if(!ids) {
+          resolve([]);
+        }
+        else {
+          resolve(getDetailedRecipeInfoBulk(ids));
+        }
+      })
+      .catch((err) => {
+        console.log('Error in searching for recipes by autocomplete.');
+        reject(err);
+      });
+  });
+}
+
 
 /**
  * Get recipe by cuisine
@@ -95,7 +140,12 @@ async function getRecipesByCuisine(cuisine, num) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        resolve(getDetailedRecipeInfoBulk(ids));
+        if(!ids) {
+          resolve([]);
+        }
+        else {
+          resolve(getDetailedRecipeInfoBulk(ids));
+        }
       })
       .catch((err) => {
         console.log('Error in searching for recipes by cuisine.');
@@ -122,7 +172,12 @@ async function getRecipesByType(type, num) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        resolve(getDetailedRecipeInfoBulk(ids));
+        if(!ids) {
+          resolve([]);
+        }
+        else {
+          resolve(getDetailedRecipeInfoBulk(ids));
+        }
       })
       .catch((err) => {
         console.log('Error in searching for recipes by type.');
@@ -155,7 +210,12 @@ async function getRecipesByCuisine(cuisine, num, sort) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        resolve(getDetailedRecipeInfoBulk(ids));
+        if(!ids) {
+          resolve([]);
+        }
+        else {
+          resolve(getDetailedRecipeInfoBulk(ids));
+        }
       })
       .catch((err) => {
         console.log('Error in searching for recipes by cuisine.');
@@ -163,3 +223,10 @@ async function getRecipesByCuisine(cuisine, num, sort) {
       });
   });
 }
+
+
+
+getRecipesByAutocomplete("chi", 3)
+  .then((data) => {
+    console.log(data)
+  });
