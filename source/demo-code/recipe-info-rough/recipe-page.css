@@ -119,13 +119,17 @@ div.sub-header {
 
 div.ingredients-wrapper {
   border-right: 1px solid rgb(0 0 0);
+  height: 26pc;
+  overflow: scroll;
 }
 
 div.quick-facts-wrapper {
   border-bottom: 1px solid rgb(0 0 0);
+  height: 13pc;
 }
 
 div.measurements-wrapper {
+  height: 8pc;
   padding-top: 1rem;
 }
 
@@ -139,9 +143,11 @@ div.serving-adjust {
 
 div.steps-wrapper {
   display: grid;
+  height: auto;
   margin-bottom: 0.5rem;
   margin-top: 1.25rem;
   outline: 1px solid rgb(0 0 0);
+  overflow: scroll;
   padding: 1rem;
 }
 
