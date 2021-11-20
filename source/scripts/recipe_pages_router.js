@@ -11,7 +11,7 @@
   *     easily modify the URL without refreshing the page or anything
   */
 
- export class Router {
+ export default class Router {
     static routes = {};
   
     /**

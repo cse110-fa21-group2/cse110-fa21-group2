@@ -494,7 +494,7 @@ class RecipeExpand extends HTMLElement {
       recImg.setAttribute("src", recImgSrc);
       recImg.setAttribute("alt", title); // set alt text for rec image to rec's title
 
-      // Set descriptoin:
+      // Set description:
       const descrEl = this.shadowRoot.querySelector("div > p.description");
       const descr = getSummary(data);
       descrEl.innerHTML = descr;
@@ -817,6 +817,7 @@ function searchForKey(object, key) {
    * 
    * @param {Object} data // assume data is passed as object for single recipe 
    */
+  /*
   function getTitle(data) {
       return searchForKey(data, "originalName");
   }
@@ -850,4 +851,5 @@ function searchForKey(object, key) {
       + searchForKey(data, "unit") + "\n"
       + searchForKey(data, "unit"); 
   }
+*/ 
 
