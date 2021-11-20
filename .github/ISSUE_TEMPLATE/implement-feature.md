@@ -2,7 +2,7 @@
 name: Implement Feature
 about: A core or extra feature we have agreed to implement into the final product
 title: "[IMPLEMENT]"
-labels: todo pre-alpha
+labels: 
 assignees: ''
 
 ---
