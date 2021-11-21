@@ -1085,7 +1085,7 @@
       
     </section>
 
-    <section class="create-recipe-page shown">
+    <section class="create-recipe-page">
       <form class="container">
         <h2 class="create-title">Name:</h2>
         <input
@@ -1119,13 +1119,13 @@
 
             <div class="row ingredient-title">
               <div class="col">
+                <p>Name:</p>
+              </div>
+              <div class="col">
                 <p>Amount:</p>
               </div>
               <div class="col">
                 <p>Unit:</p>
-              </div>
-              <div class="col">
-                <p>Name:</p>
               </div>
             </div>
 
@@ -1133,6 +1133,13 @@
               <div class="row">
                 <div class="col">
                   <input
+                    type="text"
+                    class="form-control recipe-ingredient-name"
+                    placeholder="Name"
+                  />
+                </div>
+                <div class="col">
+                  <input
                     type="number"
                     class="form-control recipe-ingredient-amount"
                     placeholder="Amount"
@@ -1143,13 +1150,6 @@
                     type="text"
                     class="form-control recipe-ingredient-unit"
                     placeholder="Unit"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    class="form-control recipe-ingredient-name"
-                    placeholder="Name"
                   />
                 </div>
               </div>
@@ -1157,6 +1157,13 @@
               <div class="row create-ingredient-fact">
                 <div class="col">
                   <input
+                    type="text"
+                    class="form-control recipe-ingredient-name"
+                    placeholder="Name"
+                  />
+                </div>
+                <div class="col">
+                  <input
                     type="number"
                     class="form-control recipe-ingredient-amount"
                     placeholder="Amount"
@@ -1167,13 +1174,6 @@
                     type="text"
                     class="form-control recipe-ingredient-unit"
                     placeholder="Unit"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    class="form-control recipe-ingredient-name"
-                    placeholder="Name"
                   />
                 </div>
               </div>
@@ -1190,13 +1190,13 @@
           <div class="col-6">
             <h2 class="create-title">Facts:</h2>
 
-            <p class="create-title-fact">Prep Time:</p>
+            <p class="create-title-fact">Prep Time (minutes):</p>
             <input
               type="number"
               class="form-control recipe-preptime"
               placeholder="preptime"
             />
-            <p class="create-title-fact">Cook Time:</p>
+            <p class="create-title-fact">Cook Time (minutes):</p>
             <input
               type="number"
               class="form-control recipe-cooktime"
@@ -1208,11 +1208,13 @@
               class="form-control recipe-image-url"
               placeholder="Url"
             />
-            <p class="create-title-fact">Rating(1-5):</p>
+            <p class="create-title-fact">Rating(0-5):</p>
             <input
               type="number"
               class="form-control recipe-rating"
               placeholder="Rating"
+              min=0
+              max=5
             />
           </div>
         </div>
@@ -1235,13 +1237,13 @@
           </div>
           <div class="add-step-button-wrapper">
             <button type="button" class="btn btn-dark add-step-button">
-              Add More Steps !
+              Add More Steps
             </button>
           </div>
         </div>
         <div class="create-recipe-button-wrapper">
           <button type="button" class="btn btn-dark create-recipe-button">
-            Create Recipe !
+            Create Recipe
           </button>
         </div>
       </form>

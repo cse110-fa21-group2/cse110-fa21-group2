@@ -1,5 +1,5 @@
 import * as storageFuncs from './storage/storage.js';
-function init() {
+async function init() {
   // add a ingredient input row to dom
   let addIngredientButton = document.querySelector(".add-ingredient-button");
   addIngredientButton.addEventListener("click", (e) => {
@@ -35,9 +35,10 @@ function init() {
     ingNameInput.setAttribute("placeholder", "Name");
     ingNameDiv.appendChild(ingNameInput);
 
+    ingRow.appendChild(ingNameDiv);
     ingRow.appendChild(ingAmountDiv);
     ingRow.appendChild(ingUnitDiv);
-    ingRow.appendChild(ingNameDiv);
+
     createIngRoot.appendChild(ingRow);
   });
 

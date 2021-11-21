@@ -1,48 +1,49 @@
-.create-title{
-    padding-top: 20px;
+.create-title {
+  padding-top: 20px;
 }
 
-.create-title-fact{
-    padding-top: 10px;
+.create-title-fact {
+  padding-top: 10px;
 }
 
-.create-ingredient-fact{
-    padding-top: 10px;
+.create-ingredient-fact {
+  padding-top: 10px;
 }
 
-.recipe-step-input{
-    margin-top: 10px;
-
+.recipe-step-input {
+  margin-top: 10px;
 }
 
-.ingredient-title{
-    padding-top: 10px;
+.ingredient-title {
+  padding-top: 10px;
 }
 
-.ingredient-input-list{
-    height: 180px;
-    overflow-y: scroll;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: lightgray;
-    border-width: thin;
-    text-align: center;
+.ingredient-input-list {
+  height: 180px;
+  overflow-y: scroll;
+  text-align: center;
 }
 
-.step-input-list{
-    height: 200px;
-    overflow-y: scroll;
-    border-radius: 10px;
-    border-style: solid;
-    border-color: lightgray;
-    border-width: thin;
+.step-input-list {
+  border-color: lightgray;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: thin;
+  height: 200px;
+  overflow-y: scroll;
 }
 
-.add-ingredient-button-wrapper, .add-step-button-wrapper, .create-recipe-button-wrapper{
-    text-align: center;
-    margin-top: 20px;
+.add-ingredient-button-wrapper,
+.add-step-button-wrapper,
+.create-recipe-button-wrapper {
+  margin-top: 20px;
+  text-align: center;
 }
 
-.add-step-button{
-    margin-top: 20px;
+.add-step-button {
+  margin-top: 20px;
+}
+
+.create-recipe-button {
+  margin-bottom: 20px;
 }
