@@ -10,7 +10,7 @@ class RecipeExpand extends HTMLElement {
   
       // Create styles and root element
       const styles = document.createElement('style');
-      const article = document.createElement('article');
+      // const article = document.createElement('article');
   
       // Fill in styles and root element
       styles.innerHTML = `
@@ -230,15 +230,17 @@ class RecipeExpand extends HTMLElement {
       }`;
       // added <section> to contain html for expanded page:
    
+      let articleEl = document.createElement("article");
+      articleEl.innerHTML = ""; // empty/blank
   
       // Append elements to the shadow root
       this.shadowRoot.append(styles);
-      this.shadowRoot.append(article);
+      this.shadowRoot.append(articleEl);
 
       console.log("this.shadowRoot after article added:");
       console.log(this.shadowRoot);
-      console.log("this.shadowRoot.article after article added:");
-      console.log(this.shadowRoot.querySelector("article"));
+      //console.log("this.shadowRoot.article after article added:");
+      //console.log(this.shadowRoot.querySelector("article"));
     }
   
     /**
@@ -247,6 +249,11 @@ class RecipeExpand extends HTMLElement {
      */
     set data(data) {
       this.json = data;
+
+      // reset page so that it doesn't keep on having
+      // subsequent clicks add to content already there:
+      let articleEl = this.shadowRoot.querySelector("article");
+      articleEl.remove();
   
       console.log("this.shadowRoot before setting in set data(data):");
       console.log(this.shadowRoot);
@@ -263,7 +270,7 @@ class RecipeExpand extends HTMLElement {
 
     // ** Reset HTML:
     // wrapper (article as outermost wrapper of this custom element):
-    let articleEl = document.createElement("article");
+    articleEl = document.createElement("article");
 
     let secEl = "";
     let secElExpRecs = document.createElement("section");
@@ -751,7 +758,7 @@ function searchForKey(object, key) {
 
   // returns recipe short description / summary:
   function getSummary(data) {
-    return searchForKey("summary");
+    return data["summary"];/// searchForKey("summary");
   }
 
 

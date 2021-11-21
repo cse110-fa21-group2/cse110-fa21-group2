@@ -80,15 +80,15 @@ async function init() {
 
 router = new Router(() => {
 	landingPage.classList.remove('hidden');
-	explorePage.classList.add('hidden');
-	savedRecipePage.classList.add('hidden');
-	searchResults.classList.add('hidden');
+	//explorePage.classList.add('hidden');
+	//savedRecipePage.classList.add('hidden');
+	//searchResults.classList.add('hidden');
 
 	// add "shown" to section wrapper for recipe cards:
-	document.querySelector('section--recipecards').classList.add("hidden");
+	document.querySelector('section.section--recipe-cards').classList.remove("hidden");
 
 	// recipeInfoPage.classList.add('hidden');
-	document.querySelector('section--recipe-expand').classList.remove('hidden')
+	document.querySelector('section.section--recipe-expand').classList.add('hidden')
 
 });
 
@@ -112,10 +112,10 @@ async function init() {
   // navigate to search results page
 
   landingPage = document.querySelector('.landing');
-  explorePage = document.querySelector('.explore');
-  savedRecipePage = document.querySelector('.saved-recipes');
-  searchResults = document.querySelector('.search-results');
-  recipeInfoPage = document.querySelector('.recipe-info');
+  //explorePage = document.querySelector('.explore');
+  //savedRecipePage = document.querySelector('.saved-recipes');
+  //searchResults = document.querySelector('.search-results');
+  //recipeInfoPage = document.querySelector('.recipe-info');
   
 
   // Function calls
@@ -148,6 +148,7 @@ async function init() {
   
   const storageSavedData = fetcherFuncs.getAllSavedRecipe();
 	console.log("After storageSavedData fetcherFuncs");
+	bindPopstate();
 }
 
 /**
@@ -169,7 +170,7 @@ function createExploreRecipeCards(storageCategoryData) {
 		console.log(currCatRecIDs);
 		
 		// for each recipe of current category ("breakfast", "lunch", etc.):
-		for (const recId of currCatRecIDs) {
+		for (let recId of currCatRecIDs) {
 			let recipeCard = document.createElement('recipe-card');
 
 			console.log("recId:");
@@ -190,17 +191,24 @@ function createExploreRecipeCards(storageCategoryData) {
 			// recipeCard.data = localStorage['recipeData'][recId]; // assumes recipe is already in local storage:
 
 			// use # + recipe ids as page names for (expanded) recipes
+			recId = storageCategoryData[category][recId]["id"]; // set to ID of recipe
 			const page = '#' + recId; 
+			console.log("page adding:");
+			console.log(page);
 			// adds function for going from: recipe card => expanded recipe card page
 			router.addPage(page, () => {
 				// assume 'hidden' performs opposite of 'shown' from lab 7:
-				document.querySelector('section--recipe-cards').classList.add('hidden');
-				document.querySelector('section--recipe-expand').classList.remove('hidden');
+				console.log("curr page() called by router.");
+				console.log("test retrieving section--recipe-cards element:");
+				console.log(document.querySelector('section.section--recipe-cards'));
+				document.querySelector('section.landing').classList.add("hidden");
+				document.querySelector('section.section--recipe-cards').classList.add('hidden');
+				document.querySelector('section.section--recipe-expand').classList.remove('hidden');
 				document.querySelector('recipe-expand').data = recipeCard.data;
 				
 			});
 			// binds recipeCard for clicking to go to expanded page
-			prepRecipeForClick(recipeCard, recId);
+			prepRecipeForClick(recipeCard, page);
 
 			// add to html: append to explore section element custom element: 
 			// expSecEl.appendChild(recipeCard);
