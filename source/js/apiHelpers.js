@@ -40,8 +40,8 @@ async function getDetailedRecipeInfoBulk(ids) {
  */
 function extractIDs(data) {
   const { results } = data;
-  if(!results){
-    return;
+  if (!results) {
+    return [];
   }
   const ids = [];
   results.forEach((result) => {
@@ -53,15 +53,17 @@ function extractIDs(data) {
 
 /**
  * Get recipes by keywords(user searching for recipes)
- * @param {Number} num - max number of recipes to get
  * @param {String} query - Keywords to search for
+ * @param {Number} num - max number of recipes to get
+ * @param {Number} [offset=0] - number of recipes to skip
+ *  (use random number so we dont get same results everytime)
  * @returns {Object} list of recipes with detailed info
  */
 // eslint-disable-next-line no-unused-vars
-async function getRecipesByName(query, num) {
+async function getRecipesByName(query, num, offset = 0) {
   return new Promise((resolve, reject) => {
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=populatrity`, {
+    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=populatrity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -71,10 +73,9 @@ async function getRecipesByName(query, num) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if(!ids) {
+        if (!ids) {
           resolve([]);
-        }
-        else {
+        } else {
           resolve(getDetailedRecipeInfoBulk(ids));
         }
       })
@@ -105,11 +106,15 @@ async function getRecipesByAutocomplete(query, num) {
     })
       .then((response) => response.json())
       .then((data) => {
-        const ids = extractIDs(data);
-        if(!ids) {
+        if (!data) {
+          console.log('No search results');
           resolve([]);
-        }
-        else {
+        } else {
+          // different format from complex search
+          const ids = [];
+          data.forEach((result) => {
+            ids.push(result.id);
+          });
           resolve(getDetailedRecipeInfoBulk(ids));
         }
       })
@@ -120,17 +125,18 @@ async function getRecipesByAutocomplete(query, num) {
   });
 }
 
-
 /**
  * Get recipe by cuisine
  * @param {String} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines
  * @param {Number} num - max number of recipes to get
+ * @param {Number} [offset=0] - number of recipes to skip
+ *  (use random number so we dont get same results everytime)
  * @returns {Object} list of recipes with detailed info
  */
 // eslint-disable-next-line no-unused-vars
-async function getRecipesByCuisine(cuisine, num) {
+async function getRecipesByCuisine(cuisine, num, offset=0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=popularity`, {
+    fetch(`https://${HOST}/recipes/complexSearch?cuisine=${cuisine}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -140,10 +146,10 @@ async function getRecipesByCuisine(cuisine, num) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if(!ids) {
+        if (!ids) {
+          console.log('No search results');
           resolve([]);
-        }
-        else {
+        } else {
           resolve(getDetailedRecipeInfoBulk(ids));
         }
       })
@@ -158,11 +164,13 @@ async function getRecipesByCuisine(cuisine, num) {
  * Get recipe by type(can use this to grab a bunch of recipes when user first enters site)
  * @param {String} type - type of meal
  * @param {Number} num - max number of recipes to get
+ * @param {Number} [offset=0] - number of recipes to skip
+ *  (use random number so we dont get same results everytime)
  * @returns {Object} list of recipes with detailed info
  */
-async function getRecipesByType(type, num) {
+async function getRecipesByType(type, num, offset=0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity`, {
+    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -172,10 +180,10 @@ async function getRecipesByType(type, num) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if(!ids) {
+        if (!ids) {
+          console.log('No search results');
           resolve([]);
-        }
-        else {
+        } else {
           resolve(getDetailedRecipeInfoBulk(ids));
         }
       })
@@ -186,47 +194,17 @@ async function getRecipesByType(type, num) {
   });
 }
 
-// export functions and API and HOST variables
-// not sure how to do this
+// export functions?
 
 
-/**
- * Get recipe by cuisine
- * @param {String} cuisine - any cuisine specified here https://spoonacular.com/food-api/docs#Cuisines
- * @param {Number} num - max number of recipes to get
- * @param {String} sort - any Recipe Sorting Options here https://spoonacular.com/food-api/docs#Recipe-Sorting-Options
- * @returns {Object} list of recipes with detailed info
- */
-// eslint-disable-next-line no-unused-vars
-async function getRecipesByCuisine(cuisine, num, sort) {
-  return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=${sort}`, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': HOST,
-        'x-rapidapi-key': API_KEY,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const ids = extractIDs(data);
-        if(!ids) {
-          resolve([]);
-        }
-        else {
-          resolve(getDetailedRecipeInfoBulk(ids));
-        }
-      })
-      .catch((err) => {
-        console.log('Error in searching for recipes by cuisine.');
-        reject(err);
-      });
-  });
-}
-
-
-
+/*
 getRecipesByAutocomplete("chi", 3)
   .then((data) => {
     console.log(data)
   });
+
+getRecipesByName('asian', 2, 1)
+  .then((data) => {
+    console.log(data);
+  });
+*/
