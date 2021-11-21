@@ -237,8 +237,8 @@ class RecipeExpand extends HTMLElement {
       this.shadowRoot.append(styles);
       this.shadowRoot.append(articleEl);
 
-      console.log("this.shadowRoot after article added:");
-      console.log(this.shadowRoot);
+      // console.log("this.shadowRoot after article added:");
+      // console.log(this.shadowRoot);
       //console.log("this.shadowRoot.article after article added:");
       //console.log(this.shadowRoot.querySelector("article"));
     }
@@ -255,8 +255,8 @@ class RecipeExpand extends HTMLElement {
       let articleEl = this.shadowRoot.querySelector("article");
       articleEl.remove();
   
-      console.log("this.shadowRoot before setting in set data(data):");
-      console.log(this.shadowRoot);
+      // console.log("this.shadowRoot before setting in set data(data):");
+      // console.log(this.shadowRoot);
 
       // Assume we're passed a single recipe as data
 
@@ -277,6 +277,8 @@ class RecipeExpand extends HTMLElement {
     secElExpRecs.setAttribute("class", "expanded-recipe");
     articleEl.appendChild(secElExpRecs);
 
+    /* // Commented out as don't want to display header twice when
+       // recipe expanded page is shown.
     let navEl = document.createElement("nav");
     navEl.setAttribute("class", "nav-logo");
     secElExpRecs.appendChild(navEl);
@@ -293,6 +295,13 @@ class RecipeExpand extends HTMLElement {
     spanEl.setAttribute("class", "nav-title");
     divEl.appendChild(imgEl);
     divEl.appendChild(spanEl);
+  */ 
+    // as a result of commenting the just-above code:
+    let divEl = document.createElement("div");
+    let imgEl = "";
+    let spanEl = "";
+    let navEl = "";
+    divEl.setAttribute("class", "nav-logo");
 
     let aElHome = document.createElement("a");
     aElHome.setAttribute("href", "LINK_TO_HOME");
@@ -485,19 +494,19 @@ class RecipeExpand extends HTMLElement {
    
 
 
-    console.log("this.shadowRoot.querySelector('article').innerHTML:");
-    console.log(this.shadowRoot.querySelector('article').innerHTML);
-    console.log(this.shadowRoot);
+    //console.log("this.shadowRoot.querySelector('article').innerHTML:");
+    //console.log(this.shadowRoot.querySelector('article').innerHTML);
+    //console.log(this.shadowRoot);
 
-    console.log("testing this.shadowRoot.querySelector():");
-    console.log(this.shadowRoot.querySelector("p"));
+    // console.log("testing this.shadowRoot.querySelector():");
+    // console.log(this.shadowRoot.querySelector("p"));
 
     // Set Title
   //  let pEl = document.createElement("p");
   //  pEl.innerHTML = "Hello";
     this.shadowRoot.querySelector('article').appendChild(pEl);
-    console.log("this.shadowRoot:");
-    console.log(this.shadowRoot);
+    // console.log("this.shadowRoot:");
+    // console.log(this.shadowRoot);
 
 
     const title = getTitle(data).toUpperCase();
@@ -509,8 +518,8 @@ class RecipeExpand extends HTMLElement {
     // this.shadowRoot.querySelector('ul > li.rating-stats').innerHTML = "Servings: " + numServings;
     // 
     const ratingLiArr = this.shadowRoot.querySelectorAll('ul > li.rating-stats');
-    console.log("rating list items returned: ");
-    console.log(ratingLiArr);
+    // console.log("rating list items returned: ");
+    // console.log(ratingLiArr);
     ratingLiArr[0].innerHTML = getRatingStat(data) + "<span class='divider'></span>";
     ratingLiArr[1].innerHTML = getNumLikes(data) + " likes.";
 
@@ -529,14 +538,14 @@ class RecipeExpand extends HTMLElement {
     // (create list items, <li>'s, for individual ingredients
     // and their amounts):
     const ingUlEl = this.shadowRoot.querySelector("div > ul.ingredients");
-    console.log("retrieving ingUlEl: " + ingUlEl);
+    // console.log("retrieving ingUlEl: " + ingUlEl);
     const ingredArr = getIngredArray(data); // array of ingredients 
-    console.log("ingredArr: " + ingredArr);
+    // console.log("ingredArr: " + ingredArr);
     for(let i = 0; i < ingredArr.length; i++) {
       let ingredListItem = document.createElement("li");
       ingredListItem.setAttribute("class", "item");
       ingredListItem.innerHTML = ingredArr[i];
-      console.log("constructing ingredListItem: " + ingredListItem);
+      // console.log("constructing ingredListItem: " + ingredListItem);
       ingUlEl.appendChild(ingredListItem);
     }
 
@@ -544,9 +553,9 @@ class RecipeExpand extends HTMLElement {
     // (create list items, <li>'s, for individual quick facts
     // and their amounts):
     const qfUlEl = this.shadowRoot.querySelector("ul.facts"); // qf list <ul>
-    console.log("qfUlEl: " + qfUlEl);
+    // console.log("qfUlEl: " + qfUlEl);
     const qfArr = getQuickFactsArr(data); // get quick facts array
-    console.log("qfArr: " + qfArr);
+    // console.log("qfArr: " + qfArr);
     for(let i = 0; i < qfArr.length; i++) {
       let qfListItem = document.createElement("li");
       qfListItem.setAttribute("class", "item");
@@ -557,9 +566,9 @@ class RecipeExpand extends HTMLElement {
     // Set/create steps list
     // (create list items, <li>'s, for individual steps):
     const stepOlEl = this.shadowRoot.querySelector('div.sub-body > ol.steps'); // step list <ol>
-    console.log("stepOlEl: " + stepOlEl);
+    // console.log("stepOlEl: " + stepOlEl);
     const stepsArr = getRecInstructionsArr(data);
-    console.log("stepsArr: " + stepsArr);
+    // console.log("stepsArr: " + stepsArr);
     for(let i = 0; i < stepsArr.length; i++) {
       let stepListItem = document.createElement("li");
       stepListItem.setAttribute("class", "steps");
@@ -810,15 +819,15 @@ function searchForKey(object, key) {
    */
   function getRecInstructionsArr(data) {
     let analyInstructs = data["analyzedInstructions"];
-    console.log("analyInstructs: " + analyInstructs);
+    // console.log("analyInstructs: " + analyInstructs);
     let steps = analyInstructs[0]["steps"];
-    console.log("steps: " + steps);
+    // console.log("steps: " + steps);
     let arrInstructs = [];
     // add instructions to arr:
     for(let i = 0; i < steps.length; i++) {
       arrInstructs[i] = steps[i]["step"];
     }
-    console.log("arrInstructs: " + arrInstructs);
+    // console.log("arrInstructs: " + arrInstructs);
     return arrInstructs;
   }
 
