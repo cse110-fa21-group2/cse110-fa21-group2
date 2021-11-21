@@ -9,20 +9,28 @@ body {
 
 /* nav bar CSS style */
 
-nav {
-  align-items: center;
+.nav {
+  overflow: hidden;
   border-bottom: 2px solid black;
-  display: flex;
-  height: 4rem;
-  justify-content: space-evenly;
-  position: relative;
-  width: 100%;
-  z-index: 99;
 }
 
-.nav-logo {
-  align-items: center;
+.nav a {
+  float: left;
   display: flex;
+  color: black;
+  text-align: center;
+  padding: 1rem 1rem;
+  text-decoration: none;
+  font-size: 17px;
+  height: 1.5rem;
+  margin:auto;
+  align-items: center;
+  
+}
+
+a.nav-logo {
+  align-items: center;
+  height: 1.5rem;
 }
 
 .nav-title {
@@ -31,6 +39,56 @@ nav {
 
 .nav-icon {
   height: 3rem;
+}
+
+.nav .search {
+  float: right;
+}
+
+.nav input[type=text] {
+  padding: .4rem;
+  margin-top: .6rem;
+  margin-bottom: .5rem;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-radius: .2rem;
+}
+
+.nav .search button {
+  float: right;
+  padding: .4rem .6rem;
+  margin-top: .6rem;
+  margin-right: 1rem;
+  margin-left: .5rem;
+  margin-bottom: .5rem;
+  background: #ddd;
+  font-size: 17px;
+  border: 1px solid grey;
+  cursor: pointer;
+  border-radius: .2rem;
+}
+
+.nav .search button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .nav .search {
+    float: none;
+  }
+  .nav a, .nav input[type=text], .nav .search button {
+    float: none;
+    display: flex;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    border: none;
+
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;  
+  }
 }
 
 /* main CSS style */
@@ -180,12 +238,6 @@ img.main-recipe-image{
 }
 
 /* text CSS style */
-
-a {
-  color: black;
-  text-decoration: none;
-}
-
 p.title {
   font-size: 24px;
 }
