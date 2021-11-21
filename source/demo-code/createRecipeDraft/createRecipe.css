@@ -1,0 +1,48 @@
+.create-title{
+    padding-top: 20px;
+}
+
+.create-title-fact{
+    padding-top: 10px;
+}
+
+.create-ingredient-fact{
+    padding-top: 10px;
+}
+
+.recipe-step-input{
+    margin-top: 10px;
+
+}
+
+.ingredient-title{
+    padding-top: 10px;
+}
+
+.ingredient-input-list{
+    height: 180px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: thin;
+    text-align: center;
+}
+
+.step-input-list{
+    height: 200px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: thin;
+}
+
+.add-ingredient-button-wrapper, .add-step-button-wrapper, .create-recipe-button-wrapper{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.add-step-button{
+    margin-top: 20px;
+}
