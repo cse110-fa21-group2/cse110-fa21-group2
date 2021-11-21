@@ -7,10 +7,7 @@ body {
   padding: 0;
 }
 
-a {
-  color: black;
-  text-decoration: none;
-}
+/* nav bar CSS style */
 
 nav {
   align-items: center;
@@ -36,7 +33,262 @@ nav {
   height: 3rem;
 }
 
+/* main CSS style */
+
 main {
-  min-height: calc(100vh - 4rem);
+  background-color: white;
+  box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+  margin: 30px auto;
+  max-width: 44rem;
+  padding: 15px;
+  transition: all 0.2s ease;
+  width: 80%;
+}
+
+/* generic button CSS style */
+
+button {
+  border: 1px solid rgb(0 0 0);
+  color: rgb(0 0 0);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.back-btn {
+  background-color: #f1f7f7;
+}
+
+.org-btn {
+  background-color: #fff0d4;
+}
+
+.unit-btn {
+  background-color: #f1f7f7;
+  display: block;
+  font-size: large;
+  margin: auto;
   width: 100%;
+}
+
+.minus-btn {
+  background-color: #f1f7f7;
+  font-size: large;
+  margin-left: auto;
+  width: 50%;
+}
+
+.plus-btn {
+  background-color: #f1f7f7;
+  font-size: large;
+  margin-right: auto;
+  width: 50%;
+}
+
+/* header CSS style */
+
+div.title-edit-wrapper {
+  align-items: center;
+  display: flex;
+  height: 2rem;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+div.rating-favorite-wrapper {
+  align-items: center;
+  display: flex;
+  height: 2rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+div.rating {
+  align-items: center;
+  display: inline-flex;
+}
+
+.divider {
+  align-items: center;
+  background: rgb(0 0 0);
+  display: inline-block;
+  height: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 1px;
+}
+
+div.recipe-description-wrapper {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 2rem;
+}
+
+/* sub-header CSS style */
+
+#sub-header {
+  display: flex;
+  margin-top: 0.75rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 0.5rem;
+}
+
+div.sub-header {
+  display: grid;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  outline: 0 solid rgb(0 0 0);
+  padding: 0.5rem;
+  width: 100%;
+}
+
+div.ingredients-wrapper {
+  border-right: 1px solid rgb(0 0 0);
+  height: 26pc;
+  overflow: scroll;
+}
+
+div.quick-facts-wrapper {
+  border-bottom: 1px solid rgb(0 0 0);
+  height: 13pc;
+}
+
+div.measurements-wrapper {
+  height: 8pc;
+  padding-top: 1rem;
+}
+
+div.serving-adjust {
+  align-items: center;
+  display: flex;
+  margin: auto;
+  width: 100%;
+}
+
+/* body CSS style */
+
+div.steps-wrapper {
+  display: grid;
+  height: auto;
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  overflow: scroll;
+  padding: 1rem;
+}
+
+div.videos-wrapper {
+  display: grid;
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 1rem;
+}
+
+div.nutrition-wrapper {
+  display: grid;
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 1rem;
+}
+
+/* image CSS style */
+
+img.rating {
+  align-items: center;
+  display: flex;
+  height: 1rem;
+}
+
+img.main-recipe-image {
+  height: auto;
+  margin: 0;
+  max-height: 27rem;
+  object-fit: cover;
+  outline: 1px solid rgb(0 0 0);
+  width: 100%;
+}
+
+/* text CSS style */
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+p.title {
+  font-size: 24px;
+}
+
+p.subtitle {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: gold;
+  text-decoration-thickness: 3px;
+  text-underline-position: under;
+}
+
+p.description {
+  font-size: 16px;
+  margin: 0;
+}
+
+p.quick-fact {
+  margin-bottom: 1rem;
+  padding-left: 1.75rem;
+}
+
+p.step {
+  margin-bottom: 0.5rem;
+}
+
+.serving-size {
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+  margin-top: 1rem;
+}
+
+#measure-title {
+  margin-bottom: 1rem;
+}
+
+/* list CSS style */
+
+ul {
+  padding-left: 1rem;
+  padding-right: 2rem;
+}
+
+ul.rating-stats {
+  align-items: center;
+  display: flex;
+  padding-left: 1rem;
+}
+
+li.rating-stats {
+  align-items: center;
+  color: rgb(121 121 121);
+  display: flex;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+li.item {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+li.steps {
+  margin-top: 0.5rem;
 }
