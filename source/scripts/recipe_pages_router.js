@@ -89,8 +89,6 @@
       console.log("type of func:");
       console.log(func);
 
-      // testing:
-      func();
 
       // page doesn't exist
       if(typeof this[page] != "function") { // note to self that checking if this[page] == undefined returns true even if the function this[page] is defined
@@ -103,7 +101,8 @@
       if(page == 'home') {
         hash = "";
       } else {
-        hash = '#' + page;
+        // hash = '#' + page;
+        hash = page;
       }
       
       // was undefined for when you start on home page, as it retrieves the current state
@@ -128,53 +127,3 @@
       this[page]();
     }
   }
-
-
-  /**
- * Binds the 'popstate' event on the window (which fires when the back &
- * forward buttons are pressed) so the navigation will continue to work 
- * as expected. (Hint - you should be passing in which page you are on
- * in your Router when you push your state so you can access that page
- * info in your popstate function)
- */
-function bindPopstate() {
-  /**
-   * TODO - Part 1 Step 6
-   * Finally, add an event listener to the window object for the 'popstate'
-   * event - this fires when the forward or back buttons are pressed in a browser.
-   * If your event has a state object that you passed in, navigate to that page,
-   * otherwise navigate to 'home'.
-   * 
-   * IMPORTANT: Pass in the boolean true as the second argument in navigate() here
-   * so your navigate() function does not add your going back action to the history,
-   * creating an infinite loop
-   */
-  window.addEventListener('popstate', event => {
-    console.log("");
-    console.log("*****************");
-    console.log("In event listener for popstate.");
-    console.log("event for event fired: ");
-    console.log(event);
-    console.log("Current state: ");
-    console.log(event.state);
-
-    if(event.state != undefined) // && event.state["pageHash"] != "home") 
-    {
-      console.log("State of event fired for popstate: " + event.state["pageHash"]);
-      if(event.state["pageHash"] == "") // navigate to home:
-      {
-        router.navigate("home", true);
-      } else {
-
-        router.navigate(event.state["pageHash"].slice(1), true); // to get rid of hash, #, at start of name, slice from index 1 to end of string
-                                                                // (also note we don't explicitly add home to history stack, so going
-                                                               // to home only happens in the else case here, of when event.state == null,
-                                                                // so we'll never be passed just "home", of something without a # as its first
-                                                                // character, in this if.
-
-      }
-    } else {
-      router.navigate("home", true);
-    }
-  });
-}

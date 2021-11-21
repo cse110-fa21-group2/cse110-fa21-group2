@@ -1,4 +1,6 @@
-import getRouter from '/source/scripts/main.js';
+// Jon and Antonia import:
+
+
 
 // RecipeExpand.js
 class RecipeExpand extends HTMLElement {
@@ -8,7 +10,8 @@ class RecipeExpand extends HTMLElement {
   
       // Create styles and root element
       const styles = document.createElement('style');
-
+      const article = document.createElement('article');
+  
       // Fill in styles and root element
       styles.innerHTML = `
       @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
@@ -225,53 +228,292 @@ class RecipeExpand extends HTMLElement {
       li.steps {
         margin-top: .5rem;
       }`;
+      // added <section> to contain html for expanded page:
+    article.innerHTML = `
+    <section class='expanded-recipe>
+    <!-- Recipe Website Header -->
+      <nav>
+        <div class="nav-logo">
+          <--! img src="" alt="" class="nav-icon" -->
+          <span class="nav-title">Recipe Book</span>
+        </div>
+        <!-- TODO: Call Router -->
+          <a href="">Home</a>
+          <a href="">Explore</a>
+          <a href="">Saved Recipes</a>
+        <!-- TODO: Search bar should call Router and display search results, fetch results -->
+        <form action="" class="search-bar">
+          <input type="text" name="" id="" placeholder="Search recipes">
+          <button type="submit">
+              <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </nav>
+    
+      <!-- Recipe Content -->
+      <main>
+        <section id="header">
+          <button> Return </button>
 
-      // add dummy <article> wrapper element
-      // for content of custom element; leave blank:
-      let articleEl = document.createElement("article");
-      articleEl.innerHTML = ""; // empty/blank
+          <div class="title-edit">
+            <p class="title"> </p>
+            <button> Edit </button>
+          </div>
+
+          <!-- Rating Info: -->
+          <div class="rating-favorite">
+            <div class = "rating">
+              <!-- img src="" class="rating" alt="autpopulated by script" -->
+              <ul class="rating-states">
+                <li class="rating-stats">
+                  <!-- FILL IN WITH RATING STATS -->
+                  <span class="divider"></span>
+                </li>
+                <li class="rating-stats">
+                  <!-- FILL IN WITH NUMBER OF REVIEWS -->
+                </li>
+              </ul>
+            </div>
+            <button style="background-color: pink">Save Recipe</button>
+          </div>
+
+          <!-- Recipe Image: -->
+          <img src="" class="main-recipe-image" alt="autpopulated by script">
+
+          <!-- Recipe Description: -->
+          <div class="recipe-description-wrapper">
+            <p class="description">
+              <!-- FILL IN WITH RECIPE DESCRIPTION -->
+            </p>
+          </div>
+        </section>
+
+        <!-- **Recipe General Info:** -->
+        <!-- Recipe Ingredients + Measurements + Serving Size --> 
+        <section id="sub-header">
+          <div class="sub-header">
+            <p class="subtitle">Ingredients</p>
+            <ul class="ingredients">
+              <!-- POPULATE WITH LIST ITEMS (<li>) OF INGREDIENTS -->
+            </ul>
+          </div>
+          <div class="sub-header">
+            <div class="quick-facts">
+              <p class="subtitle">Quick Facts</p>
+              <ul class="facts">
+                <!-- POPULATE WITH LIST ITEMS (<li>) OF QUICK RECIPE INFO/FACTS -->
+              </ul>
+            </div>
+            <div class="measurements">
+              <p class="subtitle" style="margin-bottom: 1rem">Measurements</p>
+              <button style="width: 100%;display: block;margin: auto;">Units: Imperial</button>
+              <div class="serving-adjust" style="width: 100%;margin: auto;">
+                <button style="width: 100%;margin-left: auto">-</button>
+                <div class="serving-size" style="margin-top: 1rem; margin-bottom: 1rem; margin-left: 2rem; margin-right: 2rem">
+                  <!-- POPULATE WITH SERVING SIZE -->
+                </div>
+                <button style="width: 100%;margin-right: auto;">+</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Recipe Preparation Instructions --> 
+        <section class="body">
+          <div class="sub-body">
+            <p class="subtitle">Steps</p>
+            <ol class="steps">
+              <!-- POPULATE WITH LIST  ITEMS (<li>) of preparation steps
+            </ol>
+          </div>
+        </section>
+
+        <!-- SKIPPED VIDEO PART -->
+
+        <!-- Recipe Nutrition Info -->
+        <!-- Note: changed from id="body" to class="body" as is used > 1 time -->
+        <section class="body">
+          <div class="sub-body">
+            <p class="subtitle">Nutrition Facts</p>
+            <!-- POPULATE BELOW p-tag WITH NUTRITION FACTS>
+            <button>Full Nutrition</button>
+
+            <!-- SKIPPED THE EXTRA STUFF HERE -->
+            
+        </section>
+      </main>
+    </section>
+      `;
   
-      // Append the two <style> and <article> elements to the shadow root:
+      // Append elements to the shadow root
       this.shadowRoot.append(styles);
-      this.shadowRoot.append(articleEl);
+      this.shadowRoot.append(article);
+
+      console.log("this.shadowRoot after article added:");
+      console.log(this.shadowRoot);
+      console.log("this.shadowRoot.article after article added:");
+      console.log(this.shadowRoot.querySelector("article"));
     }
   
     /**
      * Sets the recipe that will be used inside the <recipe-expand> element.
      * Overwrites the previous recipe, fair warning.
-     * @param {Object} data assume data is the JSON/JS data for a single recipe
      */
     set data(data) {
       this.json = data;
+  
+      console.log("this.shadowRoot before setting in set data(data):");
+      console.log(this.shadowRoot);
 
-      // reset page so that it doesn't keep on having
-      // subsequent clicks add to content already there:
-      let articleEl = this.shadowRoot.querySelector("article");
-      articleEl.remove();
+      // Reset HTML
+      this.shadowRoot.querySelector('article').innerHTML = `
+      <section class='expanded-recipe>
+      <!-- Recipe Website Header -->
+      <nav>
+        <div class="nav-logo">
+          <img src="" alt="" class="nav-icon">
+          <span class="nav-title">Recipe Book</span>
+        </div>
+        <!-- TODO: Call Router -->
+          <a href="">Home</a>
+          <a href="">Explore</a>
+          <a href="">Saved Recipes</a>
+        <!-- TODO: Search bar should call Router and display search results, fetch results -->
+        <form action="" class="search-bar">
+          <input type="text" name="" id="" placeholder="Search recipes">
+          <button type="submit">
+              <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </nav>
+      
+      <!-- Recipe Content -->
+      <main>
+        <section id="header">
+          <button> Return </button>
+  
+          <div class="title-edit">
+            <p class="title"> </p>
+            <button> Edit </button>
+          </div>
+  
+          <!-- Rating Info: -->
+          <div class="rating-favorite">
+            <div class = "rating">
+              <img src="" class="rating" alt="autpopulated by script">
+              <ul class="rating-states">
+                <li class="rating-stats">
+                  <!-- FILL IN WITH RATING STATS -->
+                  <span class="divider"></span>
+                </li>
+                <li class="rating-stats">
+                  <!-- FILL IN WITH NUMBER OF REVIEWS -->
+                </li>
+              </ul>
+            </div>
+            <button style="background-color: pink">Save Recipe</button>
+          </div>
+  
+          <!-- Recipe Image: -->
+          <img src="" class="main-recipe-image" alt="autpopulated by script">
+  
+          <!-- Recipe Description: -->
+          <div class="recipe-description-wrapper">
+            <p class="description">
+              <!-- FILL IN WITH RECIPE DESCRIPTION -->
+            </p>
+          </div>
+        </section>
+  
+        <!-- **Recipe General Info:** -->
+        <!-- Recipe Ingredients + Measurements + Serving Size --> 
+        <section id="sub-header">
+          <div class="sub-header">
+            <p class="subtitle">Ingredients</p>
+            <ul class="ingredients">
+              <!-- POPULATE WITH LIST ITEMS (<li>) OF INGREDIENTS -->
+            </ul>
+          </div>
+          <div class="sub-header">
+            <div class="quick-facts">
+              <p class="subtitle">Quick Facts</p>
+                <ul class="facts">
+                  <!-- POPULATE WITH LIST ITEMS (<li>) OF QUICK RECIPE INFO/FACTS -->
+                </ul>
+            </div>
+            <div class="measurements">
+              <p class="subtitle" style="margin-bottom: 1rem">Measurements</p>
+              <button style="width: 100%;display: block;margin: auto;">Units: Imperial</button>
+              <div class="serving-adjust" style="width: 100%;margin: auto;">
+                <button style="width: 100%;margin-left: auto">-</button>
+                <div class="serving-size" style="margin-top: 1rem; margin-bottom: 1rem; margin-left: 2rem; margin-right: 2rem">
+                  <!-- POPULATE WITH SERVING SIZE -->
+                </div>
+                <button style="width: 100%;margin-right: auto;">+</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Recipe Preparation Instructions --> 
+        <section id="body">
+          <div class="sub-body">
+            <p class="subtitle">Steps</p>
+            <ol class="steps">
+              <!-- POPULATE WITH LIST  ITEMS (<li>) of preparation steps
+            </ol>
+          </div>
+        </section>
+  
+        <!-- SKIPPED VIDEO PART -->
+  
+        <!-- Recipe Nutrition Info -->
+        <section id="body">
+          <div class="sub-body">
+            <p class="subtitle">Nutrition Facts</p>
+            <!-- POPULATE BELOW p-tag WITH NUTRITION FACTS>
+            <button>Full Nutrition</button>
+  
+            <!-- SKIPPED THE EXTRA STUFF HERE -->
+            
+        </section>
+      </main>
+    </section>
+      `;
+
+      // Assume we're passed a single recipe as data
+
+      // Now start setting the data/properties of the html
+      // after having declared its skeleton above:
 
     /*
       ** CREATING HTML MANUALLY WITH JS, AS ASSIGNING TO article.innerHTML
       WITH THAT BIG A STRING SEEMS TO CAUSE ISSUES (per OH) **
     */ 
-
-    // * Reset HTML: *
-    // wrapper (article as outermost wrapper of this custom element):
-    articleEl = document.createElement("article");
+    
+    // wrapper:
+    let articleEl = document.createElement("article");
 
     let secEl = "";
     let secElExpRecs = document.createElement("section");
     secElExpRecs.setAttribute("class", "expanded-recipe");
     articleEl.appendChild(secElExpRecs);
 
-    // declarations (due to previous edits):
-    let divEl = document.createElement("div");
-    let imgEl = "";
-    let spanEl = "";
-    let navEl = "";
-    divEl.setAttribute("class", "nav-logo");
+    let navEl = document.createElement("nav");
+    navEl.setAttribute("class", "nav-logo");
+    secElExpRecs.appendChild(navEl);
 
-    // links to other pages
-    // (NOTE: UPDATE THIS AS ARE USING ROUTER)
+    let divEl = document.createElement("logo");
+    divEl.setAttribute("class", "nav-logo");
+    navEl.appendChild(divEl);
+
+    let imgEl = document.createElement("img");
+    imgEl.setAttribute("src", "/source/images/pot.svg");
+    imgEl.setAttribute("alt", "auto-populated");
+    imgEl.setAttribute("class", "nav-icon");
+    let spanEl = document.createElement("span");
+    spanEl.setAttribute("class", "nav-title");
+    divEl.appendChild(imgEl);
+    divEl.appendChild(spanEl);
+
     let aElHome = document.createElement("a");
     aElHome.setAttribute("href", "LINK_TO_HOME");
     aElHome.innerHTML = "Home";
@@ -285,7 +527,6 @@ class RecipeExpand extends HTMLElement {
     divEl.appendChild(aElExplore);
     divEl.appendChild(aElSaved);
 
-    // search-bar:
     let formEl = document.createElement("form");
     formEl.setAttribute("action", "");
     formEl.setAttribute("class", "search-bar");
@@ -308,11 +549,10 @@ class RecipeExpand extends HTMLElement {
     secElExpRecs.appendChild(mainEl);
 
     let secElHeader = document.createElement("section");
-    secElHeader.setAttribute("id", "header");
+    mainEl.appendChild(secElHeader);
 
     buttonEl = document.createElement("button"); 
     buttonEl.innerHTML = "Return";
-    buttonEl.addEventListener("click",logicPopstateForRouter);
     secElHeader.appendChild(buttonEl);
 
     divEl = document.createElement("div");
@@ -334,17 +574,10 @@ class RecipeExpand extends HTMLElement {
     imgEl.setAttribute("src", "/source/images/5-star.svg");
     imgEl.setAttribute("alt", "autopopulate");
     divRatEl.appendChild(imgEl);
-    let ulEl = document.createElement("ul");
-    let liRatStatsEl = document.createElement("li");
-    liRatStatsEl.setAttribute("class", "rating-stats");
-    let liRatStatsEl2 = document.createElement("li");
-    liRatStatsEl2.setAttribute("class", "rating-stats");
+    let ulEl = document.createElement("ul"); // NOTE: to include <li class=rating-stats"> or not?
     spanEl = document.createElement("span");
     spanEl.setAttribute("class", "divider");
-    liRatStatsEl.appendChild(spanEl);
-    ulEl.appendChild(liRatStatsEl);
-    ulEl.appendChild(liRatStatsEl2);
-
+    ulEl.appendChild(spanEl);  // NOTE: span divider will appear before list items for <ul> rating stats
     divRatEl.appendChild(ulEl);
     buttonEl = document.createElement("button");
     buttonEl.setAttribute("style", "background-color: pink");
@@ -375,7 +608,7 @@ class RecipeExpand extends HTMLElement {
     divSubHead.setAttribute("class", "sub-header");
     pEl = document.createElement("p");
     pEl.setAttribute("class", "subttitle");
-    pEl.innerHTML = "Ingredients: ";
+    pEl.innerHTML = "Ingredients";
     ulEl = document.createElement("ul");
     ulEl.setAttribute("class", "ingredients");
     divSubHead.appendChild(pEl);
@@ -388,7 +621,7 @@ class RecipeExpand extends HTMLElement {
     divEl.setAttribute("class", "quick-facts");
     pEl = document.createElement("p");
     pEl.setAttribute("class", "subtitle");
-    pEl.innerHTML = "Quick Facts:";
+    pEl.innerHTML = "Quick Facts";
     ulEl = document.createElement("ul");
     ulEl.setAttribute("class", "facts");
     divEl.appendChild(pEl);
@@ -401,7 +634,7 @@ class RecipeExpand extends HTMLElement {
     pEl = document.createElement("p");
     pEl.setAttribute("class", "subtitle");
     pEl.setAttribute("style", "margin-bottom: 1rem;");
-    pEl.innerHTML = "Measurements:";
+    pEl.innerHTML = "Measurements";
     buttonEl = document.createElement("button");
     buttonEl.setAttribute("style", "width: 100%; display: block; margin: auto;");
     buttonEl.innerHTML = "Units: Imperial";
@@ -426,7 +659,6 @@ class RecipeExpand extends HTMLElement {
     divMeas.appendChild(divEl);
     secElHeader.appendChild(divMeas);
     mainEl.appendChild(secElHeader);
-    mainEl.appendChild(secElSubHeader);
 
     // Recipe preparation/cooking instructions:
     secElHeader = document.createElement("section");
@@ -435,9 +667,8 @@ class RecipeExpand extends HTMLElement {
     divEl.setAttribute("class", "sub-body");
     pEl = document.createElement("p");
     pEl.setAttribute("class", "subtitle");
-    pEl.innerHTML = "Steps:";
+    pEl.innerHTML = "Steps";
     let olEl = document.createElement("ol");
-    olEl.setAttribute("class", "steps");
     divEl.appendChild(pEl);
     divEl.appendChild(olEl);
     secElHeader.appendChild(divEl);
@@ -450,7 +681,7 @@ class RecipeExpand extends HTMLElement {
     divEl.setAttribute("class", "sub-body");
     pEl = document.createElement("p");
     pEl.setAttribute("class", "subtitle");
-    pEl.innerHTML = "Nutrition Facts: ";
+    pEl.innerHTML = "Nutrition Facts";
     buttonEl = document.createElement("button");
     buttonEl.innerHTML = "Full Nutrition";
     divEl.appendChild(pEl);
@@ -460,8 +691,24 @@ class RecipeExpand extends HTMLElement {
 
     // append to shadow DOM:
     this.shadowRoot.append(articleEl);
+   
 
-    // set title:
+
+    console.log("this.shadowRoot.querySelector('article').innerHTML:");
+    console.log(this.shadowRoot.querySelector('article').innerHTML);
+    console.log(this.shadowRoot);
+
+    console.log("testing this.shadowRoot.querySelector():");
+    console.log(this.shadowRoot.querySelector("p"));
+
+    // Set Title
+  //  let pEl = document.createElement("p");
+  //  pEl.innerHTML = "Hello";
+    this.shadowRoot.querySelector('article').appendChild(pEl);
+    console.log("this.shadowRoot:");
+    console.log(this.shadowRoot);
+
+
     const title = getTitle(data).toUpperCase();
     this.shadowRoot.querySelector('div > p.title').innerHTML = title;
 
@@ -471,13 +718,12 @@ class RecipeExpand extends HTMLElement {
     // this.shadowRoot.querySelector('ul > li.rating-stats').innerHTML = "Servings: " + numServings;
     // 
     const ratingLiArr = this.shadowRoot.querySelectorAll('ul > li.rating-stats');
-
     ratingLiArr[0].innerHTML = getRatingStat(data) + "<span class='divider'></span>";
     ratingLiArr[1].innerHTML = getNumLikes(data) + " likes.";
 
     // Set image:
     const recImg = this.shadowRoot.querySelector("section#header > img");
-    const recImgSrc = getImgSrc(data);
+    const recImgSrc = getImg(data);
     recImg.setAttribute("src", recImgSrc);
     recImg.setAttribute("alt", title); // set alt text for rec image to rec's title
 
@@ -490,24 +736,19 @@ class RecipeExpand extends HTMLElement {
     // (create list items, <li>'s, for individual ingredients
     // and their amounts):
     const ingUlEl = this.shadowRoot.querySelector("div > ul.ingredients");
-
     const ingredArr = getIngredArray(data); // array of ingredients 
-
     for(let i = 0; i < ingredArr.length; i++) {
       let ingredListItem = document.createElement("li");
       ingredListItem.setAttribute("class", "item");
       ingredListItem.innerHTML = ingredArr[i];
-
       ingUlEl.appendChild(ingredListItem);
     }
 
     // Set/create quick facts list
     // (create list items, <li>'s, for individual quick facts
     // and their amounts):
-    const qfUlEl = this.shadowRoot.querySelector("ul.facts"); // qf list <ul>
-    // console.log("qfUlEl: " + qfUlEl);
-    const qfArr = getQuickFactsArr(data); // get quick facts array
-    // console.log("qfArr: " + qfArr);
+    const qfUlEl = this.shadowRoot.querySelector("p.subtitle > ul.facts"); // qf list <ul>
+    const qfArr = this.getQuickFactsArr; // get quick facts array
     for(let i = 0; i < qfArr.length; i++) {
       let qfListItem = document.createElement("li");
       qfListItem.setAttribute("class", "item");
@@ -517,24 +758,92 @@ class RecipeExpand extends HTMLElement {
     
     // Set/create steps list
     // (create list items, <li>'s, for individual steps):
-    const stepOlEl = this.shadowRoot.querySelector('div.sub-body > ol.steps'); // step list <ol>
-    // console.log("stepOlEl: " + stepOlEl);
-    const stepsArr = getRecInstructionsArr(data);
-    // console.log("stepsArr: " + stepsArr);
+    const stepOlEl = document.querySelector('div.steps-wrapper > ol.steps'); // step list <ol>
+    const stepsArr = this.getRecInstrucitonsArr;
     for(let i = 0; i < stepsArr.length; i++) {
       let stepListItem = document.createElement("li");
       stepListItem.setAttribute("class", "steps");
       stepListItem.innerHTML = stepsArr[i];
       stepOlEl.appendChild(stepListItem);
     }
-    
-  } 
 
-    // return data of current expanded recipe:
+
+
+
+      
+
+
+      
+      
+
+    /* 
+      // Set the total time (time is returned in minutes, as is stored
+      // as total number of minutes in .JSON file):
+      // const totalTime = convertTime(searchForKey(data, 'totalTime'));
+      const recTime = getRecTime(data);
+      this.shadowRoot.querySelector('.meta--total-time').innerHTML = totalTime;
+  
+      // Set Categories
+      const categories = getCategories(data);
+      this.shadowRoot.querySelector('.meta--categories').innerHTML = categories;
+  
+      // Set Description
+      const description = getDescription(data);
+      this.shadowRoot.querySelector('p.description').innerHTML = description;
+  
+      // Set Image
+      const imgSrc = getImage(data);
+      const img = this.shadowRoot.querySelector('img.thumbnail');
+      img.setAttribute('src', imgSrc);
+      img.setAttribute('alt', title);
+  
+      // Set Ratings
+      const ratingVal = searchForKey(data, 'ratingValue');
+      let ratingTotal = searchForKey(data, 'ratingCount');
+      const rating = this.shadowRoot.querySelector('.rating--wrapper');
+      const numStars = Math.round(ratingVal);
+      if (ratingVal) {
+        rating.innerHTML = `
+        <img src="assets/images/icons/${numStars}-star.svg" alt="${numStars} stars">
+        <span>${ratingVal}</span>
+        from
+        `;
+        if (!ratingTotal) {
+          ratingTotal = 'some';
+        }
+        rating.innerHTML += `<span class="rating-total">${ratingTotal} votes</span>`;
+      } else {
+        rating.innerHTML = `
+          <span>No Reviews</span>
+        `;
+      }
+  
+      // Set Ingredients
+      const ingredients = getIngredients(data);
+      ingredients.forEach(ingredient => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = ingredient;
+        this.shadowRoot.querySelector('.section--ingredients > ul').append(listItem);
+      });
+  
+      // Set Instructions
+      const instructions = getInstructions(data);
+      instructions.forEach(instruction => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = instruction;
+        this.shadowRoot.querySelector('.section--instructions > ol').append(listItem);
+      });
+    }
+    */ 
+    /**
+     * Returns the object of the currect recipe being used.
+     */
+    
+    } 
+
     get data() {
       return this.json;
     }
-
   } // end of class
   customElements.define('recipe-expand', RecipeExpand);
 
@@ -564,20 +873,20 @@ function searchForKey(object, key) {
 
   // gets img for recipe
   function getImgSrc(data) {
-    return data["image"]; //searchForKey(data, "image");
+    return searchForKey(data, "image");
   }
   
   // returns array of ingredients
   function getIngredArray(data) {
     // an array of ingredient objects:
     let ingredList = searchForKey(data, "extendedIngredients");
-    let ingredListLen = ingredList.length;
+    ingredListLen = ingredList.length;
     let ingredListArr = []
     // populate ingredients list (append each time):
     for(let i = 0; i < ingredListLen; i++) {
       let currIngred = ingredList[i];
       ingredListArr[i] = currIngred["amount"] + " "
-        + currIngred["unit"] + " " + currIngred["name"];
+        + currIngred["units"] + " " + currIngred("name");
     }
     return ingredListArr;
   }
@@ -649,7 +958,7 @@ function searchForKey(object, key) {
 
   // returns recipe short description / summary:
   function getSummary(data) {
-    return data["summary"];/// searchForKey("summary");
+    return searchForKey("summary");
   }
 
 
@@ -662,7 +971,7 @@ function searchForKey(object, key) {
   function getQuickFactsArr(data) {
     // populate array:
     let arrOfQFacts = [];
-    arrOfQFacts[0] = "Time: " + searchForKey(data, "readyInMinutes") + " minutes.";
+    arrOfQFacts[0] = "Time: " + searchForKey(data, "readyInMinutes");
     arrOfQFacts[1] = " Servings: " + searchForKey(data, "servings");
     arrOfQFacts[2] = "Dish Types: " + searchForKey(data, "dishTypes");
     return arrOfQFacts;
@@ -700,16 +1009,13 @@ function searchForKey(object, key) {
    * @returns an array of the recipe instructions in order
    */
   function getRecInstructionsArr(data) {
-    let analyInstructs = data["analyzedInstructions"];
-    // console.log("analyInstructs: " + analyInstructs);
-    let steps = analyInstructs[0]["steps"];
-    // console.log("steps: " + steps);
+    let analyInstructs = searchForKey(data, "analyzedInstructions");
+    let steps = analyInstructs["steps"];
     let arrInstructs = [];
     // add instructions to arr:
     for(let i = 0; i < steps.length; i++) {
-      arrInstructs[i] = steps[i]["step"];
+      arrInstructs[i] = steps["step"];
     }
-    // console.log("arrInstructs: " + arrInstructs);
     return arrInstructs;
   }
 
@@ -742,10 +1048,48 @@ function searchForKey(object, key) {
 
 
 
+
+/*
+  **** IGNORE THE BELOW: IT IS UNUSED ********
+*/ 
+
   /**
-   * Handles popstate event as back browser arrow click
-   * @param {Object} event 
+   * 
+   * @param {Object} data // assume data is passed as object for single recipe 
    */
-  function logicPopstateForRouter(event) {
-    window.history.back();
+  /*
+  function getTitle(data) {
+      return searchForKey(data, "originalName");
   }
+  
+  // returns measurements in US units:
+  function getUSMeasures(data) {
+      return searchForKey(data["measures"], "us");
+  }
+  
+  // get recipe's ID:
+  function getRecID(data) {
+      return searchForKey(data, "id");
+  }
+  
+  // get recipe's ingredients:
+  function getIngred(data) {
+      // TODO: get individual step ingredients (in nested .JSON objects)
+      return searchForKey(data, "instructions");
+  }
+  
+  // get img for recipe
+  function getImg(data) {
+      return searchForKey(data, "image");
+  }
+  
+  // try to get quick facts (slightly modified from Design Team's specs
+  // as couldn't find all the info):
+  function getQuickFacts(data) {
+      return searchForKey(data, "nameClean") + "\n" 
+      + searchForKey(data, consistency) + "\n"
+      + searchForKey(data, "unit") + "\n"
+      + searchForKey(data, "unit"); 
+  }
+*/ 
+

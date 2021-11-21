@@ -1,0 +1,105 @@
+.hidden {
+    display: none;
+  }
+  
+  .landing.hidden {
+    display: none;
+  }
+  
+  /* Landing Page CSS */
+  .landing {
+    background-image: url("../images/background-2.jpg");
+    background-size: cover;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 4rem);
+  }
+  
+  .landing-container {
+    grid-column: 2;
+    margin-top: 25%;
+    padding: 5rem;
+  }
+  
+  .landing-title {
+    font-size: 5em;
+  }
+  
+  .landing-buttons {
+    align-items: center;
+    display: flex;
+  }
+  
+  .landing-buttons button {
+    background-color: white;
+    border: 1px solid black;
+    height: 2.5rem;
+    margin-right: 1rem;
+    width: 7rem;
+  }
+  
+  /* Explore Page CSS */
+  
+  .explore {
+    margin-left: 5%;
+    min-height: calc(100vh - 4rem);
+    width: 90%;
+  }
+  
+  /* .row-title {
+    margin: 0;
+    margin-top: 2rem;
+  } */
+  
+  .recipe-row {
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
+  .line {
+    background-color: orange;
+    border: none;
+    border-radius: 3px;
+    height: 3px;
+    margin-left: 0;
+    width: 50%;
+  }
+  
+  /* Saved Recipe Page CSS */
+  
+  .saved-recipes {
+    margin-left: 5%;
+    min-height: calc(100vh - 4rem);
+    position: relative;
+    width: 90%;
+  }
+  
+  .saved-recipe-header {
+    height: 2rem;
+    margin: 2rem 0;
+    width: 75%;
+  }
+  
+  .list-dropdown {
+    float: left;
+    height: 1.5rem;
+    margin-right: 1rem;
+    min-width: 7rem;
+  }
+  
+  .edit-btn {
+    height: 1.5rem;
+    min-width: 7rem;
+  }
+  
+  /* Search Results CSS */
+  
+  .search-results {
+    margin-left: 5%;
+    min-height: calc(100vh - 4rem);
+    width: 90%;
+  }
+  
+  .row-title {
+    margin: 2rem 0 0;
+  }

@@ -121,14 +121,14 @@ async function init() {
   // Function calls
   // Fetch recipes and store locally if storage is empty.
   let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-	console.log("storageCategoryData: ");
-	console.log(storageCategoryData);
+	// console.log("storageCategoryData: ");
+	// console.log(storageCategoryData);
 
 	// ** for testing, have store the 10 recipes from sample JSON file: ** 
 	// storageCategoryData =
 	//storageCategoryData = sampleRecipes.json;
-	console.log("storageCategoryData:");
-	console.log(storageCategoryData);
+	// console.log("storageCategoryData:");
+	// console.log(storageCategoryData);
 
 	
   const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
@@ -144,11 +144,12 @@ async function init() {
     }
   }
   createExploreRecipeCards(storageCategoryData);
-	console.log("After createExploreRecipeCards()");
+	// console.log("After createExploreRecipeCards()");
   
   const storageSavedData = fetcherFuncs.getAllSavedRecipe();
 	console.log("After storageSavedData fetcherFuncs");
 	bindPopstate();
+	bindEscKey();
 }
 
 /**
@@ -159,31 +160,31 @@ function createExploreRecipeCards(storageCategoryData) {
 	// get explore-section "wrapper" (for "Trending Recipes"):
 	let expSecEl = document.querySelector("explore-rec-section");
 
-	console.log("storageCategoryData:");
-	console.log(storageCategoryData);
+	// console.log("storageCategoryData:");
+	// console.log(storageCategoryData);
 	
 	// create recipe cards (i.e., for each recipe, create card):
   Object.keys(storageCategoryData).forEach((category) => {
 		let currCatRecIDs = Object.keys(category); // ids of current category
 
-		console.log("currCatRecIDs:");
-		console.log(currCatRecIDs);
+		// console.log("currCatRecIDs:");
+		// console.log(currCatRecIDs);
 		
 		// for each recipe of current category ("breakfast", "lunch", etc.):
 		for (let recId of currCatRecIDs) {
 			let recipeCard = document.createElement('recipe-card');
 
-			console.log("recId:");
-			console.log(recId);
+			// console.log("recId:");
+			// console.log(recId);
 			
 			// set recipeCard data for html element:
-			console.log('localStorage:');
-			console.log(localStorage);
-			console.log("localStorage['recipeData'][recId]):");
-			console.log(localStorage['recipeData'][recId]);
+			// console.log('localStorage:');
+			// console.log(localStorage);
+			// console.log("localStorage['recipeData'][recId]):");
+			// console.log(localStorage['recipeData'][recId]);
 			
-			console.log("storageCategoryData[category][recId]:");
-			console.log(storageCategoryData[category][recId]);
+			// console.log("storageCategoryData[category][recId]:");
+			// console.log(storageCategoryData[category][recId]);
 			
 			// set from passed-iin storageCategoryData:
 			recipeCard.data = storageCategoryData[category][recId];
@@ -199,8 +200,8 @@ function createExploreRecipeCards(storageCategoryData) {
 			router.addPage(page, () => {
 				// assume 'hidden' performs opposite of 'shown' from lab 7:
 				console.log("curr page() called by router.");
-				console.log("test retrieving section--recipe-cards element:");
-				console.log(document.querySelector('section.section--recipe-cards'));
+				// console.log("test retrieving section--recipe-cards element:");
+				// console.log(document.querySelector('section.section--recipe-cards'));
 				document.querySelector('section.landing').classList.add("hidden");
 				document.querySelector('section.section--recipe-cards').classList.add('hidden');
 				document.querySelector('section.section--recipe-expand').classList.remove('hidden');
@@ -258,34 +259,38 @@ function prepRecipeForClick(rec, recPageName) {
    * so your navigate() function does not add your going back action to the history,
    * creating an infinite loop
    */
-  window.addEventListener('popstate', event => {
-    console.log("");
-    console.log("*****************");
-    console.log("In event listener for popstate.");
-    console.log("event for event fired: ");
-    console.log(event);
-    console.log("Current state: ");
-    console.log(event.state);
+  window.addEventListener('popstate', logicPopstateForRouter);
+}
 
-    if(event.state != undefined) // && event.state["pageHash"] != "home") 
-    {
-      console.log("State of event fired for popstate: " + event.state["pageHash"]);
-      if(event.state["pageHash"] == "") // navigate to home:
-      {
-        router.navigate("home", true);
-      } else {
+function logicPopstateForRouter(event) {
+	console.log("");
+	console.log("*****************");
+	console.log("In event listener for popstate.");
+	console.log("event for event fired: ");
+	console.log(event);
+	console.log("Current state: ");
+	console.log(event.state);
 
-        router.navigate(event.state["pageHash"].slice(1), true); // to get rid of hash, #, at start of name, slice from index 1 to end of string
-                                                                // (also note we don't explicitly add home to history stack, so going
-                                                               // to home only happens in the else case here, of when event.state == null,
-                                                                // so we'll never be passed just "home", of something without a # as its first
-                                                                // character, in this if.
+	if(event.state != undefined) // && event.state["pageHash"] != "home") 
+	{
+		console.log("State of event fired for popstate: " + event.state["pageHash"]);
+		if(event.state["pageHash"] == "") // navigate to home:
+		{
+			router.navigate("home", true);
+		} else {
 
-      }
-    } else {
-      router.navigate("home", true);
-    }
-  });
+			//router.navigate(event.state["pageHash"].slice(1), true); // to get rid of hash, #, at start of name, slice from index 1 to end of string
+																															// (also note we don't explicitly add home to history stack, so going
+																														 // to home only happens in the else case here, of when event.state == null,
+																															// so we'll never be passed just "home", of something without a # as its first
+																															// character, in this if.
+			// just added (for project), see if it works:
+			router.navigate(event.state["pageHash"], true); // i.e., keep # at beginning of page name
+
+		}
+	} else {
+		router.navigate("home", true);
+	}
 }
 
 
@@ -311,4 +316,9 @@ function prepRecipeForClick(rec, recPageName) {
       router.navigate("home", false); // is this true or false for statePopped (2nd arg)???
     }
   })
+}
+
+// get router:
+export default function getRouter() {
+	return router;
 }
