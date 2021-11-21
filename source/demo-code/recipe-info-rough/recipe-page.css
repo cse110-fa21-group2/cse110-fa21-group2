@@ -120,11 +120,12 @@ a.nav-logo {
   }
 
   .nav .search {
-    display: inline-flex;
+    display: none;
     float: right;
     margin-right: 1rem;
     margin-bottom: .5rem;
   }
+
 }
 
 /* main CSS style */
