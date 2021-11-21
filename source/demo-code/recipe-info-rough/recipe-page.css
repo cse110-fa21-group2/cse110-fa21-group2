@@ -66,6 +66,28 @@ button {
   background-color: #fff0d4;
 }
 
+.unit-btn {
+  background-color: #f1f7f7;
+  display: block;
+  font-size: large;
+  margin: auto;
+  width: 100%;
+}
+
+.minus-btn {
+  background-color: #f1f7f7;
+  font-size: large;
+  margin-left: auto;
+  width: 50%;
+}
+
+.plus-btn {
+  background-color: #f1f7f7;
+  font-size: large;
+  margin-right: auto;
+  width: 50%;
+}
+
 /* header CSS style */
 
 div.title-edit-wrapper {
@@ -144,7 +166,8 @@ div.measurements-wrapper {
 div.serving-adjust {
   align-items: center;
   display: flex;
-  margin: 1rem;
+  margin: auto;
+  width: 100%;
 }
 
 /* body CSS style */
@@ -225,6 +248,18 @@ p.quick-fact {
 
 p.step {
   margin-bottom: 0.5rem;
+}
+
+.serving-size {
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+  margin-top: 1rem;
+}
+
+#measure-title {
+  margin-bottom: 1rem;
 }
 
 /* list CSS style */
