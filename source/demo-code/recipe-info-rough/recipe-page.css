@@ -28,6 +28,11 @@ body {
   
 }
 
+.nav a.icon {
+  float: right !important;
+  display: none;
+}
+
 a.nav-logo {
   align-items: center;
   height: 1.5rem;
@@ -73,21 +78,45 @@ a.nav-logo {
 }
 
 @media screen and (max-width: 600px) {
-  .nav .search {
-    float: none;
+  .nav {
+    overflow: hidden;
+    border-bottom: 2px solid black;
   }
+
+  .nav #links, div.search {
+    display: none;
+  }
+
+  .nav a.icon {
+    float: right !important;
+    display: flex;
+    top: 0px !important;
+    right: 0px !important;
+    position: fixed !important;
+  }
+
+  .nav a.nav-logo {
+    display: flex !important;
+  }
+
   .nav a, .nav input[type=text], .nav .search button {
     float: none;
-    display: flex;
     text-align: left;
-    width: 100%;
+    display: inline-flex;
     margin: 0;
     padding: 1rem;
     border: none;
 
   }
-  .topnav input[type=text] {
-    border: 1px solid #ccc;  
+
+  .nav input[type=text] {
+    border: 1px solid #ccc;
+  }
+
+  .nav .search {
+    float: right;
+    margin-right: 1rem;
+    margin-bottom: .5rem;
   }
 }
 
