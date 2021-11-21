@@ -1,16 +1,16 @@
-# cse110-fall21-group2
+# Fall 2021 Group 2 (Team H2O)
+
+## Overview
+
+We are a team of students taking Thomas Powell's CSE110 Software Engineering class. Our project for the quarter is to create a recipe manager (EzPzRecipez)
+
+## Documentation
+
+This GitHub serves as the single-source-of-truth for the project. All documentation is organized in the [GitHub Wiki](https://github.com/cse110-fa21-group2/cse110-fa21-group2/wiki). Meeting minutes, and other archived information can be found in their respective folders in this repo. 
 
 ## Important Team Links
 
 1. [Team Page](admin/team.md)
 2. [Team Media Drive](https://drive.google.com/drive/u/1/folders/0AFuPoOL2dVNLUk9PVA)
-3. [Daily Standups Google Sheet](https://docs.google.com/spreadsheets/d/1SMPIuIakQLT89LjbC_OeXi88n1kjemgWY70IPSrXweg)
-4. [Miro Planning Board](https://miro.com/app/board/o9J_lpl-XMA=/)
-5. [Project Pitch](https://docs.google.com/presentation/d/11jF1oKp75DLx46tuGD6EQLSZYdLSG2OP50iHBZg_Hf0/edit?usp=sharing)
-6. [GANTT Chart](https://docs.google.com/spreadsheets/d/1SmLbdnKe8qh5n3MxefshZGN7vzQVhQEA7gFJ1xP9oeg/edit?usp=sharing)
-7. [HTML Style Guide and Coding Conventions](https://www.w3schools.com/html/html5_syntax.asp)
-
-## Team Members
-
-## Team Contract
-
+3. [Miro Planning Board](https://miro.com/app/board/o9J_lpl-XMA=/)
+4. [Project Pitch](https://docs.google.com/presentation/d/11jF1oKp75DLx46tuGD6EQLSZYdLSG2OP50iHBZg_Hf0/edit?usp=sharing)

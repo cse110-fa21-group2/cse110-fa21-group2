@@ -2,14 +2,13 @@
 
 ## Context and Problem Statement
 
-We want to record architectural decision for data storage in this project.
-What storage should we use ?
+We want to record architectural decisions for **how we store user data** in this project.
+What storage should we use?
 
 ## Considered Options
 
 * Local Storage (https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 * Indexeddb (https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
-
 
 ## Decision Outcome
 

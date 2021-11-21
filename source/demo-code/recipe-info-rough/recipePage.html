@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./recipe-page.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">
+          <img src="../../images/pot.svg" alt="" class="nav-icon">
+          <span class="nav-title">Recipe Book</span>
+        </div>
+        <!-- TODO: Call Router -->
+        <a href="./landing.html">Home</a>
+        <a href="./explore.html">Explore</a>
+        <a href="./saved-recipes.html">Saved Recipes</a>
+        <!-- TODO: Search bar should call Router and display search results, fetch results -->
+        <form action="./search-results.html" class="search-bar">
+          <input type="text" name="" id="" placeholder="Search recipes">
+          <button type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+      </nav>
+    <main>
+        <section id="header">
+            <button class="back-btn">Return</button>
+
+            <div class="title-edit-wrapper">
+                <p class = "title">Chicken Salad</p>
+                <button class="back-btn">Edit</button>
+            </div>
+
+            <div class="rating-favorite-wrapper">
+                <div class="rating">
+                    <img src="5-star.svg" class="rating" alt="autopopulated by script">
+                    <ul class="rating-stats">
+                        <li class="rating-stats">
+                            4.65 stars
+                            <span class="divider"></span>
+                        </li>
+                        <li class="rating-stats">
+                            55 reviews
+                        </li>
+                    </ul>
+                </div>
+                <button class="org-btn"> <i class="far fa-heart"></i> Save Recipe</button>
+            </div>
+
+            <img src="image.webp" class="main-recipe-image" alt="autopopulated by script">
+        
+            <div class="recipe-description-wrapper">
+                <p class="description">
+                    This chicken salad comes together fast using rotisserie chicken breasts. The herbs, along with the pecans, help to make this chicken salad flavorful. Serve on top of toasted croissants, or butter lettuce.
+                </p>
+            </div>
+        </section>
+
+        <section id="sub-header">
+            <div class="sub-header">
+                <div class="ingredients-wrapper">
+                    <p class="subtitle">Ingredients</p>
+                    <ul class="ingredients">
+                        <li class="item">1/2 cup mayonnaise</li>
+                        <li class="item">1/2 cup plain Greek yogurt</li>
+                        <li class="item">2 teaspoons white wine vinegar</li>
+                        <li class="item">1/2 teaspoon garlic powder</li>
+                        <li class="item">1/4 teaspoon dried thyme</li>
+                        <li class="item">2 cups chopped cooked chicken</li>
+                        <li class="item">2 stalks celery, sliced</li>
+                        <li class="item">1/2 cup mayonnaise</li>
+                        <li class="item">1/2 cup plain Greek yogurt</li>
+                        <li class="item">2 teaspoons white wine vinegar</li>
+                        <li class="item">1/2 teaspoon garlic powder</li>
+                        <li class="item">1/4 teaspoon dried thyme</li>
+                        <li class="item">2 cups chopped cooked chicken</li>
+                        <li class="item">2 stalks celery, sliced</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sub-header">
+                <div class="quick-facts-wrapper">
+                    <p class="subtitle">Quick Facts</p>
+                        <ul class="facts">
+                            <li class="item">Prep: 20 minutes</li>
+                            <li class="item">Cook: N/A</li>
+                            <li class="item">Total: 20 minutes</li>
+                            <li class="item">Yield: 4 servings</li>
+                    </ul>
+                </div>
+                <div class="measurements-wrapper">
+                    <p class="subtitle" id="measure-title">Measurements</p>
+                    <button class="unit-btn">Units: Imperial</button>
+                    <div class="serving-adjust">
+                        <button class="minus-btn">-</button>
+                        <div class="serving-size">4</div>
+                        <button class="plus-btn">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="body">
+            <div class="steps-wrapper">
+                <p class="subtitle">Steps</p>
+                <ol class="steps">
+                    <li class="steps">
+                        Mix mayonnaise, Greek yogurt, vinegar, garlic powder, thyme, and maple pepper together in a bowl until well combined. Add chicken, celery, pecans, and red onion; stir well to incorporate.
+                    </li>
+                    <li class="steps">
+                        Serve immediately or refrigerate for up to 3 days.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="videos-wrapper">
+                <p class="subtitle">Videos</p>
+                <!-- Include videos if any :D -->
+            </div>
+
+            <div class="nutrition-wrapper">
+                <p class="subtitle">Nutrition Facts</p>
+                <p>Per Serving: 458 calories; protein 20.2g; carbohydrates 4.6g; fat 40.3g; cholesterol 70.7mg; sodium 236mg.</p>
+                <button class="org-btn">Full Nutrition</button>
+            </div>
+
+            <div class="recipe-tags-wrapper">
+                <!-- Tags // Possible extra feature- see related recipes by tag-->
+            </div>
+        
+            <div class="recipe-related-tags-wrapper">
+                <!-- Related tags EXTRA FEATURE -->
+            </div>
+            
+            <div class="related-recipes-wrapper">
+                <!-- Related recipes EXTRA FEATURE -->
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>

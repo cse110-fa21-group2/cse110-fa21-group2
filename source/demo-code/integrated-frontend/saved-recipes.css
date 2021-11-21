@@ -1,0 +1,24 @@
+.saved-recipes {
+  margin-left: 5%;
+  min-height: calc(100vh - 4rem);
+  position: relative;
+  width: 90%;
+}
+
+.saved-recipe-header {
+  height: 2rem;
+  margin: 2rem 0;
+  width: 75%;
+}
+
+.list-dropdown {
+  float: left;
+  height: 1.5rem;
+  margin-right: 1rem;
+  min-width: 7rem;
+}
+
+.edit-btn {
+  height: 1.5rem;
+  min-width: 7rem;
+}
