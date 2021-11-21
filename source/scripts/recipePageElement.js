@@ -435,7 +435,8 @@ class RecipeExpand extends HTMLElement {
     secElExpRecs.appendChild(mainEl);
 
     let secElHeader = document.createElement("section");
-    mainEl.appendChild(secElHeader);
+    secElHeader.setAttribute("id", "header");
+    // mainEl.appendChild(secElHeader);
 
     buttonEl = document.createElement("button"); 
     buttonEl.innerHTML = "Return";
@@ -464,7 +465,7 @@ class RecipeExpand extends HTMLElement {
     let liRatStatsEl = document.createElement("li");
     liRatStatsEl.setAttribute("class", "rating-stats");
     let liRatStatsEl2 = document.createElement("li");
-    liRatStatsEl.setAttribute("class", "rating-stats");
+    liRatStatsEl2.setAttribute("class", "rating-stats");
     spanEl = document.createElement("span");
     spanEl.setAttribute("class", "divider");
     liRatStatsEl.appendChild(spanEl);
@@ -496,6 +497,7 @@ class RecipeExpand extends HTMLElement {
     // Recipe general info: recipe ingredients + measurements + serving size:
     let secElSubHeader = document.createElement("section");
     secElSubHeader.setAttribute("id", "sub-header");
+    //mainEl.appendChild(secElHeader);
     // 
     let divSubHead = document.createElement("div");
     divSubHead.setAttribute("class", "sub-header");
@@ -552,6 +554,7 @@ class RecipeExpand extends HTMLElement {
     divMeas.appendChild(divEl);
     secElHeader.appendChild(divMeas);
     mainEl.appendChild(secElHeader);
+    mainEl.appendChild(secElSubHeader);
 
     // Recipe preparation/cooking instructions:
     secElHeader = document.createElement("section");
@@ -562,6 +565,7 @@ class RecipeExpand extends HTMLElement {
     pEl.setAttribute("class", "subtitle");
     pEl.innerHTML = "Steps";
     let olEl = document.createElement("ol");
+    olEl.setAttribute("class", "steps");
     divEl.appendChild(pEl);
     divEl.appendChild(olEl);
     secElHeader.appendChild(divEl);
@@ -611,12 +615,14 @@ class RecipeExpand extends HTMLElement {
     // this.shadowRoot.querySelector('ul > li.rating-stats').innerHTML = "Servings: " + numServings;
     // 
     const ratingLiArr = this.shadowRoot.querySelectorAll('ul > li.rating-stats');
+    console.log("rating list items returned: ");
+    console.log(ratingLiArr);
     ratingLiArr[0].innerHTML = getRatingStat(data) + "<span class='divider'></span>";
     ratingLiArr[1].innerHTML = getNumLikes(data) + " likes.";
 
     // Set image:
     const recImg = this.shadowRoot.querySelector("section#header > img");
-    const recImgSrc = getImg(data);
+    const recImgSrc = getImgSrc(data);
     recImg.setAttribute("src", recImgSrc);
     recImg.setAttribute("alt", title); // set alt text for rec image to rec's title
 
@@ -629,19 +635,23 @@ class RecipeExpand extends HTMLElement {
     // (create list items, <li>'s, for individual ingredients
     // and their amounts):
     const ingUlEl = this.shadowRoot.querySelector("div > ul.ingredients");
+    console.log("retrieving ingUlEl: " + ingUlEl);
     const ingredArr = getIngredArray(data); // array of ingredients 
     for(let i = 0; i < ingredArr.length; i++) {
       let ingredListItem = document.createElement("li");
       ingredListItem.setAttribute("class", "item");
       ingredListItem.innerHTML = ingredArr[i];
+      console.log("constructing ingredListItem: " + ingredListItem);
       ingUlEl.appendChild(ingredListItem);
     }
 
     // Set/create quick facts list
     // (create list items, <li>'s, for individual quick facts
     // and their amounts):
-    const qfUlEl = this.shadowRoot.querySelector("p.subtitle > ul.facts"); // qf list <ul>
-    const qfArr = this.getQuickFactsArr; // get quick facts array
+    const qfUlEl = this.shadowRoot.querySelector("ul.facts"); // qf list <ul>
+    console.log("qfUlEl: " + qfUlEl);
+    const qfArr = getQuickFactsArr(data); // get quick facts array
+    console.log("qfArr: " + qfArr);
     for(let i = 0; i < qfArr.length; i++) {
       let qfListItem = document.createElement("li");
       qfListItem.setAttribute("class", "item");
@@ -651,8 +661,10 @@ class RecipeExpand extends HTMLElement {
     
     // Set/create steps list
     // (create list items, <li>'s, for individual steps):
-    const stepOlEl = document.querySelector('div.steps-wrapper > ol.steps'); // step list <ol>
-    const stepsArr = this.getRecInstrucitonsArr;
+    const stepOlEl = this.shadowRoot.querySelector('div.sub-body > ol.steps'); // step list <ol>
+    console.log("stepOlEl: " + stepOlEl);
+    const stepsArr = getRecInstructionsArr(data);
+    console.log("stepsArr: " + stepsArr);
     for(let i = 0; i < stepsArr.length; i++) {
       let stepListItem = document.createElement("li");
       stepListItem.setAttribute("class", "steps");
@@ -766,20 +778,20 @@ function searchForKey(object, key) {
 
   // gets img for recipe
   function getImgSrc(data) {
-    return searchForKey(data, "image");
+    return data["image"]; //searchForKey(data, "image");
   }
   
   // returns array of ingredients
   function getIngredArray(data) {
     // an array of ingredient objects:
     let ingredList = searchForKey(data, "extendedIngredients");
-    ingredListLen = ingredList.length;
+    let ingredListLen = ingredList.length;
     let ingredListArr = []
     // populate ingredients list (append each time):
     for(let i = 0; i < ingredListLen; i++) {
       let currIngred = ingredList[i];
       ingredListArr[i] = currIngred["amount"] + " "
-        + currIngred["units"] + " " + currIngred("name");
+        + currIngred["units"] + " " + currIngred["name"];
     }
     return ingredListArr;
   }
@@ -864,7 +876,7 @@ function searchForKey(object, key) {
   function getQuickFactsArr(data) {
     // populate array:
     let arrOfQFacts = [];
-    arrOfQFacts[0] = "Time: " + searchForKey(data, "readyInMinutes");
+    arrOfQFacts[0] = "Time: " + searchForKey(data, "readyInMinutes") + " minutes.";
     arrOfQFacts[1] = " Servings: " + searchForKey(data, "servings");
     arrOfQFacts[2] = "Dish Types: " + searchForKey(data, "dishTypes");
     return arrOfQFacts;
@@ -902,13 +914,16 @@ function searchForKey(object, key) {
    * @returns an array of the recipe instructions in order
    */
   function getRecInstructionsArr(data) {
-    let analyInstructs = searchForKey(data, "analyzedInstructions");
-    let steps = analyInstructs["steps"];
+    let analyInstructs = data["analyzedInstructions"];
+    console.log("analyInstructs: " + analyInstructs);
+    let steps = analyInstructs[0]["steps"];
+    console.log("steps: " + steps);
     let arrInstructs = [];
     // add instructions to arr:
     for(let i = 0; i < steps.length; i++) {
-      arrInstructs[i] = steps["step"];
+      arrInstructs[i] = steps[i]["step"];
     }
+    console.log("arrInstructs: " + arrInstructs);
     return arrInstructs;
   }
 
