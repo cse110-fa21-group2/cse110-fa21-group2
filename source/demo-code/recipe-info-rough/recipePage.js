@@ -33,7 +33,7 @@ window.addEventListener("resize", function(event) {
             x = document.getElementById("search");
             x.style.display = "none";
             x = document.querySelector('.icon');
-            x.style.display = "flex";
+            x.style.display = "block";
         }
         windowSize = 0;
     }

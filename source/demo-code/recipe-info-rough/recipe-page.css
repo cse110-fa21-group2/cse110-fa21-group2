@@ -16,7 +16,7 @@ body {
 
 .nav a {
   float: left;
-  display: flex;
+  display: block;
   color: black;
   text-align: center;
   padding: 1rem 1rem;
@@ -34,6 +34,7 @@ body {
 }
 
 a.nav-logo {
+  display: flex;
   align-items: center;
   height: 1.5rem;
 }
@@ -83,7 +84,11 @@ a.nav-logo {
     border-bottom: 2px solid black;
   }
 
-  .nav #links, div.search {
+  .nav #links{
+    display: none;
+  }
+
+  .nav.search {
     display: none;
   }
 
@@ -95,14 +100,15 @@ a.nav-logo {
     position: fixed !important;
   }
 
-  .nav a.nav-logo {
+  a.nav-logo {
     display: flex !important;
+    align-items: center;
+    height: 1.5rem;
   }
 
   .nav a, .nav input[type=text], .nav .search button {
     float: none;
     text-align: left;
-    display: inline-flex;
     margin: 0;
     padding: 1rem;
     border: none;
@@ -114,6 +120,7 @@ a.nav-logo {
   }
 
   .nav .search {
+    display: inline-flex;
     float: right;
     margin-right: 1rem;
     margin-bottom: .5rem;
