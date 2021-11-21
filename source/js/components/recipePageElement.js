@@ -1,4 +1,4 @@
-import getRouter from '/source/scripts/main.js';
+import getRouter from '/source/js/main.js';
 
 // RecipeExpand.js
 class RecipeExpand extends HTMLElement {
