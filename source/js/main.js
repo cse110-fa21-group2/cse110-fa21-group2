@@ -2,10 +2,10 @@
 // main.js
 
 // Import requried modules
-import Router from '/source/scripts/recipe_pages_router.js';
-import * as storageFuncs from '/source/scripts/storage.js';
-import * as fetcherFuncs from '/source/scripts/fetcher.js';
-import fetchedData from '/source/scripts/sampleRecipes.js';
+import Router from '/source/js/recipe_pages_router.js';
+import * as storageFuncs from '/source/js/storage/storage.js';
+import * as fetcherFuncs from '/source/js/storage/fetcher.js';
+import fetchedData from '/source/js/storage/sampleRecipes.js';
 // import * as fetchedData from '/sampleRecipes.json' assert {type: "json"};
 
 
