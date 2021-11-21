@@ -1,5 +1,6 @@
 import * as storageFuncs from './storage/storage.js';
 function init() {
+  // add a ingredient input row to dom
   let addIngredientButton = document.querySelector(".add-ingredient-button");
   addIngredientButton.addEventListener("click", (e) => {
     let createIngRoot = document.querySelector(".ingredient-input-list");
@@ -40,6 +41,7 @@ function init() {
     createIngRoot.appendChild(ingRow);
   });
 
+  // add step input to dom
   let addStepButton = document.querySelector(".add-step-button");
   addStepButton.addEventListener("click", (e) => {
     let createStepRoot = document.querySelector(".step-input-list");
@@ -49,13 +51,9 @@ function init() {
     stepInput.setAttribute("class", "form-control recipe-step-input");
     stepInput.setAttribute("id", `step-${allStepInput.length}`);
     stepInput.setAttribute("placeholder", `Step ${allStepInput.length + 1}`);
-
-    // let createStepLabel = document.querySelector("p");
-    // createStepLabel.innerHTML = `Step ${allStepInput.length + 1}`;
-    // createStepRoot.appendChild(createStepLabel);
     createStepRoot.appendChild(stepInput);
   });
-
+  // create data object save to local storage.
   let createButton = document.querySelector(".create-recipe-button");
   createButton.addEventListener("click", (e) => {
     const ingredientAmount = document.querySelectorAll(
@@ -167,9 +165,6 @@ function init() {
     storageFuncs.saveRecipeToList("created", recipeId)
 
     console.log(finalObject);
-
-
-
   });
 }
 
