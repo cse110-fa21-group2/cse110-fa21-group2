@@ -10,36 +10,35 @@ body {
 /* nav bar CSS style */
 
 .nav {
-  overflow: hidden;
-  border-bottom: 2px solid black;
-  position: fixed;
-  top: 0px;
-  width: 100%;
   background-color: white;
+  border-bottom: 2px solid black;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .nav a {
-  float: left;
-  display: block;
+  align-items: center;
   color: black;
-  text-align: center;
-  padding: 1rem 1rem;
-  text-decoration: none;
+  display: block;
+  float: left;
   font-size: 17px;
   height: 1.5rem;
-  margin:auto;
-  align-items: center;
-  
+  margin: auto;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
 }
 
 .nav a.icon {
-  float: right !important;
   display: none;
+  float: right !important;
 }
 
 a.nav-logo {
-  display: flex;
   align-items: center;
+  display: flex;
   height: 1.5rem;
 }
 
@@ -55,27 +54,27 @@ a.nav-logo {
   float: right;
 }
 
-.nav input[type=text] {
-  padding: .4rem;
-  margin-top: .6rem;
-  margin-bottom: .5rem;
-  font-size: 17px;
+.nav input[type="text"] {
   border: 1px solid grey;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
+  font-size: 17px;
+  margin-bottom: 0.5rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem;
 }
 
 .nav .search button {
-  float: right;
-  padding: .4rem .6rem;
-  margin-top: .6rem;
-  margin-right: 1rem;
-  margin-left: .5rem;
-  margin-bottom: .5rem;
   background: #ddd;
-  font-size: 17px;
   border: 1px solid grey;
+  border-radius: 0.2rem;
   cursor: pointer;
-  border-radius: .2rem;
+  float: right;
+  font-size: 17px;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem 0.6rem;
 }
 
 .nav .search button:hover {
@@ -84,59 +83,60 @@ a.nav-logo {
 
 @media screen and (max-width: 800px) {
   .nav {
-    overflow: hidden;
     border-bottom: 2px solid black;
+    overflow: hidden;
   }
 
-  div.links{
+  div.links {
     display: none;
   }
 
   .nav a.icon {
-    float: right !important;
     display: flex;
-    top: 0px !important;
-    right: 0px !important;
+    float: right !important;
     position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
   }
 
   a.nav-logo {
-    display: flex !important;
     align-items: center;
+    display: flex !important;
     height: 1.5rem;
   }
 
-  .nav a, .nav input[type=text], .nav .search button {
+  .nav a,
+  .nav input[type="text"],
+  .nav .search button {
+    border: none;
     float: none;
-    text-align: left;
     margin: 0;
     padding: 1rem;
-    border: none;
-
+    text-align: left;
   }
 
-  .nav input[type=text] {
+  .nav input[type="text"] {
     border: 1px solid #ccc;
   }
 
   .nav .search {
     display: none;
     float: left;
+    margin-bottom: 0.5rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    margin-bottom: .5rem;
   }
-
 }
+
 /* main CSS style */
 
 main {
   background-color: white;
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
-  margin-top: 5rem;
+  margin-bottom: 2.5rem;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 2.5rem;
+  margin-top: 5rem;
   max-width: 44rem;
   padding: 15px;
   transition: all 0.2s ease;
