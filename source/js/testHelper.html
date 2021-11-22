@@ -15,14 +15,16 @@
       localStorage.clear();
       //storeRecipeData Test: new category with two new recipe-------------
       storage.storeRecipeData("cat1", [
-        { id:624375, title: "cat1_recipe1" },
+        { id:296687, title: "cat1_recipe1" },
         { id:2, title: "cat1_recipe2" },
       ]);
+      /*
       helper.getRecipesByName('potato', 1)
         .then((data) => {
           console.log("Testing getRecipesByName");
           console.log(data);
       }); 
+      
       helper.getRecipesByCuisine("mexican",1)
         .then((data) => {
           console.log("Testing getRecipesByCuisine");
@@ -33,11 +35,13 @@
           console.log("Testing getRecipesByType");
           console.log(data);
       });
+      */
       helper.getRecipesByAutocomplete('chick', 1)
         .then((data) => {
           console.log("Testing getRecipesByAutocomplete");
           console.log(data);
       });
+      
     </script>
   </body>
 </html>

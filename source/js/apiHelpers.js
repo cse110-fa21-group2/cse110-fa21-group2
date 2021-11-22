@@ -1,22 +1,20 @@
 /* eslint-disable no-unused-vars */
 // helper functions for Spoonacular API
 // all these functions fetch for most popular recipes
-// TODO: sort by random?, look for easy recipe(maxReadyTime)?
+
 
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require('dotenv').config();
-
-// const fetch = require('node-fetch');// uncomment if using with nodejs
 // const { API_KEY } = process.env;// prevent exposing api key
-// const API_KEY = 'blahblahblah'
+const API_KEY = '';
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get detailed info from recipe ID's
  * @param {Object} idsToFetch - list of recipe ID's to fetch from API
- * @returns {Object} list of detailed info of recipes
+ * @returns {Object} list of recipe JSONs
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
@@ -44,9 +42,9 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
 }
 
 /**
- * Helper function to extract recipe ids from complex search
+ * Helper function to extract recipe ids from complex search ONLY
  * @param {Object} - list of recipes search results from complex search
- * @returns {Object} - [Recipes IDs to fetch, Recipe ids already in local storage]
+ * @returns {Object} - [Recipes IDs to fetch, Recipe JSONs already in local storage]
  */
 export function extractIDs(data) {
   const { results } = data;
@@ -54,17 +52,18 @@ export function extractIDs(data) {
     return [];
   }
   const idsToFetch = [];
-  const idsInLocalStorage = [];
+  const recipesInLocalStorage = [];
   const recipeData = getAllRecipes();
   results.forEach((result) => {
     const { id } = result;
     if (recipeData[id] == undefined) {
       idsToFetch.push(id);
     } else {
-      idsInLocalStorage.push(id);
+      recipesInLocalStorage.push(recipeData[id]);
     }
   });
-  return [idsToFetch, idsInLocalStorage];
+  console.log(idsToFetch, recipesInLocalStorage);
+  return [idsToFetch, recipesInLocalStorage];
 }
 
 /**
@@ -73,7 +72,7 @@ export function extractIDs(data) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByName(query, num = 5, offset = 0) {
@@ -91,11 +90,11 @@ export async function getRecipesByName(query, num = 5, offset = 0) {
         const ids = extractIDs(data);
         if (ids.length == 0) {
           console.log('No search results');
-          resolve([[], []]);
+          resolve([]);
         } else {
           getDetailedRecipeInfoBulk(ids[0])
             .then((fetchedRecipes) => {
-              resolve([fetchedRecipes, ids[1]]);
+              resolve(fetchedRecipes.concat(ids[1]));
             });
         }
       })
@@ -111,7 +110,7 @@ export async function getRecipesByName(query, num = 5, offset = 0) {
  * (Use this if searching by query returned not enough results)
  * @param {String} query - Query to autocomplete
  * @param {Number} [num=5] - max number of recipes to get
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByAutocomplete(query, num = 5) {
@@ -128,23 +127,21 @@ export async function getRecipesByAutocomplete(query, num = 5) {
       .then((data) => {
         if (!data) {
           console.log('No search results');
-          resolve([[], []]);
+          resolve([]);
         } else {
           // data is different format from complex search
-          const idsToFetch = [];
-          const idsInLocalStorage = [];
-          data.forEach((result) => {
-            const { id } = result;
-            if (localStorage.getItem('recipeData')[id]) {
-              idsToFetch.push(id);
-            } else {
-              idsInLocalStorage.push(id);
-            }
-          });
-          getDetailedRecipeInfoBulk(idsToFetch)
-            .then((fetchedRecipes) => {
-              resolve([fetchedRecipes, idsInLocalStorage]);
-            });
+          const passToExtractID = {};
+          passToExtractID.results = data;
+          const ids = extractIDs(passToExtractID);
+          if (ids.length == 0) {
+            console.log('No search results');
+            resolve([]);
+          } else {
+            getDetailedRecipeInfoBulk(ids[0])
+              .then((fetchedRecipes) => {
+                resolve(fetchedRecipes.concat(ids[1]));
+              });
+          }
         }
       })
       .catch((err) => {
@@ -177,11 +174,11 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
         const ids = extractIDs(data);
         if (ids.length == 0) {
           console.log('No search results');
-          resolve([[], []]);
+          resolve([]);
         } else {
           getDetailedRecipeInfoBulk(ids[0])
             .then((fetchedRecipes) => {
-              resolve([fetchedRecipes, ids[1]]);
+              resolve(fetchedRecipes.concat(ids[1]));
             });
         }
       })
@@ -214,11 +211,11 @@ export async function getRecipesByType(type, num = 5, offset = 0) {
         const ids = extractIDs(data);
         if (ids.length == 0) {
           console.log('No search results');
-          resolve([[], []]);
+          resolve([]);
         } else {
           getDetailedRecipeInfoBulk(ids[0])
             .then((fetchedRecipes) => {
-              resolve([fetchedRecipes, ids[1]]);
+              resolve(fetchedRecipes.concat(ids[1]));
             });
         }
       })
