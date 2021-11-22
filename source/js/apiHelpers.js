@@ -8,7 +8,8 @@ import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require('dotenv').config();
 
 // const fetch = require('node-fetch');// uncomment if using with nodejs
-const { API_KEY } = process.env;// prevent exposing api key
+// const { API_KEY } = process.env;// prevent exposing api key
+// const API_KEY = 'blahblahblah'
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
