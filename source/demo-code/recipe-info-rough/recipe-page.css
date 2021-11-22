@@ -9,20 +9,38 @@ body {
 
 /* nav bar CSS style */
 
-nav {
-  align-items: center;
+.nav {
+  overflow: hidden;
   border-bottom: 2px solid black;
-  display: flex;
-  height: 4rem;
-  justify-content: space-evenly;
-  position: relative;
+  position: fixed;
+  top: 0px;
   width: 100%;
-  z-index: 99;
+  background-color: white;
 }
 
-.nav-logo {
+.nav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 1rem 1rem;
+  text-decoration: none;
+  font-size: 17px;
+  height: 1.5rem;
+  margin:auto;
   align-items: center;
+  
+}
+
+.nav a.icon {
+  float: right !important;
+  display: none;
+}
+
+a.nav-logo {
   display: flex;
+  align-items: center;
+  height: 1.5rem;
 }
 
 .nav-title {
@@ -33,12 +51,92 @@ nav {
   height: 3rem;
 }
 
+.nav .search {
+  float: right;
+}
+
+.nav input[type=text] {
+  padding: .4rem;
+  margin-top: .6rem;
+  margin-bottom: .5rem;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-radius: .2rem;
+}
+
+.nav .search button {
+  float: right;
+  padding: .4rem .6rem;
+  margin-top: .6rem;
+  margin-right: 1rem;
+  margin-left: .5rem;
+  margin-bottom: .5rem;
+  background: #ddd;
+  font-size: 17px;
+  border: 1px solid grey;
+  cursor: pointer;
+  border-radius: .2rem;
+}
+
+.nav .search button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 800px) {
+  .nav {
+    overflow: hidden;
+    border-bottom: 2px solid black;
+  }
+
+  div.links{
+    display: none;
+  }
+
+  .nav a.icon {
+    float: right !important;
+    display: flex;
+    top: 0px !important;
+    right: 0px !important;
+    position: fixed !important;
+  }
+
+  a.nav-logo {
+    display: flex !important;
+    align-items: center;
+    height: 1.5rem;
+  }
+
+  .nav a, .nav input[type=text], .nav .search button {
+    float: none;
+    text-align: left;
+    margin: 0;
+    padding: 1rem;
+    border: none;
+
+  }
+
+  .nav input[type=text] {
+    border: 1px solid #ccc;
+  }
+
+  .nav .search {
+    display: none;
+    float: left;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: .5rem;
+  }
+
+}
 /* main CSS style */
 
 main {
   background-color: white;
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
-  margin: 30px auto;
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2.5rem;
   max-width: 44rem;
   padding: 15px;
   transition: all 0.2s ease;
