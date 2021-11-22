@@ -100,6 +100,7 @@ function createExploreRecipeCards(storageCategoryData) {
 
 /**
  * active when search button click
+ * store Recipe to local with query as category name
  * Does NOT apply any filter & sort, only search by name
  * 1.add even handler to search button to fetch recipes for query 
  * 2.add fetched recipes to local Storage
@@ -112,7 +113,7 @@ async function searchButtonHandler() {
   let searchResult = await apiFuncs.getRecipesByName(query, num);
   // console.log("data from API");
   // console.log(searchResult);
-  storageFuncs.storeRecipeData(query, searchResult); //will not duplicate, if same id then replace
+  storageFuncs.storeRecipeData(query, searchResult); //not duplicate, if same id then replace
   // console.log("local data");
   // console.log(fetcherFuncs.getAllCategoryRecipe());
   // console.log(fetcherFuncs.getAllCategoryRecipeId());
