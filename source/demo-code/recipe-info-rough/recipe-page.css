@@ -70,10 +70,10 @@ a.nav-logo {
   cursor: pointer;
   float: right;
   font-size: 17px;
+  margin: 0.6rem;
   margin-bottom: 0.5rem;
   margin-left: 0.5rem;
   margin-right: 1rem;
-  margin-top: 0.6rem;
   padding: 0.4rem 0.6rem;
 }
 
@@ -122,7 +122,7 @@ a.nav-logo {
   .nav .search {
     display: none;
     float: left;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
   }
@@ -133,10 +133,10 @@ a.nav-logo {
 main {
   background-color: white;
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+  margin: 5rem;
   margin-bottom: 2.5rem;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5rem;
   max-width: 44rem;
   padding: 15px;
   transition: all 0.2s ease;
@@ -145,6 +145,7 @@ main {
 
 /* generic button CSS style */
 
+/* stylelint-disable-next-line no-descending-specificity */
 button {
   border: 1px solid rgb(0 0 0);
   color: rgb(0 0 0);
@@ -162,6 +163,7 @@ button {
 
 .org-btn {
   background-color: #fff0d4;
+  width: auto;
 }
 
 .unit-btn {
@@ -315,6 +317,7 @@ img.main-recipe-image {
 
 /* text CSS style */
 
+/* stylelint-disable-next-line no-descending-specificity */
 a {
   color: black;
   text-decoration: none;
