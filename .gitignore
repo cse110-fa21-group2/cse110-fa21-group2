@@ -1,3 +1,5 @@
 .vscode/*
 /node_modules
 .env
+/source/js/test_search_handler.html
+/source/js/apiHelpers copy.js

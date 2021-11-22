@@ -96,3 +96,29 @@ function createExploreRecipeCards(storageCategoryData) {
     })
   })   
 }
+
+
+/**
+ * active when search button click
+ * Does NOT apply any filter & sort, only search by name
+ * 1.add even handler to search button to fetch recipes for query 
+ * 2.add fetched recipes to local Storage
+ * 3.
+ */
+async function searchButtonHandler() {
+  let query = document.querySelector('input[name="Search recipes input"]').value;
+  let num = 2;    //hard coded, set small num for testing
+
+  let searchResult = await apiFuncs.getRecipesByName(query, num);
+  // console.log("data from API");
+  // console.log(searchResult);
+  storageFuncs.storeRecipeData(query, searchResult); //will not duplicate, if same id then replace
+  // console.log("local data");
+  // console.log(fetcherFuncs.getAllCategoryRecipe());
+  // console.log(fetcherFuncs.getAllCategoryRecipeId());
+}
+//search button event listener
+let sButton = document.querySelector('button[type="submit"]');
+sButton.addEventListener('click', () => searchButtonHandler());
+
+
