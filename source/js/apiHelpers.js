@@ -62,7 +62,6 @@ export function extractIDs(data) {
       recipesInLocalStorage.push(recipeData[id]);
     }
   });
-  console.log(idsToFetch, recipesInLocalStorage);
   return [idsToFetch, recipesInLocalStorage];
 }
 
