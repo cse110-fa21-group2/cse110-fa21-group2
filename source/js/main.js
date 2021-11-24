@@ -1,7 +1,8 @@
 /* eslint-disable no-plusplus */
 // main.js
 /**
- * NOTE: TO USE:
+ * ***********
+ * NOTE: TO USE THE ROUTER:
  * 	There are three file-scope variables used:
  * 		1. pagesArr 				// array of ALL HTML section elements representing the pages
  * 		2. pageNames 				// string array of ALL names of the pages
@@ -14,6 +15,7 @@
  * 		(i.e., where both are initialized)
  * 	- For pagesArrLinkEls, modify the createArrPageLinks() function to create links
  * 		only for those pages you wish to have in the header/navbar of the website.
+ * ***********
  */
 
 // Import requried modules
