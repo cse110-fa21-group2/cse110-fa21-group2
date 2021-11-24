@@ -312,6 +312,7 @@ function createExploreRecipeCards(storageCategoryData) {
       // document.querySelector('recipe-expand').data = recipeData[recipes[i]];
     })
   })   
+}
 
 // get router:
 export default function getRouter() {
