@@ -166,7 +166,7 @@ class RecipeCard extends HTMLElement {
       this.saved = !this.saved;
     };
 
-    // saveRecipe.addEventListener("click", flipSaved);
+    //saveRecipe.addEventListener("click", flipSaved);
     saveRecipe.addEventListener("click", flipSavedBackend);
     saveRecipe.appendChild(saveIcon);
 
@@ -182,6 +182,8 @@ class RecipeCard extends HTMLElement {
 
       const clickDelete = () => {
         storageFuncs.deleteCreatedRecipe(this.json.id);
+        const currentCard = document.getElementById(this.json.id);
+        currentCard.remove();
       };
 
       deleteRecipe.addEventListener('click', clickDelete);
@@ -191,6 +193,7 @@ class RecipeCard extends HTMLElement {
       deleteIcon.classList.add("fa-trash-alt");
       deleteRecipe.appendChild(deleteIcon);
       footer.appendChild(deleteRecipe);
+
     }
 
     card.appendChild(footer);

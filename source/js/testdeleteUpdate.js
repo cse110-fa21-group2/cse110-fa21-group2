@@ -5488,6 +5488,8 @@ async function init() {
   main.appendChild(temp)  
   for (let i = 0 ; i < tempData.length / 2; i++){
     let recipeCardTemp = document.createElement("recipe-card");
+    // recipeCardTemp.setAttribute('id',tempData[i].id);
+    recipeCardTemp.id = tempData[i].id
     recipeCardTemp.data = tempData[i];
     temp.appendChild(recipeCardTemp);
   }
