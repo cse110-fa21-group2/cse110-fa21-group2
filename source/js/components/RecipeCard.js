@@ -1,15 +1,34 @@
+import * as fetcherFuncs from "../storage/fetcher.js";
+import * as storageFuncs from "../storage/storage.js";
+
 class RecipeCard extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: "open" });
     this.saved = false;
+    this.created = false;
   }
 
   set data(data) {
     // TODO: update info based on json data
     this.json = data;
+    // check if it's stored in local database
+    const allSavedList = fetcherFuncs.getAllSavedRecipeId();
+    let savedList = [];
+    let createdList = [];
 
-    const styleElem = document.createElement('style');
+    if (allSavedList) {
+      savedList = allSavedList["favorite"];
+      createdList = allSavedList["created"];
+    }
+    if (savedList && savedList.includes(this.json.id)) {
+      this.saved = true;
+    }
+    if (createdList && createdList.includes(this.json.id)) {
+      this.created = true;
+    }
+
+    const styleElem = document.createElement("style");
     const styles = `
     @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
       .recipe-card {
@@ -88,60 +107,91 @@ class RecipeCard extends HTMLElement {
     styleElem.innerHTML = styles;
     this.shadowRoot.append(styleElem);
 
-    const card = document.createElement('article');
-    card.classList.add('recipe-card');
-    card.classList.add('card-shadow');
+    const card = document.createElement("article");
+    card.classList.add("recipe-card");
+    card.classList.add("card-shadow");
 
-    const header = document.createElement('div');
-    header.classList.add('card-header');
-    header.classList.add('card-img');
+    const header = document.createElement("div");
+    header.classList.add("card-header");
+    header.classList.add("card-img");
 
-    const recipePic = document.createElement('img');
-    recipePic.src = 'https://source.unsplash.com/random';
+    const recipePic = document.createElement("img");
+    recipePic.src = "https://source.unsplash.com/random";
 
     header.appendChild(recipePic);
     card.appendChild(header);
 
-    const body = document.createElement('div');
-    body.classList.add('card-body');
+    const body = document.createElement("div");
+    body.classList.add("card-body");
 
-    const title = document.createElement('h1');
-    title.innerHTML = 'Recipe Name';
+    const title = document.createElement("h1");
+    title.innerHTML = "Recipe Name";
 
     body.appendChild(title);
     card.appendChild(body);
 
-    const footer = document.createElement('div');
-    footer.classList.add('card-footer');
+    const footer = document.createElement("div");
+    footer.classList.add("card-footer");
 
-    const viewRecipe = document.createElement('button');
-    viewRecipe.classList.add('card-btn');
-    viewRecipe.innerHTML = 'View Recipe';
+    const viewRecipe = document.createElement("button");
+    viewRecipe.classList.add("card-btn");
+    viewRecipe.innerHTML = "View Recipe";
 
-    const saveRecipe = document.createElement('button');
-    saveRecipe.classList.add('card-btn');
-    saveRecipe.classList.add('card-btn-outline');
+    const saveRecipe = document.createElement("button");
+    saveRecipe.classList.add("card-btn");
+    saveRecipe.classList.add("card-btn-outline");
+    saveRecipe.classList.add("card-save-button");
 
-    const saveIcon = document.createElement('i');
-    saveIcon.classList.add('far');
-    saveIcon.classList.add('fa-heart');
+    const saveIcon = document.createElement("i");
+    saveIcon.classList.add("far");
+    saveIcon.classList.add("fa-heart");
 
     const flipSaved = (element) => {
       if (this.saved) {
-        element.children[0].classList.add('far');
-        element.children[0].classList.remove('fas');
+        element.children[0].classList.add("far");
+        element.children[0].classList.remove("fas");
       } else {
-        element.children[0].classList.remove('far');
-        element.children[0].classList.add('fas');
+        element.children[0].classList.remove("far");
+        element.children[0].classList.add("fas");
+      }
+      this.saved = !this.saved;
+    };
+    const flipSavedBackend = () => {
+      if (this.saved) {
+        // item is already saved, unsave it
+        storageFuncs.removeRecipeFromList("favorite", this.json.id);
+      } else {
+        storageFuncs.saveRecipeToList("favorite", this.json.id);
       }
       this.saved = !this.saved;
     };
 
-    saveRecipe.addEventListener('onclick', flipSaved);
+    // saveRecipe.addEventListener("click", flipSaved);
+    saveRecipe.addEventListener("click", flipSavedBackend);
     saveRecipe.appendChild(saveIcon);
 
     footer.appendChild(viewRecipe);
     footer.appendChild(saveRecipe);
+
+    // user can only delete if the recipe is user created
+    if (this.created) {
+      const deleteRecipe = document.createElement("button");
+      deleteRecipe.classList.add("card-btn");
+      deleteRecipe.classList.add("card-btn-outline");
+      deleteRecipe.classList.add("card-delete-button");
+
+      const clickDelete = () => {
+        storageFuncs.deleteCreatedRecipe(this.json.id);
+      };
+
+      deleteRecipe.addEventListener('click', clickDelete);
+
+      const deleteIcon = document.createElement("i");
+      deleteIcon.classList.add("fas");
+      deleteIcon.classList.add("fa-trash-alt");
+      deleteRecipe.appendChild(deleteIcon);
+      footer.appendChild(deleteRecipe);
+    }
 
     card.appendChild(footer);
 
@@ -153,4 +203,4 @@ class RecipeCard extends HTMLElement {
   }
 }
 
-customElements.define('recipe-card', RecipeCard);
+customElements.define("recipe-card", RecipeCard);
