@@ -1,20 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
-    crossorigin="anonymous">
-    <script src="../../components/RecipeCard.js" type="module"></script>
-    <script src="./recipe.js"></script>
-</head>
-<body>
-  <section class="main">
-    <i class="far fa-heart"></i>
-    <i class="fas fa-heart"></i>
-  </section>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../styles/recipe-card.css" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <script src="../../js/components/RecipeCard.js" type="module"></script>
+    <!--<script src="./recipe.js"></script>-->
+  </head>
+  <body>
+    <script>
+      function swapClass(element) {
+        if (element.children[0].classList.contains("far")) {
+          element.children[0].classList.add("fas");
+          element.children[0].classList.remove("far");
+        } else {
+          element.children[0].classList.add("far");
+          element.children[0].classList.remove("fas");
+        }
+      }
+    </script>
+
+    <main>
+      <!-- Card 1 -->
+      <section>
+        <div
+          class="recipe-card card-shadow"
+          style="
+            background-image: url('https://spoonacular.com/recipeImages/776505-556x370.jpg');
+          "
+        >
+          <div class="rating">
+            <div class="stars">
+              <div class="star">
+                <i class="fas fa-star"><span>4.96</span></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <button class="astext">Sausage & Pepperoni Stromboli</button>
+            <div class="favorite">
+              <button
+                class="card-btn card-btn-outline"
+                onclick="swapClass(this)"
+              >
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Card 2 -->
+      <section>
+        <div
+          class="recipe-card card-shadow"
+          style="
+            background-image: url('https://spoonacular.com/recipeImages/715477-556x370.jpg');
+          "
+        >
+          <div class="rating">
+            <div class="stars">
+              <div class="star">
+                <i class="fas fa-star"><span>4.96</span></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <button class="astext">The BEST Lemon Bars</button>
+            <div class="favorite">
+              <button
+                class="card-btn card-btn-outline"
+                onclick="swapClass(this)"
+              >
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Card 3 -->
+      <section>
+        <div
+          class="recipe-card card-shadow"
+          style="
+            background-image: url(https://myhappyplates-cdn.s3.amazonaws.com/images/recipes/22ca5843-8cc1-4e0d-ab0a-ea8520b16e13.jpeg);
+          "
+        >
+          <div class="rating">
+            <div class="stars">
+              <div class="star">
+                <i class="fas fa-star"><span>4.96</span></i>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <button class="astext">Spicy Sausage Soup</button>
+            <div class="favorite">
+              <button
+                class="card-btn card-btn-outline"
+                onclick="swapClass(this)"
+              >
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
