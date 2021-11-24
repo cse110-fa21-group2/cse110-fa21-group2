@@ -2,20 +2,13 @@
 // main.js
 
 // Import requried modules
-<<<<<<< HEAD
-import Router from '/source/js/recipe_pages_router.js';
+import Router from '/source/js/Router.js';
 import * as storageFuncs from '/source/js/storage/storage.js';
 import * as fetcherFuncs from '/source/js/storage/fetcher.js';
 import fetchedData from '/source/js/storage/sampleRecipes.js';
 // import * as fetchedData from '/sampleRecipes.json' assert {type: "json"};
 
 
-=======
-import Router from './Router.js';
-import * as storageFuncs from './storage/storage.js';
-import * as fetcherFuncs from './storage/fetcher.js';
-import * as apiFuncs from './apiHelpers.js';
->>>>>>> 6ce3ac9f01d5fdd8f9a3808c5041010894aa448c
 
 // Variable declarations
 let router;
@@ -35,15 +28,13 @@ router = new Router(() => {
 	document.querySelector('section.section--recipe-cards').classList.remove("hidden");
 
 	// recipeInfoPage.classList.add('hidden');
-	document.querySelector('section.section--recipe-expand').classList.add('hidden')
+	document.querySelector('section.section--recipe-expand').classLik8st.add('hidden')
 
 });
 
 window.addEventListener('DOMContentLoaded', init);
 
 async function init() {
-  console.log("Initializing");
-  createRecipeCards();
   // TODO
   // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
   // Populate explore page cards
@@ -69,7 +60,6 @@ async function init() {
 
   // Function calls
   // Fetch recipes and store locally if storage is empty.
-  /*
   let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
 	// console.log("storageCategoryData: ");
 	// console.log(storageCategoryData);
@@ -96,7 +86,6 @@ async function init() {
   createExploreRecipeCards(storageCategoryData);
 	// console.log("After createExploreRecipeCards()");
   
-<<<<<<< HEAD
   const storageSavedData = fetcherFuncs.getAllSavedRecipe();
 	console.log("After storageSavedData fetcherFuncs");
 	bindPopstate();
@@ -157,6 +146,7 @@ function createExploreRecipeCards(storageCategoryData) {
 				document.querySelector('section.section--recipe-cards').classList.add('hidden');
 				document.querySelector('section.section--recipe-expand').classList.remove('hidden');
 				document.querySelector('recipe-expand').data = recipeCard.data;
+
 				
 			});
 			// binds recipeCard for clicking to go to expanded page
@@ -177,9 +167,6 @@ function createExploreRecipeCards(storageCategoryData) {
 			// document.querySelector('recipe-cards--wrapper').appendChild(recipeCard);
 		}
   })   
-=======
-  const storageSavedData = fetcherFuncs.getAllSavedRecipe();*/
->>>>>>> 6ce3ac9f01d5fdd8f9a3808c5041010894aa448c
 }
 
 /**
@@ -195,33 +182,11 @@ function prepRecipeForClick(rec, recPageName) {
 }
 
 /**
-<<<<<<< HEAD
  * Binds the 'popstate' event on the window (which fires when the back &
  * forward buttons are pressed) so the navigation will continue to work 
  * as expected. (Hint - you should be passing in which page you are on
  * in your Router when you push your state so you can access that page
  * info in your popstate function)
-=======
- * Populates index.html with recipecards, as defined in
- * RecipeCard.js
- * @param options a json object to be edited in the future for options
- * ALEX and FRED- Start here.
- * Alex- Edit this into a for loop that populates all the pages and sections. 
- * You might need to edit index.html to make tags more specific.
- * Fred- The recipe card exists, but is not populated with information.
- * We need it to actually populate with the data.
- * You might need to edit RecipeCard.js
- */
-function createRecipeCards(options = {}){
-  const recipeCard = document.createElement('recipe-card');
-  recipeCard.data = {};
-  document.querySelector('.recipe-row').appendChild(recipeCard);
-}
-
-/**
- * Generates the <recipe-card> elements from fetched recipes and appends them to page
- * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
->>>>>>> 6ce3ac9f01d5fdd8f9a3808c5041010894aa448c
  */
  function bindPopstate() {
   /**

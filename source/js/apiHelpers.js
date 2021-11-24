@@ -4,9 +4,9 @@
 // TODO: sort by random?, look for easy recipe(maxReadyTime)?
 
 // eslint-disable-next-line import/no-unresolved
-require('dotenv').config();
+//require('dotenv').config();
 // const fetch = require('node-fetch');// uncomment if using with nodejs
-const { API_KEY } = process.env;// prevent exposing api key
+const { API_KEY } = "";// TODO put in api key
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
@@ -143,23 +143,23 @@ async function getRecipesByType(type, num) {
  * @returns {Object} list of recipes with detailed info
  */
 // eslint-disable-next-line no-unused-vars
-async function getRecipesByCuisine(cuisine, num, sort) {
-  return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=${sort}`, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': HOST,
-        'x-rapidapi-key': API_KEY,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const ids = extractIDs(data);
-        resolve(getDetailedRecipeInfoBulk(ids));
-      })
-      .catch((err) => {
-        console.log('Error in searching for recipes by cuisine.');
-        reject(err);
-      });
-  });
-}
+// async function getRecipesByCuisine(cuisine, num, sort) {
+//   return new Promise((resolve, reject) => {
+//     fetch(`https://${HOST}/recipes/complexSearch?apiKey=${API_KEY}&cuisine=${cuisine}&number=${num}&sort=${sort}`, {
+//       method: 'GET',
+//       headers: {
+//         'x-rapidapi-host': HOST,
+//         'x-rapidapi-key': API_KEY,
+//       },
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         const ids = extractIDs(data);
+//         resolve(getDetailedRecipeInfoBulk(ids));
+//       })
+//       .catch((err) => {
+//         console.log('Error in searching for recipes by cuisine.');
+//         reject(err);
+//       });
+//   });
+// }
