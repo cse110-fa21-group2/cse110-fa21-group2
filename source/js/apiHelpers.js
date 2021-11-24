@@ -6,7 +6,7 @@
 // eslint-disable-next-line import/no-unresolved
 //require('dotenv').config();
 // const fetch = require('node-fetch');// uncomment if using with nodejs
-const { API_KEY } = "c7470832aamshae843e1eaeb3a22p125d0djsn9c13a4a07fb8";// TODO prevent exposing api key
+const { API_KEY } = "";// TODO put in api key
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
