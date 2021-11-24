@@ -93,9 +93,25 @@ function prepRecipeForClick(rec, recPageName) {
  * You might need to edit RecipeCard.js
  */
 function createRecipeCards(options = {}){
-  const recipeCard = document.createElement('recipe-card');
-  recipeCard.data = {};
-  document.querySelector('.recipe-row').appendChild(recipeCard);
+  // TESTER VARIABLES //
+  const objDummyData = {
+    category1: {name: "fried rice", calories: "too many"},
+    category2: {name: "ramen", calories: "idk prob 500"},
+  };
+
+  const jsonDummyData = JSON.stringify(objDummyData);
+
+  const listRecipeRows = document.querySelector('.explore').getElementsByClassName('recipe-row');
+  console.log(`Printing recipe rows: ${JSON.stringify(listRecipeRows)}`)
+
+  // Populate sections with cards
+  for (let i = 0; i < listRecipeRows.length; i++) {
+    Object.keys(objDummyData).forEach((category) => {
+      const recipeCard = document.createElement('recipe-card');
+      recipeCard.data = objDummyData[`${category}`];
+      listRecipeRows[i].appendChild(recipeCard);
+    })
+  }
 }
 
 /**
