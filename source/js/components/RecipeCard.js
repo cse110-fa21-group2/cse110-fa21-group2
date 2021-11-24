@@ -116,7 +116,7 @@ class RecipeCard extends HTMLElement {
     header.classList.add("card-img");
 
     const recipePic = document.createElement("img");
-    recipePic.src = "https://source.unsplash.com/random";
+    recipePic.src = this.json.image;
 
     header.appendChild(recipePic);
     card.appendChild(header);
@@ -125,7 +125,7 @@ class RecipeCard extends HTMLElement {
     body.classList.add("card-body");
 
     const title = document.createElement("h1");
-    title.innerHTML = "Recipe Name";
+    title.innerHTML = this.json.title;
 
     body.appendChild(title);
     card.appendChild(body);
@@ -143,31 +143,33 @@ class RecipeCard extends HTMLElement {
     saveRecipe.classList.add("card-save-button");
 
     const saveIcon = document.createElement("i");
-    saveIcon.classList.add("far");
+    if(this.saved){
+      saveIcon.classList.add("fas");
+    } else {
+      saveIcon.classList.add("far");
+    }
+    
     saveIcon.classList.add("fa-heart");
 
-    const flipSaved = (element) => {
+    const flipSaved = () => {
+      const currCard = document.getElementById(this.json.id);
+      const shadowRoot = currCard.shadowRoot;
+      const element = shadowRoot.querySelector('.card-save-button').querySelector('i');
+
       if (this.saved) {
-        element.children[0].classList.add("far");
-        element.children[0].classList.remove("fas");
-      } else {
-        element.children[0].classList.remove("far");
-        element.children[0].classList.add("fas");
-      }
-      this.saved = !this.saved;
-    };
-    const flipSavedBackend = () => {
-      if (this.saved) {
-        // item is already saved, unsave it
+        element.classList.add("far");
+        element.classList.remove("fas");
         storageFuncs.removeRecipeFromList("favorite", this.json.id);
       } else {
+        element.classList.remove("far");
+        element.classList.add("fas");
         storageFuncs.saveRecipeToList("favorite", this.json.id);
       }
       this.saved = !this.saved;
     };
 
-    //saveRecipe.addEventListener("click", flipSaved);
-    saveRecipe.addEventListener("click", flipSavedBackend);
+
+    saveRecipe.addEventListener("click", flipSaved);
     saveRecipe.appendChild(saveIcon);
 
     footer.appendChild(viewRecipe);
@@ -186,14 +188,13 @@ class RecipeCard extends HTMLElement {
         currentCard.remove();
       };
 
-      deleteRecipe.addEventListener('click', clickDelete);
+      deleteRecipe.addEventListener("click", clickDelete);
 
       const deleteIcon = document.createElement("i");
       deleteIcon.classList.add("fas");
       deleteIcon.classList.add("fa-trash-alt");
       deleteRecipe.appendChild(deleteIcon);
       footer.appendChild(deleteRecipe);
-
     }
 
     card.appendChild(footer);
