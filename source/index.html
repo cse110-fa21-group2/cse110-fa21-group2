@@ -4,18 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-  <link rel="stylesheet" href="/source/styles/main.css">
-  <link rel="stylesheet" href="/source/styles/page-layout.css">
-  <link rel="stylesheet" href="/source/demo-code/recipe-info-rough/recipe-page.css">
-=======
+
   <!-- link stylesheets -->
   <link rel="stylesheet" href="./styles/main.css">
   <link rel="stylesheet" href="./styles/page-layout.css">
   <link rel="stylesheet" href="./styles/recipe-card.css">
   <link rel="stylesheet" href="./styles/createRecipe.css">
   <!-- What is this? -->
->>>>>>> 6ce3ac9f01d5fdd8f9a3808c5041010894aa448c
   <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
   <!-- Bootstrap -->
   <link
@@ -91,7 +86,6 @@
       </div>
     </section>
 
-<<<<<<< HEAD
     <!--Alex added:-->
     <section class="explore hidden">
       <div class="explore--wrapper">
@@ -117,7 +111,6 @@
     	<recipe-expand></recipe-expand>
     </section>
 
-=======
     <section class="explore">
       <div class="explore-section">
         <h1 class="row-title">Trending Recipes</h1>
@@ -357,7 +350,198 @@
       </form>
     </section>
 
->>>>>>> 6ce3ac9f01d5fdd8f9a3808c5041010894aa448c
+
+    </section>
+
+    <section class="saved-recipes hidden">
+      <div class="saved-recipe-header">
+        <select name="savedLists" class="list-dropdown">
+          <option value="List 1">List 1 saved recipes</option>
+          <option value="List 2">List 2 created recipes</option>
+          <option value="List 3">List 3 TODO</option>
+        </select>
+        <button class="edit-btn">Manage Lists</button>
+      </div>
+      <div class="results-grid">
+          TODO- Populate with cards
+      </div>
+    </section>
+
+    <section class="search-results hidden">
+      <h1>Top recipes for "bread"</h1>
+      <div class="results-grid">
+        TODO- populate with cards
+      </div>
+    </section>
+
+    <section class="recipe-info hidden">
+      
+    </section>
+
+    <section class="create-recipe-page container hidden">
+      <form class="create-recipe-page-form">
+        <h2 class="create-title">Name:</h2>
+        <input
+          type="text"
+          class="form-control recipe-input-name"
+          placeholder="name of recipe"
+        />
+
+        <h2 class="create-title">Summary:</h2>
+        <textarea
+          class="form-control recipe-input-summary"
+          placeholder="Summary of recipe"
+        ></textarea>
+
+        <h2 class="create-title">Nutrition Facts:</h2>
+        <textarea
+          class="form-control recipe-input-nutrition"
+          placeholder="Nutrition Facts"
+        ></textarea>
+
+        <div class="row">
+          <div class="col-6">
+            <h2 class="create-title">Ingredients:</h2>
+
+            <p class="create-title-fact">Servings:</p>
+            <input
+              type="number"
+              class="form-control ingredient-serving-input"
+              placeholder="serving size"
+            />
+
+            <div class="row ingredient-title">
+              <div class="col">
+                <p>Name:</p>
+              </div>
+              <div class="col">
+                <p>Amount:</p>
+              </div>
+              <div class="col">
+                <p>Unit:</p>
+              </div>
+            </div>
+
+            <div class="ingredient-input-list">
+              <div class="row">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control recipe-ingredient-name"
+                    placeholder="Name"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="number"
+                    class="form-control recipe-ingredient-amount"
+                    placeholder="Amount"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control recipe-ingredient-unit"
+                    placeholder="Unit"
+                  />
+                </div>
+              </div>
+
+              <div class="row create-ingredient-fact">
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control recipe-ingredient-name"
+                    placeholder="Name"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="number"
+                    class="form-control recipe-ingredient-amount"
+                    placeholder="Amount"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control recipe-ingredient-unit"
+                    placeholder="Unit"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="add-ingredient-button-wrapper">
+              <button
+                type="button"
+                class="btn btn-dark add-ingredient-button"
+              >
+                Add Ingredients
+              </button>
+            </div>
+          </div>
+          <div class="col-6">
+            <h2 class="create-title">Facts:</h2>
+
+            <p class="create-title-fact">Prep Time (minutes):</p>
+            <input
+              type="number"
+              class="form-control recipe-preptime"
+              placeholder="preptime"
+            />
+            <p class="create-title-fact">Cook Time (minutes):</p>
+            <input
+              type="number"
+              class="form-control recipe-cooktime"
+              placeholder="cooktime"
+            />
+            <p class="create-title-fact">Recipe Image URL:</p>
+            <input
+              type="text"
+              class="form-control recipe-image-url"
+              placeholder="Url"
+            />
+            <p class="create-title-fact">Rating(0-5):</p>
+            <input
+              type="number"
+              class="form-control recipe-rating"
+              placeholder="Rating"
+              min=0
+              max=5
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <h2 class="create-title">Instructions:</h2>
+          <div class="step-input-list">
+            <input
+              type="text"
+              class="form-control recipe-step-input"
+              id="0"
+              placeholder="Step 1"
+            />
+            <input
+              type="text"
+              class="form-control recipe-step-input"
+              id="1"
+              placeholder="Step 2"
+            />
+          </div>
+          <div class="add-step-button-wrapper">
+            <button type="button" class="btn btn-dark add-step-button">
+              Add More Steps
+            </button>
+          </div>
+        </div>
+        <div class="create-recipe-button-wrapper">
+          <button type="button" class="btn btn-dark create-recipe-button">
+            Create Recipe
+          </button>
+        </div>
+      </form>
+    </section>
+
   </main>
 </body>
 </html>

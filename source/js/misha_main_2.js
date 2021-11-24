@@ -2,10 +2,12 @@
 // main.js
 
 // Import requried modules
+
 import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
+
 
 // Variable declarations
 let router;
@@ -85,7 +87,8 @@ async function init() {
   }
   createExploreRecipeCards(storageCategoryData);
 	// console.log("After createExploreRecipeCards()");
-  */ 
+	*/ 
+  
   const storageSavedData = fetcherFuncs.getAllSavedRecipe();
 	console.log("After storageSavedData fetcherFuncs");
 	bindPopstate();
@@ -169,7 +172,6 @@ function createExploreRecipeCards(storageCategoryData) {
 
   const storageSavedData = fetcherFuncs.getAllSavedRecipe();
 
-
 }
 
 /**
@@ -184,8 +186,14 @@ function prepRecipeForClick(rec, recPageName) {
   });
 }
 
-
 /**
+
+ * Binds the 'popstate' event on the window (which fires when the back &
+ * forward buttons are pressed) so the navigation will continue to work 
+ * as expected. (Hint - you should be passing in which page you are on
+ * in your Router when you push your state so you can access that page
+ * info in your popstate function)
+
  * Populates index.html with recipecards, as defined in
  * RecipeCard.js
  * @param options a json object to be edited in the future for options
@@ -205,6 +213,7 @@ function createRecipeCards(options = {}){
 /**
  * Generates the <recipe-card> elements from fetched recipes and appends them to page
  * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
+
  */
  function bindPopstate() {
   /**
