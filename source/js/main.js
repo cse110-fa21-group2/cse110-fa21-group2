@@ -2,10 +2,10 @@
 // main.js
 
 // Import requried modules
-import Router from './Router';
-import * as storageFuncs from './storage/storage';
-import * as fetcherFuncs from './storage/fetcher';
-import * as apiFuncs from './apiHelpers';
+import Router from './Router.js';
+import * as storageFuncs from './storage/storage.js';
+import * as fetcherFuncs from './storage/fetcher.js';
+import * as apiFuncs from './apiHelpers.js';
 
 // Variable declarations
 let router;
@@ -16,6 +16,8 @@ let searchResults;
 let recipeInfoPage;
 
 async function init() {
+  console.log("Initializing");
+  createRecipeCards();
   // TODO
   // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
   // Populate explore page cards
@@ -48,6 +50,7 @@ async function init() {
 
   // Function calls
   // Fetch recipes and store locally if storage is empty.
+  /*
   let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
   const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
   for (let i = 0; i < categoryNames.length; i++) {
@@ -62,7 +65,7 @@ async function init() {
   storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
   createExploreRecipeCards(storageCategoryData);
   
-  const storageSavedData = fetcherFuncs.getAllSavedRecipe();
+  const storageSavedData = fetcherFuncs.getAllSavedRecipe();*/
 }
 window.addEventListener('DOMContentLoaded', init);
 
@@ -76,6 +79,17 @@ function prepRecipeForClick(rec, recPageName) {
   rec.addEventListener('click', () => {
     Router.navigate(recPageName, false);
   });
+}
+
+/**
+ * Populates index.html with recipecards, as defined in
+ * RecipeCard.js
+ * @param options a json object to be edited in the future for options
+ */
+function createRecipeCards(options = {}){
+  const recipeCard = document.createElement('recipe-card');
+  recipeCard.data = {};
+  document.querySelector('.recipe-row').appendChild(recipeCard);
 }
 
 /**
