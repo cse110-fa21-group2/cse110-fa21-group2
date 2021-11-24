@@ -85,6 +85,13 @@ function prepRecipeForClick(rec, recPageName) {
  * Populates index.html with recipecards, as defined in
  * RecipeCard.js
  * @param options a json object to be edited in the future for options
+ * ALEX and FRED- Start here.
+ * Alex- Edit this into a for loop that populates all the pages and sections. 
+ * You might need to edit index.html to make tags more specific.
+ * Fred- The recipe card exists, but is entirely unpopulated and thus
+ * invisible in the page. You can see it via dev-tools (within div tags in index: 
+ * explore/explore-section/recipe-row). We need it to actually populate with the data.
+ * You might need to edit RecipeCard.js
  */
 function createRecipeCards(options = {}){
   const recipeCard = document.createElement('recipe-card');
