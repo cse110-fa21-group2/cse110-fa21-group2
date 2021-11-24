@@ -136,7 +136,6 @@ function addPageToRouterHelper(pageToShow, pageName) {
 				pageToShow.classList.remove("hidden");
 			}
 			else {
-				console.log("in else case for: " + pagesArr[i]);
 				pagesArr[i].classList.add("hidden");
 			}
 		}
