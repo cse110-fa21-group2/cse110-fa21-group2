@@ -3,10 +3,10 @@
 
 // Import requried modules
 
-import Router from './Router.js';
-import * as storageFuncs from './storage/storage.js';
-import * as fetcherFuncs from './storage/fetcher.js';
-import * as apiFuncs from './apiHelpers.js';
+import Router from '../../js/Router.js';
+import * as storageFuncs from '../../js/storage/storage.js';
+import * as fetcherFuncs from '../../js/storage/fetcher.js';
+import * as apiFuncs from '../../js/apiHelpers.js';
 
 
 // Variable declarations

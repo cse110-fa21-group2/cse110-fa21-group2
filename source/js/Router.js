@@ -41,11 +41,13 @@
        * page
        */
       
+      /*
       console.log("page:");
       console.log(page);
       console.log("type of func added:");
       console.log(typeof pageFunc);
-      
+      */
+
       this[page] = pageFunc;
     }
   
@@ -79,15 +81,21 @@
   
       // self-coded:
       // 1.
+      /*
       console.log("number of pages/properties of this: " + Object.keys(this).length);
       console.log("this's keys:");
       console.log("this:");
       console.log(this);
       console.log(Object.keys(this));
       console.log("Requested page's function value: " + this[page]);
+      */ 
+
       let func = this[page];
+
+      /*
       console.log("type of func:");
       console.log(func);
+      */ 
 
 
       // page doesn't exist
@@ -115,11 +123,6 @@
       // 3.
       if(statePopped == false && window.location.hash != hash) {
         let currState = {pageHash: hash};
-        console.log("currState: ");
-        console.log(currState);
-        console.log("hash to go to: " + hash);
-  
-        console.log("pushing state with pushState().");
         history.pushState(currState, "", hash);
       }
   

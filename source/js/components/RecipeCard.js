@@ -97,7 +97,7 @@ class RecipeCard extends HTMLElement {
      // divTitleWrapper.innerHTML = 
   
       const recipePic = document.createElement('img');
-      recipePic.src = getImgSrc(data); // 'https://source.unsplash.com/random';
+      recipePic.src = 'https://source.unsplash.com/random'; // getImgSrc(data); 
   
       header.appendChild(recipePic);
       card.appendChild(header);

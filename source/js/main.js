@@ -1,5 +1,20 @@
 /* eslint-disable no-plusplus */
 // main.js
+/**
+ * NOTE: TO USE:
+ * 	There are three file-scope variables used:
+ * 		1. pagesArr 				// array of ALL HTML section elements representing the pages
+ * 		2. pageNames 				// string array of ALL names of the pages
+ * 		3. pagesArrLinkEls	// array of ONLY pages in website header/navbar as links/buttons there
+ * 	The indices of these arrays correspond (i.e., ith index corresponds to info for same page
+ * 	for each.)
+ * 
+ * If you wish to add/remove a page, then add/remove it from each of these arrays.
+ * 	- To do so, for pagesArr and pageNames, change its initialization at the top of the file
+ * 		(i.e., where both are initialized)
+ * 	- For pagesArrLinkEls, modify the createArrPageLinks() function to create links
+ * 		only for those pages you wish to have in the header/navbar of the website.
+ */
 
 // Import requried modules
 import Router from './Router.js';
@@ -14,19 +29,35 @@ let explorePage;
 let savedRecipePage;
 let searchResults;
 let recipeInfoPage;
+let createRecipePage;
 
+// initialize "pages":
+landingPage = document.querySelector('section.landing');
+explorePage = document.querySelector('section.explore');
+savedRecipePage = document.querySelector('section.saved-recipes');
+searchResults = document.querySelector('section.search-results');
+recipeInfoPage = document.querySelector('section.recipe-info');
+createRecipePage = document.querySelector('section.create-recipe-page');
+
+
+// initialize array of all pages (their html section elements):
+const pagesArr = [landingPage, explorePage, savedRecipePage,
+	searchResults, recipeInfoPage, createRecipePage];
+
+// initialize array of all page names:
+const pageNames = ["landing", "explore", "saved-recipe",
+"search-results", "recipe-info", "create-recipe"];
+
+// array for links to pages:
+let pagesArrLinkEls = [ ];
+
+// go to Landing Page as home page:
 router = new Router(() => {
 	landingPage.classList.remove('hidden');
-	//explorePage.classList.add('hidden');
-	//savedRecipePage.classList.add('hidden');
-	//searchResults.classList.add('hidden');
-
-	// add "shown" to section wrapper for recipe cards:
-	document.querySelector('section.section--recipe-cards').classList.remove("hidden");
-
-	// recipeInfoPage.classList.add('hidden');
-	document.querySelector('section.section--recipe-expand').classList.add('hidden')
-
+	explorePage.classList.add('hidden');
+	savedRecipePage.classList.add('hidden');
+	searchResults.classList.add('hidden');
+	recipeInfoPage.classList.add('hidden');
 });
 
 window.addEventListener('DOMContentLoaded', init);
@@ -50,19 +81,10 @@ async function init() {
   // populate search result cards
   // navigate to search results page
 
-  landingPage = document.querySelector('.landing');
-  //explorePage = document.querySelector('.explore');
-  //savedRecipePage = document.querySelector('.saved-recipes');
-  //searchResults = document.querySelector('.search-results');
-  //recipeInfoPage = document.querySelector('.recipe-info');
-  
-
   // Function calls
   // Fetch recipes and store locally if storage is empty.
   /*
   let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-	// console.log("storageCategoryData: ");
-	// console.log(storageCategoryData);
 
 	// ** for testing, have store the 10 recipes from sample JSON file: ** 
 	// storageCategoryData =
@@ -84,93 +106,88 @@ async function init() {
     }
   }
   createExploreRecipeCards(storageCategoryData);
-	// console.log("After createExploreRecipeCards()");
-  */ 
+
+   
   const storageSavedData = fetcherFuncs.getAllSavedRecipe();
-	console.log("After storageSavedData fetcherFuncs");
-	bindPopstate();
-	bindEscKey();
+*/
+
+bindPopstate();
+bindEscKey(); // TODO: needs to be applied instead to where recipe cards are
+
+// "create" all pages for router, and bind
+// website header/navbar links to their
+// corresponding pages:
+addPagesToRouter();
+createArrPageLinks();
+}
+
+
+/**
+ * Adds a page to router that hides all other pages
+ * while showing that page.
+ * @param {Element} pageToShow the html section for page to show
+ * @param {String} pageName the name of the page to show/go-to
+ */
+function addPageToRouterHelper(pageToShow, pageName) {
+	router.addPage(pageName, () => {
+		// hide all but given page:
+		for(let i = 0; i < pagesArr.length; i++) {
+			if(pagesArr[i] == pageToShow) {
+				pageToShow.classList.remove("hidden");
+			}
+			else {
+				console.log("in else case for: " + pagesArr[i]);
+				pagesArr[i].classList.add("hidden");
+			}
+		}
+	});
 }
 
 /**
- * Generates the <recipe-card> elements from fetched recipes and appends them to page
- * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
+ * Adds all the pages to the router (assuming/using
+ * that pagesArr stores all the pages): 
  */
-function createExploreRecipeCards(storageCategoryData) {
-	// get explore-section "wrapper" (for "Trending Recipes"):
-	let expSecEl = document.querySelector("explore-rec-section");
-
-	// console.log("storageCategoryData:");
-	// console.log(storageCategoryData);
-	
-	// create recipe cards (i.e., for each recipe, create card):
-  Object.keys(storageCategoryData).forEach((category) => {
-		let currCatRecIDs = Object.keys(category); // ids of current category
-
-		// console.log("currCatRecIDs:");
-		// console.log(currCatRecIDs);
-		
-		// for each recipe of current category ("breakfast", "lunch", etc.):
-		for (let recId of currCatRecIDs) {
-			let recipeCard = document.createElement('recipe-card');
-
-			// console.log("recId:");
-			// console.log(recId);
-			
-			// set recipeCard data for html element:
-			// console.log('localStorage:');
-			// console.log(localStorage);
-			// console.log("localStorage['recipeData'][recId]):");
-			// console.log(localStorage['recipeData'][recId]);
-			
-			// console.log("storageCategoryData[category][recId]:");
-			// console.log(storageCategoryData[category][recId]);
-			
-			// set from passed-iin storageCategoryData:
-			recipeCard.data = storageCategoryData[category][recId];
-
-			// recipeCard.data = localStorage['recipeData'][recId]; // assumes recipe is already in local storage:
-
-			// use # + recipe ids as page names for (expanded) recipes
-			recId = storageCategoryData[category][recId]["id"]; // set to ID of recipe
-			const page = '#' + recId; 
-			console.log("page adding:");
-			console.log(page);
-			// adds function for going from: recipe card => expanded recipe card page
-			router.addPage(page, () => {
-				// assume 'hidden' performs opposite of 'shown' from lab 7:
-				console.log("curr page() called by router.");
-				// console.log("test retrieving section--recipe-cards element:");
-				// console.log(document.querySelector('section.section--recipe-cards'));
-				document.querySelector('section.landing').classList.add("hidden");
-				document.querySelector('section.section--recipe-cards').classList.add('hidden');
-				document.querySelector('section.section--recipe-expand').classList.remove('hidden');
-				document.querySelector('recipe-expand').data = recipeCard.data;
-				
-			});
-			// binds recipeCard for clicking to go to expanded page
-			prepRecipeForClick(recipeCard, page);
-
-			// add to html: append to explore section element custom element: 
-			// expSecEl.appendChild(recipeCard);
-			// test recipe cards not showing:
-			let recCardWrapperEl = document.querySelector("div.recipe-cards--wrapper");
-			recCardWrapperEl.appendChild(recipeCard);
-			// **Note: so when I do expSecEl.appendChild(recipeCard);, of appending
-			// the recipe cards to a custom html element also, then they won't show/appear
-			// on the webpage, even though their html is there; appending them
-			// to a "standard" html element (here, "div") seems to enable them both
-			// to have their html there but also appear visualyl on the page.
-
-
-			// document.querySelector('recipe-cards--wrapper').appendChild(recipeCard);
-		}
-  })   
-
-  const storageSavedData = fetcherFuncs.getAllSavedRecipe();
-
-
+function addPagesToRouter() {
+	for(let i = 0; i < pagesArr.length; i++) {
+		addPageToRouterHelper(pagesArr[i], pageNames[i]);
+	}
 }
+
+
+/**
+ * Binds website header/navbar links ("Home", "Explore", etc.)
+ * to their corresponding pages with router.
+ * @param {string} pageToShow the section wrapper element for page to go to 
+ * @param {Object} linkEl the link element (<a>) to click to go to that page
+ */
+function bindPageToClickLink(pageToShow, linkEl) {
+	linkEl.addEventListener("click", () => {
+		router.navigate(pageToShow, false);
+	})
+}
+
+/**
+ * Populates pagesArrLinkEls, an array, such that its ith element
+ * is the html link (<a>) element that will go to the ith page
+ * in pagesArr, and binds them to on-click event
+ */
+function createArrPageLinks() {
+	// html link elements in navbar to pages:
+	let homePageLink = document.querySelector("#Home_Link");
+	let explorePageLink = document.querySelector("#Explore_Link");
+	let savedRecsPageLink = document.querySelector("#Saved_Recipes_Link");
+
+	// populating links array:
+	pagesArrLinkEls[0] = homePageLink;
+	pagesArrLinkEls[1] = explorePageLink;
+	pagesArrLinkEls[2] = savedRecsPageLink;
+
+	// bind links so when clicked navigate via router to them:
+	for(let i = 0; i < pagesArrLinkEls.length; i++) {
+		bindPageToClickLink(pageNames[i], pagesArrLinkEls[i]);
+	}
+}
+
 
 /**
  *
@@ -222,28 +239,13 @@ function createRecipeCards(options = {}){
 }
 
 function logicPopstateForRouter(event) {
-	console.log("");
-	console.log("*****************");
-	console.log("In event listener for popstate.");
-	console.log("event for event fired: ");
-	console.log(event);
-	console.log("Current state: ");
-	console.log(event.state);
-
-	if(event.state != undefined) // && event.state["pageHash"] != "home") 
+	if(event.state != undefined)
 	{
 		console.log("State of event fired for popstate: " + event.state["pageHash"]);
 		if(event.state["pageHash"] == "") // navigate to home:
 		{
 			router.navigate("home", true);
 		} else {
-
-			//router.navigate(event.state["pageHash"].slice(1), true); // to get rid of hash, #, at start of name, slice from index 1 to end of string
-																															// (also note we don't explicitly add home to history stack, so going
-																														 // to home only happens in the else case here, of when event.state == null,
-																															// so we'll never be passed just "home", of something without a # as its first
-																															// character, in this if.
-			// just added (for project), see if it works:
 			router.navigate(event.state["pageHash"], true); // i.e., keep # at beginning of page name
 
 		}
@@ -251,9 +253,6 @@ function logicPopstateForRouter(event) {
 		router.navigate("home", true);
 	}
 }
-
-
-
 
 
 /* ********* OPTIONAL: escape key from lab (when pressed, goes back to home/landing page): ********8
@@ -272,10 +271,63 @@ function logicPopstateForRouter(event) {
   window.addEventListener('keydown', event => {
     console.log("Key pressed: " + event.key);
     if(event.key == "Escape") {
-      router.navigate("home", false); // is this true or false for statePopped (2nd arg)???
+      router.navigate("home", false);
     }
   })
 }
+
+/** ** OLD: ** 
+ * Generates the <recipe-card> elements from fetched recipes and appends them to page
+ * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
+ */
+ function createExploreRecipeCards(storageCategoryData) {
+	// get explore-section "wrapper" (for "Trending Recipes"):
+	let expSecEl = document.querySelector("explore-rec-section");
+	
+	// create recipe cards (i.e., for each recipe, create card):
+  Object.keys(storageCategoryData).forEach((category) => {
+		let currCatRecIDs = Object.keys(category); // ids of current category
+
+		// for each recipe of current category ("breakfast", "lunch", etc.):
+		for (let recId of currCatRecIDs) {
+			let recipeCard = document.createElement('recipe-card');
+
+			// set from passed-in storageCategoryData:
+			recipeCard.data = storageCategoryData[category][recId];
+
+			// recipeCard.data = localStorage['recipeData'][recId]; // assumes recipe is already in local storage:
+
+			// use # + recipe ids as page names for (expanded) recipes
+			recId = storageCategoryData[category][recId]["id"]; // set to ID of recipe
+			const page = '#' + recId; 
+
+			// adds function for going from: recipe card => expanded recipe card page
+			router.addPage(page, () => {
+				// assume 'hidden' performs opposite of 'shown' from lab 7:
+
+				document.querySelector('section.landing').classList.add("hidden");
+				document.querySelector('section.section--recipe-cards').classList.add('hidden');
+				document.querySelector('section.section--recipe-expand').classList.remove('hidden');
+				document.querySelector('recipe-expand').data = recipeCard.data;
+				
+			});
+			// binds recipeCard for clicking to go to expanded page
+			prepRecipeForClick(recipeCard, page);
+
+			// add to html: append to explore section element custom element: 
+			let recCardWrapperEl = document.querySelector("div.recipe-cards--wrapper");
+			recCardWrapperEl.appendChild(recipeCard);
+			// **Note: so when I do expSecEl.appendChild(recipeCard);, of appending
+			// the recipe cards to a custom html element also, then they won't show/appear
+			// on the webpage, even though their html is there; appending them
+			// to a "standard" html element (here, "div") seems to enable them both
+			// to have their html there but also appear visualyl on the page.
+		}
+  })   
+
+  const storageSavedData = fetcherFuncs.getAllSavedRecipe();
+}
+
 
 // get router:
 export default function getRouter() {
