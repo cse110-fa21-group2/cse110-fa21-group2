@@ -277,58 +277,41 @@ function logicPopstateForRouter(event) {
   })
 }
 
-/** ** OLD: ** 
+
+/**
+ * Populates index.html with recipecards, as defined in
+ * RecipeCard.js
+ * @param options a json object to be edited in the future for options
+ * ALEX and FRED- Start here.
+ * Alex- Edit this into a for loop that populates all the pages and sections. 
+ * You might need to edit index.html to make tags more specific.
+ * Fred- The recipe card exists, but is not populated with information.
+ * We need it to actually populate with the data.
+ * You might need to edit RecipeCard.js
+ */
+ function createRecipeCards(options = {}){
+  const recipeCard = document.createElement('recipe-card');
+  recipeCard.data = {};
+  document.querySelector('.recipe-row').appendChild(recipeCard);
+}
+
+/**
  * Generates the <recipe-card> elements from fetched recipes and appends them to page
  * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
  */
- function createExploreRecipeCards(storageCategoryData) {
-	// get explore-section "wrapper" (for "Trending Recipes"):
-	let expSecEl = document.querySelector("explore-rec-section");
-	
-	// create recipe cards (i.e., for each recipe, create card):
+function createExploreRecipeCards(storageCategoryData) {
+
   Object.keys(storageCategoryData).forEach((category) => {
-		let currCatRecIDs = Object.keys(category); // ids of current category
-
-		// for each recipe of current category ("breakfast", "lunch", etc.):
-		for (let recId of currCatRecIDs) {
-			let recipeCard = document.createElement('recipe-card');
-
-			// set from passed-in storageCategoryData:
-			recipeCard.data = storageCategoryData[category][recId];
-
-			// recipeCard.data = localStorage['recipeData'][recId]; // assumes recipe is already in local storage:
-
-			// use # + recipe ids as page names for (expanded) recipes
-			recId = storageCategoryData[category][recId]["id"]; // set to ID of recipe
-			const page = '#' + recId; 
-
-			// adds function for going from: recipe card => expanded recipe card page
-			router.addPage(page, () => {
-				// assume 'hidden' performs opposite of 'shown' from lab 7:
-
-				document.querySelector('section.landing').classList.add("hidden");
-				document.querySelector('section.section--recipe-cards').classList.add('hidden');
-				document.querySelector('section.section--recipe-expand').classList.remove('hidden');
-				document.querySelector('recipe-expand').data = recipeCard.data;
-				
-			});
-			// binds recipeCard for clicking to go to expanded page
-			prepRecipeForClick(recipeCard, page);
-
-			// add to html: append to explore section element custom element: 
-			let recCardWrapperEl = document.querySelector("div.recipe-cards--wrapper");
-			recCardWrapperEl.appendChild(recipeCard);
-			// **Note: so when I do expSecEl.appendChild(recipeCard);, of appending
-			// the recipe cards to a custom html element also, then they won't show/appear
-			// on the webpage, even though their html is there; appending them
-			// to a "standard" html element (here, "div") seems to enable them both
-			// to have their html there but also appear visualyl on the page.
-		}
+    let recipeCard = document.createElement('recipe-card');
+    recipeCard.data = storageCategoryData;
+    let page /* = recipeData[recipes[i]]['page-name'] */;
+    router.addPage(page, () => {
+      // TODO: Replace with our version names
+      // document.querySelector('.section--recipe-cards').classList.remove('shown');
+      // document.querySelector('.section--recipe-expand').classList.add('shown');
+      // document.querySelector('recipe-expand').data = recipeData[recipes[i]];
+    })
   })   
-
-  const storageSavedData = fetcherFuncs.getAllSavedRecipe();
-}
-
 
 // get router:
 export default function getRouter() {
