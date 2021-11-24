@@ -2,13 +2,10 @@
 // helper functions for Spoonacular API
 // all these functions fetch for most popular recipes
 
-
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
-// require('dotenv').config();
-// const { API_KEY } = process.env;// prevent exposing api key
-const API_KEY = '';
-
+require('dotenv').config();
+const { API_KEY } = process.env;// prevent exposing api key
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
@@ -224,15 +221,3 @@ export async function getRecipesByType(type, num = 5, offset = 0) {
       });
   });
 }
-
-/*
-getRecipesByAutocomplete("chi", 3)
-  .then((data) => {
-    console.log(data)
-  });
-
-getRecipesByName('asian', 2)
-  .then((data) => {
-    console.log(data);
-  });
-*/
