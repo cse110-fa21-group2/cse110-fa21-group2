@@ -17,7 +17,13 @@ let recipeInfoPage;
 
 async function init() {
   console.log("Initializing");
-  createRecipeCards();
+
+  const objDummyData = {
+    category1: {name: "fried rice", calories: "too many"},
+    category2: {name: "ramen", calories: "idk prob 500"},
+  };
+
+  createRecipeCards(objDummyData);
   // TODO
   // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
   // Populate explore page cards
@@ -92,23 +98,14 @@ function prepRecipeForClick(rec, recPageName) {
  * We need it to actually populate with the data.
  * You might need to edit RecipeCard.js
  */
-function createRecipeCards(options = {}){
-  // TESTER VARIABLES //
-  const objDummyData = {
-    category1: {name: "fried rice", calories: "too many"},
-    category2: {name: "ramen", calories: "idk prob 500"},
-  };
-
-  const jsonDummyData = JSON.stringify(objDummyData);
-
+function createRecipeCards(objData, options = {}){
   const listRecipeRows = document.querySelector('.explore').getElementsByClassName('recipe-row');
-  console.log(`Printing recipe rows: ${JSON.stringify(listRecipeRows)}`)
 
   // Populate sections with cards
   for (let i = 0; i < listRecipeRows.length; i++) {
-    Object.keys(objDummyData).forEach((category) => {
+    Object.keys(objData).forEach((category) => {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = objDummyData[`${category}`];
+      recipeCard.data = objData[`${category}`];
       listRecipeRows[i].appendChild(recipeCard);
     })
   }
