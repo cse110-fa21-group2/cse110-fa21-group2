@@ -88,9 +88,12 @@ function prepRecipeForClick(rec, recPageName) {
 }
 
 /**
- * Populates index.html with recipecards, as defined in
- * RecipeCard.js
- * @param options a json object to be edited in the future for options
+ * Populates index.html with <recipe-card> elements, as defined in
+ * RecipeCard.js. This function is meant to be called for each section that needs
+ * to be populated with recipe cards.
+ * @param objData Object that contains recipe data
+ * @param location specifies where recipes are being filled i.e. HTML tags
+ * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
  * ALEX and FRED- Start here.
  * Alex- Edit this into a for loop that populates all the pages and sections. 
  * You might need to edit index.html to make tags more specific.
@@ -98,34 +101,15 @@ function prepRecipeForClick(rec, recPageName) {
  * We need it to actually populate with the data.
  * You might need to edit RecipeCard.js
  */
-function createRecipeCards(objData, options = {}){
-  const listRecipeRows = document.querySelector('.explore').getElementsByClassName('recipe-row');
+function createRecipeCards(objData, location, numRecipesPopd = 5){
+  const listExploreRecipeRows = document.querySelector('.explore').getElementsByClassName('recipe-row');
 
-  // Populate sections with cards
-  for (let i = 0; i < listRecipeRows.length; i++) {
+  // Populate explore sections with cards
+  for (let i = 0; i < listExploreRecipeRows.length; i++) {
     Object.keys(objData).forEach((category) => {
       const recipeCard = document.createElement('recipe-card');
       recipeCard.data = objData[`${category}`];
-      listRecipeRows[i].appendChild(recipeCard);
+      listExploreRecipeRows[i].appendChild(recipeCard);
     })
   }
-}
-
-/**
- * Generates the <recipe-card> elements from fetched recipes and appends them to page
- * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
- */
-function createExploreRecipeCards(storageCategoryData) {
-
-  Object.keys(storageCategoryData).forEach((category) => {
-    let recipeCard = document.createElement('recipe-card');
-    recipeCard.data = storageCategoryData;
-    let page /* = recipeData[recipes[i]]['page-name'] */;
-    router.addPage(page, () => {
-      // TODO: Replace with our version names
-      // document.querySelector('.section--recipe-cards').classList.remove('shown');
-      // document.querySelector('.section--recipe-expand').classList.add('shown');
-      // document.querySelector('recipe-expand').data = recipeData[recipes[i]];
-    })
-  })   
 }
