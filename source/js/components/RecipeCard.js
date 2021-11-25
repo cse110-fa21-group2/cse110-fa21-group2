@@ -195,15 +195,15 @@ class RecipeCard extends HTMLElement {
     card.setAttribute('style',`background-image: url('${this.json.image}');`)
 
 
-    const ratingDiv = document.createElement('div');
-    ratingDiv.setAttribute('class','rating');
-    ratingDiv.innerHTML = `  
-      <div class="stars">
-        <div class="star">
-          <i class="fas fa-star"><span>${this.json.averageRating}</span></i>
-        </div>
-      </div>
-    `
+    // const ratingDiv = document.createElement('div');
+    // ratingDiv.setAttribute('class','rating');
+    // ratingDiv.innerHTML = `  
+    //   <div class="stars">
+    //     <div class="star">
+    //       <i class="fas fa-star"><span>${this.json.spoonacularScore / 100}</span></i>
+    //     </div>
+    //   </div>
+    // `
     const cardBody = document.createElement('div');
     cardBody.setAttribute('class','card-body')
     const expandRecipe = document.createElement('button');
@@ -274,7 +274,7 @@ class RecipeCard extends HTMLElement {
 
     cardBody.appendChild(favDiv);
 
-    card.appendChild(ratingDiv);
+    //card.appendChild(ratingDiv);
     card.appendChild(cardBody);
 
     this.shadowRoot.append(card);
