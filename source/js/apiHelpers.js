@@ -3,10 +3,12 @@
 // all these functions fetch for most popular recipes
 
 // eslint-disable-next-line import/no-unresolved
+
+/* TODO Remove comment later
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
 const { API_KEY } = process.env;// prevent exposing api key
-
+*/
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**

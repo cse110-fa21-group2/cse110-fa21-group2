@@ -7,6 +7,9 @@ import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
 
+//TODO Remove this tester later
+import {returnDummyData} from "../demo-code/exampleData.js"
+
 // Variable declarations
 let router;
 let landingPage;
@@ -17,6 +20,8 @@ let recipeInfoPage;
 
 async function init() {
   console.log("Initializing");
+  const tempData = returnDummyData();
+  populateRecipeData(tempData);
   createRecipeCards();
   // TODO
   // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
@@ -50,6 +55,7 @@ async function init() {
 
   // Function calls
   // Fetch recipes and store locally if storage is empty.
+  // TODO- Fix or remove
   /*
   let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
   const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
@@ -115,4 +121,13 @@ function createExploreRecipeCards(storageCategoryData) {
       // document.querySelector('recipe-expand').data = recipeData[recipes[i]];
     })
   })   
+}
+
+function populateRecipeData(data){
+  //Get single recipe JSON from list of JSONs
+  let curRecipe = data[0]; 
+  console.log(curRecipe.title);
+  const title = document.querySelector("p.title");
+  title.innerHTML = curRecipe.title;
+  console.log(title);
 }
