@@ -154,6 +154,7 @@ class RecipeCard extends HTMLElement {
         padding: 1em 2em 2em 1em;
         position: absolute;
         right: 0;
+        height: 14%;
       }
 
       .favorite {
@@ -185,6 +186,9 @@ class RecipeCard extends HTMLElement {
         color: #f00;
         font-size: 1.5rem;
       }
+      .card-delete-button {
+        padding-top: 0px;
+      }
     `;
     styleElem.innerHTML = styles;
     this.shadowRoot.append(styleElem);
@@ -194,16 +198,6 @@ class RecipeCard extends HTMLElement {
     card.classList.add("card-shadow");
     card.setAttribute('style',`background-image: url('${this.json.image}');`)
 
-
-    // const ratingDiv = document.createElement('div');
-    // ratingDiv.setAttribute('class','rating');
-    // ratingDiv.innerHTML = `  
-    //   <div class="stars">
-    //     <div class="star">
-    //       <i class="fas fa-star"><span>${this.json.spoonacularScore / 100}</span></i>
-    //     </div>
-    //   </div>
-    // `
     const cardBody = document.createElement('div');
     cardBody.setAttribute('class','card-body')
     const expandRecipe = document.createElement('button');
@@ -274,7 +268,6 @@ class RecipeCard extends HTMLElement {
 
     cardBody.appendChild(favDiv);
 
-    //card.appendChild(ratingDiv);
     card.appendChild(cardBody);
 
     this.shadowRoot.append(card);
