@@ -1,77 +1,79 @@
-/* eslint-disable no-plusplus */
-// main.js
-
 // Import requried modules
 import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
-import * as apiFuncs from './apiHelpers.js';
+// TODO: fix require in apiFuncs
+// import * as apiFuncs from './apiHelpers.js';
 
-// Variable declarations
-let router;
-let landingPage;
-let explorePage;
-let savedRecipePage;
-let searchResults;
-let recipeInfoPage;
+const sections = [
+  'landing',
+  'explore',
+  'saved-recipes',
+  'search-results',
+  'recipe-info',
+  'create-recipe-page',
+];
+
+/** We switch pages by making a section visible and hiding all others */
+const openSection = (active) => () => {
+  sections.forEach(((val) => {
+    const section = document.querySelector(`.${val}`);
+    if (val === active) {
+      section.classList.remove('hidden');
+    } else {
+      section.classList.add('hidden');
+    }
+  }));
+};
+
+const router = new Router();
+
+const openHome = () => {
+  router.navigate('landing', false);
+};
+
+const openExplore = () => {
+  router.navigate('explore', false);
+};
+
+const openSavedRecipes = () => {
+  router.navigate('saved-recipes', false);
+};
+
+const openSearchResults = () => {
+  // TODO: Fetch search results first
+  router.navigate('search-results', false);
+};
+
+const openRecipeInfo = () => {
+  // TODO: Populate page from JSON object
+  router.navigate('recipe-info', false);
+};
+
+const openCreateRecipe = () => {
+  router.navigate('create-recipe-page', false);
+};
+
+function initializeRoutes() {
+  sections.forEach((section) => router.addPage(section, openSection(section)));
+
+  document.getElementById('landing-nav').addEventListener('click', openHome);
+  document.getElementById('explore-nav').addEventListener('click', openExplore);
+  document.getElementById('saved-recipes-nav').addEventListener('click', openSavedRecipes);
+  document.getElementById('create-recipe-nav').addEventListener('click', openCreateRecipe);
+  document.getElementById('search-results-nav').addEventListener('click', openSearchResults);
+}
+
+function bindPopState() {
+  window.addEventListener('popstate', (e) => {
+    const { state } = e;
+    router.navigate(state ? state.page : 'landing', true);
+  });
+}
 
 async function init() {
-  console.log('Initializing');
-
-  // const objDummyData = {
-  //   category1: {name: "fried rice", calories: "too many"},
-  //   category2: {name: "ramen", calories: "idk prob 500"},
-  // };
-
-  // TODO
-  // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
-  // Populate explore page cards
-  // add recipes to localstorage
-  // navigate to explore page
-
-  // fetch saved recipe cards from localstorage
-  // navigate to saved recipe page
-  // add save button action to every card and page to update the saved recipe page so we don't
-  // have to handle it when we open the page
-
-  // add event handler to search button to fetch recipes for query
-  // add recipes to localstorage
-  // populate search result cards
-  // navigate to search results page
-
-  landingPage = document.querySelector('.landing');
-  explorePage = document.querySelector('.explore');
-  savedRecipePage = document.querySelector('.saved-recipes');
-  searchResults = document.querySelector('.search-results');
-  recipeInfoPage = document.querySelector('.recipe-info');
-
-  router = new Router(() => {
-    landingPage.classList.remove('hidden');
-    explorePage.classList.add('hidden');
-    savedRecipePage.classList.add('hidden');
-    searchResults.classList.add('hidden');
-    recipeInfoPage.classList.add('hidden');
-  });
-
-  // Function calls
-  // Fetch recipes and store locally if storage is empty.
-
-  // let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-  // const categoryNames = ['breakfast'];
-  // for (let i = 0; i < categoryNames.length; i++) {
-  //   if (storageCategoryData === null
-  //       || !(categoryNames[i] in storageCategoryData)
-  //       || storageCategoryData[categoryNames[i]].length < 10) {
-  //       // fetch from api for (categoryNames[i], 10)
-
-  //     const fetchedData = apiFuncs.getRecipesByType(categoryNames[i], 10);
-  //     // store to local storage
-  //     storageFuncs.storeRecipeData(categoryNames[i], fetchedData);
-  //   }
-  // }
-  // storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-
-  // storageSavedData = fetcherFuncs.getAllSavedRecipe();
+  initializeRoutes();
+  bindPopState();
 
   // Testing variables
   const testArrRecipe = [
@@ -83,7 +85,43 @@ async function init() {
 
   createRecipeCards(['1337', '1911'], testLocation, 2);
 }
+
 window.addEventListener('DOMContentLoaded', init);
+
+// createRecipeCards();
+// TODO
+// Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
+// Populate explore page cards
+// add recipes to localstorage
+// navigate to explore page
+
+// fetch saved recipe cards from localstorage
+// navigate to saved recipe page
+// add save button action to every card and page to update the saved recipe page so we don't
+// have to handle it when we open the page
+
+// add event handler to search button to fetch recipes for query
+// add recipes to localstorage
+// populate search result cards
+// navigate to search results page
+
+// Function calls
+// Fetch recipes and store locally if storage is empty.
+/*
+  let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
+  const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
+  for (let i = 0; i < categoryNames.length; i++) {
+    if (!(categoryNames[i] in storageCategoryData)
+        || storageCategoryData[categoryNames[i]].length < 10) {
+        // fetch from api for (categoryNames[i], 10)
+       const fetchedData = [];
+       // store to local storage
+       storageFuncs.storeRecipeData(categoryNames[i], fetchedData);
+    }
+  }
+  storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
+  createExploreRecipeCards(storageCategoryData);
+*/
 
 /**
  *
@@ -109,12 +147,6 @@ function prepRecipeForClick(rec, recPageName) {
 *  ]
  * @param location specifies where recipes are being filled i.e. HTML tags
  * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
- * ALEX and FRED- Start here.
- * Alex- Edit this into a for loop that populates all the pages and sections.
- * You might need to edit index.html to make tags more specific.
- * Fred- The recipe card exists, but is not populated with information.
- * We need it to actually populate with the data.
- * You might need to edit RecipeCard.js
  */
 function createRecipeCards(arrData, location, numRecipesPopd = 5) {
   // Populate each section
@@ -124,8 +156,8 @@ function createRecipeCards(arrData, location, numRecipesPopd = 5) {
   while (i < numRecipesPopd && i < arrData.length) {
     const recipeCard = document.createElement('recipe-card');
     // work-in-progress by Fred for populating recipe cards.
-    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i]));
+    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
     location.appendChild(recipeCard);
-    i++;
+    i += 1;
   }
 }
