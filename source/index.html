@@ -30,6 +30,10 @@
 <script type="module" src="js/main.js"> </script>
 <script type="module" src="js/components/RecipeCard.js"> </script>
 <script type="module" src="js/Router.js"> </script>
+<script type="module" src="js/apiHelpers.js"> </script>
+<script type="module" src="js/storage/fetcher.js"> </script>
+<script type="module" src="js/storage/storage.js"> </script>
+
 
   <link rel="shortcut icon" href="..//favicon.ico" type="image/x-icon">
   <title>Recipe Book</title>
@@ -68,28 +72,28 @@
 
     <section class="explore">
       <div class="explore-section">
-        <h1 class="row-title">Trending Recipes</h1>
+        <h1 class="row-title" id="trending">Trending Recipes</h1>
         <hr class="line">
         <div class="recipe-row">
             Populate with recipes TODO
         </div>
       </div>
       <div class="explore-section">
-        <h1 class="row-title">Top Breakfast Recipes</h1>
+        <h1 class="row-title" id="breakfast">Top Breakfast Recipes</h1>
         <hr class="line">
         <div class="recipe-row">
             TODO- populate with recipe cards
         </div>
       </div>
       <div class="explore-section">
-        <h1 class="row-title">Top Lunch Recipes</h1>
+        <h1 class="row-title" id="lunch">Top Lunch Recipes</h1>
         <hr class="line">
         <div class="recipe-row">
             TODO populate with recipe cards
         </div>
       </div>
       <div class="explore-section">
-        <h1 class="row-title">Top Dinner Recipes</h1>
+        <h1 class="row-title" id="dinner">Top Dinner Recipes</h1>
         <hr class="line">
         <div class="recipe-row">
           <div class="recipe-card card-shadow">

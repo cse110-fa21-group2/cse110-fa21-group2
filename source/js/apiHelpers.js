@@ -12,7 +12,7 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 /**
  * Get detailed info from recipe ID's
  * @param {Object} ids - list of ids of recipes
- * @returns {Object} list of detailed info of recipes
+ * @returns {Array} Array of recipe Objects where each object contains detailed info
  */
 async function getDetailedRecipeInfoBulk(ids) {
   return new Promise((resolve, reject) => {
@@ -106,11 +106,11 @@ async function getRecipesByCuisine(cuisine, num) {
 
 /**
  * Get recipe by type(can use this to grab a bunch of recipes when user first enters site)
- * @param {String} type - type of meal
+ * @param {String} type - type of meal i.e. breakfast, lunch, dinner
  * @param {Number} num - max number of recipes to get
  * @returns {Object} list of recipes with detailed info
  */
-async function getRecipesByType(type, num) {
+export async function getRecipesByType(type, num) {
   return new Promise((resolve, reject) => {
     fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity`, {
       method: 'GET',
