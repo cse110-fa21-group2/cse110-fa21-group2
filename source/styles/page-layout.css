@@ -12,31 +12,7 @@ a {
   text-decoration: none;
 }
 
-nav {
-  align-items: center;
-  border-bottom: 2px solid black;
-  display: flex;
-  height: 4rem;
-  justify-content: space-evenly;
-  position: relative;
-  width: 100%;
-  z-index: 99;
-}
-
-.nav-logo {
-  align-items: center;
-  display: flex;
-}
-
-.nav-title {
-  font-size: 1.5em;
-}
-
-.nav-icon {
-  height: 3rem;
-}
-
 main {
-  min-height: calc(100vh - 4rem);
+  min-height: calc(100vh - 64px);
   width: 100%;
 }
