@@ -2,7 +2,7 @@
 /* eslint-disable dot-notation */
 /* eslint-disable no-plusplus */
 // localStorage = {
-//   categories: { // Used to populate explore page (only ids to reduce storage size)
+//   explore: { // Used to populate explore page (only ids to reduce storage size)
 //       "breakfast": [
 //           "123", // recipe id
 //           "111", // recipe id
@@ -20,7 +20,7 @@
 //           "111", // recipe id
 //           "444", // recipe id
 //       ],
-//       "list2": [
+//       "created": [
 //           "123", // recipe id
 //           "111", // recipe id
 //           "444", // recipe id

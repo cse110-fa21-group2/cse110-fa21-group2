@@ -4,15 +4,16 @@
 
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
-require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const { API_KEY } = process.env;// prevent exposing api key
+// require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
+const { API_KEY } = '';// prevent exposing api key
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get detailed info from recipe ID's
- * @param {Object} idsToFetch - list of recipe ID's to fetch from API
- * @returns {Object} list of recipe JSONs
+ * @param {Object} ids - list of ids of recipes
+ * @returns {Array} Array of recipe Objects where each object contains detailed info
+
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {

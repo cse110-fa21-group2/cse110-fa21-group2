@@ -16,8 +16,13 @@ let searchResults;
 let recipeInfoPage;
 
 async function init() {
-  console.log("Initializing");
-  createRecipeCards();
+  console.log('Initializing');
+
+  // const objDummyData = {
+  //   category1: {name: "fried rice", calories: "too many"},
+  //   category2: {name: "ramen", calories: "idk prob 500"},
+  // };
+
   // TODO
   // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
   // Populate explore page cards
@@ -50,22 +55,33 @@ async function init() {
 
   // Function calls
   // Fetch recipes and store locally if storage is empty.
-  /*
-  let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-  const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
-  for (let i = 0; i < categoryNames.length; i++) {
-    if (!(categoryNames[i] in storageCategoryData)
-        || storageCategoryData[categoryNames[i]].length < 10) {
-        // fetch from api for (categoryNames[i], 10)
-       const fetchedData = [];
-       // store to local storage
-       storageFuncs.storeRecipeData(categoryNames[i], fetchedData);
-    }
-  }
-  storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-  createExploreRecipeCards(storageCategoryData);
-  
-  const storageSavedData = fetcherFuncs.getAllSavedRecipe();*/
+
+  // let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
+  // const categoryNames = ['breakfast'];
+  // for (let i = 0; i < categoryNames.length; i++) {
+  //   if (storageCategoryData === null
+  //       || !(categoryNames[i] in storageCategoryData)
+  //       || storageCategoryData[categoryNames[i]].length < 10) {
+  //       // fetch from api for (categoryNames[i], 10)
+
+  //     const fetchedData = apiFuncs.getRecipesByType(categoryNames[i], 10);
+  //     // store to local storage
+  //     storageFuncs.storeRecipeData(categoryNames[i], fetchedData);
+  //   }
+  // }
+  // storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
+
+  // storageSavedData = fetcherFuncs.getAllSavedRecipe();
+
+  // Testing variables
+  const testArrRecipe = [
+    { id: 1337, title: 'Doritos and Mtn Dew' },
+    { id: 1911, title: 'Pizza' },
+  ];
+  storageFuncs.storeRecipeData('test', testArrRecipe);
+  const testLocation = document.querySelector('#trending~div');
+
+  createRecipeCards(['1337', '1911'], testLocation, 2);
 }
 window.addEventListener('DOMContentLoaded', init);
 
@@ -82,37 +98,34 @@ function prepRecipeForClick(rec, recPageName) {
 }
 
 /**
- * Populates index.html with recipecards, as defined in
- * RecipeCard.js
- * @param options a json object to be edited in the future for options
+ * Populates index.html with <recipe-card> elements, as defined in
+ * RecipeCard.js. This function is meant to be called for each section that needs
+ * to be populated with recipe cards.
+ * @param arrData an array of recipe ids (currently). example input:
+ * [
+*    "123", // recipe id
+*    "111", // recipe id
+*    "444", // recipe id
+*  ]
+ * @param location specifies where recipes are being filled i.e. HTML tags
+ * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
  * ALEX and FRED- Start here.
- * Alex- Edit this into a for loop that populates all the pages and sections. 
+ * Alex- Edit this into a for loop that populates all the pages and sections.
  * You might need to edit index.html to make tags more specific.
  * Fred- The recipe card exists, but is not populated with information.
  * We need it to actually populate with the data.
  * You might need to edit RecipeCard.js
  */
-function createRecipeCards(options = {}){
-  const recipeCard = document.createElement('recipe-card');
-  recipeCard.data = {};
-  document.querySelector('.recipe-row').appendChild(recipeCard);
-}
-
-/**
- * Generates the <recipe-card> elements from fetched recipes and appends them to page
- * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
- */
-function createExploreRecipeCards(storageCategoryData) {
-
-  Object.keys(storageCategoryData).forEach((category) => {
-    let recipeCard = document.createElement('recipe-card');
-    recipeCard.data = storageCategoryData;
-    let page /* = recipeData[recipes[i]]['page-name'] */;
-    router.addPage(page, () => {
-      // TODO: Replace with our version names
-      // document.querySelector('.section--recipe-cards').classList.remove('shown');
-      // document.querySelector('.section--recipe-expand').classList.add('shown');
-      // document.querySelector('recipe-expand').data = recipeData[recipes[i]];
-    })
-  })   
+function createRecipeCards(arrData, location, numRecipesPopd = 5) {
+  // Populate each section
+  let i = 0;
+  // Checks to make sure only populate as many as requested by numRecipesPopd or
+  // until reach the end of the array of recipe ids i.e. ran out of recipes
+  while (i < numRecipesPopd && i < arrData.length) {
+    const recipeCard = document.createElement('recipe-card');
+    // work-in-progress by Fred for populating recipe cards.
+    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i]));
+    location.appendChild(recipeCard);
+    i++;
+  }
 }
