@@ -1,29 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- link stylesheets -->
-  <link rel="stylesheet" href="./styles/main.css">
-  <link rel="stylesheet" href="./styles/page-layout.css">
-  <link rel="stylesheet" href="./styles/recipe-card.css">
-  <link rel="stylesheet" href="./styles/createRecipe.css">
-  <!-- What is this? -->
-  <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
-  <!-- Bootstrap -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-    crossorigin="anonymous"
-  />
-  <!-- What is this? -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"
-  ></script>
+  <head>
+    <!-- Website Metadata -->
+    <title>Recipe Book</title>
+    <link rel="shortcut icon" href="..//favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Call our scripts -->
 <script type="module" src="js/createRecipe.js"></script>
@@ -34,61 +17,80 @@
 <script type="module" src="js/storage/fetcher.js"> </script>
 <script type="module" src="js/storage/storage.js"> </script>
 
+    <!-- Link stylesheets -->
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/page-layout.css">
+    <link rel="stylesheet" href="./styles/recipe-card.css">
 
-  <link rel="shortcut icon" href="..//favicon.ico" type="image/x-icon">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <title>Recipe Book</title>
-</head>
-<body>
+    <!-- Import Font Awesome Icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+    
+    <!-- Bootstrap dependencies -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
-
-    <a class="navbar-brand ms-3" href="#">
-      <img src="./images/pot.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-      Recipe Book
-    </a>
-
-    <button class="navbar-toggler me-2" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-        <li class="nav-item mx-auto">
-          <a class="nav-link" href="#">Explore <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mx-auto">
-          <a class="nav-link" href="#">Saved Recipes</a>
-        </li>
-        <li class="nav-item mx-auto">
-          <a class="nav-link" href="#">Create Recipe</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <div class="input-group mx-2">
-          <input type="text" class="form-control" placeholder="Search Recipes" aria-label="Username" aria-describedby="basic-addon1">
-          <button class="input-group-text" id="basic-addon1">🔍</button>
-        </div>
-      </form>
-    </div>
-  </nav>
-  <main>
-
-    <section class="landing">
-      <div class="landing-container">
-        <span class="landing-title">Recipe</span>
-        <br>
-        <span class="landing-title">Book</span>
-        <div class="landing-buttons">
-          <button>Explore</button>
-          <button>Saved Recipes</button>
-        </div>
+    <!-- Import scripts -->
+    <script src="js/main.js"></script>
+    <script type="module" src="js/createRecipe.js"></script>
+    <script type="module" src="js/components/RecipeCard.js"></script>
+    <script type="module" src="js/Router.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <a class="navbar-brand ms-3" href="#">
+        <img src="./images/pot.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+        Recipe Book
+      </a>
+      <button class="navbar-toggler me-2" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+          <li class="nav-item mx-auto">
+            <a class="nav-link" href="#">Explore <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item mx-auto">
+            <a class="nav-link" href="#">Saved Recipes</a>
+          </li>
+          <li class="nav-item mx-auto">
+            <a class="nav-link" href="#">Create Recipe</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <div class="input-group mx-2">
+            <input type="text" class="form-control" placeholder="Search Recipes" aria-label="Username" aria-describedby="basic-addon1">
+            <button class="input-group-text" id="basic-addon1">🔍</button>
+          </div>
+        </form>
       </div>
-    </section>
+    </nav>
+    <main>
 
-    <section class="explore hidden">
+      <section class="landing">
+        <div class="landing-container">
+          <span class="landing-title">Recipe</span>
+          <br>
+          <span class="landing-title">Book</span>
+          <div class="landing-buttons">
+            <button>Explore</button>
+            <button>Saved Recipes</button>
+          </div>
+        </div>
+      </section>
+
+    <section class="explore">
       <div class="explore-section">
         <h1 class="row-title" id="trending">Trending Recipes</h1>
         <hr class="line">
@@ -116,217 +118,217 @@
         <div class="recipe-row">
           <div class="recipe-card card-shadow">
 
-            <div class="card-header card-img">
-              <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
-            </div>
-
-            <div class="card-body">
-              <h1>Sausage & Pepperoni Stromboli</h1>
-            </div>
-
-            <div class="card-footer">
-              <button class="card-btn">View Recipe</button>
-              <button class="card-btn card-btn-outline" onclick="swapClass(this)">
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-    </section>
-
-    <section class="saved-recipes hidden">
-      <div class="saved-recipe-header">
-        <select name="savedLists" class="list-dropdown">
-          <option value="List 1">List 1 saved recipes</option>
-          <option value="List 2">List 2 created recipes</option>
-          <option value="List 3">List 3 TODO</option>
-        </select>
-        <button class="edit-btn">Manage Lists</button>
-      </div>
-      <div class="results-grid">
-          TODO- Populate with cards
-      </div>
-    </section>
-
-    <section class="search-results hidden">
-      <h1>Top recipes for "bread"</h1>
-      <div class="results-grid">
-        TODO- populate with cards
-      </div>
-    </section>
-
-    <section class="recipe-info hidden">
-      
-    </section>
-
-    <section class="create-recipe-page container hidden">
-      <form class="create-recipe-page-form">
-        <h2 class="create-title">Name:</h2>
-        <input
-          type="text"
-          class="form-control recipe-input-name"
-          placeholder="name of recipe"
-        />
-
-        <h2 class="create-title">Summary:</h2>
-        <textarea
-          class="form-control recipe-input-summary"
-          placeholder="Summary of recipe"
-        ></textarea>
-
-        <h2 class="create-title">Nutrition Facts:</h2>
-        <textarea
-          class="form-control recipe-input-nutrition"
-          placeholder="Nutrition Facts"
-        ></textarea>
-
-        <div class="row">
-          <div class="col-6">
-            <h2 class="create-title">Ingredients:</h2>
-
-            <p class="create-title-fact">Servings:</p>
-            <input
-              type="number"
-              class="form-control ingredient-serving-input"
-              placeholder="serving size"
-            />
-
-            <div class="row ingredient-title">
-              <div class="col">
-                <p>Name:</p>
-              </div>
-              <div class="col">
-                <p>Amount:</p>
-              </div>
-              <div class="col">
-                <p>Unit:</p>
-              </div>
-            </div>
-
-            <div class="ingredient-input-list">
-              <div class="row">
-                <div class="col">
-                  <input
-                    type="text"
-                    class="form-control recipe-ingredient-name"
-                    placeholder="Name"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="number"
-                    class="form-control recipe-ingredient-amount"
-                    placeholder="Amount"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    class="form-control recipe-ingredient-unit"
-                    placeholder="Unit"
-                  />
-                </div>
+              <div class="card-header card-img">
+                <img src="https://spoonacular.com/recipeImages/776505-556x370.jpg" alt="" srcset="">
               </div>
 
-              <div class="row create-ingredient-fact">
-                <div class="col">
-                  <input
-                    type="text"
-                    class="form-control recipe-ingredient-name"
-                    placeholder="Name"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="number"
-                    class="form-control recipe-ingredient-amount"
-                    placeholder="Amount"
-                  />
-                </div>
-                <div class="col">
-                  <input
-                    type="text"
-                    class="form-control recipe-ingredient-unit"
-                    placeholder="Unit"
-                  />
-                </div>
+              <div class="card-body">
+                <h1>Sausage & Pepperoni Stromboli</h1>
               </div>
-            </div>
-            <div class="add-ingredient-button-wrapper">
-              <button
-                type="button"
-                class="btn btn-dark add-ingredient-button"
-              >
-                Add Ingredients
-              </button>
-            </div>
-          </div>
-          <div class="col-6">
-            <h2 class="create-title">Facts:</h2>
 
-            <p class="create-title-fact">Prep Time (minutes):</p>
-            <input
-              type="number"
-              class="form-control recipe-preptime"
-              placeholder="preptime"
-            />
-            <p class="create-title-fact">Cook Time (minutes):</p>
-            <input
-              type="number"
-              class="form-control recipe-cooktime"
-              placeholder="cooktime"
-            />
-            <p class="create-title-fact">Recipe Image URL:</p>
-            <input
-              type="text"
-              class="form-control recipe-image-url"
-              placeholder="Url"
-            />
-            <p class="create-title-fact">Rating(0-5):</p>
-            <input
-              type="number"
-              class="form-control recipe-rating"
-              placeholder="Rating"
-              min=0
-              max=5
-            />
+              <div class="card-footer">
+                <button class="card-btn">View Recipe</button>
+                <button class="card-btn card-btn-outline" onclick="swapClass(this)">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+
+            </div>
           </div>
         </div>
 
-        <div class="row">
-          <h2 class="create-title">Instructions:</h2>
-          <div class="step-input-list">
-            <input
-              type="text"
-              class="form-control recipe-step-input"
-              id="0"
-              placeholder="Step 1"
-            />
-            <input
-              type="text"
-              class="form-control recipe-step-input"
-              id="1"
-              placeholder="Step 2"
-            />
+
+      </section>
+
+      <section class="saved-recipes hidden">
+        <div class="saved-recipe-header">
+          <select name="savedLists" class="list-dropdown">
+            <option value="List 1">List 1 saved recipes</option>
+            <option value="List 2">List 2 created recipes</option>
+            <option value="List 3">List 3 TODO</option>
+          </select>
+          <button class="edit-btn">Manage Lists</button>
+        </div>
+        <div class="results-grid">
+            TODO- Populate with cards
+        </div>
+      </section>
+
+      <section class="search-results hidden">
+        <h1>Top recipes for "bread"</h1>
+        <div class="results-grid">
+          TODO- populate with cards
+        </div>
+      </section>
+
+      <section class="recipe-info hidden">
+        TODO: Populate info
+      </section>
+
+      <section class="create-recipe-page container hidden">
+        <form class="create-recipe-page-form">
+          <h2 class="create-title">Name:</h2>
+          <input
+            type="text"
+            class="form-control recipe-input-name"
+            placeholder="name of recipe"
+          />
+
+          <h2 class="create-title">Summary:</h2>
+          <textarea
+            class="form-control recipe-input-summary"
+            placeholder="Summary of recipe"
+          ></textarea>
+
+          <h2 class="create-title">Nutrition Facts:</h2>
+          <textarea
+            class="form-control recipe-input-nutrition"
+            placeholder="Nutrition Facts"
+          ></textarea>
+
+          <div class="row">
+            <div class="col-6">
+              <h2 class="create-title">Ingredients:</h2>
+
+              <p class="create-title-fact">Servings:</p>
+              <input
+                type="number"
+                class="form-control ingredient-serving-input"
+                placeholder="serving size"
+              />
+
+              <div class="row ingredient-title">
+                <div class="col">
+                  <p>Name:</p>
+                </div>
+                <div class="col">
+                  <p>Amount:</p>
+                </div>
+                <div class="col">
+                  <p>Unit:</p>
+                </div>
+              </div>
+
+              <div class="ingredient-input-list">
+                <div class="row">
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control recipe-ingredient-name"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      type="number"
+                      class="form-control recipe-ingredient-amount"
+                      placeholder="Amount"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control recipe-ingredient-unit"
+                      placeholder="Unit"
+                    />
+                  </div>
+                </div>
+
+                <div class="row create-ingredient-fact">
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control recipe-ingredient-name"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      type="number"
+                      class="form-control recipe-ingredient-amount"
+                      placeholder="Amount"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      type="text"
+                      class="form-control recipe-ingredient-unit"
+                      placeholder="Unit"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="add-ingredient-button-wrapper">
+                <button
+                  type="button"
+                  class="btn btn-dark add-ingredient-button"
+                >
+                  Add Ingredients
+                </button>
+              </div>
+            </div>
+            <div class="col-6">
+              <h2 class="create-title">Facts:</h2>
+
+              <p class="create-title-fact">Prep Time (minutes):</p>
+              <input
+                type="number"
+                class="form-control recipe-preptime"
+                placeholder="preptime"
+              />
+              <p class="create-title-fact">Cook Time (minutes):</p>
+              <input
+                type="number"
+                class="form-control recipe-cooktime"
+                placeholder="cooktime"
+              />
+              <p class="create-title-fact">Recipe Image URL:</p>
+              <input
+                type="text"
+                class="form-control recipe-image-url"
+                placeholder="Url"
+              />
+              <p class="create-title-fact">Rating(0-5):</p>
+              <input
+                type="number"
+                class="form-control recipe-rating"
+                placeholder="Rating"
+                min=0
+                max=5
+              />
+            </div>
           </div>
-          <div class="add-step-button-wrapper">
-            <button type="button" class="btn btn-dark add-step-button">
-              Add More Steps
+
+          <div class="row">
+            <h2 class="create-title">Instructions:</h2>
+            <div class="step-input-list">
+              <input
+                type="text"
+                class="form-control recipe-step-input"
+                id="0"
+                placeholder="Step 1"
+              />
+              <input
+                type="text"
+                class="form-control recipe-step-input"
+                id="1"
+                placeholder="Step 2"
+              />
+            </div>
+            <div class="add-step-button-wrapper">
+              <button type="button" class="btn btn-dark add-step-button">
+                Add More Steps
+              </button>
+            </div>
+          </div>
+          <div class="create-recipe-button-wrapper">
+            <button type="button" class="btn btn-dark create-recipe-button">
+              Create Recipe
             </button>
           </div>
-        </div>
-        <div class="create-recipe-button-wrapper">
-          <button type="button" class="btn btn-dark create-recipe-button">
-            Create Recipe
-          </button>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
 
-  </main>
-</body>
+    </main>
+  </body>
 </html>

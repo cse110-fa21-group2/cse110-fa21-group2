@@ -13,6 +13,10 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
  * Get detailed info from recipe ID's
  * @param {Object} ids - list of ids of recipes
  * @returns {Array} Array of recipe Objects where each object contains detailed info
+<<<<<<< HEAD
+=======
+
+>>>>>>> e4e7c2b5ca5c38aab8a9e54e09c8a99ec06cad38
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
