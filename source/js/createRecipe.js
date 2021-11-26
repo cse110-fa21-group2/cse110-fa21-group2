@@ -1,4 +1,4 @@
-import * as storageFunc from './storage/storage.js';
+import * as storageFuncs from './storage/storage.js';
 async function init() {
   // add a ingredient input row to dom
   let addIngredientButton = document.querySelector(".add-ingredient-button");
@@ -162,8 +162,8 @@ async function init() {
     const recipeId = recipeName.value;
     finalObject["id"] = recipeId;
 
-    storageFunc.storeRecipeData("created", [finalObject]);
-    storageFunc.saveRecipeToList("created", recipeId)
+    storageFuncs.storeRecipeData("created", [finalObject]);
+    storageFuncs.saveRecipeToList("created", recipeId)
 
     console.log(finalObject);
   });
