@@ -16,15 +16,13 @@ let searchResults;
 let recipeInfoPage;
 
 async function init() {
-  console.log("Initializing");
-
+  console.log('Initializing');
 
   // const objDummyData = {
   //   category1: {name: "fried rice", calories: "too many"},
   //   category2: {name: "ramen", calories: "idk prob 500"},
   // };
 
-  
   // TODO
   // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
   // Populate explore page cards
@@ -57,15 +55,15 @@ async function init() {
 
   // Function calls
   // Fetch recipes and store locally if storage is empty.
-  
+
   // let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
   // const categoryNames = ['breakfast'];
   // for (let i = 0; i < categoryNames.length; i++) {
-  //   if (storageCategoryData === null 
+  //   if (storageCategoryData === null
   //       || !(categoryNames[i] in storageCategoryData)
   //       || storageCategoryData[categoryNames[i]].length < 10) {
   //       // fetch from api for (categoryNames[i], 10)
-        
+
   //     const fetchedData = apiFuncs.getRecipesByType(categoryNames[i], 10);
   //     // store to local storage
   //     storageFuncs.storeRecipeData(categoryNames[i], fetchedData);
@@ -76,14 +74,14 @@ async function init() {
   // storageSavedData = fetcherFuncs.getAllSavedRecipe();
 
   // Testing variables
-  let testArrRecipe = [
-                        {"id": 1337, "title": "Doritos and Mtn Dew"},
-                        {"id": 1911, "title": "Pizza"},
-                      ];
-  storageFuncs.storeRecipeData("test", testArrRecipe);
-  const testLocation = document.querySelector("#trending~div");
+  const testArrRecipe = [
+    { id: 1337, title: 'Doritos and Mtn Dew' },
+    { id: 1911, title: 'Pizza' },
+  ];
+  storageFuncs.storeRecipeData('test', testArrRecipe);
+  const testLocation = document.querySelector('#trending~div');
 
-  createRecipeCards(["1337", "1911"], testLocation, 2);
+  createRecipeCards(['1337', '1911'], testLocation, 2);
 }
 window.addEventListener('DOMContentLoaded', init);
 
@@ -112,13 +110,13 @@ function prepRecipeForClick(rec, recPageName) {
  * @param location specifies where recipes are being filled i.e. HTML tags
  * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
  * ALEX and FRED- Start here.
- * Alex- Edit this into a for loop that populates all the pages and sections. 
+ * Alex- Edit this into a for loop that populates all the pages and sections.
  * You might need to edit index.html to make tags more specific.
  * Fred- The recipe card exists, but is not populated with information.
  * We need it to actually populate with the data.
  * You might need to edit RecipeCard.js
  */
-function createRecipeCards(arrData, location, numRecipesPopd = 5){
+function createRecipeCards(arrData, location, numRecipesPopd = 5) {
   // Populate each section
   let i = 0;
   // Checks to make sure only populate as many as requested by numRecipesPopd or

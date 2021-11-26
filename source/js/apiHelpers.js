@@ -110,6 +110,7 @@ async function getRecipesByCuisine(cuisine, num) {
  * @param {Number} num - max number of recipes to get
  * @returns {Object} list of recipes with detailed info
  */
+// eslint-disable-next-line import/prefer-default-export
 export async function getRecipesByType(type, num) {
   return new Promise((resolve, reject) => {
     fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity`, {
