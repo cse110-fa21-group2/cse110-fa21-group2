@@ -75,13 +75,14 @@ async function init() {
 
   // storageSavedData = fetcherFuncs.getAllSavedRecipe();
 
-  
+  // Testing variables
   let testArrRecipe = [
                         {"id": 1337, "title": "Doritos and Mtn Dew"},
                         {"id": 1911, "title": "Pizza"},
                       ];
   storageFuncs.storeRecipeData("test", testArrRecipe);
-  const testLocation = document.querySelector("#trending~div")
+  const testLocation = document.querySelector("#trending~div");
+
   createRecipeCards(["1337", "1911"], testLocation, 2);
 }
 window.addEventListener('DOMContentLoaded', init);
@@ -118,23 +119,15 @@ function prepRecipeForClick(rec, recPageName) {
  * You might need to edit RecipeCard.js
  */
 function createRecipeCards(arrData, location, numRecipesPopd = 5){
-  // const listExploreRecipeRows = document.querySelector('.explore').getElementsByClassName('recipe-row');
-
   // Populate each section
   let i = 0;
+  // Checks to make sure only populate as many as requested by numRecipesPopd or
+  // until reach the end of the array of recipe ids i.e. ran out of recipes
   while (i < numRecipesPopd && i < arrData.length) {
     const recipeCard = document.createElement('recipe-card');
+    // work-in-progress by Fred for populating recipe cards.
     recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i]));
     location.appendChild(recipeCard);
     i++;
   }
-
-  // Population for all categories in explore using dummy data
-  // for (let i = 0; i < listExploreRecipeRows.length; i++) {
-  //   Object.keys(objData).forEach((category) => {
-  //     const recipeCard = document.createElement('recipe-card');
-  //     recipeCard.data = objData[`${category}`];
-  //     listExploreRecipeRows[i].appendChild(recipeCard);
-  //   })
-  // }
 }
