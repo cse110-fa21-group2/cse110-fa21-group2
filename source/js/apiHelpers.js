@@ -154,7 +154,7 @@ export async function getRecipesByAutocomplete(query, num = 5) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
@@ -192,7 +192,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
