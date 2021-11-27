@@ -293,15 +293,53 @@ function initializeCreateRecipeButtons() {
   const createButton = document.querySelector('.create-recipe-button');
   createButton.addEventListener('click', createRecipeClicked);
 }
+
+/**
+ * active when search button click
+ * store Recipe to local with query as category name
+ * Does NOT apply any filter & sort, only search by name
+ * 1.add even handler to search button to fetch recipes for query 
+ * 2.add fetched recipes to local Storage
+ */
+ async function searchButtonHandler() {
+  let query = document.querySelector('.form-control').value;
+  let numOfRecipe = 3;    //hard coded, set small num for testing
+
+  let searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = "Top recipes for " + query;
+
+  let searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe);
+  // console.log("data from API");
+  // console.log(searchResult);
+  storageFuncs.storeRecipeData(query, searchResult); //not duplicate, if same id then replace
+  console.log("local data");
+  // console.log(fetcherFuncs.getAllCategoryRecipe());
+  console.log(fetcherFuncs.getAllCategoryRecipeId());
+  // console.log(fetcherFuncs.getAllCategoryRecipeId());
+  
+  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
+  console.log(resultRecipeId);
+  const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
+  createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
+
+
+  console.log("END");
+}
+
 async function init() {
   initializeRoutes();
   bindPopState();
   populateExplore();
   populateSavedRecipes();
   initializeCreateRecipeButtons();
-
+  // localStorage.clear();
   // temporary code
   testCreateRecipeCards();
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+//search button event listener
+let sButton = document.getElementById('search-results-nav');
+sButton.addEventListener('click', () => searchButtonHandler());
+
