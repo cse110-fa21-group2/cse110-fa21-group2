@@ -5,7 +5,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const  API_KEY  = 'ae714dd7cemsh368fb3362a0a8f7p11a770jsn2a499660f96d';// prevent exposing api key
+const  API_KEY  = '';// prevent exposing api key
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
