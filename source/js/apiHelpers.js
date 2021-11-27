@@ -5,7 +5,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const { API_KEY } = '';// prevent exposing api key
+const API_KEY = 'ae714dd7cemsh368fb3362a0a8f7p11a770jsn2a499660f96d';// prevent exposing api key
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
@@ -22,16 +22,18 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
-      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`, {
+      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}&includeNutrition=true`, {
         method: 'GET',
         headers: {
           'x-rapidapi-host': HOST,
           'x-rapidapi-key': API_KEY,
         },
       })
-        .then((response) => {
-          resolve(response.json());
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
         })
+
         .catch((err) => {
           console.log('Error getting detailed recipe info');
           reject(err);
