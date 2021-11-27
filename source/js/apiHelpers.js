@@ -31,9 +31,15 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       })
         .then((response) => response.json())
         .then((data) => {
+          data.forEach((recipe) => {
+            const { nutrients } = recipe.nutrition;
+            // eslint-disable-next-line no-param-reassign
+            delete recipe.nutrition;
+            // eslint-disable-next-line no-param-reassign
+            recipe.nutrients = nutrients;
+          });
           console.log(data);
         })
-
         .catch((err) => {
           console.log('Error getting detailed recipe info');
           reject(err);
