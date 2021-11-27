@@ -4,15 +4,16 @@
 
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
-require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const { API_KEY } = process.env;// prevent exposing api key
+// require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
+const { API_KEY } = '';// prevent exposing api key
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get detailed info from recipe ID's
- * @param {Object} idsToFetch - list of recipe ID's to fetch from API
- * @returns {Object} list of recipe JSONs
+ * @param {Object} ids - list of ids of recipes
+ * @returns {Array} Array of recipe Objects where each object contains detailed info
+
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
@@ -154,7 +155,7 @@ export async function getRecipesByAutocomplete(query, num = 5) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
@@ -192,7 +193,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {

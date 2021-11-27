@@ -1,118 +1,307 @@
-/* eslint-disable no-plusplus */
-// main.js
-
+/* eslint-disable import/extensions */
 // Import requried modules
 import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
 
-// Variable declarations
-let router;
-let landingPage;
-let explorePage;
-let savedRecipePage;
-let searchResults;
-let recipeInfoPage;
+const sections = [
+  'landing',
+  'explore',
+  'saved-recipes',
+  'search-results',
+  'recipe-info',
+  'create-recipe-page',
+];
 
-async function init() {
-  console.log("Initializing");
-  createRecipeCards();
-  // TODO
-  // Load 10 recipes per category for explore page (offset=rand to get diff recipe everytime)
-  // Populate explore page cards
-  // add recipes to localstorage
-  // navigate to explore page
-
-  // fetch saved recipe cards from localstorage
-  // navigate to saved recipe page
-  // add save button action to every card and page to update the saved recipe page so we don't
-  // have to handle it when we open the page
-
-  // add event handler to search button to fetch recipes for query
-  // add recipes to localstorage
-  // populate search result cards
-  // navigate to search results page
-
-  landingPage = document.querySelector('.landing');
-  explorePage = document.querySelector('.explore');
-  savedRecipePage = document.querySelector('.saved-recipes');
-  searchResults = document.querySelector('.search-results');
-  recipeInfoPage = document.querySelector('.recipe-info');
-
-  router = new Router(() => {
-    landingPage.classList.remove('hidden');
-    explorePage.classList.add('hidden');
-    savedRecipePage.classList.add('hidden');
-    searchResults.classList.add('hidden');
-    recipeInfoPage.classList.add('hidden');
-  });
-
-  // Function calls
-  // Fetch recipes and store locally if storage is empty.
-  /*
-  let storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-  const categoryNames = ['popular', 'cheap', 'healthy', 'fast'];
-  for (let i = 0; i < categoryNames.length; i++) {
-    if (!(categoryNames[i] in storageCategoryData)
-        || storageCategoryData[categoryNames[i]].length < 10) {
-        // fetch from api for (categoryNames[i], 10)
-       const fetchedData = [];
-       // store to local storage
-       storageFuncs.storeRecipeData(categoryNames[i], fetchedData);
+/** We switch pages by making a section visible and hiding all others */
+const openSection = (active) => () => {
+  sections.forEach(((val) => {
+    const section = document.querySelector(`.${val}`);
+    if (val === active) {
+      section.classList.remove('hidden');
+    } else {
+      section.classList.add('hidden');
     }
-  }
-  storageCategoryData = fetcherFuncs.getAllCategoryRecipe();
-  createExploreRecipeCards(storageCategoryData);
-  
-  const storageSavedData = fetcherFuncs.getAllSavedRecipe();*/
-}
-window.addEventListener('DOMContentLoaded', init);
+  }));
+};
 
-/**
- *
- * @param {Element} rec the recipe to prepare for clicking
- * @param {String} recPageName the name of page for that recipe
- */
-// eslint-disable-next-line no-unused-vars
-function prepRecipeForClick(rec, recPageName) {
-  rec.addEventListener('click', () => {
-    Router.navigate(recPageName, false);
+const router = new Router();
+
+const openHome = () => {
+  router.navigate('landing', false);
+};
+
+const openExplore = () => {
+  router.navigate('explore', false);
+};
+
+const openSavedRecipes = () => {
+  router.navigate('saved-recipes', false);
+};
+
+const openCreateRecipe = () => {
+  router.navigate('create-recipe-page', false);
+};
+
+const openSearchResults = () => {
+  // TODO: Fetch search results from API call and populate cards before navigation
+  router.navigate('search-results', false);
+};
+
+const openRecipeInfo = (data) => {
+  // TODO: Populate page from data
+  router.navigate('recipe-info', false);
+};
+
+function initializeRoutes() {
+  sections.forEach((section) => router.addPage(section, openSection(section)));
+
+  document.getElementById('landing-nav').addEventListener('click', openHome);
+  document.getElementById('explore-nav').addEventListener('click', openExplore);
+  document.getElementById('saved-recipes-nav').addEventListener('click', openSavedRecipes);
+  document.getElementById('create-recipe-nav').addEventListener('click', openCreateRecipe);
+  document.getElementById('search-results-nav').addEventListener('click', openSearchResults);
+}
+
+function bindPopState() {
+  window.addEventListener('popstate', (e) => {
+    const { state } = e;
+    router.navigate(state ? state.page : 'landing', true);
   });
 }
 
-/**
- * Populates index.html with recipecards, as defined in
- * RecipeCard.js
- * @param options a json object to be edited in the future for options
- * ALEX and FRED- Start here.
- * Alex- Edit this into a for loop that populates all the pages and sections. 
- * You might need to edit index.html to make tags more specific.
- * Fred- The recipe card exists, but is not populated with information.
- * We need it to actually populate with the data.
- * You might need to edit RecipeCard.js
- */
-function createRecipeCards(options = {}){
-  const recipeCard = document.createElement('recipe-card');
-  recipeCard.data = {};
-  document.querySelector('.recipe-row').appendChild(recipeCard);
+function populateExplore() {
+  // TODO: Fetch cards and add to explore section
 }
 
-/**
- * Generates the <recipe-card> elements from fetched recipes and appends them to page
- * @param storageCategoryData a JSON Object {category: RecipeJSON, ...}
- */
-function createExploreRecipeCards(storageCategoryData) {
-
-  Object.keys(storageCategoryData).forEach((category) => {
-    let recipeCard = document.createElement('recipe-card');
-    recipeCard.data = storageCategoryData;
-    let page /* = recipeData[recipes[i]]['page-name'] */;
-    router.addPage(page, () => {
-      // TODO: Replace with our version names
-      // document.querySelector('.section--recipe-cards').classList.remove('shown');
-      // document.querySelector('.section--recipe-expand').classList.add('shown');
-      // document.querySelector('recipe-expand').data = recipeData[recipes[i]];
-    })
-  })   
+function populateSavedRecipes() {
+  // TODO: Fetch all saved recipes from localStorage and populate saved recipe section
 }
+
+// TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
+
+/**
+ * Populates index.html with <recipe-card> elements, as defined in
+ * RecipeCard.js. This function is meant to be called for each section that needs
+ * to be populated with recipe cards.
+ * @param arrData an array of recipe ids (currently). example input:
+ * [
+*    "123", // recipe id
+*    "111", // recipe id
+*    "444", // recipe id
+*  ]
+ * @param location specifies where recipes are being filled i.e. HTML tags
+ * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
+ */
+function createRecipeCards(arrData, location, numRecipesPopd = 5) {
+  // Populate each section
+  let i = 0;
+  // Checks to make sure only populate as many as requested by numRecipesPopd or
+  // until reach the end of the array of recipe ids i.e. ran out of recipes
+  while (i < numRecipesPopd && i < arrData.length) {
+    const recipeCard = document.createElement('recipe-card');
+    // work-in-progress by Fred for populating recipe cards.
+    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
+    location.appendChild(recipeCard);
+    i += 1;
+  }
+}
+
+function testCreateRecipeCards() {
+  // Testing variables
+  const testArrRecipe = [
+    { id: 1337, title: 'Doritos and Mtn Dew' },
+    { id: 1911, title: 'Pizza' },
+  ];
+  storageFuncs.storeRecipeData('test', testArrRecipe);
+  const testLocation = document.querySelector('#trending~div');
+
+  createRecipeCards(['1337', '1911'], testLocation, 2);
+}
+
+const addIngredientClicked = () => {
+  const createIngRoot = document.querySelector('.ingredient-input-list');
+
+  const ingRow = document.createElement('div');
+  ingRow.setAttribute('class', 'row create-ingredient-fact');
+
+  const ingAmountDiv = document.createElement('div');
+  ingAmountDiv.setAttribute('class', 'col');
+  const ingAmountInput = document.createElement('input');
+  ingAmountInput.setAttribute('type', 'number');
+  ingAmountInput.setAttribute(
+    'class',
+    'form-control recipe-ingredient-amount',
+  );
+  ingAmountInput.setAttribute('placeholder', 'Amount');
+  ingAmountDiv.appendChild(ingAmountInput);
+
+  const ingUnitDiv = document.createElement('div');
+  ingUnitDiv.setAttribute('class', 'col');
+  const ingUnitInput = document.createElement('input');
+  ingUnitInput.setAttribute('type', 'text');
+  ingUnitInput.setAttribute('class', 'form-control recipe-ingredient-unit');
+  ingUnitInput.setAttribute('placeholder', 'Unit');
+  ingUnitDiv.appendChild(ingUnitInput);
+
+  const ingNameDiv = document.createElement('div');
+  ingNameDiv.setAttribute('class', 'col');
+  const ingNameInput = document.createElement('input');
+  ingNameInput.setAttribute('type', 'text');
+  ingNameInput.setAttribute('class', 'form-control recipe-ingredient-name');
+  ingNameInput.setAttribute('placeholder', 'Name');
+  ingNameDiv.appendChild(ingNameInput);
+
+  ingRow.appendChild(ingNameDiv);
+  ingRow.appendChild(ingAmountDiv);
+  ingRow.appendChild(ingUnitDiv);
+
+  createIngRoot.appendChild(ingRow);
+};
+
+const addStepClicked = () => {
+  const createStepRoot = document.querySelector('.step-input-list');
+  const allStepInput = document.querySelectorAll('.recipe-step-input');
+  const stepInput = document.createElement('input');
+  stepInput.setAttribute('type', 'text');
+  stepInput.setAttribute('class', 'form-control recipe-step-input');
+  stepInput.setAttribute('id', `step-${allStepInput.length}`);
+  stepInput.setAttribute('placeholder', `Step ${allStepInput.length + 1}`);
+  createStepRoot.appendChild(stepInput);
+};
+
+const createRecipeClicked = () => {
+  const ingredientAmount = document.querySelectorAll(
+    '.recipe-ingredient-amount',
+  );
+
+  const ingredientUnits = document.querySelectorAll(
+    '.recipe-ingredient-unit',
+  );
+
+  const ingredientNames = document.querySelectorAll(
+    '.recipe-ingredient-name',
+  );
+
+  const steps = document.querySelectorAll('.recipe-step-input');
+
+  const finalObject = {};
+
+  // format serving
+  const serving = document.querySelector(
+    '.ingredient-serving-input',
+  );
+  finalObject.servings = serving.value;
+
+  // format all the ingredients:
+  const ingredientArray = [];
+  for (let i = 0; i < ingredientNames.length; i++) {
+    const ingObject = {};
+    ingObject.name = ingredientNames[i].value;
+    ingObject.amount = ingredientAmount[i].value;
+    ingObject.unit = ingredientUnits[i].value;
+    ingObject.measures = {
+      us: {
+        amount: ingredientAmount[i].value,
+        unitShort: ingredientUnits[i].value,
+        unitLong: ingredientUnits[i].value,
+      },
+      metric: {
+        amount: ingredientAmount[i].value,
+        unitShort: ingredientUnits[i].value,
+        unitLong: ingredientUnits[i].value,
+      },
+    };
+    ingredientArray.push(ingObject);
+  }
+  finalObject.extendedIngredients = ingredientArray;
+
+  // format step array
+  const stepArray = [];
+  for (let i = 0; i < steps.length; i++) {
+    const stepObject = {};
+    stepObject.number = i + 1;
+    stepObject.step = steps[i].value;
+    stepArray.push(stepObject);
+  }
+  finalObject.analyzedInstructions = {
+    name: '',
+    steps: stepArray,
+  };
+
+  // format summary
+  const summary = document.querySelector(
+    '.recipe-input-summary',
+  );
+  finalObject.summary = summary.value;
+
+  // format nutrition
+  const nutrition = document.querySelector(
+    '.recipe-input-nutrition',
+  );
+  finalObject.nutrition = nutrition.value;
+
+  // format preptime
+  const preptime = document.querySelector(
+    '.recipe-preptime',
+  );
+  finalObject.preparationMinutes = preptime.value;
+
+  // format cooktime
+  const cooktime = document.querySelector(
+    '.recipe-cooktime',
+  );
+  finalObject.cookingMinutes = cooktime.value;
+
+  // format image URL
+  const imageUrl = document.querySelector(
+    '.recipe-image-url',
+  );
+  finalObject.image = imageUrl.value;
+
+  // format rating
+  const rating = document.querySelector(
+    '.recipe-rating',
+  );
+  finalObject.averageRating = rating.value;
+
+  // format name:
+  const recipeName = document.querySelector(
+    '.recipe-input-name',
+  );
+  finalObject.title = recipeName.value;
+
+  // assign a random id (use recipe name)
+  const recipeId = recipeName.value;
+  finalObject.id = recipeId;
+
+  storageFuncs.storeRecipeData('created', [finalObject]);
+  storageFuncs.saveRecipeToList('created', recipeId);
+
+  console.log(finalObject);
+};
+
+function initializeCreateRecipeButtons() {
+  const addIngredientButton = document.querySelector('.add-ingredient-button');
+  addIngredientButton.addEventListener('click', addIngredientClicked);
+
+  // add step input to dom
+  const addStepButton = document.querySelector('.add-step-button');
+  addStepButton.addEventListener('click', addStepClicked);
+  // create data object save to local storage.
+  const createButton = document.querySelector('.create-recipe-button');
+  createButton.addEventListener('click', createRecipeClicked);
+}
+async function init() {
+  initializeRoutes();
+  bindPopState();
+  populateExplore();
+  populateSavedRecipes();
+  initializeCreateRecipeButtons();
+
+  // temporary code
+  testCreateRecipeCards();
+}
+
+window.addEventListener('DOMContentLoaded', init);
