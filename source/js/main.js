@@ -294,22 +294,29 @@ function initializeCreateRecipeButtons() {
   createButton.addEventListener('click', createRecipeClicked);
 }
 
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
 /**
  * active when search button click
  * store Recipe to local with query as category name
  * Does NOT apply any filter & sort, only search by name
  * 1.add even handler to search button to fetch recipes for query 
  * 2.add fetched recipes to local Storage
+ * 3.populate recipe cards for search result page
  */
  async function searchButtonHandler() {
   const query = document.querySelector('.form-control').value;
   const numOfRecipe = 5;    //number of recipe
-  const offset = 0; //begin with page 0 when search
+  const pageOffset = 0; //begin with page 0 when search
 
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = "Top recipes for " + query;
 
-  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, offset);
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
   // console.log("data from API");
   // console.log(searchResult);
   storageFuncs.storeRecipeData(query, searchResult);
@@ -317,12 +324,17 @@ function initializeCreateRecipeButtons() {
   // console.log(fetcherFuncs.getAllCategoryRecipe());
   console.log(fetcherFuncs.getAllCategoryRecipeId());
   // console.log(fetcherFuncs.getAllCategoryRecipeId());
-  
-  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
-  console.log(resultRecipeId);
-  const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
-  createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
 
+  // if(searchResult.length < numOfRecipe){
+  //   const autocompleteResult = await apiFuncs.getRecipesByAutocomplete(query, numOfRecipe - searchResult.length);
+  //   storageFuncs.storeRecipeData(query, autocompleteResult);
+  // }
+   
+  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
+  // console.log(resultRecipeId);
+  const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
+  removeAllChildNodes(searchResultCardslocation);
+  createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
 }
 
 async function init() {
