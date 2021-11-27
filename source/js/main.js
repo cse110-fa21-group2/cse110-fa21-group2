@@ -307,10 +307,11 @@ function removeAllChildNodes(parent) {
  * 1.add even handler to search button to fetch recipes for query 
  * 2.add fetched recipes to local Storage
  * 3.populate recipe cards for search result page
+ * 4.TODO: if no enough result, call getRecipesByAutocomplete
  */
  async function searchButtonHandler() {
   const query = document.querySelector('.form-control').value;
-  const numOfRecipe = 5;    //number of recipe
+  const numOfRecipe = 2;    //number of recipe, 2 for testing
   const pageOffset = 0; //begin with page 0 when search
 
   const searchResultPageTitle = document.getElementById('search-results-title');
@@ -326,15 +327,43 @@ function removeAllChildNodes(parent) {
   // console.log(fetcherFuncs.getAllCategoryRecipeId());
 
   // if(searchResult.length < numOfRecipe){
-  //   const autocompleteResult = await apiFuncs.getRecipesByAutocomplete(query, numOfRecipe - searchResult.length);
+  //   const numOfAdditionRecipe = numOfRecipe - searchResult.length;
+  //   const autocompleteResult = await apiFuncs.getRecipesByAutocomplete(query, numOfAdditionRecipe);
   //   storageFuncs.storeRecipeData(query, autocompleteResult);
   // }
    
   const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
   // console.log(resultRecipeId);
   const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
-  removeAllChildNodes(searchResultCardslocation);
+  removeAllChildNodes(searchResultCardslocation); //refresh cards
   createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
+}
+
+/**
+ * active when show more button click
+ * add # more recipe cards by fetch # more recipe from API with offset
+ * populate more recipe cards
+ */
+async function searchResultShowMore(){
+  const query = document.querySelector('.form-control').value;
+  const numOfCardExist = document.querySelector('#results-grid-recipe-card-location').childElementCount;
+  // console.log("numOfCardExist: ");
+  // console.log(numOfCardExist);
+  const numOfAdditionRecipeCards = 2; //2 for testing
+  const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;    //number of total recipe cards
+  const pageOffset = numOfCardExist/numOfAdditionRecipeCards; //move to next page 
+  
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfAdditionRecipeCards, pageOffset);
+  storageFuncs.storeRecipeData(query, searchResult);
+
+  const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
+  //create more cards
+  for(let i = numOfCardExist; i < numOfRecipe; i++){
+    const singleResultRecipeId = JSON.parse(localStorage.getItem('categories'))[query][i];
+    // console.log("singleResultRecipeId");
+    // console.log(singleResultRecipeId);
+    createRecipeCards([singleResultRecipeId], searchResultCardslocation, 1);
+  }
 }
 
 async function init() {
@@ -355,3 +384,5 @@ window.addEventListener('DOMContentLoaded', init);
 let sButton = document.getElementById('search-results-nav');
 sButton.addEventListener('click', () => searchButtonHandler());
 
+let showMoreButton = document.getElementById('show-more-button');
+showMoreButton.addEventListener('click', () => searchResultShowMore());
