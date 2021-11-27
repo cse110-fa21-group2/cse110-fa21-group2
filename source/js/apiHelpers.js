@@ -38,7 +38,7 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
             // eslint-disable-next-line no-param-reassign
             recipe.nutrients = nutrients;
           });
-          console.log(data);
+          resolve(data);
         })
         .catch((err) => {
           console.log('Error getting detailed recipe info');
@@ -84,7 +84,7 @@ export function extractIDs(data) {
 export async function getRecipesByName(query, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=popularity&offset=${offset}`, {
+    fetch(`https://${HOST}/recipes/complexSearch?query=${queryFormatted}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -205,7 +205,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
+    fetch(`https://${HOST}/recipes/complexSearch?type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
