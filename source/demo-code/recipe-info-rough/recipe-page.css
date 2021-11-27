@@ -393,3 +393,26 @@ li.item {
 li.steps {
   margin-top: 0.5rem;
 }
+
+div.timer {
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+  background-color: white;
+  bottom: 0;
+  float: right;
+  right: 0;
+  position: fixed;
+  width: 15rem;
+  display:block;
+  align-items: center;
+}
+
+div.timeInput {
+  display: inline-flex;
+}
+
+#timer {
+  font-size: 24px;
+  text-align: center;
+}
