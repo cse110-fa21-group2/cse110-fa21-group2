@@ -302,16 +302,17 @@ function initializeCreateRecipeButtons() {
  * 2.add fetched recipes to local Storage
  */
  async function searchButtonHandler() {
-  let query = document.querySelector('.form-control').value;
-  let numOfRecipe = 3;    //hard coded, set small num for testing
+  const query = document.querySelector('.form-control').value;
+  const numOfRecipe = 5;    //number of recipe
+  const offset = 0; //begin with page 0 when search
 
-  let searchResultPageTitle = document.getElementById('search-results-title');
+  const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = "Top recipes for " + query;
 
-  let searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe);
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, offset);
   // console.log("data from API");
   // console.log(searchResult);
-  storageFuncs.storeRecipeData(query, searchResult); //not duplicate, if same id then replace
+  storageFuncs.storeRecipeData(query, searchResult);
   console.log("local data");
   // console.log(fetcherFuncs.getAllCategoryRecipe());
   console.log(fetcherFuncs.getAllCategoryRecipeId());
@@ -322,8 +323,6 @@ function initializeCreateRecipeButtons() {
   const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
   createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
 
-
-  console.log("END");
 }
 
 async function init() {
@@ -332,9 +331,10 @@ async function init() {
   populateExplore();
   populateSavedRecipes();
   initializeCreateRecipeButtons();
-  // localStorage.clear();
+  
   // temporary code
   testCreateRecipeCards();
+  // localStorage.clear(); //for testing, turn off to make less api call
 }
 
 window.addEventListener('DOMContentLoaded', init);
