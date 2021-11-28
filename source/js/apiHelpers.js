@@ -21,7 +21,7 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       const url = new URL(`https://${HOST}/recipes/complexSearch`);
       url.searchParams.append('ids', idsFormatted);
       url.searchParams.append('includeNutrition', 'true');
-      fetch(url, {
+      fetch(url.href, {
         method: 'GET',
         headers: {
           'x-rapidapi-host': HOST,
@@ -92,11 +92,11 @@ export async function getRecipesByName(query, num = 5, offset = 0, sortFilterPar
     url.searchParams.append('num', num);
     url.searchParams.append('offset', offset);
 
-    // add sort and filter params
-    // eslint-disable-next-line no-restricted-syntax
-    for (const [key, val] of Object.entries(sortFilterParams)) {
-      url.searchParams.append(key, val);
-    }
+    // add sort and filter params to search
+    Object.keys(sortFilterParams).forEach((key) => {
+      url.searchParams.append(key, sortFilterParams.key);
+    });
+
     console.log(url.href);
     fetch(url.href, {
       method: 'GET',
@@ -139,7 +139,7 @@ export async function getRecipesByAutocomplete(query, num = 5) {
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
     url.searchParams.append('query', queryFormatted);
     url.searchParams.append('number', num);
-    fetch(url, {
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -189,7 +189,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
     url.searchParams.append('cuisine', cuisine);
     url.searchParams.append('number', num);
     url.searchParams.append('offset', offset);
-    fetch(url, {
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -230,7 +230,7 @@ export async function getRecipesByType(type, num = 5, offset = 0) {
     url.searchParams.append('type', type);
     url.searchParams.append('number', num);
     url.searchParams.append('offset', offset);
-    fetch(url, {
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
