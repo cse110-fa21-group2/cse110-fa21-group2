@@ -20,6 +20,7 @@ export default class Router {
    */
   navigate(page, statePopped) {
     if (this[page] === undefined) {
+      // eslint-disable-next-line no-console
       console.error('Page not found');
       return;
     }
