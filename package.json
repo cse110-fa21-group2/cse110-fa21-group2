@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lintjs": "npx eslint \"**/*.js\"",
+    "lintjs": "npx eslint \"./source/js/*.js\"",
     "lintcss": "npx stylelint \"**/*.css\"",
     "lint": "npm run lintjs && npm run lintcss"
   },

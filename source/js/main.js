@@ -29,7 +29,49 @@ const openSection = (active) => () => {
   }));
 };
 
+/**
+ * helper function to remove duplication
+ * @returns search bar input
+ */
+const getSearchQuery = () => document.querySelector('.form-control').value;
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
+/**
+ * Populates index.html with <recipe-card> elements, as defined in
+ * RecipeCard.js. This function is meant to be called for each section that needs
+ * to be populated with recipe cards.
+ * @param arrData an array of recipe ids (currently). example input:
+ * [
+*    "123", // recipe id
+*    "111", // recipe id
+*    "444", // recipe id
+*  ]
+ * @param location specifies where recipes are being filled i.e. HTML tags
+ * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
+ */
+function createRecipeCards(arrData, location, numRecipesPopd = 5) {
+  // Populate each section
+  let i = 0;
+  // Checks to make sure only populate as many as requested by numRecipesPopd or
+  // until reach the end of the array of recipe ids i.e. ran out of recipes
+  while (i < numRecipesPopd && i < arrData.length) {
+    const recipeCard = document.createElement('recipe-card');
+    recipeCard.id = arrData[i];
+    // work-in-progress by Fred for populating recipe cards.
+    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
+    location.appendChild(recipeCard);
+    i += 1;
+  }
+}
+
 const router = new Router();
+
+/* Navbar button handlers */
 
 const openHome = () => {
   router.navigate('landing', false);
@@ -47,8 +89,21 @@ const openCreateRecipe = () => {
   router.navigate('create-recipe-page', false);
 };
 
-const openSearchResults = () => {
+const openSearchResults = async () => {
   // TODO: Fetch search results from API call and populate cards before navigation
+  const query = getSearchQuery();
+  const numOfRecipe = 4;
+  const pageOffset = 0;
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
+  storageFuncs.storeRecipeData(query, searchResult);
+
+  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
+  const searchResultsContainer = document.getElementById('search-results-container');
+  removeAllChildNodes(searchResultsContainer);
+  createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
+
   router.navigate('search-results', false);
 };
 
@@ -67,6 +122,7 @@ function initializeRoutes() {
   document.getElementById('search-results-nav').addEventListener('click', openSearchResults);
 }
 
+/* Back button event handler */
 function bindPopState() {
   window.addEventListener('popstate', (e) => {
     const { state } = e;
@@ -172,17 +228,7 @@ function createRecipeCards(arrData, location, numRecipesPopd = 5) {
   }
 }
 
-// function testCreateRecipeCards() {
-//   // Testing variables
-//   const testArrRecipe = [
-//     { id: 1337, title: 'Doritos and Mtn Dew' },
-//     { id: 1911, title: 'Pizza' },
-//   ];
-//   storageFuncs.storeRecipeData('test', testArrRecipe);
-//   const testLocation = document.querySelector('#trending~div');
-
-//   createRecipeCards(['1337', '1911'], testLocation, 2);
-// }
+/* More event handlers */
 
 const addIngredientClicked = () => {
   const createIngRoot = document.querySelector('.ingredient-input-list');
@@ -346,7 +392,32 @@ const createRecipeClicked = () => {
   console.log(finalObject);
 };
 
-function initializeCreateRecipeButtons() {
+/**
+ * active when show more button click
+ * add # more recipe cards by fetch # more recipe from API with offset
+ * populate more recipe cards
+ */
+async function searchResultShowMore() {
+  const query = getSearchQuery();
+  const searchResultsContainer = document.getElementById('search-results-container');
+
+  const numOfCardExist = searchResultsContainer.childElementCount;
+  const numOfAdditionRecipeCards = 4;
+  const pageOffset = numOfCardExist / numOfAdditionRecipeCards;
+
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfAdditionRecipeCards, pageOffset);
+  storageFuncs.storeRecipeData(query, searchResult);
+
+  const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
+  const localCategories = JSON.parse(localStorage.getItem('categories'));
+
+  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
+    const singleResultRecipeId = localCategories[query][i];
+    createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
+  }
+}
+
+function initializeButtons() {
   const addIngredientButton = document.querySelector('.add-ingredient-button');
   addIngredientButton.addEventListener('click', addIngredientClicked);
 
@@ -356,16 +427,17 @@ function initializeCreateRecipeButtons() {
   // create data object save to local storage.
   const createButton = document.querySelector('.create-recipe-button');
   createButton.addEventListener('click', createRecipeClicked);
+
+  const showMoreButton = document.getElementById('show-more-button');
+  showMoreButton.addEventListener('click', searchResultShowMore);
 }
+
 async function init() {
   initializeRoutes();
   bindPopState();
   populateExplore();
   populateSavedRecipes();
-  initializeCreateRecipeButtons();
-
-  // temporary code
-  // testCreateRecipeCards();
+  initializeButtons();
 }
 
 window.addEventListener('DOMContentLoaded', init);
