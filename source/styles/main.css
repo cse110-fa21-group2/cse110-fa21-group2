@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+html,
+body {
+  font-family: Lato, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .hidden {
   display: none;
 }
@@ -9,6 +18,38 @@
 /* Navbar CSS */
 nav a:hover {
   cursor: pointer;
+}
+
+.navbar {
+  border-bottom: black solid 2px;
+}
+
+.navbar-brand {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+#explore-nav {
+  background: none;
+  border: none;
+  color: black;
+  margin-left: 5rem;
+}
+
+#saved-recipes-nav {
+  background: none;
+  border: none;
+  color: black;
+  margin-left: 5rem;
+}
+
+#create-recipe-nav {
+  background: none;
+  border: none;
+  color: black;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
 
 /* Landing Page CSS */
@@ -40,7 +81,7 @@ nav a:hover {
   border: 1px solid black;
   height: 2.5rem;
   margin-right: 1rem;
-  width: 7rem;
+  width: 8rem;
 }
 
 /* Explore Page CSS */
