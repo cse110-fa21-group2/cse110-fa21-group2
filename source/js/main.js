@@ -104,7 +104,13 @@ function populateExplore() {
   storageFuncs.storeRecipeData('trending', trendingArrRecipe);
   // ********* //
 
+  // Location where recipe cards are to be added
+  const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
+
+  // Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
+  
+  // Iterate through each category in explore IDs and add recipe cards using their IDs
   exploreSections.forEach((section) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const category in allCategoriesIds) {
@@ -123,12 +129,15 @@ function populateSavedRecipes() {
   storageFuncs.saveRecipeToList('favorites', 5981);
   // ******* //
 
+  // Location where recipe cards are to be added
   const grid = document.querySelector('.saved-recipes .results-grid');
 
+  // Get IDs from localStorage using fetcher functions
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
+
+  // Iterate through each "list" in saved lists and add recipe cards using their IDs
   for (const category in allSavedIds) {
     //if (section.id == category) {
-      console.log(`Printing category: ${allSavedIds[category]}`);
       createRecipeCards(allSavedIds[category], grid, DEFAULT_NUM_CARDS);
     //}
   }
