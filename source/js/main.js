@@ -526,7 +526,7 @@ async function init() {
   initializeButtons();
 
   // Expanded Recipe Info using dummy data. Can pass in real data when we get it.
-  populateExpandedRecipeData(tempData[0]);
+  // populateExpandedRecipeData(tempData[0]);
 }
 
 window.addEventListener('DOMContentLoaded', init);
