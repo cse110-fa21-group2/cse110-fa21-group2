@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lintjs": "npx eslint \"./source/js/**/*.js\"",
-    "lintcss": "npx stylelint './source/styles/*.css'",
+    "lintcss": "npx stylelint \"**/*.css\"",
     "lint": "npm run lintjs && npm run lintcss"
   },
   "jest": {
