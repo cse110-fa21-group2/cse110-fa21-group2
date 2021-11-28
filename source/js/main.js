@@ -51,10 +51,10 @@ const removeAllChildNodes = (parent) => {
  * to be populated with recipe cards.
  * @param arrData an array of recipe ids (currently). example input:
  * [
-*    "123", // recipe id
-*    "111", // recipe id
-*    "444", // recipe id
-*  ]
+ *    "123", // recipe id
+ *    "111", // recipe id
+ *    "444", // recipe id
+ *  ]
  * @param location specifies where recipes are being filled i.e. HTML tags
  * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
  */
@@ -200,7 +200,25 @@ function populateSavedRecipes() {
   });
 }
 
-function populateRecipeData(data){
+/**
+ * 
+ * @param {*} recipe //TODO -Laurence Specify object type
+ * @returns ingredientList: list of ingredients to make recipe
+ */
+function getRecipeIngredients(recipe){
+  let ingredientList = []
+  let ingredients = recipe.extendedIngredients
+  for(let i = 0; i < ingredients.length; i++){
+    ingredientList.push(ingredients[i].originalString);
+  }
+  return ingredientList;
+} 
+
+/**
+* Populates the ExpandedRecipeCard with data
+* @param data a list of recipe JSONS //TODO alter param to be less confusing
+*/
+function populateExpandedRecipeData(data){
   //Get single recipe JSON from list of JSONs
   let curRecipe = data[0]; 
 
@@ -297,20 +315,6 @@ function getRecipeSteps(recipe){
   }
   return stepsList;
 }
-
-/**
- * 
- * @param {*} recipe //TODO Specify object type
- * @returns ingredientList: list of ingredients to make recipe
- */
-function getRecipeIngredients(recipe){
-  let ingredientList = []
-  let ingredients = recipe.extendedIngredients
-  for(let i = 0; i < ingredients.length; i++){
-    ingredientList.push(ingredients[i].originalString);
-  }
-  return ingredientList;
-} 
 
 // TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
 
@@ -608,7 +612,7 @@ async function init() {
 
   //Expanded Recipe Info using dummy data. Can pass in real data when we get it.
   const tempData = returnDummyData();
-  populateRecipeData(tempData);
+  populateExpandedRecipeData(tempData);
 
 }
 
