@@ -11,24 +11,29 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
  * Get detailed info from recipe ID's
  * @param {Object} ids - list of ids of recipes
  * @returns {Array} Array of recipe Objects where each object contains detailed info
-
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
-    // fetch from API
     if (idsToFetch.length === 0) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
-      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`, {
+      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}&includeNutrition=true`, {
         method: 'GET',
         headers: {
           'x-rapidapi-host': HOST,
           'x-rapidapi-key': API_KEY,
         },
       })
-        .then((response) => {
-          resolve(response.json());
+        .then((response) => response.json())
+        .then((data) => {
+          resolve(data.map((recipe) => {
+            const recipeInfo = recipe;
+            const { nutrients } = recipe.nutrition;
+            delete recipeInfo.nutrition;
+            recipeInfo.nutrients = nutrients;
+            return recipeInfo;
+          }));
         })
         .catch((err) => {
           console.log('Error getting detailed recipe info');
@@ -74,7 +79,7 @@ export function extractIDs(data) {
 export async function getRecipesByName(query, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=popularity&offset=${offset}`, {
+    fetch(`https://${HOST}/recipes/complexSearch?query=${queryFormatted}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -195,7 +200,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
+    fetch(`https://${HOST}/recipes/complexSearch?type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
