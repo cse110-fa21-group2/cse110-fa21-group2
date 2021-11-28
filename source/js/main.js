@@ -380,7 +380,7 @@ async function searchResultShowMore() {
   storageFuncs.storeRecipeData(query, searchResult);
 
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
-  const localCategories = JSON.parse(localStorage.getItem('categories'));
+  const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
   for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
     const singleResultRecipeId = localCategories[query][i];
