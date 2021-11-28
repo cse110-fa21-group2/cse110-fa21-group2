@@ -35,6 +35,24 @@
 
 /**
  *
+ * @returns all recipes {uid:recipe json,uid:recipe json}
+ */
+export function getAllRecipes() {
+  return JSON.parse(localStorage.getItem('recipeData'));
+}
+
+/**
+ *
+ * @param {*} recipeid
+ * @returns json object of the recipe
+ */
+export function getSingleRecipe(recipeid) {
+  const recipes = getAllRecipes();
+  return recipes[recipeid];
+}
+
+/**
+ *
  * @return recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
  */
 export function getAllCategoryRecipeId() {
@@ -47,7 +65,6 @@ export function getAllCategoryRecipeId() {
  */
 export function getAllCategoryRecipe() {
   const categoryId = getAllCategoryRecipeId();
-  // eslint-disable-next-line no-use-before-define
   const recipes = getAllRecipes();
   const output = {};
   if (categoryId == null || recipes == null) {
@@ -76,7 +93,6 @@ export function getAllSavedRecipeId() {
  */
 export function getAllSavedRecipe() {
   const savedId = getAllSavedRecipeId();
-  // eslint-disable-next-line no-use-before-define
   const recipes = getAllRecipes();
   const output = {};
   if (savedId == null || recipes == null) {
@@ -89,22 +105,4 @@ export function getAllSavedRecipe() {
     });
   });
   return output;
-}
-
-/**
- *
- * @returns all recipes {uid:recipe json,uid:recipe json}
- */
-export function getAllRecipes() {
-  return JSON.parse(localStorage.getItem('recipeData'));
-}
-
-/**
- *
- * @param {*} recipeid
- * @returns json object of the recipe
- */
-export function getSingleRecipe(recipeid) {
-  const recipes = getAllRecipes();
-  return recipes[recipeid];
 }
