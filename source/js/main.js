@@ -87,50 +87,6 @@ const createRecipeCards = (arrData, location, numRecipesPopd = 5) => {
   }
 };
 
-/* Navbar button handlers */
-
-const openHome = () => {
-  router.navigate('landing', false);
-};
-
-const openExplore = () => {
-  router.navigate('explore', false);
-};
-
-const openSavedRecipes = () => {
-  router.navigate('saved-recipes', false);
-};
-
-const openCreateRecipe = () => {
-  router.navigate('create-recipe-page', false);
-};
-
-const openSearchResults = async () => {
-  const query = getSearchQuery();
-  // Don't navigate if query is blank
-  if (!query) return;
-
-  const numOfRecipe = 4;
-  const pageOffset = 0;
-  const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
-  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
-
-  storageFuncs.storeRecipeData(query, searchResult);
-
-  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
-  const searchResultsContainer = document.getElementById('search-results-container');
-  removeAllChildNodes(searchResultsContainer);
-  createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
-
-  router.navigate('search-results', false);
-};
-
-const openRecipeInfo = (data) => {
-  // TODO: Populate page from data
-  router.navigate('recipe-info', false);
-};
-
 /**
  *
  * @param {*} recipe //TODO -Laurence Specify object type
@@ -205,6 +161,50 @@ function populateExpandedRecipeData(data) {
   // TODO: extract nutrition facts from data
   nutFacts.innerHTML = '**DUMMY NUTRITION FACTS**';
 }
+
+/* Navbar button handlers */
+
+const openHome = () => {
+  router.navigate('landing', false);
+};
+
+const openExplore = () => {
+  router.navigate('explore', false);
+};
+
+const openSavedRecipes = () => {
+  router.navigate('saved-recipes', false);
+};
+
+const openCreateRecipe = () => {
+  router.navigate('create-recipe-page', false);
+};
+
+const openSearchResults = async () => {
+  const query = getSearchQuery();
+  // Don't navigate if query is blank
+  if (!query) return;
+
+  const numOfRecipe = 4;
+  const pageOffset = 0;
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
+
+  storageFuncs.storeRecipeData(query, searchResult);
+
+  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
+  const searchResultsContainer = document.getElementById('search-results-container');
+  removeAllChildNodes(searchResultsContainer);
+  createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
+
+  router.navigate('search-results', false);
+};
+
+const openRecipeInfo = (data) => {
+  populateExpandedRecipeData(data);
+  router.navigate('recipe-info', false);
+};
 
 // TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
 
