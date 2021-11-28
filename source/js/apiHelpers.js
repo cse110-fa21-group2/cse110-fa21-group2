@@ -13,11 +13,9 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
  * Get detailed info from recipe ID's
  * @param {Object} ids - list of ids of recipes
  * @returns {Array} Array of recipe Objects where each object contains detailed info
-
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
-    // fetch from API
     if (idsToFetch.length == 0) {
       resolve([]);
     } else {
@@ -31,14 +29,13 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       })
         .then((response) => response.json())
         .then((data) => {
-          data.forEach((recipe) => {
+          resolve(data.map((recipe) => {
+            const recipeInfo = recipe;
             const { nutrients } = recipe.nutrition;
-            // eslint-disable-next-line no-param-reassign
-            delete recipe.nutrition;
-            // eslint-disable-next-line no-param-reassign
-            recipe.nutrients = nutrients;
-          });
-          resolve(data);
+            delete recipeInfo.nutrition;
+            recipeInfo.nutrients = nutrients;
+            return recipeInfo;
+          }));
         })
         .catch((err) => {
           console.log('Error getting detailed recipe info');
