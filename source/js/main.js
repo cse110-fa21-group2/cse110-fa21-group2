@@ -101,6 +101,7 @@ function createRecipeCards(arrData, location, numRecipesPopd = 5) {
   // until reach the end of the array of recipe ids i.e. ran out of recipes
   while (i < numRecipesPopd && i < arrData.length) {
     const recipeCard = document.createElement('recipe-card');
+    recipeCard.id = arrData[i];
     // work-in-progress by Fred for populating recipe cards.
     recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
     location.appendChild(recipeCard);
