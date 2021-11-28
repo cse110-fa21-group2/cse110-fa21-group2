@@ -7,7 +7,7 @@ export default class Router {
    * @param {Function} pageFunc The function to run when the page is called
    */
   addPage(page, pageFunc) {
-    this[page] = pageFunc;
+     this[page] = pageFunc;
   }
 
   /**
