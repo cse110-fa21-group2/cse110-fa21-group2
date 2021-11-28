@@ -90,6 +90,9 @@ const openCreateRecipe = () => {
 
 const openSearchResults = async () => {
   const query = getSearchQuery();
+  // Don't navigate if query is blank
+  if (!query) return;
+
   const numOfRecipe = 4;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
