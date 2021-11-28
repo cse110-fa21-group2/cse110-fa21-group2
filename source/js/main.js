@@ -1,5 +1,4 @@
 /* eslint-disable import/extensions */
-// Import requried modules
 import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
@@ -90,16 +89,16 @@ const openCreateRecipe = () => {
 };
 
 const openSearchResults = async () => {
-  // TODO: Fetch search results from API call and populate cards before navigation
   const query = getSearchQuery();
   const numOfRecipe = 4;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
+  console.log(searchResult);
   storageFuncs.storeRecipeData(query, searchResult);
 
-  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
+  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
   const searchResultsContainer = document.getElementById('search-results-container');
   removeAllChildNodes(searchResultsContainer);
   createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
@@ -107,6 +106,7 @@ const openSearchResults = async () => {
   router.navigate('search-results', false);
 };
 
+// eslint-disable-next-line no-unused-vars
 const openRecipeInfo = (data) => {
   // TODO: Populate page from data
   router.navigate('recipe-info', false);

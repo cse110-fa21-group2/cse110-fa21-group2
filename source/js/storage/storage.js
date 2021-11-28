@@ -1,6 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable dot-notation */
-/* eslint-disable no-plusplus */
 // localStorage = {
 //   explore-categories: { // Used to populate explore page (only ids to reduce storage size)
 //       "breakfast": [
@@ -50,8 +47,8 @@ export function storeRecipeData(category, recipeArray) {
 
     // store recipe
     const allRecipeId = [];
-    for (let i = 0; i < recipeArray.length; i++) {
-      const uid = recipeArray[i]['id'];
+    for (let i = 0; i < recipeArray.length; i += 1) {
+      const uid = recipeArray[i].id;
       allRecipeId.push(uid);
       allData[uid] = recipeArray[i];
     }
@@ -115,7 +112,7 @@ export function removeRecipeFromList(listName, recipeId) {
   try {
     const listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData != null && listName in listData) {
-      listData[listName] = listData[listName].filter((id) => id != recipeId);
+      listData[listName] = listData[listName].filter((id) => id !== recipeId);
       localStorage.setItem('savedLists', JSON.stringify(listData));
     }
   } catch (e) {
@@ -171,13 +168,9 @@ export function deleteCreatedRecipe(recipeId) {
     const catData = JSON.parse(localStorage.getItem('explore-categories'));
     const allData = JSON.parse(localStorage.getItem('recipeData'));
 
-    if (
-      saveData
-      && 'created' in saveData
-      && saveData['created'].includes(recipeId)
-    ) {
-      saveData['created'] = saveData['created'].filter((id) => id != recipeId);
-      catData['created'] = catData['created'].filter((id) => id != recipeId);
+    if (saveData && 'created' in saveData && saveData.created.includes(recipeId)) {
+      saveData.created = saveData.created.filter((id) => id !== recipeId);
+      catData.created = catData.created.filter((id) => id !== recipeId);
       delete allData[recipeId];
 
       localStorage.setItem('explore-categories', JSON.stringify(catData));
