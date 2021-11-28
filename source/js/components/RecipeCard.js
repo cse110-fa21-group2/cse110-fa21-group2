@@ -10,6 +10,10 @@ class RecipeCard extends HTMLElement {
     this.created = false;
   }
 
+  set windowRouter(routerElem) {
+    this.router = routerElem;
+  }
+
   set data(data) {
     // TODO: update info based on json data
     this.json = data;
@@ -46,6 +50,10 @@ class RecipeCard extends HTMLElement {
         position: relative;
         white-space: normal;
         width: 15rem;
+      }
+
+      .recipe-card:hover {
+        cursor: pointer;
       }
 
       .card-shadow {
@@ -266,6 +274,10 @@ class RecipeCard extends HTMLElement {
     cardBody.appendChild(favDiv);
 
     card.appendChild(cardBody);
+
+    card.addEventListener('click', () => {
+      this.router.navigate('recipe-info', false);
+    });
 
     this.shadowRoot.append(card);
   }
