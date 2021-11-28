@@ -126,8 +126,112 @@ function createExploreRecipeCards(storageCategoryData) {
 function populateRecipeData(data){
   //Get single recipe JSON from list of JSONs
   let curRecipe = data[0]; 
-  console.log(curRecipe.title);
+
+  //Poulate the title of the recipe
   const title = document.querySelector("p.title");
   title.innerHTML = curRecipe.title;
-  console.log(title);
+
+  //Populate the score/rating of the recipe
+  let rating = document.querySelector('.rating-stars');
+  rating.innerHTML = curRecipe.spoonacularScore / 20 + ' stars';
+
+  //Populate the number of reviews given for the recipe
+  let reviews = document.querySelector('.rating-reviews');
+  reviews.innerHTML = '**DUMMY REVIEW COUNT**'
+
+  //Populate the recipe description
+  const description = document.querySelector('p.description');
+  description.innerHTML = curRecipe.summary;
+
+  //Populate the time to make the recipe in minutes
+  let totalTime = document.querySelector('.total-time');
+  totalTime.innerHTML += curRecipe.readyInMinutes + ' minutes';
+
+  //Populate the serving size of the recipe
+  let numServings = document.querySelector('.servings');
+  numServings.innerHTML += curRecipe.servings + ' servings';
+
+  /**
+   * populate the ingredients to make the recipe
+   */
+  let ingredList = document.querySelector('.ingredients');
+  const recipeIngred = getRecipeIngredients(curRecipe);
+  for(let i = 0; i < recipeIngred.length; i++){
+    let elem = document.createElement('li');
+    elem.innerHTML = recipeIngred[i];
+    ingredList.appendChild(elem);
+  }
+
+  /**
+   * populate the steps to make the recipe
+   */
+  let stepsList = document.querySelector('.steps');
+  const recipeSteps = getRecipeSteps(curRecipe);
+  for(let i = 0; i < recipeSteps.length; i++){
+    let elem = document.createElement('li');
+    elem.innerHTML = recipeSteps[i];
+    stepsList.appendChild(elem);
+  }
+
+  //Populate video for recipe (if available)
+  let video = document.querySelector('.videos-wrapper')
+  //TODO: extract video from data if present
+
+  //Populate the nutrition info of the recipe
+  let nutFacts = document.querySelectorAll('.nutrition-wrapper > p')[1];
+  //TODO: extract nutrition facts from data  
+  nutFacts.innerHTML = "**DUMMY NUTRITION FACTS**";
+  
+}
+
+/**
+ * Serving size button functionality
+ * not functional yet
+ *
+let plusButton = document.querySelector('.minus-btn');
+plusButton.onclick = scaleRecipeDown(curRecipe);
+
+let minusButton = document.querySelector('.plus-btn');
+minusButton.onclick = scaleRecipeUp(curRecipe);
+*/
+
+function scaleRecipeUp(recipe){
+  let servingSize = document.querySelector('.serving-size');
+  servingSize.innerHTML = parseInt(servingSize.innerHTML) + 1;
+}
+
+function scaleRecipeDown(recipe){
+  let servingSize = document.querySelector('.serving-size');
+  if(servingSize.innerHTML <= 1){
+    return;
+  }
+  servingSize.innerHTML = parseInt(servingSize.innerHTML) - 1;
+}
+
+/**
+ * 
+ * @param {*} recipe 
+ * @returns stepsList: list of steps to make recipe
+ */
+function getRecipeSteps(recipe){
+  let stepsList = [];
+  let steps = recipe.analyzedInstructions[0].steps;
+  for(let i = 0; i < steps.length; i++){
+    stepsList.push(steps[i].step);
+  }
+  return stepsList;
+}
+
+/**
+ * 
+ * @param {*} recipe 
+ * @returns ingredientList: list of ingredients to make recipe
+ */
+function getRecipeIngredients(recipe){
+  let ingredientList = []
+  let ingredients = recipe.extendedIngredients
+  for(let i = 0; i < ingredients.length; i++){
+    ingredientList.push(ingredients[i].originalString);
+  }
+  return ingredientList;
 }
