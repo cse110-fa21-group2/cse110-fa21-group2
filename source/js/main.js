@@ -44,8 +44,22 @@ const openCreateRecipe = () => {
   router.navigate('create-recipe-page', false);
 };
 
-const openSearchResults = () => {
+const openSearchResults = async () => {
   // TODO: Fetch search results from API call and populate cards before navigation
+  const query = document.querySelector('.form-control').value;
+  const numOfRecipe = 4;  //number of recipe to fetch
+  const pageOffset = 0; //begin with page 0 when search
+
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = "Top recipes for " + query;
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
+  storageFuncs.storeRecipeData(query, searchResult);
+   
+  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
+  const searchResultCardslocation = document.querySelector('#search-results-container');
+  removeAllChildNodes(searchResultCardslocation); //refresh cards
+  createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
+
   router.navigate('search-results', false);
 };
 
@@ -301,56 +315,21 @@ function removeAllChildNodes(parent) {
 }
 
 /**
- * active when search button click
- * store Recipe to local with query as category name
- * Does NOT apply any filter & sort, only search by name
- * 1.add even handler to search button to fetch recipes for query 
- * 2.add fetched recipes to local Storage
- * 3.populate recipe cards for search result page
- * 4.TODO: if no enough result, call getRecipesByAutocomplete
- */
- async function searchButtonHandler() {
-  const query = document.querySelector('.form-control').value;
-  const numOfRecipe = 4;    //number of recipe, 2 for testing
-  const pageOffset = 0; //begin with page 0 when search
-
-  const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = "Top recipes for " + query;
-  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
-
-  storageFuncs.storeRecipeData(query, searchResult);
-  //API is down, will add Autocomplete once API work
-  // if(searchResult.length < numOfRecipe){
-  //   const numOfAdditionRecipe = numOfRecipe - searchResult.length;
-  //   const autocompleteResult = await apiFuncs.getRecipesByAutocomplete(query, numOfAdditionRecipe);
-  //   storageFuncs.storeRecipeData(query, autocompleteResult);
-  // }
-   
-  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
-
-  const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
-  removeAllChildNodes(searchResultCardslocation); //refresh cards
-  createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
-}
-
-/**
  * active when show more button click
  * add # more recipe cards by fetch # more recipe from API with offset
  * populate more recipe cards
  */
 async function searchResultShowMore(){
   const query = document.querySelector('.form-control').value;
-  const numOfCardExist = document.querySelector('#results-grid-recipe-card-location').childElementCount;
-
-  const numOfAdditionRecipeCards = 4; //2 for testing
+  const numOfCardExist = document.querySelector('#search-results-container').childElementCount;
+  const numOfAdditionRecipeCards = 4; //number of recipe to fetch
   const pageOffset = numOfCardExist/numOfAdditionRecipeCards; //move to next page 
   
   const searchResult = await apiFuncs.getRecipesByName(query, numOfAdditionRecipeCards, pageOffset);
   storageFuncs.storeRecipeData(query, searchResult);
 
-  const searchResultCardslocation = document.querySelector('#results-grid-recipe-card-location');
+  const searchResultCardslocation = document.querySelector('#search-results-container');
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;    //number of total recipe cards
-
   const NumOfAllRecipeIdInLocal = JSON.parse(localStorage.getItem('categories'))[query].length;
 
   //create more cards
@@ -369,14 +348,10 @@ async function init() {
   
   // temporary code
   testCreateRecipeCards();
-  // localStorage.clear(); //for testing, turn off to make less api call
 }
 
 window.addEventListener('DOMContentLoaded', init);
 
-//search button event listener
-let sButton = document.getElementById('search-results-nav');
-sButton.addEventListener('click', () => searchButtonHandler());
 //show more button event listener
 let showMoreButton = document.getElementById('show-more-button');
 showMoreButton.addEventListener('click', () => searchResultShowMore());
