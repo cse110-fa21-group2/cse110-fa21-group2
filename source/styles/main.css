@@ -7,6 +7,11 @@ body {
   padding: 0;
 }
 
+main {
+  min-height: calc(100vh - 64px);
+  width: 100%;
+}
+
 .hidden {
   display: none;
 }

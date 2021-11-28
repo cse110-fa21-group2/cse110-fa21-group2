@@ -383,9 +383,12 @@ async function showMoreClicked() {
 
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = 4;
-  const pageOffset = numOfCardExist / numOfAdditionRecipeCards;
 
-  const searchResult = await apiFuncs.getRecipesByName(query, numOfAdditionRecipeCards, pageOffset);
+  const searchResult = await apiFuncs.getRecipesByName(
+    query,
+    numOfAdditionRecipeCards,
+    numOfCardExist,
+  );
   storageFuncs.storeRecipeData(query, searchResult);
 
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
