@@ -38,7 +38,7 @@
  * @return recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
  */
 export function getAllCategoryRecipeId() {
-  return JSON.parse(localStorage.getItem('categories'));
+  return JSON.parse(localStorage.getItem('explore-categories'));
 }
 
 /**

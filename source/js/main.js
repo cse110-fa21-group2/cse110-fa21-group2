@@ -5,6 +5,9 @@ import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
 
+// Constant variables (reduce magic numbers)
+const DEFAULT_NUM_CARDS = 10;
+
 const sections = [
   'landing',
   'explore',
@@ -129,25 +132,69 @@ function bindPopState() {
 
 function populateExplore() {
   // TODO: Fetch cards and add to explore section
+  const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
+
+  // PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
+  const breakfastArrRecipe = [
+    { id: 1348, title: 'Spicy Sausage Scramble' },
+    { id: 1204, title: 'Chick\'n Waffles' },
+  ];
+  storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
+
+  const lunchArrRecipe = [
+    { id: 5109, title: 'Grilled Cheese' },
+    { id: 1598, title: 'Korean Fried Chicken' },
+  ];
+  storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
+
+  const dinnerArrRecipe = [
+    { id: 5981, title: 'Lasagna' },
+    { id: 1409, title: 'Pad Thai' },
+  ];
+  storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
+
+  const trendingArrRecipe = [
+    { id: 1987, title: 'Tonkatsu Ramen' },
+    { id: 1095, title: 'Red Braised Pork Belly' },
+  ];
+  storageFuncs.storeRecipeData('trending', trendingArrRecipe);
+  // ********* //
+
+  // Get IDs from localStorage using fetcher functions
+  const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
+
+  // Iterate through each category in explore IDs and add recipe cards using their IDs
+  exploreSections.forEach((section) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const category in allCategoriesIds) {
+      if (section.id === category) {
+        createRecipeCards(allCategoriesIds[category], section, DEFAULT_NUM_CARDS);
+      }
+    }
+  });
 }
 
 function populateSavedRecipes() {
-  // TODO: Fetch all saved recipes from localStorage and populate saved recipe section
+  // PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
+  storageFuncs.createList('favorites');
+  storageFuncs.saveRecipeToList('favorites', 1987);
+  storageFuncs.saveRecipeToList('favorites', 5981);
+  // ******* //
+
+  // Location where recipe cards are to be added
+  const grid = document.querySelector('.saved-recipes .results-grid');
+
+  // Get IDs from localStorage using fetcher functions
+  const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
+
+  // Iterate through each "list" in saved lists and add recipe cards using their IDs
+  Object.keys(allSavedIds).forEach((category) => {
+    // TODO: Only populate cards for the active category
+    createRecipeCards(allSavedIds[category], grid, DEFAULT_NUM_CARDS);
+  });
 }
 
 // TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
-
-function testCreateRecipeCards() {
-  // Testing variables
-  const testArrRecipe = [
-    { id: 1337, title: 'Doritos and Mtn Dew' },
-    { id: 1911, title: 'Pizza' },
-  ];
-  storageFuncs.storeRecipeData('test', testArrRecipe);
-  const testLocation = document.querySelector('#trending~div');
-
-  createRecipeCards(['1337', '1911'], testLocation, 2);
-}
 
 /* More event handlers */
 
@@ -227,7 +274,7 @@ const createRecipeClicked = () => {
 
   // format all the ingredients:
   const ingredientArray = [];
-  for (let i = 0; i < ingredientNames.length; i++) {
+  for (let i = 0; i < ingredientNames.length; i += 1) {
     const ingObject = {};
     ingObject.name = ingredientNames[i].value;
     ingObject.amount = ingredientAmount[i].value;
@@ -250,7 +297,7 @@ const createRecipeClicked = () => {
 
   // format step array
   const stepArray = [];
-  for (let i = 0; i < steps.length; i++) {
+  for (let i = 0; i < steps.length; i += 1) {
     const stepObject = {};
     stepObject.number = i + 1;
     stepObject.step = steps[i].value;
@@ -359,9 +406,6 @@ async function init() {
   populateExplore();
   populateSavedRecipes();
   initializeButtons();
-
-  // temporary code
-  testCreateRecipeCards();
 }
 
 window.addEventListener('DOMContentLoaded', init);
