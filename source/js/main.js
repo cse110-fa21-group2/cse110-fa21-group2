@@ -92,7 +92,7 @@ const openSearchResults = async () => {
   const numOfRecipe = 4;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Top recipes for ${query}`;
+  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
   storageFuncs.storeRecipeData(query, searchResult);
 
