@@ -221,15 +221,10 @@ nav a:hover {
 
 /* Recipe Info Page */
 
-/* Recipe info page CSS */
-
 .recipe-info {
   background-color: white;
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
-  margin: 5rem;
-  margin-bottom: 2.5rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 2rem auto;
   max-width: 44rem;
   padding: 15px;
   transition: all 0.2s ease;
@@ -408,7 +403,7 @@ nav a:hover {
 
 .info-subtitle {
   font-size: 20px;
-  margin: 0;
+  margin: 0 0 1rem;
   padding: 0;
   text-decoration: underline;
   text-decoration-color: gold;
@@ -425,14 +420,11 @@ nav a:hover {
   margin: 1rem 2rem;
 }
 
-.subtitle.measure-title {
-  margin-bottom: 1rem;
-}
-
 /* list CSS style */
 
 .info-list {
-  padding: 0 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 .rating-box {
