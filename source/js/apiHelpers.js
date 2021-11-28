@@ -3,6 +3,7 @@
 // all these functions fetch for most popular recipes
 
 // eslint-disable-next-line import/no-unresolved
+import { rules } from 'stylelint';
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require(['dotenv']).config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
 // const { API_KEY }= process.env.API_KEY;// prevent exposing api key
@@ -138,8 +139,11 @@ export async function getRecipesByName(query, num = 5, offset = 0, sortFilterPar
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByAutocomplete(query, num = 5) {
   return new Promise((resolve, reject) => {
+    const url = new URL(`https://${HOST}/recipes/autocomplete`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/autocomplete?query=${queryFormatted}&number=${num}`, {
+    url.searchParams.append('query', queryFormatted);
+    url.searchParams.append('number', num);
+    fetch(url, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -185,7 +189,11 @@ export async function getRecipesByAutocomplete(query, num = 5) {
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?cuisine=${cuisine}&number=${num}&sort=popularity&offset=${offset}`, {
+    const url = new URL(`https://${HOST}/recipes/complexSearch`);
+    url.searchParams.append('cuisine', cuisine);
+    url.searchParams.append('number', num);
+    url.searchParams.append('offset', offset);
+    fetch(url, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -222,7 +230,11 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
+    const url = new URL(`https://${HOST}/recipes/complexSearch`);
+    url.searchParams.append('type', type);
+    url.searchParams.append('number', num);
+    url.searchParams.append('offset', offset);
+    fetch(url, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
