@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable import/extensions */
 import Router from './Router.js';
@@ -5,10 +6,12 @@ import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
 
-//TODO Remove this tester later
-import {returnDummyData} from "../demo-code/exampleData.js"
+// TODO: Remove this tester later
+import { returnDummyData } from '../demo-code/exampleData.js';
 
 // Constant variables (reduce magic numbers)
+
+const tempData = returnDummyData();
 
 const DEFAULT_NUM_CARDS = 10;
 
@@ -43,6 +46,20 @@ const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
+};
+
+/**
+ *
+ * @param {*} recipe
+ * @returns stepsList: list of steps to make recipe
+ */
+const getRecipeSteps = (recipe) => {
+  const stepsList = [];
+  const { steps } = recipe.analyzedInstructions[0];
+  for (let i = 0; i < steps.length; i += 1) {
+    stepsList.push(steps[i].step);
+  }
+  return stepsList;
 };
 
 /**
@@ -112,65 +129,61 @@ const openSearchResults = async () => {
   router.navigate('search-results', false);
 };
 
-// eslint-disable-next-line no-unused-vars
 const openRecipeInfo = (data) => {
   // TODO: Populate page from data
   router.navigate('recipe-info', false);
 };
 
 /**
- * 
+ *
  * @param {*} recipe //TODO -Laurence Specify object type
  * @returns ingredientList: list of ingredients to make recipe
  */
-function getRecipeIngredients(recipe){
-  let ingredientList = []
-  let ingredients = recipe.extendedIngredients
-  for(let i = 0; i < ingredients.length; i++){
+function getRecipeIngredients(recipe) {
+  const ingredientList = [];
+  const ingredients = recipe.extendedIngredients;
+  for (let i = 0; i < ingredients.length; i += 1) {
     ingredientList.push(ingredients[i].originalString);
   }
   return ingredientList;
-} 
+}
 
 /**
-* Populates the ExpandedRecipeCard with data
-* @param data a list of recipe JSONS //TODO alter param to be less confusing
-*/
-function populateExpandedRecipeData(data){
-  //Get single recipe JSON from list of JSONs
-  let curRecipe = data[0]; 
+ * Populates the ExpandedRecipeCard with data
+ * @param {Object} data - JSON object to use for page data
+ */
+function populateExpandedRecipeData(data) {
+  // Poulate the title of the recipe
+  const title = document.querySelector('p.title');
+  title.innerHTML = data.title;
 
-  //Poulate the title of the recipe
-  const title = document.querySelector("p.title");
-  title.innerHTML = curRecipe.title;
+  // Populate the score/rating of the recipe
+  const rating = document.querySelector('.rating-stars');
+  rating.innerHTML = `${data.spoonacularScore / 20} stars`;
 
-  //Populate the score/rating of the recipe
-  let rating = document.querySelector('.rating-stars');
-  rating.innerHTML = curRecipe.spoonacularScore / 20 + ' stars';
+  // Populate the number of reviews given for the recipe
+  const reviews = document.querySelector('.rating-reviews');
+  reviews.innerHTML = '**DUMMY REVIEW COUNT**';
 
-  //Populate the number of reviews given for the recipe
-  let reviews = document.querySelector('.rating-reviews');
-  reviews.innerHTML = '**DUMMY REVIEW COUNT**'
-
-  //Populate the recipe description
+  // Populate the recipe description
   const description = document.querySelector('p.description');
-  description.innerHTML = curRecipe.summary;
+  description.innerHTML = data.summary;
 
-  //Populate the time to make the recipe in minutes
-  let totalTime = document.querySelector('.total-time');
-  totalTime.innerHTML += curRecipe.readyInMinutes + ' minutes';
+  // Populate the time to make the recipe in minutes
+  const totalTime = document.querySelector('.total-time');
+  totalTime.innerHTML += `${data.readyInMinutes} minutes`;
 
-  //Populate the serving size of the recipe
-  let numServings = document.querySelector('.servings');
-  numServings.innerHTML += curRecipe.servings + ' servings';
+  // Populate the serving size of the recipe
+  const numServings = document.querySelector('.servings');
+  numServings.innerHTML += `${data.servings} servings`;
 
   /**
    * populate the ingredients to make the recipe
    */
-  let ingredList = document.querySelector('.ingredients');
-  const recipeIngred = getRecipeIngredients(curRecipe);
-  for(let i = 0; i < recipeIngred.length; i++){
-    let elem = document.createElement('li');
+  const ingredList = document.querySelector('.ingredients');
+  const recipeIngred = getRecipeIngredients(data);
+  for (let i = 0; i < recipeIngred.length; i += 1) {
+    const elem = document.createElement('li');
     elem.innerHTML = recipeIngred[i];
     ingredList.appendChild(elem);
   }
@@ -178,60 +191,22 @@ function populateExpandedRecipeData(data){
   /**
    * populate the steps to make the recipe
    */
-  let stepsList = document.querySelector('.steps');
-  const recipeSteps = getRecipeSteps(curRecipe);
-  for(let i = 0; i < recipeSteps.length; i++){
-    let elem = document.createElement('li');
+  const stepsList = document.querySelector('.steps');
+  const recipeSteps = getRecipeSteps(data);
+  for (let i = 0; i < recipeSteps.length; i += 1) {
+    const elem = document.createElement('li');
     elem.innerHTML = recipeSteps[i];
     stepsList.appendChild(elem);
   }
 
-  //Populate video for recipe (if available)
-  let video = document.querySelector('.videos-wrapper')
-  //TODO: extract video from data if present
+  // Populate video for recipe (if available)
+  const video = document.querySelector('.videos-wrapper');
+  // TODO: extract video from data if present
 
-  //Populate the nutrition info of the recipe
-  let nutFacts = document.querySelectorAll('.nutrition-wrapper > p')[1];
-  //TODO: extract nutrition facts from data  
-  nutFacts.innerHTML = "**DUMMY NUTRITION FACTS**";
-
-}
-
-/**
- * Serving size button functionality
- * not functional yet
- *
-let plusButton = document.querySelector('.minus-btn');
-plusButton.onclick = scaleRecipeDown(curRecipe);
-let minusButton = document.querySelector('.plus-btn');
-minusButton.onclick = scaleRecipeUp(curRecipe);
-*/
-
-function scaleRecipeUp(recipe){
-  let servingSize = document.querySelector('.serving-size');
-  servingSize.innerHTML = parseInt(servingSize.innerHTML) + 1;
-}
-
-function scaleRecipeDown(recipe){
-  let servingSize = document.querySelector('.serving-size');
-  if(servingSize.innerHTML <= 1){
-    return;
-  }
-  servingSize.innerHTML = parseInt(servingSize.innerHTML) - 1;
-}
-
-/**
- * 
- * @param {*} recipe 
- * @returns stepsList: list of steps to make recipe
- */
-function getRecipeSteps(recipe){
-  let stepsList = [];
-  let steps = recipe.analyzedInstructions[0].steps;
-  for(let i = 0; i < steps.length; i++){
-    stepsList.push(steps[i].step);
-  }
-  return stepsList;
+  // Populate the nutrition info of the recipe
+  const nutFacts = document.querySelectorAll('.nutrition-wrapper > p')[1];
+  // TODO: extract nutrition facts from data
+  nutFacts.innerHTML = '**DUMMY NUTRITION FACTS**';
 }
 
 // TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
@@ -425,6 +400,28 @@ async function showMoreClicked() {
   }
 }
 
+/**
+ * Serving size button functionality
+ * not functional yet
+ *
+let plusButton = document.querySelector('.minus-btn');
+plusButton.onclick = scaleRecipeDown(curRecipe);
+let minusButton = document.querySelector('.plus-btn');
+minusButton.onclick = scaleRecipeUp(curRecipe);
+*/
+
+function scaleRecipeUp(recipe) {
+  const servingSize = document.querySelector('.serving-size');
+  servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) + 1;
+}
+
+function scaleRecipeDown(recipe) {
+  const servingSize = document.querySelector('.serving-size');
+  if (servingSize.innerHTML <= 1) {
+    return;
+  }
+  servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) - 1;
+}
 /* Functions calls to initialize app */
 
 function initializeRoutes() {
@@ -528,10 +525,8 @@ async function init() {
   populateSavedRecipes();
   initializeButtons();
 
-  //Expanded Recipe Info using dummy data. Can pass in real data when we get it.
-  const tempData = returnDummyData();
-  populateExpandedRecipeData(tempData);
-
+  // Expanded Recipe Info using dummy data. Can pass in real data when we get it.
+  populateExpandedRecipeData(tempData[0]);
 }
 
 window.addEventListener('DOMContentLoaded', init);
