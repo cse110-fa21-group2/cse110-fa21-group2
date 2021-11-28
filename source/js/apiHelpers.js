@@ -4,9 +4,9 @@
 
 // eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
-// require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const { API_KEY } = '';// prevent exposing api key
-
+// require(['dotenv']).config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
+// const { API_KEY }= process.env.API_KEY;// prevent exposing api key
+const API_KEY = '';
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
@@ -22,15 +22,24 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
-      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`, {
+
+      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}&includeNutrition=true`, {
         method: 'GET',
         headers: {
           'x-rapidapi-host': HOST,
           'x-rapidapi-key': API_KEY,
         },
       })
-        .then((response) => {
-          resolve(response.json());
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((recipe) => {
+            const { nutrients } = recipe.nutrition;
+            // eslint-disable-next-line no-param-reassign
+            delete recipe.nutrition;
+            // eslint-disable-next-line no-param-reassign
+            recipe.nutrients = nutrients;
+          });
+          resolve(data);
         })
         .catch((err) => {
           console.log('Error getting detailed recipe info');
@@ -69,14 +78,30 @@ export function extractIDs(data) {
  * @param {String} query - Keywords to search for
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
- *  (use random number so we dont get same results everytime)
+ * @param {Object} [sortFilterParams = {sort:'popularity', sortDirection:'desc'}]
+ *                 - dictionary of sort/filter parameters
+ * The key is any parameter listed here https://spoonacular.com/food-api/docs#Search-Recipes-Complex
+ * The value is whatever you set to the parameter. Ex (key:value) = (diet:'vegitarian')
+ * Options for sort parameter here https://spoonacular.com/food-api/docs#Recipe-Sorting-Options
+ * Make sure include a sort direction, 'asc' or 'desc'
  * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
-export async function getRecipesByName(query, num = 5, offset = 0) {
+export async function getRecipesByName(query, num = 5, offset = 0, sortFilterParams = { sort: 'popularity', sortDirection: 'desc' }) {
   return new Promise((resolve, reject) => {
+    const url = new URL(`https://${HOST}/recipes/complexSearch`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=popularity&offset=${offset}`, {
+    url.searchParams.append('query', queryFormatted);
+    url.searchParams.append('num', num);
+    url.searchParams.append('offset', offset);
+
+    // add sort and filter params
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, val] of Object.entries(sortFilterParams)) {
+      url.searchParams.append(key, val);
+    }
+    console.log(url.href);
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -197,7 +222,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
+    fetch(`https://${HOST}/recipes/complexSearch?type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
