@@ -44,8 +44,22 @@ const openCreateRecipe = () => {
   router.navigate('create-recipe-page', false);
 };
 
-const openSearchResults = () => {
+const openSearchResults = async () => {
   // TODO: Fetch search results from API call and populate cards before navigation
+  const query = document.querySelector('.form-control').value;
+  const numOfRecipe = 4;  //number of recipe to fetch
+  const pageOffset = 0; //begin with page 0 when search
+
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = "Top recipes for " + query;
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
+  storageFuncs.storeRecipeData(query, searchResult);
+   
+  const resultRecipeId = JSON.parse(localStorage.getItem('categories'))[query];
+  const searchResultCardslocation = document.querySelector('#search-results-container');
+  removeAllChildNodes(searchResultCardslocation); //refresh cards
+  createRecipeCards(resultRecipeId, searchResultCardslocation, numOfRecipe);
+
   router.navigate('search-results', false);
 };
 
@@ -294,15 +308,51 @@ function initializeCreateRecipeButtons() {
   const createButton = document.querySelector('.create-recipe-button');
   createButton.addEventListener('click', createRecipeClicked);
 }
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
+/**
+ * active when show more button click
+ * add # more recipe cards by fetch # more recipe from API with offset
+ * populate more recipe cards
+ */
+async function searchResultShowMore(){
+  const query = document.querySelector('.form-control').value;
+  const numOfCardExist = document.querySelector('#search-results-container').childElementCount;
+  const numOfAdditionRecipeCards = 4; //number of recipe to fetch
+  const pageOffset = numOfCardExist/numOfAdditionRecipeCards; //move to next page 
+  
+  const searchResult = await apiFuncs.getRecipesByName(query, numOfAdditionRecipeCards, pageOffset);
+  storageFuncs.storeRecipeData(query, searchResult);
+
+  const searchResultCardslocation = document.querySelector('#search-results-container');
+  const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;    //number of total recipe cards
+  const NumOfAllRecipeIdInLocal = JSON.parse(localStorage.getItem('categories'))[query].length;
+
+  //create more cards
+  for(let i = numOfCardExist; (i < numOfRecipe) && (i < NumOfAllRecipeIdInLocal); i++){
+    const singleResultRecipeId = JSON.parse(localStorage.getItem('categories'))[query][i];
+    createRecipeCards([singleResultRecipeId], searchResultCardslocation, 1);
+  }
+}
+
 async function init() {
   initializeRoutes();
   bindPopState();
   populateExplore();
   populateSavedRecipes();
   initializeCreateRecipeButtons();
-
+  
   // temporary code
   testCreateRecipeCards();
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+//show more button event listener
+let showMoreButton = document.getElementById('show-more-button');
+showMoreButton.addEventListener('click', () => searchResultShowMore());
