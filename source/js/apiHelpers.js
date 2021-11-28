@@ -14,7 +14,7 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
-    if (idsToFetch.length == 0) {
+    if (idsToFetch.length === 0) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
