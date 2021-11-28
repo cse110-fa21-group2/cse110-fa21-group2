@@ -1,3 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+html,
+body {
+  font-family: Lato, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: calc(100vh - 64px);
+  width: 100%;
+}
+
 .hidden {
   display: none;
 }
@@ -9,6 +23,27 @@
 /* Navbar CSS */
 nav a:hover {
   cursor: pointer;
+}
+
+.navbar {
+  border-bottom: black solid 2px;
+}
+
+.navbar-brand {
+  background: none;
+  border: none;
+  margin-right: 10rem;
+  padding: 0;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: black !important;
+}
+
+.navbar-nav {
+  width: 100%;
 }
 
 /* Landing Page CSS */
@@ -40,7 +75,7 @@ nav a:hover {
   border: 1px solid black;
   height: 2.5rem;
   margin-right: 1rem;
-  width: 7rem;
+  width: 8rem;
 }
 
 /* Explore Page CSS */
