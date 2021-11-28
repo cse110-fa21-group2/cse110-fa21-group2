@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: General Workflow (unit testing, e2e, linting)
 
 # Controls when the workflow will run
 on:
@@ -30,3 +30,7 @@ jobs:
       - name: Run jest unit tests 
         run: |
           npm run test
+
+      # Runs linters
+      - name: Lint
+        run: npm run lint
