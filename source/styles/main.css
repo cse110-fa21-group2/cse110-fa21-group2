@@ -40,8 +40,10 @@ nav a:hover {
   background: none;
   border: none;
   color: black !important;
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+}
+
+.navbar-nav {
+  width: 100%;
 }
 
 /* Landing Page CSS */
