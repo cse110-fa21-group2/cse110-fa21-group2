@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
 import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
@@ -97,7 +98,7 @@ const openSearchResults = async () => {
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
-  console.log(searchResult);
+
   storageFuncs.storeRecipeData(query, searchResult);
 
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
