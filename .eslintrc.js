@@ -12,5 +12,10 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
+    'no-console': 'off',
+    'import/extensions': 'off',
+    'no-restricted-globals': 'off',
+    'no-unused-vars': 'off',
+    'no-plusplus': 'off',
   },
 };

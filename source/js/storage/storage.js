@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // localStorage = {
 //   explore-categories: { // Used to populate explore page (only ids to reduce storage size)
 //       "breakfast": [

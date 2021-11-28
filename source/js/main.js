@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint-disable import/extensions */
 import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';

@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable import/extensions */
-/* eslint-disable no-unused-vars */
 // helper functions for Spoonacular API
 // all these functions fetch for most popular recipes
 

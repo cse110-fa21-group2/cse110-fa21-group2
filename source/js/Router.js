@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-restricted-globals */
 export default class Router {
   /**
    * Adds a page name & function so to the router so that the function
