@@ -3,12 +3,11 @@
   <head>
     <!-- Website Metadata -->
     <title>Recipe Book</title>
-    <link rel="shortcut icon" href="..//favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
     <!-- Link stylesheets -->
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./styles/page-layout.css">
@@ -64,7 +63,7 @@
         </ul>
         <form class="d-flex" onsubmit="return false">
           <div class="input-group mx-2">
-            <input type="text" class="form-control" placeholder="Search Recipes" aria-label="Username" aria-describedby="basic-addon1">
+            <input required type="text" class="form-control" placeholder="Search Recipes" aria-label="Username" aria-describedby="basic-addon1">
             <button class="input-group-text" id='search-results-nav'>🔍</button>
           </div>
         </form>
@@ -86,30 +85,30 @@
 
       <section class="explore hidden">
         <div class="explore-section">
-          <h1 class="row-title" id="trending">Trending Recipes</h1>
+          <h1 class="row-title">Trending Recipes</h1>
           <hr class="line">
-          <div class="recipe-row">
+          <div class="recipe-row" id="trending">
               <!-- TODO: Populate recipe cards -->
           </div>
         </div>
         <div class="explore-section">
-          <h1 class="row-title" id="breakfast">Top Breakfast Recipes</h1>
+          <h1 class="row-title">Top Breakfast Recipes</h1>
           <hr class="line">
-          <div class="recipe-row">
+          <div class="recipe-row" id="breakfast">
               <!-- TODO: Populate recipe cards -->
           </div>
         </div>
         <div class="explore-section">
-          <h1 class="row-title" id="lunch">Top Lunch Recipes</h1>
+          <h1 class="row-title">Top Lunch Recipes</h1>
           <hr class="line">
-          <div class="recipe-row">
+          <div class="recipe-row" id="lunch">
             <!-- TODO: Populate recipe cards -->
           </div>
         </div>
         <div class="explore-section">
-          <h1 class="row-title" id="dinner">Top Dinner Recipes</h1>
+          <h1 class="row-title">Top Dinner Recipes</h1>
           <hr class="line">
-          <div class="recipe-row">
+          <div class="recipe-row" id="dinner">
             <!-- TODO: Populate recipe cards -->
           </div>
         </div>
@@ -125,20 +124,125 @@
           <button class="edit-btn">Manage Lists</button>
         </div>
         <div class="results-grid">
-            TODO- Populate with cards
+
         </div>
       </section>
 
       <section class="search-results hidden">
         <!-- TODO: Populate query field -->
-        <h1>Top recipes for "bread"</h1>
-        <div class="results-grid">
+        <h1 id="search-results-title">Top recipes for "bread"</h1>
+        <div class="results-grid" id="search-results-container">
           <!-- TODO: Populate recipe cards -->
         </div>
+        <button id="show-more-button">Show more</button>
       </section>
 
       <section class="recipe-info hidden">
-        <!-- TODO: Populate recipe info -->
+        <!-- TODO: Update with most recent HTML for Recipe Page -->
+        <section id="header">
+          <button class="back-btn">Return</button>
+  
+          <div class="title-edit-wrapper">
+              <p class = "title">Chicken Salad</p>
+              <button class="back-btn">Edit</button>
+          </div>
+  
+          <div class="rating-favorite-wrapper">
+              <div class="rating">
+                  <img src="5-star.svg" class="rating" alt="autopopulated by script">
+                  <ul class="rating-stats">
+                      <li class="rating-stars">
+                          4.65 stars
+                          <span class="divider"></span>
+                      </li>
+                      <li class="rating-reviews">
+                          55 reviews
+                      </li>
+                  </ul>
+              </div>
+              <button class="org-btn"> <i class="far fa-heart"></i> Save Recipe</button>
+          </div>
+  
+          <img src="image.webp" class="main-recipe-image" alt="autopopulated by script">
+      
+          <div class="recipe-description-wrapper">
+              <p class="description">
+                  This chicken salad comes together fast using rotisserie chicken breasts. The herbs, along with the pecans, help to make this chicken salad flavorful. Serve on top of toasted croissants, or butter lettuce.
+              </p>
+          </div>
+          </section>
+  
+          <section id="sub-header">
+              <div class="sub-header">
+                  <div class="ingredients-wrapper">
+                      <p class="subtitle">Ingredients</p>
+                      <ul class="ingredients">
+                        <!-- To be autopopulated -->
+                      </ul>
+                  </div>
+              </div>
+              <div class="sub-header">
+                  <div class="quick-facts-wrapper">
+                      <p class="subtitle">Quick Facts</p>
+                          <ul class="facts">
+                              <li class="item">Ready in: N/A</li>
+                              <li class="item">Prep: N/A</li>
+                              <li class="item">Cook: N/A</li>
+                              <li class="total-time">Total: </li>
+                              <li class="servings">Yield: </li>
+                      </ul>
+                  </div>
+                  <div class="measurements-wrapper">
+                      <p class="subtitle" id="measure-title">Measurements</p>
+                      <button class="unit-btn">Units: Imperial</button>
+                      <div class="serving-adjust">
+                          <button class="minus-btn">-</button>
+                          <div class="serving-size">4</div>
+                          <button class="plus-btn">+</button>
+                      </div>
+                  </div>
+              </div>
+          </section>
+  
+          <section id="body">
+            <div class="steps-wrapper">
+                <p class="subtitle">Steps</p>
+                <ol class="steps">
+    
+                  <!--
+                    <li class="steps">
+                        Mix mayonnaise, Greek yogurt, vinegar, garlic powder, thyme, and maple pepper together in a bowl until well combined. Add chicken, celery, pecans, and red onion; stir well to incorporate.
+                    </li>
+                    <li class="steps">
+                        Serve immediately or refrigerate for up to 3 days.
+                    </li>
+                  -->
+                </ol>
+            </div>
+    
+            <div class="videos-wrapper">
+                <p class="subtitle">Videos</p>
+                <!-- Include videos if any :D -->
+            </div>
+    
+            <div class="nutrition-wrapper">
+                <p class="subtitle">Nutrition Facts</p>
+                <p>Per Serving: 458 calories; protein 20.2g; carbohydrates 4.6g; fat 40.3g; cholesterol 70.7mg; sodium 236mg.</p>
+                <button class="org-btn">Full Nutrition</button>
+            </div>
+    
+            <div class="recipe-tags-wrapper">
+                <!-- Tags // Possible extra feature- see related recipes by tag-->
+            </div>
+        
+            <div class="recipe-related-tags-wrapper">
+                <!-- Related tags EXTRA FEATURE -->
+            </div>
+            
+            <div class="related-recipes-wrapper">
+                <!-- Related recipes EXTRA FEATURE -->
+            </div>
+        </section>  
       </section>
 
       <section class="create-recipe-page container hidden">

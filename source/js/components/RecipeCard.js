@@ -1,10 +1,11 @@
-import * as fetcherFuncs from "../storage/fetcher.js";
-import * as storageFuncs from "../storage/storage.js";
+/* eslint-disable import/extensions */
+import * as fetcherFuncs from '../storage/fetcher.js';
+import * as storageFuncs from '../storage/storage.js';
 
 class RecipeCard extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
+    this.attachShadow({ mode: 'open' });
     this.saved = false;
     this.created = false;
   }
@@ -18,8 +19,8 @@ class RecipeCard extends HTMLElement {
     let createdList = [];
 
     if (allSavedList) {
-      savedList = allSavedList["favorite"];
-      createdList = allSavedList["created"];
+      savedList = allSavedList.favorite;
+      createdList = allSavedList.created;
     }
     if (savedList && savedList.includes(this.json.id)) {
       this.saved = true;
@@ -28,7 +29,7 @@ class RecipeCard extends HTMLElement {
       this.created = true;
     }
 
-    const styleElem = document.createElement("style");
+    const styleElem = document.createElement('style');
     const styles = `
     @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
       .recipe-card {
@@ -193,63 +194,59 @@ class RecipeCard extends HTMLElement {
     styleElem.innerHTML = styles;
     this.shadowRoot.append(styleElem);
 
-    const card = document.createElement("article");
-    card.classList.add("recipe-card");
-    card.classList.add("card-shadow");
-    card.setAttribute('style',`background-image: url('${this.json.image}');`)
+    const card = document.createElement('article');
+    card.classList.add('recipe-card');
+    card.classList.add('card-shadow');
+    card.setAttribute('style', `background-image: url('${this.json.image}');`);
 
     const cardBody = document.createElement('div');
-    cardBody.setAttribute('class','card-body')
+    cardBody.setAttribute('class', 'card-body');
     const expandRecipe = document.createElement('button');
-    expandRecipe.setAttribute('class','astext');
+    expandRecipe.setAttribute('class', 'astext');
     expandRecipe.innerText = this.json.title;
     cardBody.appendChild(expandRecipe);
 
-
     const favDiv = document.createElement('div');
-    favDiv.setAttribute('class','favorite');
+    favDiv.setAttribute('class', 'favorite');
     const favButton = document.createElement('button');
-    favButton.setAttribute('class',"card-btn card-btn-outline card-save-button")
-
+    favButton.setAttribute('class', 'card-btn card-btn-outline card-save-button');
 
     const flipSaved = () => {
       const currCard = document.getElementById(this.json.id);
-      const shadowRoot = currCard.shadowRoot;
+      const { shadowRoot } = currCard;
       const element = shadowRoot
-        .querySelector(".card-save-button")
-        .querySelector("i");
+        .querySelector('.card-save-button')
+        .querySelector('i');
 
       if (this.saved) {
-        element.classList.add("far");
-        element.classList.remove("fas");
-        storageFuncs.removeRecipeFromList("favorite", this.json.id);
+        element.classList.add('far');
+        element.classList.remove('fas');
+        storageFuncs.removeRecipeFromList('favorite', this.json.id);
       } else {
-        element.classList.remove("far");
-        element.classList.add("fas");
-        storageFuncs.saveRecipeToList("favorite", this.json.id);
+        element.classList.remove('far');
+        element.classList.add('fas');
+        storageFuncs.saveRecipeToList('favorite', this.json.id);
       }
       this.saved = !this.saved;
     };
 
-    favButton.addEventListener("click", flipSaved);
+    favButton.addEventListener('click', flipSaved);
 
-
-    const saveIcon = document.createElement("i");
+    const saveIcon = document.createElement('i');
     if (this.saved) {
-      saveIcon.classList.add("fas");
+      saveIcon.classList.add('fas');
     } else {
-      saveIcon.classList.add("far");
+      saveIcon.classList.add('far');
     }
-    saveIcon.classList.add("fa-heart");
-    favButton.appendChild(saveIcon)
-    favDiv.appendChild(favButton)
-
+    saveIcon.classList.add('fa-heart');
+    favButton.appendChild(saveIcon);
+    favDiv.appendChild(favButton);
 
     if (this.created) {
-      const deleteRecipe = document.createElement("button");
-      deleteRecipe.classList.add("card-btn");
-      deleteRecipe.classList.add("card-btn-outline");
-      deleteRecipe.classList.add("card-delete-button");
+      const deleteRecipe = document.createElement('button');
+      deleteRecipe.classList.add('card-btn');
+      deleteRecipe.classList.add('card-btn-outline');
+      deleteRecipe.classList.add('card-delete-button');
 
       const clickDelete = () => {
         storageFuncs.deleteCreatedRecipe(this.json.id);
@@ -257,11 +254,11 @@ class RecipeCard extends HTMLElement {
         currentCard.remove();
       };
 
-      deleteRecipe.addEventListener("click", clickDelete);
+      deleteRecipe.addEventListener('click', clickDelete);
 
-      const deleteIcon = document.createElement("i");
-      deleteIcon.classList.add("fas");
-      deleteIcon.classList.add("fa-trash-alt");
+      const deleteIcon = document.createElement('i');
+      deleteIcon.classList.add('fas');
+      deleteIcon.classList.add('fa-trash-alt');
       deleteRecipe.appendChild(deleteIcon);
       favDiv.appendChild(deleteRecipe);
     }
@@ -278,4 +275,4 @@ class RecipeCard extends HTMLElement {
   }
 }
 
-customElements.define("recipe-card", RecipeCard);
+customElements.define('recipe-card', RecipeCard);

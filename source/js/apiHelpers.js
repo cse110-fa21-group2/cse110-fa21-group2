@@ -1,30 +1,27 @@
-/* eslint-disable no-unused-vars */
 // helper functions for Spoonacular API
 // all these functions fetch for most popular recipes
 
-// eslint-disable-next-line import/no-unresolved
-import { rules } from 'stylelint';
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
-// require(['dotenv']).config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-// const { API_KEY }= process.env.API_KEY;// prevent exposing api key
-const API_KEY = '';
+// require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
+const API_KEY = '';// prevent exposing api key
+
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get detailed info from recipe ID's
  * @param {Object} ids - list of ids of recipes
  * @returns {Array} Array of recipe Objects where each object contains detailed info
-
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
-    // fetch from API
-    if (idsToFetch.length == 0) {
+    if (idsToFetch.length === 0) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
-
-      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}&includeNutrition=true`, {
+      const url = new URL(`https://${HOST}/recipes/complexSearch`);
+      url.searchParams.append('ids', idsFormatted);
+      url.searchParams.append('includeNutrition', 'true');
+      fetch(url, {
         method: 'GET',
         headers: {
           'x-rapidapi-host': HOST,
@@ -33,14 +30,13 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       })
         .then((response) => response.json())
         .then((data) => {
-          data.forEach((recipe) => {
+          resolve(data.map((recipe) => {
+            const recipeInfo = recipe;
             const { nutrients } = recipe.nutrition;
-            // eslint-disable-next-line no-param-reassign
-            delete recipe.nutrition;
-            // eslint-disable-next-line no-param-reassign
-            recipe.nutrients = nutrients;
-          });
-          resolve(data);
+            delete recipeInfo.nutrition;
+            recipeInfo.nutrients = nutrients;
+            return recipeInfo;
+          }));
         })
         .catch((err) => {
           console.log('Error getting detailed recipe info');
@@ -65,7 +61,7 @@ export function extractIDs(data) {
   const recipeData = getAllRecipes();
   results.forEach((result) => {
     const { id } = result;
-    if (recipeData[id] == undefined) {
+    if (recipeData[id] === undefined) {
       idsToFetch.push(id);
     } else {
       recipesInLocalStorage.push(recipeData[id]);
@@ -112,7 +108,7 @@ export async function getRecipesByName(query, num = 5, offset = 0, sortFilterPar
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if (ids.length == 0) {
+        if (ids.length === 0) {
           console.log('No search results');
           resolve([]);
         } else {
@@ -160,7 +156,7 @@ export async function getRecipesByAutocomplete(query, num = 5) {
           const passToExtractID = {};
           passToExtractID.results = data;
           const ids = extractIDs(passToExtractID);
-          if (ids.length == 0) {
+          if (ids.length === 0) {
             console.log('No search results');
             resolve([]);
           } else {
@@ -203,7 +199,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if (ids.length == 0) {
+        if (ids.length === 0) {
           console.log('No search results');
           resolve([]);
         } else {
@@ -244,7 +240,7 @@ export async function getRecipesByType(type, num = 5, offset = 0) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if (ids.length == 0) {
+        if (ids.length === 0) {
           console.log('No search results');
           resolve([]);
         } else {

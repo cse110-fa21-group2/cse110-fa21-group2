@@ -1,8 +1,5 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable dot-notation */
-/* eslint-disable no-plusplus */
 // localStorage = {
-//   explore: { // Used to populate explore page (only ids to reduce storage size)
+//   explore-categories: { // Used to populate explore page (only ids to reduce storage size)
 //       "breakfast": [
 //           "123", // recipe id
 //           "111", // recipe id
@@ -43,21 +40,21 @@
  */
 export function storeRecipeData(category, recipeArray) {
   try {
-    let allData = JSON.parse(localStorage.getItem("recipeData"));
+    let allData = JSON.parse(localStorage.getItem('recipeData'));
     if (allData == null) {
       allData = {};
     }
 
     // store recipe
     const allRecipeId = [];
-    for (let i = 0; i < recipeArray.length; i++) {
-      const uid = recipeArray[i]["id"];
+    for (let i = 0; i < recipeArray.length; i += 1) {
+      const uid = recipeArray[i].id;
       allRecipeId.push(uid);
       allData[uid] = recipeArray[i];
     }
 
     // add to category list
-    let catData = JSON.parse(localStorage.getItem("categories"));
+    let catData = JSON.parse(localStorage.getItem('explore-categories'));
     if (catData == null) {
       catData = {};
     }
@@ -71,8 +68,8 @@ export function storeRecipeData(category, recipeArray) {
       }
     });
 
-    localStorage.setItem("categories", JSON.stringify(catData));
-    localStorage.setItem("recipeData", JSON.stringify(allData));
+    localStorage.setItem('explore-categories', JSON.stringify(catData));
+    localStorage.setItem('recipeData', JSON.stringify(allData));
   } catch (e) {
     // storage might be full
     console.log(e);
@@ -86,7 +83,7 @@ export function storeRecipeData(category, recipeArray) {
  */
 export function saveRecipeToList(listName, recipeId) {
   try {
-    let listData = JSON.parse(localStorage.getItem("savedLists"));
+    let listData = JSON.parse(localStorage.getItem('savedLists'));
 
     if (listData == null) {
       listData = {};
@@ -100,7 +97,7 @@ export function saveRecipeToList(listName, recipeId) {
       listData[listName].push(recipeId);
     }
 
-    localStorage.setItem("savedLists", JSON.stringify(listData));
+    localStorage.setItem('savedLists', JSON.stringify(listData));
   } catch (e) {
     console.error(e);
   }
@@ -113,10 +110,10 @@ export function saveRecipeToList(listName, recipeId) {
  */
 export function removeRecipeFromList(listName, recipeId) {
   try {
-    const listData = JSON.parse(localStorage.getItem("savedLists"));
+    const listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData != null && listName in listData) {
-      listData[listName] = listData[listName].filter((id) => id != recipeId);
-      localStorage.setItem("savedLists", JSON.stringify(listData));
+      listData[listName] = listData[listName].filter((id) => id !== recipeId);
+      localStorage.setItem('savedLists', JSON.stringify(listData));
     }
   } catch (e) {
     console.error(e);
@@ -129,15 +126,15 @@ export function removeRecipeFromList(listName, recipeId) {
  */
 export function createList(listName) {
   try {
-    let listData = JSON.parse(localStorage.getItem("savedLists"));
+    let listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData == null) {
       listData = {};
       listData[listName] = [];
-      localStorage.setItem("savedLists", JSON.stringify(listData));
+      localStorage.setItem('savedLists', JSON.stringify(listData));
     } else if (!(listName in listData)) {
       // if (!(listName in listData)) {
       listData[listName] = [];
-      localStorage.setItem("savedLists", JSON.stringify(listData));
+      localStorage.setItem('savedLists', JSON.stringify(listData));
       // }
     }
   } catch (e) {
@@ -151,10 +148,10 @@ export function createList(listName) {
  */
 export function deleteList(listName) {
   try {
-    const listData = JSON.parse(localStorage.getItem("savedLists"));
+    const listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData != null && listName in listData) {
       delete listData[listName];
-      localStorage.setItem("savedLists", JSON.stringify(listData));
+      localStorage.setItem('savedLists', JSON.stringify(listData));
     }
   } catch (e) {
     console.error(e);
@@ -167,25 +164,19 @@ export function deleteList(listName) {
  */
 export function deleteCreatedRecipe(recipeId) {
   try {
-    const saveData = JSON.parse(localStorage.getItem("savedLists"));
-    const catData = JSON.parse(localStorage.getItem("categories"));
-    const allData = JSON.parse(localStorage.getItem("recipeData"));
+    const saveData = JSON.parse(localStorage.getItem('savedLists'));
+    const catData = JSON.parse(localStorage.getItem('explore-categories'));
+    const allData = JSON.parse(localStorage.getItem('recipeData'));
 
-    if (
-      saveData &&
-      "created" in saveData &&
-      saveData["created"].includes(recipeId)
-    ) {
-      saveData["created"] = saveData["created"].filter((id) => id != recipeId);
-      catData["created"] = catData["created"].filter((id) => id != recipeId);
+    if (saveData && 'created' in saveData && saveData.created.includes(recipeId)) {
+      saveData.created = saveData.created.filter((id) => id !== recipeId);
+      catData.created = catData.created.filter((id) => id !== recipeId);
       delete allData[recipeId];
 
-      localStorage.setItem("categories", JSON.stringify(catData));
-      localStorage.setItem("recipeData", JSON.stringify(allData));
-      localStorage.setItem("savedLists", JSON.stringify(saveData));
-
+      localStorage.setItem('explore-categories', JSON.stringify(catData));
+      localStorage.setItem('recipeData', JSON.stringify(allData));
+      localStorage.setItem('savedLists', JSON.stringify(saveData));
     }
-
   } catch (e) {
     console.error(e);
   }
