@@ -27,29 +27,16 @@ nav a:hover {
 .navbar-brand {
   background: none;
   border: none;
+  margin-right: 10rem;
   padding: 0;
 }
 
-#explore-nav {
+.nav-link {
   background: none;
   border: none;
-  color: black;
-  margin-left: 5rem;
-}
-
-#saved-recipes-nav {
-  background: none;
-  border: none;
-  color: black;
-  margin-left: 5rem;
-}
-
-#create-recipe-nav {
-  background: none;
-  border: none;
-  color: black;
-  margin-left: 5rem;
-  margin-right: 5rem;
+  color: black !important;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
 }
 
 /* Landing Page CSS */
