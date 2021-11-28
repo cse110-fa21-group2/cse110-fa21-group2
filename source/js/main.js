@@ -160,17 +160,14 @@ function populateExplore() {
   storageFuncs.storeRecipeData('trending', trendingArrRecipe);
   // ********* //
 
-  // Location where recipe cards are to be added
-  const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
-
   // Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
-  
+
   // Iterate through each category in explore IDs and add recipe cards using their IDs
   exploreSections.forEach((section) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const category in allCategoriesIds) {
-      if (section.id == category) {
+      if (section.id === category) {
         createRecipeCards(allCategoriesIds[category], section, DEFAULT_NUM_CARDS);
       }
     }
@@ -178,7 +175,6 @@ function populateExplore() {
 }
 
 function populateSavedRecipes() {
-  // TODO: Fetch all saved recipes from localStorage and populate saved recipe section
   // PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
   storageFuncs.createList('favorites');
   storageFuncs.saveRecipeToList('favorites', 1987);
@@ -192,41 +188,13 @@ function populateSavedRecipes() {
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
 
   // Iterate through each "list" in saved lists and add recipe cards using their IDs
-  for (const category in allSavedIds) {
-    //if (section.id == category) {
-      createRecipeCards(allSavedIds[category], grid, DEFAULT_NUM_CARDS);
-    //}
-  }
+  Object.keys(allSavedIds).forEach((category) => {
+    // TODO: Only populate cards for the active category
+    createRecipeCards(allSavedIds[category], grid, DEFAULT_NUM_CARDS);
+  });
 }
 
 // TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
-
-/**
- * Populates index.html with <recipe-card> elements, as defined in
- * RecipeCard.js. This function is meant to be called for each section that needs
- * to be populated with recipe cards.
- * @param arrData an array of recipe ids (currently). example input:
- * [
-*    "123", // recipe id
-*    "111", // recipe id
-*    "444", // recipe id
-*  ]
- * @param location specifies where recipes are being filled i.e. HTML tags
- * @param numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
- */
-function createRecipeCards(arrData, location, numRecipesPopd = 5) {
-  // Populate each section
-  let i = 0;
-  // Checks to make sure only populate as many as requested by numRecipesPopd or
-  // until reach the end of the array of recipe ids i.e. ran out of recipes
-  while (i < numRecipesPopd && i < arrData.length) {
-    const recipeCard = document.createElement('recipe-card');
-    // work-in-progress by Fred for populating recipe cards.
-    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
-    location.appendChild(recipeCard);
-    i += 1;
-  }
-}
 
 /* More event handlers */
 
@@ -306,7 +274,7 @@ const createRecipeClicked = () => {
 
   // format all the ingredients:
   const ingredientArray = [];
-  for (let i = 0; i < ingredientNames.length; i++) {
+  for (let i = 0; i < ingredientNames.length; i += 1) {
     const ingObject = {};
     ingObject.name = ingredientNames[i].value;
     ingObject.amount = ingredientAmount[i].value;
@@ -329,7 +297,7 @@ const createRecipeClicked = () => {
 
   // format step array
   const stepArray = [];
-  for (let i = 0; i < steps.length; i++) {
+  for (let i = 0; i < steps.length; i += 1) {
     const stepObject = {};
     stepObject.number = i + 1;
     stepObject.step = steps[i].value;
