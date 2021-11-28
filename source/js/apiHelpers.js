@@ -1,5 +1,4 @@
 // helper functions for Spoonacular API
-// all these functions fetch for most popular recipes
 
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
@@ -18,7 +17,7 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
-      const url = new URL(`https://${HOST}/recipes/complexSearch`);
+      const url = new URL(`https://${HOST}/recipes/informationBulk`);
       url.searchParams.append('ids', idsFormatted);
       url.searchParams.append('includeNutrition', 'true');
       fetch(url.href, {
@@ -78,9 +77,12 @@ export function extractIDs(data) {
  * @param {Object} [sortFilterParams = {sort:'popularity', sortDirection:'desc'}]
  *                 - dictionary of sort/filter parameters
  * The key is any parameter listed here https://spoonacular.com/food-api/docs#Search-Recipes-Complex
- * The value is whatever you set to the parameter. Ex (key:value) = (diet:'vegitarian')
+ * The value is whatever you set to the parameter. Ex (key:value) = (diet:'vegetarian')
  * Options for sort parameter here https://spoonacular.com/food-api/docs#Recipe-Sorting-Options
- * Make sure include a sort direction, 'asc' or 'desc'
+ * Make sure include (sortDirection: 'asc' or 'desc).
+ *
+ * It seems like you can only sort by one thing per call,
+ * so you can't sort by calories and popularity together(at least I havent figure out how to)
  * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
@@ -89,15 +91,13 @@ export async function getRecipesByName(query, num = 5, offset = 0, sortFilterPar
     const url = new URL(`https://${HOST}/recipes/complexSearch`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
     url.searchParams.append('query', queryFormatted);
-    url.searchParams.append('num', num);
+    url.searchParams.append('number', num);
     url.searchParams.append('offset', offset);
 
     // add sort and filter params to search
     Object.keys(sortFilterParams).forEach((key) => {
-      url.searchParams.append(key, sortFilterParams.key);
+      url.searchParams.append(key, sortFilterParams[key]);
     });
-
-    console.log(url.href);
     fetch(url.href, {
       method: 'GET',
       headers: {
