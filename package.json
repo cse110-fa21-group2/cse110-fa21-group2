@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lintjs": "npx eslint \"**/*.js\"",
-    "lintcss": "npx stylelint \"**/*.css\"",
+    "lintjs": "npx eslint \"./source/js/**/*.js\"",
+    "lintcss": "npx stylelint './source/styles/*.css'",
     "lint": "npm run lintjs && npm run lintcss"
   },
   "jest": {
