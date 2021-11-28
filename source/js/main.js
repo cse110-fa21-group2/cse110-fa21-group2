@@ -81,6 +81,7 @@ const createRecipeCards = (arrData, location, numRecipesPopd = 5) => {
     const recipeCard = document.createElement('recipe-card');
     recipeCard.id = arrData[i];
     // work-in-progress by Fred for populating recipe cards.
+    recipeCard.windowRouter = router;
     recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
     location.appendChild(recipeCard);
     i += 1;
