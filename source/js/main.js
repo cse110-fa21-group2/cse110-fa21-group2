@@ -81,6 +81,7 @@ const createRecipeCards = (arrData, location, numRecipesPopd = 5) => {
     const recipeCard = document.createElement('recipe-card');
     recipeCard.setAttribute('class', `id_${arrData[i]}`);
     // work-in-progress by Fred for populating recipe cards.
+    recipeCard.windowRouter = router;
     recipeCard.data = fetcherFuncs.getSingleRecipe(arrData[i]);
     location.appendChild(recipeCard);
     i += 1;
@@ -536,7 +537,7 @@ async function init() {
   initializeButtons();
 
   // Expanded Recipe Info using dummy data. Can pass in real data when we get it.
-  populateExpandedRecipeData(tempData[0]);
+  // populateExpandedRecipeData(tempData[0]);
 }
 
 window.addEventListener('DOMContentLoaded', init);
