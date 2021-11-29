@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./recipe-page.css">
+    <link rel="stylesheet" href="./recipe-sort.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+    <script src="recipePage.js"></script>
+    <script src="recipeTimer.js"></script>
+    <script src="recipeSort.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="nav">
+        <a class ="nav-logo">
+            <img src="../../images/pot.svg" alt="" class="nav-icon">
+            <span class="nav-title">Recipe Book</span>
+        </a>
+        <div class="links" id="links">
+            <a href="./landing.html">Home</a>
+            <a href="./explore.html">Explore</a>
+            <a href="./saved-recipes.html">Saved Recipes</a>
+        </div>
+        <div class="search" id="search">
+            <form action="./search-results.html">
+                <input type="text" name="" id="" placeholder="Search recipes">
+                <button type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
+              </form>
+        </div>
+        <a href="javascript:void(0);" class="icon" id="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <main>
+        <section class="search-results hidden">
+            <!-- TODO: Populate query field -->
+            <h1 id="search-results-title">Top recipes for "bread"</h1>
+            <!-- TODO: Add sorting section here :D-->
+            <div class="sort-filter">
+                <form id="sort-filter-form" class="sort-filter-form">
+                    <div id="sort-filters" class="sort-filters">
+                      <div class="sort-filters-wrapper">
+                        <div class="sort-filters-top">
+                          <h2 class="sort-filters-heading">Sort and Filter</h2>
+                          <hr class="solid">
+                          <button id="display-sort-filter" class="sort-filter" type="button" onclick="displaySortFilter()">Show Sort/Filter</button>
+                        </div>
+                        <div class="sort-filter-body" id="sort-filter-body">
+                            <hr class="solid">
+                            <button id="clear-sort-filter" class="sort-filter" type="button">Clear all sorting and filtering</button>
+                            <hr class="solid">
+                            <div class="sort">
+                                <div class="sort-header">
+                                    <label class="sort-filter-label">Sort by:</label><br>
+                                    <select name="sorts" id="sorts" value="">
+                                        <option value="">None selected</option>
+                                        <option value="popularity">Popularity</option>
+                                        <option value="healthiness">Healthiness</option>
+                                        <option value="price">Price</option>
+                                        <option value="time">Time</option>
+                                    </select>
+                                    <select name="ordering" id="ordering" value="">
+                                        <option value="">None selected</option>
+                                        <option value="descending">Descending</option>
+                                        <option value="ascending">Ascending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-meal-type">
+                                <div class="filters-meal-type">
+                                <div class="filter-meal-type-input">
+                                    <label class="sort-filter-label">Meal Type:</label><br>
+                                    <select name="meal-type" id="meal-type" value="">
+                                        <option value="">None selected</option>
+                                        <option value="main course">Main course</option>
+                                        <option value="side dish">Side dish</option>
+                                        <option value="dessert">Dessert</option>
+                                        <option value="appetizer">Appetizer</option>
+                                        <option value="salad">Salad</option>
+                                        <option value="bread">Bread</option>
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="soup">Soup</option>
+                                        <option value="beverage">Beverage</option>
+                                        <option value="sauce">Sauce</option>
+                                        <option value="marinade">Marinade</option>
+                                        <option value="fingerfood">Fingerfood</option>
+                                        <option value="snack">Snack</option>
+                                        <option value="drink">Drink</option>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-cuisine">
+                            <div class="filters-cuisine-header">
+                                <label class="sort-filter-label">Filter by cuisine:</label>
+                                <button class="cuisine-collapse" id="cuisine-collapse" type="button" onclick="displayCuisine()">↑</button>
+                            </div>
+                            <div class="filters-cuisine-body" id="cuisine-collapse-body">
+                                <div class="filter-cuisine-input">
+                                <input type="checkbox" id="cuisine1" name="cuisine1" value="African">
+                                <label for="cuisine1">African</label><br>
+                                <input type="checkbox" id="cuisine2" name="cuisine2" value="American">
+                                <label for="cuisine2">American</label><br>
+                                <input type="checkbox" id="cuisine3" name="cuisine3" value="British">
+                                <label for="cuisine3">British</label><br>
+                                <input type="checkbox" id="cuisine4" name="cuisine4" value="Cajun">
+                                <label for="cuisine4">Cajun</label><br>
+                                <input type="checkbox" id="cuisine5" name="cuisine5" value="Caribbean">
+                                <label for="cuisine5">Caribbean</label><br>
+                                <input type="checkbox" id="cuisine6" name="cuisine6" value="Chinese">
+                                <label for="cuisine6">Chinese</label><br>
+                                <input type="checkbox" id="cuisine7" name="cuisine7" value="Eastern European">
+                                <label for="cuisine7">Eastern European</label><br>
+                                <input type="checkbox" id="cuisine8" name="cuisine8" value="European">
+                                <label for="cuisine8">European</label><br>
+                                <input type="checkbox" id="cuisine9" name="cuisine9" value="French">
+                                <label for="cuisine9">French</label><br>
+                                <input type="checkbox" id="cuisine10" name="cuisine10" value="German">
+                                <label for="cuisine10">German</label><br>
+                                <input type="checkbox" id="cuisine11" name="cuisine11" value="Greek">
+                                <label for="cuisine11">Greek</label><br>
+                                <input type="checkbox" id="cuisine12" name="cuisine12" value="Indian">
+                                <label for="cuisine12">Indian</label><br>
+                                <input type="checkbox" id="cuisine13" name="cuisine13" value="Irish">
+                                <label for="cuisine13">Irish</label><br>
+                                <input type="checkbox" id="cuisine14" name="cuisine14" value="Italian">
+                                <label for="cuisine14">Italian</label><br>
+                                <input type="checkbox" id="cuisine15" name="cuisine15" value="Japanese">
+                                <label for="cuisine15">Japanese</label><br>
+                                <input type="checkbox" id="cuisine16" name="cuisine16" value="Jewish">
+                                <label for="cuisine16">Jewish</label><br>
+                                <input type="checkbox" id="cuisine17" name="cuisine17" value="Korean">
+                                <label for="cuisine17">Korean</label><br>
+                                <input type="checkbox" id="cuisine18" name="cuisine18" value="Latin American">
+                                <label for="cuisine18">Latin American</label><br>
+                                <input type="checkbox" id="cuisine19" name="cuisine19" value="Mediterranean">
+                                <label for="cuisine19">Mediterranean</label><br>
+                                <input type="checkbox" id="cuisine20" name="cuisine20" value="Mexican">
+                                <label for="cuisine20">Mexican</label><br>
+                                <input type="checkbox" id="cuisine21" name="cuisine21" value="Middle Eastern">
+                                <label for="cuisine21">Middle Eastern</label><br>
+                                <input type="checkbox" id="cuisine22" name="cuisine22" value="Nordic">
+                                <label for="cuisine22">Nordic</label><br>
+                                <input type="checkbox" id="cuisine23" name="cuisine23" value="Southern">
+                                <label for="cuisine23">Southern</label><br>
+                                <input type="checkbox" id="cuisine24" name="cuisine24" value="Spanish">
+                                <label for="cuisine24">Spanish</label><br>
+                                <input type="checkbox" id="cuisine25" name="cuisine25" value="Thai">
+                                <label for="cuisine25">Thai</label><br>
+                                <input type="checkbox" id="cuisine26" name="cuisine26" value="Vietnamese">
+                                <label for="cuisine26">Vietnamese</label><br>
+                                </div>
+                            </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-diet">
+                                <div class="filters-diet-header">
+                                    <label class="sort-filter-label">Dietary restrictions:</label>
+                                </div>
+                                <div class="filters-diet-body">
+                                <div class="filter-diet-input">
+                                    <select name="sorts" id="sorts" value="">
+                                        <option value="">None selected</option>
+                                        <option value="Gluten Free">Gluten Free</option>
+                                        <option value="Ketogenic">Ketogenic</option>
+                                        <option value="Vegetarian">Vegetarian</option>
+                                        <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+                                        <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                                        <option value="Vegan">Vegan</option>
+                                        <option value="Pescetarian">Pescetarian</option>
+                                        <option value="Paleo">Paleo</option>
+                                        <option value="Primal">Primal</option>
+                                        <option value="Low FODMAP">Low FODMAP</option>
+                                        <option value="Whole30">Whole30</option>
+                                    </select>
+                                </div>
+                                </div>
+                                <hr class="solid">
+                                <div class="filters-max-time">
+                                    <div class="filters-max-time-header">
+                                    <label class="sort-filter-label">Max prep time:</label>
+                                    </div>
+                                    <div class="filters-max-time-body">
+                                    <div class="filter-max-time-input">
+                                        <input type="range" value="" min="0" max="1440" step="10" oninput="this.nextElementSibling.nextElementSibling.value = this.value + ' min (roughly ' + (this.value/60).toFixed(2) + ' hr)'"><br>
+                                        <output>Default</output>
+                                    </div>
+                                    </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-intolerances">
+                                <div class="filters-intolerances-header">
+                                    <label class="sort-filter-label">Filter by intolerances:</label>
+                                    <button class="intolerance-collapse" id="intolerance-collapse" type="button" onclick="displayIntolerance()">↑</button>
+                                </div>
+                                <div class="filters-intolerance-body" id="intolerance-collapse-body">
+                                    <div class="filter-intolerance-input">
+                                        <input type="checkbox" id="intolerance1" name="intolerance1" value="Dairy">
+                                        <label for="intolerance1">Dairy</label><br>
+                                        <input type="checkbox" id="intolerance2" name="intolerance2" value="Egg">
+                                        <label for="intolerance2">Egg</label><br>
+                                        <input type="checkbox" id="intolerance3" name="intolerance3" value="Gluten">
+                                        <label for="intolerance3">Gluten</label><br>
+                                        <input type="checkbox" id="intolerance4" name="intolerance4" value="Grain">
+                                        <label for="intolerance4">Grain</label><br>
+                                        <input type="checkbox" id="intolerance5" name="intolerance5" value="Peanut">
+                                        <label for="intolerance5">Peanut</label><br>
+                                        <input type="checkbox" id="intolerance6" name="intolerance6" value="Seafood">
+                                        <label for="intolerance7">Seafood</label><br>
+                                        <input type="checkbox" id="intolerance7" name="intolerance7" value="Sesame">
+                                        <label for="intolerance7">Sesame</label><br>
+                                        <input type="checkbox" id="intolerance8" name="intolerance8" value="Shellfish">
+                                        <label for="intolerance8">Shellfish</label><br>
+                                        <input type="checkbox" id="intolerance9" name="intolerance9" value="Soy">
+                                        <label for="intolerance9">Soy</label><br>
+                                        <input type="checkbox" id="intolerance10" name="intolerance10" value="Sulfite">
+                                        <label for="intolerance10">Sulfite</label><br>
+                                        <input type="checkbox" id="intolerance11" name="intolerance11" value="Tree Nut">
+                                        <label for="intolerance11">Tree Nut</label><br>
+                                        <input type="checkbox" id="intolerance12" name="intolerance12" value="Wheat">
+                                        <label for="intolerance12">Wheat</label><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="solid">
+                        <div class="sort-filters-bottom">
+                            <button id="submit" class="sort-filter">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+            </div>
+          </section>
+        <section id="header">
+            <button class="back-btn">Return</button>
+
+            <div class="title-edit-wrapper">
+                <p class = "title">Chicken Salad</p>
+                <button class="back-btn">Edit</button>
+            </div>
+
+            <div class="rating-favorite-wrapper">
+                <div class="rating">
+                    <img src="5-star.svg" class="rating" alt="autopopulated by script">
+                    <ul class="rating-stats">
+                        <li class="rating-stats">
+                            4.65 stars
+                            <span class="divider"></span>
+                        </li>
+                        <li class="rating-stats">
+                            55 reviews
+                        </li>
+                    </ul>
+                </div>
+                <button class="org-btn"> <i class="far fa-heart"></i> Save Recipe</button>
+            </div>
+
+            <img src="image.webp" class="main-recipe-image" alt="autopopulated by script">
+        
+            <div class="recipe-description-wrapper">
+                <p class="description">
+                    This chicken salad comes together fast using rotisserie chicken breasts. The herbs, along with the pecans, help to make this chicken salad flavorful. Serve on top of toasted croissants, or butter lettuce.
+                </p>
+            </div>
+        </section>
+
+        <section id="sub-header">
+            <div class="sub-header">
+                <div class="ingredients-wrapper">
+                    <p class="subtitle">Ingredients</p>
+                    <ul class="ingredients">
+                        <li class="item">1/2 cup mayonnaise</li>
+                        <li class="item">1/2 cup plain Greek yogurt</li>
+                        <li class="item">2 teaspoons white wine vinegar</li>
+                        <li class="item">1/2 teaspoon garlic powder</li>
+                        <li class="item">1/4 teaspoon dried thyme</li>
+                        <li class="item">2 cups chopped cooked chicken</li>
+                        <li class="item">2 stalks celery, sliced</li>
+                        <li class="item">1/2 cup mayonnaise</li>
+                        <li class="item">1/2 cup plain Greek yogurt</li>
+                        <li class="item">2 teaspoons white wine vinegar</li>
+                        <li class="item">1/2 teaspoon garlic powder</li>
+                        <li class="item">1/4 teaspoon dried thyme</li>
+                        <li class="item">2 cups chopped cooked chicken</li>
+                        <li class="item">2 stalks celery, sliced</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sub-header">
+                <div class="quick-facts-wrapper">
+                    <p class="subtitle">Quick Facts</p>
+                        <ul class="facts">
+                            <li class="item">Prep: 20 minutes</li>
+                            <li class="item">Cook: N/A</li>
+                            <li class="item">Total: 20 minutes</li>
+                            <li class="item">Yield: 4 servings</li>
+                    </ul>
+                </div>
+                <div class="measurements-wrapper">
+                    <p class="subtitle" id="measure-title">Measurements</p>
+                    <button class="unit-btn">Units: Imperial</button>
+                    <div class="serving-adjust">
+                        <button class="minus-btn">-</button>
+                        <div class="serving-size">4</div>
+                        <button class="plus-btn">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="body">
+            <div class="steps-wrapper">
+                <p class="subtitle">Steps</p>
+                <ol class="steps">
+                    <li class="steps">
+                        Mix mayonnaise, Greek yogurt, vinegar, garlic powder, thyme, and maple pepper together in a bowl until well combined. Add chicken, celery, pecans, and red onion; stir well to incorporate.
+                    </li>
+                    <li class="steps">
+                        Serve immediately or refrigerate for up to 3 days.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="videos-wrapper">
+                <p class="subtitle">Videos</p>
+                <!-- Include videos if any :D -->
+            </div>
+
+            <div class="nutrition-wrapper">
+                <p class="subtitle">Nutrition Facts</p>
+                <p>Per Serving: 458 calories; protein 20.2g; carbohydrates 4.6g; fat 40.3g; cholesterol 70.7mg; sodium 236mg.</p>
+                <button class="org-btn">Full Nutrition</button>
+            </div>
+
+            <div class="recipe-tags-wrapper">
+                <!-- Tags // Possible extra feature- see related recipes by tag-->
+            </div>
+        
+            <div class="recipe-related-tags-wrapper">
+                <!-- Related tags EXTRA FEATURE -->
+            </div>
+            
+            <div class="related-recipes-wrapper">
+                <!-- Related recipes EXTRA FEATURE -->
+            </div>
+        </section>
+
+    </main>
+    <div class="timer">
+        <div id="timeInput" class="timeInput">
+            <input type="number" name ="hours" id ="hours" placeholder="Hours" min="0" max="23" size = "5" maxlength="2" value="0">
+            <input type="number" name="minutes" id="minutes" placeholder="Minutes" min="0" max="59" size = "5" maxlength="2" value="0">
+            <input type="number" name="seconds" id="seconds" placeholder="Seconds" min="0" max="59" size = "5" maxlength="2" value="0">
+            <button href="javascript:void(0);" class="setTime" id="setTime" onclick="setTimer()">Set Timer</button>
+        </div>
+        
+        <p id="timer">Begin Timer</p>
+        <button id="pause" onclick="pauseTimer()">Pause</button>
+        <button id="reset" onclick="resetTimer()">Reset</button>
+        <button id="shown" onclick="displayTimer()">Minimize</button>
+        <audio class="hidden" src=""></audio>
+    </div>
+</body>
+</html>
