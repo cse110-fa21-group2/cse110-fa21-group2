@@ -214,7 +214,8 @@ class RecipeCard extends HTMLElement {
     const favButton = document.createElement('button');
     favButton.setAttribute('class', 'card-btn card-btn-outline card-save-button');
 
-    const flipSaved = () => {
+    const flipSaved = (e) => {
+      e.stopPropagation();
       const currCards = document.querySelectorAll(`.id_${this.json.id}`);
       const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
       console.log(currSavedPageSelect);
