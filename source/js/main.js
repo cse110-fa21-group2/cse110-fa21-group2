@@ -138,55 +138,68 @@ function openRecipeInfo(data) {
 
   const saveBtn = document.getElementById('info-save-btn');
 
-  const initialCategories = fetcherFuncs.getAllSavedRecipeId();
-  this.saved = initialCategories.favorites && initialCategories.favorites.includes(this.json.id);
-  saveBtn.innerHTML = this.saved ? 'Remove Recipe' : 'Save Recipe';
+  const categories = fetcherFuncs.getAllSavedRecipeId();
+  const saved = categories.favorites && categories.favorites.includes(data.id);
+  saveBtn.innerHTML = saved ? 'Remove Recipe' : 'Save Recipe';
 
-  saveBtn.addEventListener('click', () => {
-    const categories = fetcherFuncs.getAllSavedRecipeId();
-    this.saved = categories.favorites && categories.favorites.includes(this.json.id);
-    const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-    const currCards = document.querySelectorAll(`.id_${this.json.id}`);
+  const flipSaved = () => {
+    // categories = fetcherFuncs.getAllSavedRecipeId();
+    // saved = categories.favorites && categories.favorites.includes(data.id);
+    // console.log(`Saved: ${saved}`);
+    // if (saved) {
+    //   // Remove from saved recipes
+    //   saveBtn.innerHTML = 'Save Recipe';
+    //   storageFuncs.removeRecipeFromList('favorites', data.id);
+    // } else {
+    //   // Add to saved recipes
+    //   saveBtn.innerHTML = 'Remove Recipe';
+    //   storageFuncs.saveRecipeToList('favorites', data.id);
+    // }
+    // const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+    // const currCards = document.querySelectorAll(`.id_${this.json.id}`);
 
-    if (this.saved) {
-      saveBtn.innerHTML = 'Save Recipe';
-      storageFuncs.removeRecipeFromList('favorites', this.json.id);
-      if (currSavedPageSelect === 'List 1') {
-        // remove card in saved recipe page
-        const grid = document.querySelector('.saved-recipes .results-grid');
-        const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
-        for (let i = 0; i < currentCardsSaved.length; i++) {
-          currentCardsSaved[i].remove();
-        }
-      }
-    } else {
-      saveBtn.innerHTML = 'Remove Recipe';
+    // if (this.saved) {
+    //   saveBtn.innerHTML = 'Save Recipe';
+    //   storageFuncs.removeRecipeFromList('favorites', this.json.id);
+    //   if (currSavedPageSelect === 'List 1') {
+    //     // remove card in saved recipe page
+    //     const grid = document.querySelector('.saved-recipes .results-grid');
+    //     const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
+    //     for (let i = 0; i < currentCardsSaved.length; i++) {
+    //       currentCardsSaved[i].remove();
+    //     }
+    //   }
+    // } else {
+    //   saveBtn.innerHTML = 'Remove Recipe';
 
-      storageFuncs.saveRecipeToList('favorites', this.json.id);
-      if (currSavedPageSelect === 'List 1') {
-        // add card to saved recipe page
-        const grid = document.querySelector('.saved-recipes .results-grid');
-        const recipeCardNew = document.createElement('recipe-card');
-        recipeCardNew.setAttribute('class', `id_${this.json.id}`);
-        recipeCardNew.data = this.json;
-        grid.appendChild(recipeCardNew);
-      }
-    }
-    for (let i = 0; i < currCards.length; i++) {
-      const { shadowRoot } = currCards[i];
-      const element = shadowRoot
-        .querySelector('.card-save-button')
-        .querySelector('i');
-      if (currCards[i].saved) {
-        element.classList.add('far');
-        element.classList.remove('fas');
-      } else {
-        element.classList.remove('far');
-        element.classList.add('fas');
-      }
-      currCards[i].saved = !currCards[i].saved;
-    }
-  });
+    //   storageFuncs.saveRecipeToList('favorites', this.json.id);
+    //   if (currSavedPageSelect === 'List 1') {
+    //     // add card to saved recipe page
+    //     const grid = document.querySelector('.saved-recipes .results-grid');
+    //     const recipeCardNew = document.createElement('recipe-card');
+    //     recipeCardNew.setAttribute('class', `id_${this.json.id}`);
+    //     recipeCardNew.populateFunc = openRecipeInfo;
+    //     recipeCardNew.data = this.json;
+    //     grid.appendChild(recipeCardNew);
+    //   }
+    // }
+    // for (let i = 0; i < currCards.length; i++) {
+    //   const { shadowRoot } = currCards[i];
+    //   const element = shadowRoot
+    //     .querySelector('.card-save-button')
+    //     .querySelector('i');
+    //   if (currCards[i].saved) {
+    //     element.classList.add('far');
+    //     element.classList.remove('fas');
+    //   } else {
+    //     element.classList.remove('far');
+    //     element.classList.add('fas');
+    //   }
+    //   currCards[i].saved = !currCards[i].saved;
+    // }
+  };
+
+  saveBtn.addEventListener('click', flipSaved);
 
   router.navigate('recipe-info', false);
 }
@@ -426,6 +439,7 @@ const createRecipeClicked = () => {
     const grid = document.querySelector('.saved-recipes .results-grid');
     const recipeCardNew = document.createElement('recipe-card');
     recipeCardNew.setAttribute('class', `id_${finalObject.id}`);
+    recipeCardNew.populateFunc = openRecipeInfo;
     recipeCardNew.data = finalObject;
     grid.appendChild(recipeCardNew);
   }
