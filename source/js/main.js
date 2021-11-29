@@ -453,26 +453,27 @@ function populateExplore() {
 
   // TODO: PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
   const breakfastArrRecipe = [
-    { id: 1348, title: 'Spicy Sausage Scramble' },
-    { id: 1204, title: 'Chick\'n Waffles' },
+    tempData[0],
+    tempData[1],
   ];
   storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
 
   const lunchArrRecipe = [
-    { id: 5109, title: 'Grilled Cheese' },
-    { id: 1598, title: 'Korean Fried Chicken' },
+    tempData[2],
+    tempData[3],
   ];
   storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
 
   const dinnerArrRecipe = [
-    { id: 5981, title: 'Lasagna' },
-    { id: 1409, title: 'Pad Thai' },
+    tempData[4],
+    tempData[5],
   ];
   storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
 
   const trendingArrRecipe = [
-    { id: 1987, title: 'Tonkatsu Ramen' },
-    { id: 1095, title: 'Red Braised Pork Belly' },
+    tempData[6],
+    tempData[7],
+    tempData[8],
   ];
   storageFuncs.storeRecipeData('trending', trendingArrRecipe);
   // ********* //
