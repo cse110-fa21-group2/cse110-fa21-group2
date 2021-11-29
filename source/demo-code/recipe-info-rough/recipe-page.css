@@ -404,6 +404,7 @@ div.timer {
   bottom: 0;
   display: block;
   float: left;
+  height: 140px;
   left: 0;
   margin: 1rem;
   overflow: auto;

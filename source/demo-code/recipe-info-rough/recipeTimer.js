@@ -76,11 +76,13 @@ function displayTimer() {
       document.getElementById('pause').style.display = 'none';
       document.getElementById('reset').style.display = 'none';
       document.getElementById('timer').style.display = 'none';
+      document.querySelector('div.timer').style.height = '40px';
     } else {
       document.getElementById('timeInput').style.display = 'none';
       document.getElementById('pause').style.display = 'none';
       document.getElementById('reset').style.display = 'none';
-      document.getElementById('timer').style.margin = '0rem 0rem .5rem 0rem';
+      document.querySelector('div.timer').style.height = '60px';
+      document.getElementById('timer').style.margin = '0rem 0rem 0.5rem 0rem';
     }
     document.getElementById('shown').innerHTML = 'Maximize';
   }
@@ -90,6 +92,30 @@ function displayTimer() {
     document.getElementById('reset').style.display = 'inline-block';
     document.getElementById('timer').style.display = 'block';
     document.getElementById('timer').style.margin = '1rem 1rem 1rem 1rem';
+    document.querySelector('div.timer').style.height = '140px';
     document.getElementById('shown').innerHTML = 'Minimize';
+  }
+}
+
+// Draggable timer functionality
+
+const timer = document.querySelector('div.timer');
+timer.addEventListener('mousedown', mousedown);
+
+function mousedown(e) {
+  window.addEventListener('mousemove', mousemove);
+  window.addEventListener('mouseup', mouseup);
+  const rect = timer.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left + 10;
+  const offsetY = e.clientY - rect.top + 15;
+
+  function mousemove(e1) {
+    timer.style.left = `${e1.clientX - offsetX}px`;
+    timer.style.top = `${e1.clientY - offsetY}px`;
+  }
+
+  function mouseup() {
+    window.removeEventListener('mousemove', mousemove);
+    window.removeEventListener('mouseup', mouseup);
   }
 }
