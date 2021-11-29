@@ -249,7 +249,7 @@ main {
 /* generic button CSS style */
 
 .info-page-btn {
-  border: 1px solid rgb(0 0 0);
+  border: 1px solid var(--primary);
   color: rgb(0 0 0);
   cursor: pointer;
   display: inline-block;
@@ -310,8 +310,7 @@ main {
   height: auto;
   margin-bottom: 0.5rem;
   margin-top: 1.25rem;
-
-  /* TODO: outline: 1px solid rgb(0 0 0); */
+  outline: 1px solid rgb(0 0 0);
   overflow: scroll;
   padding: 1rem;
 }
@@ -320,8 +319,7 @@ main {
   display: grid;
   margin-bottom: 0.5rem;
   margin-top: 1.25rem;
-
-  /* TODO: outline: 1px solid rgb(0 0 0); */
+  outline: 1px solid rgb(0 0 0);
   padding: 1rem;
 }
 
@@ -334,24 +332,21 @@ main {
   display: grid;
   margin-bottom: 0.5rem;
   margin-top: 1.25rem;
-
-  /* TODO: outline: 1px solid rgb(0 0 0); */
+  outline: 1px solid rgb(0 0 0);
   padding: 1rem;
 }
 
 .recipe-description-wrapper {
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
-
-  /* TODO: outline: 1px solid rgb(0 0 0); */
+  outline: 1px solid rgb(0 0 0);
   padding: 2rem;
 }
 
 .recipe-info-body {
   display: flex;
   margin-top: 0.75rem;
-
-  /* TODO: outline: 1px solid rgb(0 0 0); */
+  outline: 1px solid rgb(0 0 0);
   padding: 0.5rem;
 }
 
@@ -365,14 +360,14 @@ main {
 }
 
 .ingredients-wrapper {
-  /* border-right: 1px solid rgb(0 0 0); */
+  border-right: 1px solid rgb(0 0 0);
   min-height: 26pc;
   overflow-y: scroll;
   padding-right: 2px;
 }
 
 .quick-facts-wrapper {
-  /* TODO: border-bottom: 1px solid rgb(0 0 0); */
+  border-bottom: 1px solid rgb(0 0 0);
   height: 15rem;
   overflow-y: scroll;
 }
@@ -421,6 +416,7 @@ main {
   margin: 0;
   max-height: 27rem;
   object-fit: cover;
+  outline: 1px solid rgb(0 0 0);
   width: 100%;
 }
 
