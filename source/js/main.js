@@ -526,17 +526,17 @@ function initializeButtons() {
 }
 
 function initializeLocalStorage() {
-  if (!localStorage.getItem('savedLists')) {
-    localStorage.setItem('savedLists', JSON.stringify({}));
+  if (!window.localStorage.getItem('savedLists')) {
+    window.localStorage.setItem('savedLists', JSON.stringify({}));
   }
 }
 async function init() {
+  initializeLocalStorage();
   initializeRoutes();
   bindPopState();
   populateExplore();
   populateSavedRecipes();
   initializeButtons();
-  initializeLocalStorage();
 }
 
 window.addEventListener('DOMContentLoaded', init);
