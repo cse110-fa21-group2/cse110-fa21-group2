@@ -1,3 +1,4 @@
+/* stylelint-disable selector-id-pattern */
 @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 html,
@@ -394,20 +395,30 @@ li.steps {
   margin-top: 0.5rem;
 }
 
+/* Style for timer */
 div.timer {
-  margin: 1rem;
-  padding: 1rem;
-  border: 1px solid black;
+  align-items: center;
   background-color: white;
+  border: 3px solid gold;
+  border-radius: 25px;
   bottom: 0;
-  float: right;
-  right: 0;
+  display: block;
+  float: left;
+  left: 0;
+  margin: 1rem;
+  overflow: auto;
+  padding: 1rem;
   position: fixed;
   width: auto;
-  display:block;
-  align-items: center;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
+div.timer button {
+  background-color: #fff0d4;
+  border-radius: 10px;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
 div.timeInput {
   display: inline-flex;
 }
@@ -415,4 +426,8 @@ div.timeInput {
 #timer {
   font-size: 24px;
   text-align: center;
+}
+
+#setTime {
+  margin-left: 0.2rem;
 }
