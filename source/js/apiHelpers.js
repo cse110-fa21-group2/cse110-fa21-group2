@@ -2,7 +2,7 @@
 
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const API_KEY = '';// prevent exposing api key
+const API_KEY = '857b051abfmsh018f07c4f390b41p1547b1jsn64ae2598745b';// prevent exposing api key
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
