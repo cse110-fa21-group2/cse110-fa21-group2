@@ -46,38 +46,10 @@ const removeAllChildNodes = (parent) => {
 };
 
 /**
- *
- * @param {*} recipe
- * @returns stepsList: list of steps to make recipe
- */
-const getRecipeSteps = (recipe) => {
-  const stepsList = [];
-  const { steps } = recipe.analyzedInstructions[0];
-  for (let i = 0; i < steps.length; i += 1) {
-    stepsList.push(steps[i].step);
-  }
-  return stepsList;
-};
-
-/**
- *
- * @param {*} recipe //TODO -Laurence Specify object type
- * @returns ingredientList: list of ingredients to make recipe
- */
-function getRecipeIngredients(recipe) {
-  const ingredientList = [];
-  const ingredients = recipe.extendedIngredients;
-  for (let i = 0; i < ingredients.length; i += 1) {
-    ingredientList.push(ingredients[i].originalString);
-  }
-  return ingredientList;
-}
-
-/**
  * Populates the ExpandedRecipeCard with data
  * @param {Object} data - JSON object to use for page data
  */
-function populateExpandedRecipeData(data) {
+function openRecipeInfo(data) {
   // Header section
   const title = document.querySelector('.info-title');
   title.innerHTML = data.title;
@@ -116,19 +88,20 @@ function populateExpandedRecipeData(data) {
 
   // Quick Facts
   const prepMinutes = data.preparationMinutes ?? 0;
-  const totalMinutes = data.readyInMinutes;
+  const totalMinutes = data.readyInMinutes ?? 0;
+  const cookMinutes = data.cookingMinutes ?? 0;
 
   const prepTime = document.getElementById('prep-time');
   prepTime.innerHTML = `Prep Time: ${prepMinutes} minutes`;
 
   const cookTime = document.getElementById('cook-time');
-  cookTime.innerHTML = `Cook Time: ${totalMinutes - prepMinutes} minutes`;
+  cookTime.innerHTML = `Cook Time: ${cookMinutes} minutes`;
 
   const totalTime = document.getElementById('total-time');
   totalTime.innerHTML = `Total Time: ${totalMinutes} minutes`;
 
   const servings = document.getElementById('info-servings');
-  servings.innerHTML = `Yields ${data.servings} servings`;
+  servings.innerHTML = `Servings: ${data.servings}`;
 
   // TODO: Scale ingredients
 
@@ -143,9 +116,92 @@ function populateExpandedRecipeData(data) {
     stepsDiv.appendChild(listElement);
   });
 
-  // TODO: Video
+  // TODO: Find a video
+  const video = null;
+  const videoContainer = document.querySelector('.videos-wrapper');
+  if (video) {
+    // do something;
+    videoContainer.classList.remove('hidden');
+  } else {
+    videoContainer.classList.add('hidden');
+  }
 
   // TODO: Nutritional Info
+  const nutrition = null;
+  const nutritionContainer = document.querySelector('.nutrition-wrapper');
+  if (nutrition) {
+    // do something;
+    nutritionContainer.classList.remove('hidden');
+  } else {
+    nutritionContainer.classList.add('hidden');
+  }
+
+  const saveBtn = document.getElementById('info-save-btn');
+
+  const categories = fetcherFuncs.getAllSavedRecipeId();
+  const saved = categories.favorites && categories.favorites.includes(data.id);
+  saveBtn.innerHTML = saved ? 'Remove Recipe' : 'Save Recipe';
+
+  const flipSaved = () => {
+    // categories = fetcherFuncs.getAllSavedRecipeId();
+    // saved = categories.favorites && categories.favorites.includes(data.id);
+    // console.log(`Saved: ${saved}`);
+    // if (saved) {
+    //   // Remove from saved recipes
+    //   saveBtn.innerHTML = 'Save Recipe';
+    //   storageFuncs.removeRecipeFromList('favorites', data.id);
+    // } else {
+    //   // Add to saved recipes
+    //   saveBtn.innerHTML = 'Remove Recipe';
+    //   storageFuncs.saveRecipeToList('favorites', data.id);
+    // }
+    // const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+    // const currCards = document.querySelectorAll(`.id_${this.json.id}`);
+
+    // if (this.saved) {
+    //   saveBtn.innerHTML = 'Save Recipe';
+    //   storageFuncs.removeRecipeFromList('favorites', this.json.id);
+    //   if (currSavedPageSelect === 'List 1') {
+    //     // remove card in saved recipe page
+    //     const grid = document.querySelector('.saved-recipes .results-grid');
+    //     const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
+    //     for (let i = 0; i < currentCardsSaved.length; i++) {
+    //       currentCardsSaved[i].remove();
+    //     }
+    //   }
+    // } else {
+    //   saveBtn.innerHTML = 'Remove Recipe';
+
+    //   storageFuncs.saveRecipeToList('favorites', this.json.id);
+    //   if (currSavedPageSelect === 'List 1') {
+    //     // add card to saved recipe page
+    //     const grid = document.querySelector('.saved-recipes .results-grid');
+    //     const recipeCardNew = document.createElement('recipe-card');
+    //     recipeCardNew.setAttribute('class', `id_${this.json.id}`);
+    //     recipeCardNew.populateFunc = openRecipeInfo;
+    //     recipeCardNew.data = this.json;
+    //     grid.appendChild(recipeCardNew);
+    //   }
+    // }
+    // for (let i = 0; i < currCards.length; i++) {
+    //   const { shadowRoot } = currCards[i];
+    //   const element = shadowRoot
+    //     .querySelector('.card-save-button')
+    //     .querySelector('i');
+    //   if (currCards[i].saved) {
+    //     element.classList.add('far');
+    //     element.classList.remove('fas');
+    //   } else {
+    //     element.classList.remove('far');
+    //     element.classList.add('fas');
+    //   }
+    //   currCards[i].saved = !currCards[i].saved;
+    // }
+  };
+
+  saveBtn.addEventListener('click', flipSaved);
+
+  router.navigate('recipe-info', false);
 }
 
 /**
@@ -170,8 +226,7 @@ const createRecipeCards = (arrData, location, numRecipesPopd = 5) => {
     const recipeCard = document.createElement('recipe-card');
     recipeCard.setAttribute('class', `id_${arrData[i]}`);
     // work-in-progress by Fred for populating recipe cards.
-    recipeCard.windowRouter = router;
-    recipeCard.populateFunc = populateExpandedRecipeData;
+    recipeCard.populateFunc = openRecipeInfo;
     recipeCard.data = fetcherFuncs.getSingleRecipe(arrData[i]);
     location.appendChild(recipeCard);
     i += 1;
@@ -216,8 +271,6 @@ const openSearchResults = async () => {
 
   router.navigate('search-results', false);
 };
-
-// TODO: In recipe card and expanded page, when we toggle save recipe, update page in the background
 
 /* Other event handlers */
 
@@ -386,6 +439,7 @@ const createRecipeClicked = () => {
     const grid = document.querySelector('.saved-recipes .results-grid');
     const recipeCardNew = document.createElement('recipe-card');
     recipeCardNew.setAttribute('class', `id_${finalObject.id}`);
+    recipeCardNew.populateFunc = openRecipeInfo;
     recipeCardNew.data = finalObject;
     grid.appendChild(recipeCardNew);
   }
@@ -525,16 +579,28 @@ function populateSavedRecipes() {
 }
 
 function initializeButtons() {
+  /* Landing Page */
+  const landingExplore = document.getElementById('landing-explore-btn');
+  landingExplore.addEventListener('click', openExplore);
+
+  const landingSaved = document.getElementById('landing-saved-btn');
+  landingSaved.addEventListener('click', openSavedRecipes);
+
+  /* Recipe Info Page */
+  const backBtn = document.getElementById('info-back-btn');
+  backBtn.addEventListener('click', () => history.back());
+
+  /* Create Recipe Page */
   const addIngredientButton = document.querySelector('.add-ingredient-button');
   addIngredientButton.addEventListener('click', addIngredientClicked);
 
-  // add step input to dom
   const addStepButton = document.querySelector('.add-step-button');
   addStepButton.addEventListener('click', addStepClicked);
-  // create data object save to local storage.
+
   const createButton = document.querySelector('.create-recipe-button');
   createButton.addEventListener('click', createRecipeClicked);
 
+  /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
 }
@@ -543,7 +609,14 @@ function initializeLocalStorage() {
   if (!window.localStorage.getItem('savedLists')) {
     window.localStorage.setItem('savedLists', JSON.stringify({}));
   }
+  if (!window.localStorage.getItem('recipeData')) {
+    window.localStorage.setItem('recipeData', JSON.stringify({}));
+  }
+  if (!window.localStorage.getItem('explore-categories')) {
+    window.localStorage.setItem('explore-categories', JSON.stringify({}));
+  }
 }
+
 async function init() {
   initializeLocalStorage();
   initializeRoutes();
