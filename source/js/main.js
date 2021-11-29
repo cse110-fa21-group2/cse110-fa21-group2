@@ -78,60 +78,74 @@ function getRecipeIngredients(recipe) {
  * @param {Object} data - JSON object to use for page data
  */
 function populateExpandedRecipeData(data) {
-  // Poulate the title of the recipe
+  // Header section
   const title = document.querySelector('.info-title');
   title.innerHTML = data.title;
 
-  // Populate the score/rating of the recipe
-  // const rating = document.querySelector('.rating-stars');
-  // rating.innerHTML = `${data.spoonacularScore / 20} stars`;
+  const starValue = data.spoonacularScore / 20;
+  const roundedStars = Math.round(starValue);
 
-  // Populate the number of reviews given for the recipe
-  // const reviews = document.querySelector('.rating-reviews');
-  // reviews.innerHTML = '**DUMMY REVIEW COUNT**';
+  const stars = document.getElementById('recipe-info-stars');
+  stars.src = `./source/images/${roundedStars}-star.svg`;
 
-  // Populate the recipe description
-  // const description = document.querySelector('p.description');
-  // description.innerHTML = data.summary;
+  const line = document.createElement('span');
+  line.classList.add('divider');
 
-  // Populate the time to make the recipe in minutes
-  // const totalTime = document.querySelector('.total-time');
-  // totalTime.innerHTML += `${data.readyInMinutes} minutes`;
+  const rating = document.getElementById('recipe-info-rating');
+  rating.innerHTML = `${starValue} stars`;
+  rating.appendChild(line);
 
-  // Populate the serving size of the recipe
-  // const numServings = document.querySelector('.servings');
-  // numServings.innerHTML += `${data.servings} servings`;
+  const likes = document.getElementById('recipe-info-likes');
+  likes.innerHTML = `${data.aggregateLikes} likes`;
 
-  /**
-   * populate the ingredients to make the recipe
-   */
-  // const ingredList = document.querySelector('.ingredients');
-  // const recipeIngred = getRecipeIngredients(data);
-  // for (let i = 0; i < recipeIngred.length; i += 1) {
-  //   const elem = document.createElement('li');
-  //   elem.innerHTML = recipeIngred[i];
-  //   ingredList.appendChild(elem);
-  // }
+  const image = document.getElementById('recipe-info-image');
+  image.src = data.image;
 
-  /**
-   * populate the steps to make the recipe
-   */
-  // const stepsList = document.querySelector('.steps');
-  // const recipeSteps = getRecipeSteps(data);
-  // for (let i = 0; i < recipeSteps.length; i += 1) {
-  //   const elem = document.createElement('li');
-  //   elem.innerHTML = recipeSteps[i];
-  //   stepsList.appendChild(elem);
-  // }
+  const desc = document.getElementById('info-description');
+  desc.innerHTML = data.summary;
 
-  // Populate video for recipe (if available)
-  // const video = document.querySelector('.videos-wrapper');
-  // TODO: extract video from data if present
+  const list = document.getElementById('info-ingredients-list');
+  removeAllChildNodes(list);
 
-  // Populate the nutrition info of the recipe
-  // const nutFacts = document.querySelectorAll('.nutrition-wrapper > p')[1];
-  // // TODO: extract nutrition facts from data
-  // nutFacts.innerHTML = '**DUMMY NUTRITION FACTS**';
+  data.extendedIngredients.forEach((item) => {
+    const listElement = document.createElement('li');
+    listElement.classList.add('info-ingredient');
+    listElement.innerHTML = item.originalString;
+    list.appendChild(listElement);
+  });
+
+  // Quick Facts
+  const prepMinutes = data.preparationMinutes ?? 0;
+  const totalMinutes = data.readyInMinutes;
+
+  const prepTime = document.getElementById('prep-time');
+  prepTime.innerHTML = `Prep Time: ${prepMinutes} minutes`;
+
+  const cookTime = document.getElementById('cook-time');
+  cookTime.innerHTML = `Cook Time: ${totalMinutes - prepMinutes} minutes`;
+
+  const totalTime = document.getElementById('total-time');
+  totalTime.innerHTML = `Total Time: ${totalMinutes} minutes`;
+
+  const servings = document.getElementById('info-servings');
+  servings.innerHTML = `Yields ${data.servings} servings`;
+
+  // TODO: Scale ingredients
+
+  const stepsDiv = document.getElementById('step-list');
+  removeAllChildNodes(stepsDiv);
+
+  const stepsList = data.analyzedInstructions[0].steps;
+  stepsList.forEach((item) => {
+    const listElement = document.createElement('li');
+    listElement.classList.add('steps');
+    listElement.innerHTML = item.step;
+    stepsDiv.appendChild(listElement);
+  });
+
+  // TODO: Video
+
+  // TODO: Nutritional Info
 }
 
 /**
@@ -503,7 +517,6 @@ function populateSavedRecipes() {
 
   // Get IDs from localStorage using fetcher functions
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
-  console.log(allSavedIds);
   // Iterate through each "list" in saved lists and add recipe cards using their IDs
   Object.keys(allSavedIds).forEach((category) => {
     // TODO: Only populate cards for the active category

@@ -18,7 +18,6 @@ class RecipeCard extends HTMLElement {
 
   set data(data) {
     this.json = data;
-    console.log(data);
 
     // Initialize saved/created properties
     const categories = fetcherFuncs.getAllSavedRecipeId();
@@ -297,6 +296,7 @@ class RecipeCard extends HTMLElement {
 
     card.addEventListener('click', () => {
       this.populate(this.json);
+      console.log(this.json);
       this.router.navigate('recipe-info', false);
     });
 
