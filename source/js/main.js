@@ -79,10 +79,10 @@ const createRecipeCards = (arrData, location, numRecipesPopd = 5) => {
   // until reach the end of the array of recipe ids i.e. ran out of recipes
   while (i < numRecipesPopd && i < arrData.length) {
     const recipeCard = document.createElement('recipe-card');
-    recipeCard.id = arrData[i];
+    recipeCard.setAttribute('class', `id_${arrData[i]}`);
     // work-in-progress by Fred for populating recipe cards.
     recipeCard.windowRouter = router;
-    recipeCard.data = fetcherFuncs.getSingleRecipe(parseInt(arrData[i], 10));
+    recipeCard.data = fetcherFuncs.getSingleRecipe(arrData[i]);
     location.appendChild(recipeCard);
     i += 1;
   }
@@ -363,12 +363,22 @@ const createRecipeClicked = () => {
   );
   finalObject.title = recipeName.value;
 
-  // assign a random id (use recipe name)
-  const recipeId = recipeName.value;
+  // assign a random id (use recipe name replace space with _)
+  const recipeId = recipeName.value.split(' ').join('_');
   finalObject.id = recipeId;
 
   storageFuncs.storeRecipeData('created', [finalObject]);
   storageFuncs.saveRecipeToList('created', recipeId);
+
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'List 2') {
+    // add card to saved recipe page
+    const grid = document.querySelector('.saved-recipes .results-grid');
+    const recipeCardNew = document.createElement('recipe-card');
+    recipeCardNew.setAttribute('class', `id_${finalObject.id}`);
+    recipeCardNew.data = finalObject;
+    grid.appendChild(recipeCardNew);
+  }
 
   console.log(finalObject);
 };
@@ -487,8 +497,8 @@ function populateExplore() {
 function populateSavedRecipes() {
   // TODO: PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
   storageFuncs.createList('favorites');
-  storageFuncs.saveRecipeToList('favorites', 1987);
-  storageFuncs.saveRecipeToList('favorites', 5981);
+  // storageFuncs.saveRecipeToList('favorites', 1987);
+  // storageFuncs.saveRecipeToList('favorites', 5981);
   // ******* //
 
   // Location where recipe cards are to be added
@@ -496,7 +506,7 @@ function populateSavedRecipes() {
 
   // Get IDs from localStorage using fetcher functions
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
-
+  console.log(allSavedIds);
   // Iterate through each "list" in saved lists and add recipe cards using their IDs
   Object.keys(allSavedIds).forEach((category) => {
     // TODO: Only populate cards for the active category

@@ -23,7 +23,7 @@ class RecipeCard extends HTMLElement {
     let createdList = [];
 
     if (allSavedList) {
-      savedList = allSavedList.favorite;
+      savedList = allSavedList.favorites;
       createdList = allSavedList.created;
     }
     if (savedList && savedList.includes(this.json.id)) {
@@ -220,22 +220,44 @@ class RecipeCard extends HTMLElement {
     favButton.setAttribute('class', 'card-btn card-btn-outline card-save-button');
 
     const flipSaved = () => {
-      const currCard = document.getElementById(this.json.id);
-      const { shadowRoot } = currCard;
-      const element = shadowRoot
-        .querySelector('.card-save-button')
-        .querySelector('i');
-
+      const currCards = document.querySelectorAll(`.id_${this.json.id}`);
+      const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+      console.log(currSavedPageSelect);
       if (this.saved) {
-        element.classList.add('far');
-        element.classList.remove('fas');
-        storageFuncs.removeRecipeFromList('favorite', this.json.id);
+        storageFuncs.removeRecipeFromList('favorites', this.json.id);
+        if (currSavedPageSelect === 'List 1') {
+          // remove card in saved recipe page
+          const grid = document.querySelector('.saved-recipes .results-grid');
+          const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
+          for (let i = 0; i < currentCardsSaved.length; i++) {
+            currentCardsSaved[i].remove();
+          }
+        }
       } else {
-        element.classList.remove('far');
-        element.classList.add('fas');
-        storageFuncs.saveRecipeToList('favorite', this.json.id);
+        storageFuncs.saveRecipeToList('favorites', this.json.id);
+        if (currSavedPageSelect === 'List 1') {
+          // add card to saved recipe page
+          const grid = document.querySelector('.saved-recipes .results-grid');
+          const recipeCardNew = document.createElement('recipe-card');
+          recipeCardNew.setAttribute('class', `id_${this.json.id}`);
+          recipeCardNew.data = this.json;
+          grid.appendChild(recipeCardNew);
+        }
       }
-      this.saved = !this.saved;
+      for (let i = 0; i < currCards.length; i++) {
+        const { shadowRoot } = currCards[i];
+        const element = shadowRoot
+          .querySelector('.card-save-button')
+          .querySelector('i');
+        if (currCards[i].saved) {
+          element.classList.add('far');
+          element.classList.remove('fas');
+        } else {
+          element.classList.remove('far');
+          element.classList.add('fas');
+        }
+        currCards[i].saved = !currCards[i].saved;
+      }
     };
 
     favButton.addEventListener('click', flipSaved);
@@ -258,8 +280,10 @@ class RecipeCard extends HTMLElement {
 
       const clickDelete = () => {
         storageFuncs.deleteCreatedRecipe(this.json.id);
-        const currentCard = document.getElementById(this.json.id);
-        currentCard.remove();
+        const currentCards = document.querySelectorAll(`.id_${this.json.id}`);
+        for (let i = 0; i < currentCards.length; i++) {
+          currentCards[i].remove();
+        }
       };
 
       deleteRecipe.addEventListener('click', clickDelete);
