@@ -50,7 +50,7 @@ nav a:hover {
 /* Landing Page CSS */
 
 .landing {
-  background-image: url("../images/background-2.jpg");
+  background-image: url("../images/background.jpg");
   background-size: cover;
   display: grid;
   grid-template-columns: 1fr 1fr;

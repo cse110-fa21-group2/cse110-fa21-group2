@@ -525,12 +525,18 @@ function initializeButtons() {
   showMoreButton.addEventListener('click', showMoreClicked);
 }
 
+function initializeLocalStorage() {
+  if (!localStorage.getItem('savedLists')) {
+    localStorage.setItem('savedLists', JSON.stringify({}));
+  }
+}
 async function init() {
   initializeRoutes();
   bindPopState();
   populateExplore();
   populateSavedRecipes();
   initializeButtons();
+  initializeLocalStorage();
 }
 
 window.addEventListener('DOMContentLoaded', init);
