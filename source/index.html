@@ -62,7 +62,7 @@
         </ul>
         <form class="d-flex" onsubmit="return false">
           <div class="input-group mx-2">
-            <input required type="text" class="form-control" placeholder="Search Recipes" aria-label="Username" aria-describedby="basic-addon1">
+            <input required type="text" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
             <button class="input-group-text" id='search-results-nav'>🔍</button>
           </div>
         </form>
@@ -76,8 +76,8 @@
           <br>
           <span class="landing-title">Book</span>
           <div class="landing-buttons">
-            <button>Explore</button>
-            <button>Saved Recipes</button>
+            <button id='landing-explore-btn'>Explore</button>
+            <button id='landing-saved-btn'>Saved Recipes</button>
           </div>
         </div>
       </section>
@@ -137,7 +137,7 @@
 
       <section class="recipe-info hidden">
         <div>
-          <button class="info-page-btn back-btn">Return</button>
+          <button class="info-page-btn back-btn" id='info-back-btn'>Return</button>
           <div class="title-edit-wrapper">
               <p class="info-title">Chicken Salad</p>
               <button class="info-page-btn back-btn">Edit</button>
@@ -155,7 +155,7 @@
                 </li>
               </ul>
             </div>
-            <button class="info-page-btn org-btn"> <i class="far fa-heart"></i> Save Recipe</button>
+            <button class="info-page-btn org-btn" id='info-save-btn'>Save Recipe <i class="far fa-heart"></i></button>
           </div>
           <img id="recipe-info-image" src="./demo-code/recipe-info-rough/image.webp" class="recipe-img" alt="autopopulated by script">
           <div class="recipe-description-wrapper">
@@ -223,7 +223,7 @@
           </div>
 
           <div class="videos-wrapper">
-            <p class="info-subtitle">Videos</p>
+            <p class="info-subtitle">Video</p>
             <!-- Include videos if any :D -->
           </div>
 

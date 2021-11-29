@@ -8,10 +8,6 @@ class RecipeCard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
-  set windowRouter(routerElem) {
-    this.router = routerElem;
-  }
-
   set populateFunc(func) {
     this.populate = func;
   }
@@ -35,7 +31,7 @@ class RecipeCard extends HTMLElement {
         display: inline-block;
         font-family: Lato, sans-serif;
         height: 17rem;
-        margin: 0 1.5rem 1.5rem 0;
+        margin: 1.5rem;
         overflow-wrap: break-word;
         overflow-y: hidden;
         position: relative;
@@ -91,7 +87,6 @@ class RecipeCard extends HTMLElement {
       .card-btn.card-btn-outline {
         background: none;
       }
-
 
       .astext {
         background: none;
@@ -182,9 +177,10 @@ class RecipeCard extends HTMLElement {
       }
 
       .card-body .favorite i {
-        color: #f00;
+        color: red;
         font-size: 1.5rem;
       }
+      
       .card-delete-button {
         padding-top: 0px;
       }
@@ -217,7 +213,6 @@ class RecipeCard extends HTMLElement {
       e.stopPropagation();
       const currCards = document.querySelectorAll(`.id_${this.json.id}`);
       const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-      console.log(currSavedPageSelect);
       if (this.saved) {
         storageFuncs.removeRecipeFromList('favorites', this.json.id);
         if (currSavedPageSelect === 'List 1') {
@@ -295,9 +290,8 @@ class RecipeCard extends HTMLElement {
     card.appendChild(cardBody);
 
     card.addEventListener('click', () => {
-      this.populate(this.json);
       console.log(this.json);
-      this.router.navigate('recipe-info', false);
+      this.populate(this.json);
     });
 
     this.shadowRoot.append(card);
