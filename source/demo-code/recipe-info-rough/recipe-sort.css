@@ -1,0 +1,44 @@
+form.sort-filter-form {
+    background-color: white;
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+    margin: 5rem;
+    margin-bottom: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    transition: all 0.2s ease;
+    width: 13rem;
+}
+
+h2.sort-filters-heading {
+    margin-top: 0rem;
+    margin-bottom: .5rem;
+    text-align: center;
+}
+
+button.clear-sort-filter {
+    width: 13rem;
+}
+
+button.cuisine-collapse {
+    height: 2rem;
+}
+
+hr.solid {
+    border-top: 2px solid black;
+    margin: .5rem;
+}
+
+label.sort-filter-label {
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}
+
+select {
+    margin-top: .5rem;
+}
+
+div.filters-cuisine-header {
+    display: flex;
+    justify-content: space-between;
+}

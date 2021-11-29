@@ -129,10 +129,74 @@
       <section class="search-results hidden">
         <!-- TODO: Populate query field -->
         <h1 id="search-results-title">Top recipes for "bread"</h1>
-        <div class="results-grid" id="search-results-container">
-          <!-- TODO: Populate recipe cards -->
+        <!-- TODO: Add sorting section here :D-->
+        <div class="results-content">
+          <form id="sort-filter-form" class="sort-filter-form">
+            <div id="sort-filters" class="sort-filters">
+              <div class="sort-filters-wrapper">
+                <div class="sort-filters-top">
+                  <h2 class="sort-filters-heading">Filters</h2>
+                  <button id="clear-sort-filter" class="clear-sort-filter" type="button">Clear all</button>
+                </div>
+                <div class="sort-filters-body">
+                  <div class="filters-cuisine-header">
+                    <label class="filters-label">Filter by cuisine</label>
+                    <button class="filters-collapse" aria-label="Expland or collapse filters" aria-expanded="true" type="button">
+                      <span class="icon-up"></span>
+                      <span class="icon-down"></span>
+                    </button>
+                  </div>
+                  <div class="filters-cuisine-body">
+                    <div class="filter-cuisine-input">
+                      <input list="cuisine" name="cuisine" id="cuisine">
+                      <datalist id="cuisine">
+                        <option value="African"></option>
+                        <option value="American"></option>
+                        <option value="British"></option>
+                        <option value="Cajun"></option>
+                        <option value="Caribbean"></option>
+                        <option value="Chinese"></option>
+                        <option value="Eastern European"></option>
+                        <option value="European"></option>
+                        <option value="French"></option>
+                        <option value="German"></option>
+                        <option value="Greek"></option>
+                        <option value="Indian"></option>
+                        <option value="Irish"></option>
+                        <option value="Italian"></option>
+                        <option value="Japanese"></option>
+                        <option value="Jewish"></option>
+                        <option value="Korean"></option>
+                        <option value="Latin American"></option>
+                        <option value="Mediterranean"></option>
+                        <option value="Mexican"></option>
+                        <option value="Middle Eastern"></option>
+                        <option value="Nordic"></option>
+                        <option value="Southern"></option>
+                        <option value="Spanish"></option>
+                        <option value="Thai"></option>
+                        <option value="Vietnamese"></option>
+                      </datalist>
+                      <button id="cuisine-add" class="cuisine-add"></button>
+                    </div>
+                    <fieldset class="cuisines-available">
+                      <legend class="visual-hidden">
+                        Filter by cuisine
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="sort-filters-bottom">
+
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="results-grid" id="search-results-container">
+            <!-- TODO: Populate recipe cards -->
+          </div>
+          <button id="show-more-button">Show more</button>
         </div>
-        <button id="show-more-button">Show more</button>
       </section>
 
       <section class="recipe-info hidden">
