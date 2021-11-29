@@ -6,32 +6,24 @@ class RecipeCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.saved = false;
-    this.created = false;
   }
 
   set windowRouter(routerElem) {
     this.router = routerElem;
   }
 
-  set data(data) {
-    // TODO: update info based on json data
-    this.json = data;
-    // check if it's stored in local database
-    const allSavedList = fetcherFuncs.getAllSavedRecipeId();
-    let savedList = [];
-    let createdList = [];
+  set populateFunc(func) {
+    this.populate = func;
+  }
 
-    if (allSavedList) {
-      savedList = allSavedList.favorites;
-      createdList = allSavedList.created;
-    }
-    if (savedList && savedList.includes(this.json.id)) {
-      this.saved = true;
-    }
-    if (createdList && createdList.includes(this.json.id)) {
-      this.created = true;
-    }
+  set data(data) {
+    this.json = data;
+    console.log(data);
+
+    // Initialize saved/created properties
+    const categories = fetcherFuncs.getAllSavedRecipeId();
+    this.saved = categories.favorites && categories.favorites.includes(this.json.id);
+    this.created = categories.created && categories.created.includes(this.json.id);
 
     const styleElem = document.createElement('style');
     const styles = `
@@ -50,6 +42,7 @@ class RecipeCard extends HTMLElement {
         position: relative;
         white-space: normal;
         width: 15rem;
+        background: #ccc;
       }
 
       .recipe-card:hover {
@@ -81,8 +74,6 @@ class RecipeCard extends HTMLElement {
         aspect-ratio: 16/9;
         object-fit: cover;
       }
-
-
 
       .card-btn {
         background: white;
@@ -205,7 +196,11 @@ class RecipeCard extends HTMLElement {
     const card = document.createElement('article');
     card.classList.add('recipe-card');
     card.classList.add('card-shadow');
-    card.setAttribute('style', `background-image: url('${this.json.image}');`);
+    if (data.image) {
+      card.setAttribute('style', `background-image: url('${this.json.image}');`);
+    } else {
+      console.log('no card image provided');
+    }
 
     const cardBody = document.createElement('div');
     cardBody.setAttribute('class', 'card-body');
@@ -300,6 +295,7 @@ class RecipeCard extends HTMLElement {
     card.appendChild(cardBody);
 
     card.addEventListener('click', () => {
+      this.populate(this.json);
       this.router.navigate('recipe-info', false);
     });
 
