@@ -8,7 +8,7 @@ import { returnDummyData } from '../demo-code/exampleData.js';
 
 // Constant variables (reduce magic numbers)
 
-const tempData = returnDummyData();
+const tempData = returnDummyData()
 
 const DEFAULT_NUM_CARDS = 10;
 
