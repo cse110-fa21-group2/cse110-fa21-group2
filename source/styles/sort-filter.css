@@ -1,16 +1,22 @@
-div.search-results-wrapper {
+div.results-sort-wrapper {
   display: flex;
-  margin-left: 2rem;
-  margin-right: 2rem;
-  margin-top: 5rem;
+  width: 70rem;
+}
+
+div.search-wrapper {
+  display: flex;
+  position: absolute;
+  right: 2rem;
 }
 
 div.sort-filter {
   height: min-content;
+  margin-bottom: 2rem;
+  width: min-content;
 }
 
 div.sort-filter-body {
-  display: none;
+  display: block;
 }
 
 form.sort-filter-form {
@@ -18,7 +24,6 @@ form.sort-filter-form {
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
   padding: 15px;
   transition: all 0.2s ease;
-  width: 13rem;
 }
 
 h2.sort-filters-heading {

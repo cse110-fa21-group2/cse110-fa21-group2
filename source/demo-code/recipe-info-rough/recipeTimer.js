@@ -3,18 +3,17 @@ let timerID;
 
 function updateTimer() {
   let distance = setTime;
-  timerID = setInterval(function() {
+  timerID = setInterval(() => {
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    document.getElementById('timer').innerHTML = hours + 'h ' + minutes + 'm ' + seconds + 's ';
+    document.getElementById('timer').innerHTML = `${hours}h ${minutes}m ${seconds}s `;
     if (distance < 0) {
       clearInterval(timerID);
       const timerAudio = document.querySelector('audio');
-      timerAudio.src='Gentle-wake-alarm-clock.mp3';
+      timerAudio.src = 'Gentle-wake-alarm-clock.mp3';
       timerAudio.play();
       document.getElementById('timer').innerHTML = 'Done!';
-      timerSet = false;
     }
     distance -= 1000;
   }, 1000);
@@ -22,7 +21,7 @@ function updateTimer() {
 
 function resetTimer() {
   clearInterval(timerID);
-  document.getElementById('timer').innerHTML = 'Begin Timer'
+  document.getElementById('timer').innerHTML = 'Begin Timer';
   document.getElementById('hours').value = 0;
   document.getElementById('minutes').value = 0;
   document.getElementById('seconds').value = 0;
@@ -40,8 +39,7 @@ function setTimer() {
   && !(hours === 0 && minutes === 0 && seconds === 0)) {
     setTime = hours * 1000 * 60 * 60 + minutes * 1000 * 60 + seconds * 1000;
     updateTimer();
-  }
-  else {
+  } else {
     document.getElementById('timer').innerHTML = 'Invalid Timer';
     clearInterval(timerID);
   }
@@ -56,8 +54,7 @@ function pauseTimer() {
       clearInterval(timerID);
       document.getElementById('timer').innerHTML = `${str} (Paused)`;
       document.getElementById('pause').innerHTML = 'Resume';
-    }
-    else {
+    } else {
       const numbers = str.match(/\d+/g);
       document.getElementById('hours').value = numbers[0];
       document.getElementById('minutes').value = numbers[1];
