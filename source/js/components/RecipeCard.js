@@ -1,155 +1,270 @@
+/* eslint-disable import/extensions */
+import * as fetcherFuncs from '../storage/fetcher.js';
+import * as storageFuncs from '../storage/storage.js';
+
 class RecipeCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.saved = false;
+  }
+
+  set populateFunc(func) {
+    this.populate = func;
   }
 
   set data(data) {
-    // TODO: update info based on json data
     this.json = data;
+
+    // Initialize saved/created properties
+    const categories = fetcherFuncs.getAllSavedRecipeId();
+    this.saved = categories.favorites && categories.favorites.includes(this.json.id);
+    this.created = categories.created && categories.created.includes(this.json.id);
 
     const styleElem = document.createElement('style');
     const styles = `
     @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
-      .recipe-card {
-        background: white;
-        border: 1px solid black;
-        display: inline-block;
-        height: 17rem;
-        margin: 0 1.5rem 1.5rem 0;
-        width: 15rem;
-        white-space: normal;
-        overflow-y: scroll;
-        overflow-wrap: break-word;
-        border-radius: 0.5rem;
-      }
 
-      .card-shadow {
-        border: none;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.6);
-        transition: 0.2s ease-in-out;
-      }
-      .card-shadow:hover, .card-shadow:focus {
-        border: none;
-        transform: scale(1.01);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      }
+    .custom-card {
+      background: #eee;
+      background-image: url(${data.image});
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 5px rgba(0 0 0 / 60%);
+      display: inline-block;
+      font-family: Lato, sans-serif;
+      height: 17rem;
+      margin: 1.5rem;
+      overflow-wrap: break-word;
+      overflow-y: hidden;
+      position: relative;
+      transition: 0.2s ease-in-out;
+      white-space: normal;
+      width: 15rem;
+    }
+    
+    .custom-body {
+      background-color: white;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: 8fr 1fr;
+      height: 25%;
+      left: 0;
+      max-width: 100%;
+      padding: 1rem;
+      position: relative;
+      position: absolute;
+      right: 0;
+    }
+    
+    .custom-title {
+      align-items: center;
+      display: flex;
+      font-size: 14px;
+      grid-column: 1;
+      margin: 0;
+      max-height: 100%;
+      max-width: 100%;
+      overflow-y: scroll;
+      text-overflow: clip;
+      white-space: normal;
+    }
+    
+    .save-btn {
+      background: white;
+      border: none;
+      border-radius: 0.25em;
+      color: black;
+      cursor: pointer;
+      grid-column: 2;
+    }
+    
+    .fa-heart {
+      color: red;
+      font-size: 20px;
+    }
+    
+    .custom-card:hover {
+      border: none;
+      box-shadow: 0 8px 20px rgba(0 0 0 / 60%);
+      cursor: pointer;
+      transform: scale(1.01);
+    };`;
 
-      .card-header {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .card-header.card-img {
-        overflow: hidden;
-      }
-      .card-header.card-img > img{
-        display: block;
-        width: 100%;
-        aspect-ratio: 16/9;
-        object-fit: cover;
-      }
-
-      .card-body {
-        font-size: 0.8rem;
-        padding: 0 1rem;
-      }
-
-      .card-footer {
-        padding: 0 1rem 1rem 1rem;
-      }
-
-      .card-btn {
-        background: var(--color);
-        color: white;
-        border: none;
-        --color: hsl(200, 50%, 50%);
-        cursor: pointer;
-        transition: 0.2s ease-in-out;
-        border-radius: 0.25em;
-        padding: 0.5em 0.75em;
-      }
-
-      .card-btn:hover, .card-btn:focus {
-        background: hsl(200, 50%, 60%);
-      }
-
-      .card-btn.card-btn-outline {
-        background: none;
-        border: 1px solid var(--color);
-        color: rgb(255, 52, 52);
-      }
-
-      .card-btn.card-btn-outline:hover, .card-btn.card-btn-outline:focus {
-        /* background: hsl(200, 50%, 90%); */
-      }
-    `;
     styleElem.innerHTML = styles;
     this.shadowRoot.append(styleElem);
 
-    const card = document.createElement('article');
-    card.classList.add('recipe-card');
-    card.classList.add('card-shadow');
+    const recipeCard = document.createElement('div');
+    recipeCard.classList.add('custom-card');
 
-    const header = document.createElement('div');
-    header.classList.add('card-header');
-    header.classList.add('card-img');
+    const recipeBody = document.createElement('div');
+    recipeBody.classList.add('custom-body');
 
-    const recipePic = document.createElement('img');
-    recipePic.src = 'https://source.unsplash.com/random';
+    const recipeName = document.createElement('h1');
+    recipeName.classList.add('custom-title');
+    recipeName.innerHTML = data.title;
 
-    header.appendChild(recipePic);
-    card.appendChild(header);
+    recipeBody.appendChild(recipeName);
 
-    const body = document.createElement('div');
-    body.classList.add('card-body');
-
-    const title = document.createElement('h1');
-    title.innerHTML = 'Recipe Name';
-
-    body.appendChild(title);
-    card.appendChild(body);
-
-    const footer = document.createElement('div');
-    footer.classList.add('card-footer');
-
-    const viewRecipe = document.createElement('button');
-    viewRecipe.classList.add('card-btn');
-    viewRecipe.innerHTML = 'View Recipe';
-
-    const saveRecipe = document.createElement('button');
-    saveRecipe.classList.add('card-btn');
-    saveRecipe.classList.add('card-btn-outline');
+    const saveButton = document.createElement('button');
+    saveButton.classList.add('save-btn');
 
     const saveIcon = document.createElement('i');
-    saveIcon.classList.add('far');
     saveIcon.classList.add('fa-heart');
+    saveIcon.classList.add(this.saved ? 'fas' : 'far');
 
-    const flipSaved = (element) => {
+    saveButton.appendChild(saveIcon);
+    const flipSaved = (e) => {
+      e.stopPropagation();
+      const currCards = document.querySelectorAll(`.id_${this.json.id}`);
+      const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
       if (this.saved) {
-        element.children[0].classList.add('far');
-        element.children[0].classList.remove('fas');
+        storageFuncs.removeRecipeFromList('favorites', this.json.id);
+        if (currSavedPageSelect === 'List 1') {
+          // remove card in saved recipe page
+          const grid = document.querySelector('.saved-recipes .results-grid');
+          const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
+          for (let i = 0; i < currentCardsSaved.length; i++) {
+            currentCardsSaved[i].remove();
+          }
+        }
       } else {
-        element.children[0].classList.remove('far');
-        element.children[0].classList.add('fas');
+        storageFuncs.saveRecipeToList('favorites', this.json.id);
+        if (currSavedPageSelect === 'List 1') {
+          // add card to saved recipe page
+          const grid = document.querySelector('.saved-recipes .results-grid');
+          const recipeCardNew = document.createElement('recipe-card');
+          recipeCardNew.setAttribute('class', `id_${this.json.id}`);
+          recipeCardNew.populateFunc = this.populate;
+
+          recipeCardNew.data = this.json;
+          grid.appendChild(recipeCardNew);
+        }
       }
-      this.saved = !this.saved;
+      for (let i = 0; i < currCards.length; i++) {
+        const { shadowRoot } = currCards[i];
+        const element = shadowRoot.querySelector('.fa-heart');
+        if (currCards[i].saved) {
+          element.classList.add('far');
+          element.classList.remove('fas');
+        } else {
+          element.classList.remove('far');
+          element.classList.add('fas');
+        }
+        currCards[i].saved = !currCards[i].saved;
+      }
     };
 
-    saveRecipe.addEventListener('onclick', flipSaved);
-    saveRecipe.appendChild(saveIcon);
+    saveButton.addEventListener('click', flipSaved);
 
-    footer.appendChild(viewRecipe);
-    footer.appendChild(saveRecipe);
+    recipeBody.appendChild(saveButton);
 
-    card.appendChild(footer);
+    recipeCard.appendChild(recipeBody);
+    recipeCard.addEventListener('click', () => {
+      this.populate(data);
+      console.log(data);
+    });
 
-    this.shadowRoot.append(card);
-  }
+    this.shadowRoot.append(recipeCard);
 
-  get data() {
-    return this.json;
+    // const cardBody = document.createElement('div');
+    // cardBody.setAttribute('class', 'card-body');
+    // const expandRecipe = document.createElement('button');
+    // expandRecipe.setAttribute('class', 'astext');
+    // expandRecipe.innerText = this.json.title;
+    // cardBody.appendChild(expandRecipe);
+
+    // const favDiv = document.createElement('div');
+    // favDiv.setAttribute('class', 'favorite');
+    // const favButton = document.createElement('button');
+    // favButton.setAttribute('class', 'card-btn card-btn-outline card-save-button');
+
+    // const flipSaved = (e) => {
+    //   e.stopPropagation();
+    //   const currCards = document.querySelectorAll(`.id_${this.json.id}`);
+    //   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+    //   if (this.saved) {
+    //     storageFuncs.removeRecipeFromList('favorites', this.json.id);
+    //     if (currSavedPageSelect === 'List 1') {
+    //       // remove card in saved recipe page
+    //       const grid = document.querySelector('.saved-recipes .results-grid');
+    //       const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
+    //       for (let i = 0; i < currentCardsSaved.length; i++) {
+    //         currentCardsSaved[i].remove();
+    //       }
+    //     }
+    //   } else {
+    //     storageFuncs.saveRecipeToList('favorites', this.json.id);
+    //     if (currSavedPageSelect === 'List 1') {
+    //       // add card to saved recipe page
+    //       const grid = document.querySelector('.saved-recipes .results-grid');
+    //       const recipeCardNew = document.createElement('recipe-card');
+    //       recipeCardNew.setAttribute('class', `id_${this.json.id}`);
+    //       recipeCardNew.data = this.json;
+    //       grid.appendChild(recipeCardNew);
+    //     }
+    //   }
+    //   for (let i = 0; i < currCards.length; i++) {
+    //     const { shadowRoot } = currCards[i];
+    //     const element = shadowRoot
+    //       .querySelector('.card-save-button')
+    //       .querySelector('i');
+    //     if (currCards[i].saved) {
+    //       element.classList.add('far');
+    //       element.classList.remove('fas');
+    //     } else {
+    //       element.classList.remove('far');
+    //       element.classList.add('fas');
+    //     }
+    //     currCards[i].saved = !currCards[i].saved;
+    //   }
+    // };
+
+    // favButton.addEventListener('click', flipSaved);
+
+    // const saveIcon = document.createElement('i');
+    // if (this.saved) {
+    //   saveIcon.classList.add('fas');
+    // } else {
+    //   saveIcon.classList.add('far');
+    // }
+    // saveIcon.classList.add('fa-heart');
+    // favButton.appendChild(saveIcon);
+    // favDiv.appendChild(favButton);
+
+    // if (this.created) {
+    //   const deleteRecipe = document.createElement('button');
+    //   deleteRecipe.classList.add('card-btn');
+    //   deleteRecipe.classList.add('card-btn-outline');
+    //   deleteRecipe.classList.add('card-delete-button');
+
+    //   const clickDelete = () => {
+    //     storageFuncs.deleteCreatedRecipe(this.json.id);
+    //     const currentCards = document.querySelectorAll(`.id_${this.json.id}`);
+    //     for (let i = 0; i < currentCards.length; i++) {
+    //       currentCards[i].remove();
+    //     }
+    //   };
+
+    //   deleteRecipe.addEventListener('click', clickDelete);
+
+    //   const deleteIcon = document.createElement('i');
+    //   deleteIcon.classList.add('fas');
+    //   deleteIcon.classList.add('fa-trash-alt');
+    //   deleteRecipe.appendChild(deleteIcon);
+    //   favDiv.appendChild(deleteRecipe);
+    // }
+
+    // cardBody.appendChild(favDiv);
+
+    // card.appendChild(cardBody);
+
+    // card.addEventListener('click', () => {
+    //   console.log(this.json);
+    //   this.populate(this.json);
+    // });
+
+    // this.shadowRoot.append(card);
   }
 }
 

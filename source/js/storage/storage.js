@@ -1,8 +1,5 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable dot-notation */
-/* eslint-disable no-plusplus */
 // localStorage = {
-//   categories: { // Used to populate explore page (only ids to reduce storage size)
+//   explore-categories: { // Used to populate explore page (only ids to reduce storage size)
 //       "breakfast": [
 //           "123", // recipe id
 //           "111", // recipe id
@@ -20,7 +17,7 @@
 //           "111", // recipe id
 //           "444", // recipe id
 //       ],
-//       "list2": [
+//       "created": [
 //           "123", // recipe id
 //           "111", // recipe id
 //           "444", // recipe id
@@ -50,14 +47,14 @@ export function storeRecipeData(category, recipeArray) {
 
     // store recipe
     const allRecipeId = [];
-    for (let i = 0; i < recipeArray.length; i++) {
-      const uid = recipeArray[i]['id'];
+    for (let i = 0; i < recipeArray.length; i += 1) {
+      const uid = recipeArray[i].id;
       allRecipeId.push(uid);
       allData[uid] = recipeArray[i];
     }
 
     // add to category list
-    let catData = JSON.parse(localStorage.getItem('categories'));
+    let catData = JSON.parse(localStorage.getItem('explore-categories'));
     if (catData == null) {
       catData = {};
     }
@@ -71,7 +68,7 @@ export function storeRecipeData(category, recipeArray) {
       }
     });
 
-    localStorage.setItem('categories', JSON.stringify(catData));
+    localStorage.setItem('explore-categories', JSON.stringify(catData));
     localStorage.setItem('recipeData', JSON.stringify(allData));
   } catch (e) {
     // storage might be full
@@ -115,7 +112,7 @@ export function removeRecipeFromList(listName, recipeId) {
   try {
     const listData = JSON.parse(localStorage.getItem('savedLists'));
     if (listData != null && listName in listData) {
-      listData[listName] = listData[listName].filter((id) => id != recipeId);
+      listData[listName] = listData[listName].filter((id) => id !== recipeId);
       localStorage.setItem('savedLists', JSON.stringify(listData));
     }
   } catch (e) {
@@ -155,6 +152,30 @@ export function deleteList(listName) {
     if (listData != null && listName in listData) {
       delete listData[listName];
       localStorage.setItem('savedLists', JSON.stringify(listData));
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+/**
+ * delete created recipe
+ * @param {*} recipeId
+ */
+export function deleteCreatedRecipe(recipeId) {
+  try {
+    const saveData = JSON.parse(localStorage.getItem('savedLists'));
+    const catData = JSON.parse(localStorage.getItem('explore-categories'));
+    const allData = JSON.parse(localStorage.getItem('recipeData'));
+
+    if (saveData && 'created' in saveData && saveData.created.includes(recipeId)) {
+      saveData.created = saveData.created.filter((id) => id !== recipeId);
+      catData.created = catData.created.filter((id) => id !== recipeId);
+      delete allData[recipeId];
+
+      localStorage.setItem('explore-categories', JSON.stringify(catData));
+      localStorage.setItem('recipeData', JSON.stringify(allData));
+      localStorage.setItem('savedLists', JSON.stringify(saveData));
     }
   } catch (e) {
     console.error(e);

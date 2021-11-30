@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Test html</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <script type="module">
+      import { storeRecipeData,saveRecipeToList,removeRecipeFromList,createList,deleteList } from './storage.js';
+      import { getAllCategoryRecipeId, getAllCategoryRecipe, getAllSavedRecipeId, getAllSavedRecipe, getAllRecipes, getSingleRecipe } from './fetcher.js';
+    
+      /*
+      #TEST report#
+      --------------------------------------------------------------------------------------------------------
+      @function storeRecipeData(category, recipeArray) 
+      FIXED
+      when adding a recipe that has the same title as the recipe existed in the category, it create a recipe 
+        with same title. This might be a desgin descion. 
+      Potential risks: might cause problem/confusion when you want to search a recipe by title
+      Test case location(search word): storeRecipeData duplicate Test: add existed recipes to existed Category
+      --------------------------------------------------------------------------------------------------------
+      @function saveRecipeToList(listName, recipeName) 
+      no bug found. Just note that saveRecipeToList does not save a recipe that have the same title to list, 
+        ie, it does not save duplicate(same title recipe) recipe
+      Potential risks: non
+      Test case location(search word): TEST saveRecipeToList & getAllSavedRecipeId function
+      --------------------------------------------------------------------------------------------------------
+      @function removeRecipeFromList(listName, recipeName)
+      no bug found
+      Potential risks: non
+      Test case location(search word): TEST removeRecipeFromList function
+      --------------------------------------------------------------------------------------------------------
+      @function createList(listName)
+      no bug found
+      Potential risks: non
+      Test case location(search word): TEST createList & deleteList function
+      --------------------------------------------------------------------------------------------------------
+      @function deleteList(listName)
+      no bug found
+      Potential risks: non
+      Test case location(search word): TEST createList & deleteList function
+      --------------------------------------------------------------------------------------------------------
+      @function getAllCategoryRecipeId()
+      no bug found
+      Potential risks: non
+      Test case location(search word): TEST storeRecipeData & getAllCategoryRecipeId function
+      --------------------------------------------------------------------------------------------------------
+      @function getAllSavedRecipeId()
+      no bug found
+      Potential risks: non
+      Test case location(search word): TEST saveRecipeToList & getAllSavedRecipeId function
+      --------------------------------------------------------------------------------------------------------
+      @function getAllRecipes()
+      no bug found
+      Potential risks: 
+      --------------------------------------------------------------------------------------------------------
+      @function getAllCategoryRecipe()
+      no bug found
+      Potential risks: getSingleRecipe
+      --------------------------------------------------------------------------------------------------------
+      @function getSingleRecipe()
+      no bug found
+      Potential risks: 
+      --------------------------------------------------------------------------------------------------------
+      */
+
+      //===TEST storeRecipeData & getAllCategoryRecipeId function=================================================================================
+      localStorage.clear();
+      console.log();
+      console.log("===TEST storeRecipeData & getAllCategoryRecipeId function===");
+      //storeRecipeData Test: new category with two new recipe-------------
+      storeRecipeData("cat1", [
+        { id:1, title: "cat1_recipe1" },
+        { id:2, title: "cat1_recipe2" },
+      ]);
+      // console.error();
+      console.log("new category with new recipe:");
+      console.log(getAllCategoryRecipeId()); 
+
+      //storeRecipeData Test: additional new category with one new recipes-------------
+      storeRecipeData("cat2", [{ id:1, title: "cat2_recipe1" }]);
+      console.log("additional new category with one new recipes:");
+      console.log(getAllCategoryRecipeId()); 
+
+      //storeRecipeData Test: add new recipes to existed Category-------------
+      storeRecipeData("cat1", [
+        { id:3,title: "cat1_recipe3" },
+        { id:4,title: "cat1_recipe4" },
+        { id:5,title: "cat1_recipe5" },
+      ]);
+      storeRecipeData("cat2", [
+        { id:2,title: "cat2_recipe2" },
+        { id:3,title: "cat2_recipe3" },
+      ]);
+      console.log("add new recipes to existed Category:");
+      console.log(getAllCategoryRecipeId());
+
+      //storeRecipeData duplicate Test: add existed recipes to existed Category-------------
+      storeRecipeData("cat1", [
+        { id:1,title: "cat1_recipe1" },
+        { id:2,title: "cat1_recipe2" },
+      ]);
+      storeRecipeData("cat2", [{ id:1,title: "cat2_recipe1" }]);
+      console.log("duplicate Test: add existed recipes to existed Category:");
+      console.log(getAllCategoryRecipeId()); 
+      //storeRecipeData duplicate mix Test: add existed & new recipes to existed Category-------------
+      storeRecipeData("cat1", [
+        { id:1,title: "cat1_recipe1" },
+        { id:6,title: "cat1_recipe6" },
+      ]);
+      console.log(
+        "duplicate mix Test: add existed & new recipes to existed Category:"
+      );
+      console.log(getAllCategoryRecipeId()); 
+
+      //===TEST saveRecipeToList & getAllSavedRecipeId function=================================================================================
+      localStorage.clear();
+      console.log();
+      console.log("===TEST storeRecipeData function===");
+      //add non existing recipe to new list------------------
+      saveRecipeToList("list1", {id:1, title:"No_exist_recipe1"});
+      console.log("add non existing recipe to new list:");
+      console.log(getAllSavedRecipeId()); 
+
+      //add more non existing recipe to new list------------------
+      saveRecipeToList("list2", {id:1, title:"No_exist_recipe1"});
+      console.log("add more non existing recipe to new list");
+      console.log(getAllSavedRecipeId());
+
+      //add non existing recipe to existing list
+      saveRecipeToList("list1", "No_exist_recipe2");
+      saveRecipeToList("list2", "No_exist_recipe2");
+      console.log("add non existing recipe to existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //duplicate Test: add duplicate non existing recipe to existing list
+      saveRecipeToList("list1", "No_exist_recipe1");
+      saveRecipeToList("list2", "No_exist_recipe2");
+      console.log(
+        "duplicate Test: add duplicate non existing recipe to existing list"
+      );
+      console.log(getAllSavedRecipeId());
+
+      localStorage.clear();
+      console.log("---localStorage.clear();---");
+      storeRecipeData("cat1", [
+        { id:1,title: "cat1_recipe1" },
+        { id:2,title: "cat1_recipe2" },
+        { id:3,title: "cat1_recipe3" },
+      ]);
+      storeRecipeData("cat2", [
+        { id:1,title: "cat2_recipe1" },
+        { id:2,title: "cat2_recipe2" },
+      ]);
+
+      //add existing recipe to new list------------------
+      saveRecipeToList("list1", {id:1,title: "cat2_recipe1"});
+      console.log("add existing recipe to new list");
+      console.log(getAllSavedRecipeId());
+
+      //add more existing recipe to new list------------------
+      saveRecipeToList("list2", "cat2_recipe1");
+      console.log("add more existing recipe to new list");
+      console.log(getAllSavedRecipeId());
+
+      //add non existing recipe to existing list
+      saveRecipeToList("list1", "cat1_recipe2");
+      saveRecipeToList("list2", "cat2_recipe2");
+      console.log("add existing recipe to existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //duplicate Test: add duplicate existing recipe to existing list
+      saveRecipeToList("list1", "cat1_recipe1");
+      saveRecipeToList("list2", "cat2_recipe1");
+      console.log(
+        "duplicate Test: add duplicate existing recipe to existing list"
+      );
+      console.log(getAllSavedRecipeId()); 
+
+      //===TEST createList & deleteList function======================================================
+      localStorage.clear();
+      console.log();
+      console.log("===TEST createList & deleteList function===");
+
+      //create empty saved recipe list
+      createList("list1");
+      createList("list2");
+      createList("list3");
+      console.log("create empty saved recipe list");
+      console.log(getAllSavedRecipeId()); 
+
+      //add recipe to non exist list
+      saveRecipeToList("list_4", "recipe1");
+      console.log("add recipe to non exist list");
+      console.log(getAllSavedRecipeId()); 
+
+      //add recipe to existing list
+      saveRecipeToList("list2", "recipe1");
+      saveRecipeToList("list3", "recipe1");
+      console.log("add recipe to non exist list");
+      console.log(getAllSavedRecipeId()); 
+
+      //duplicate test: create existing list
+      createList("listName");
+      createList("list2");
+      createList("list3");
+      createList("list_4");
+      console.log("duplicate test: create existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //delete existing list
+      deleteList("list2");
+      console.log("delete existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //delete no exist list
+      deleteList("list666");
+      console.log("delete no exist list");
+      console.log(getAllSavedRecipeId()); 
+
+      //delete all existing list
+      deleteList("list3");
+      deleteList("list_4");
+      deleteList("listName");
+      console.log("delete all existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //create List after delete all list
+      createList("list 123");
+      console.log("create List after delete all list");
+      console.log(getAllSavedRecipeId()); 
+
+      //===TEST removeRecipeFromList function======================================================
+      localStorage.clear();
+      console.log();
+      console.log("===TEST removeRecipeFromList function===");
+
+      //remove recipe from non exist recipe list
+      removeRecipeFromList("list_non_exist", "recipe_non_exist");
+      console.log("remove recipe from non exist recipe list");
+      console.log(getAllSavedRecipeId()); //null
+
+      //init Recipe Data
+      saveRecipeToList("cat1", "cat1_recipe1");
+      saveRecipeToList("cat1", "cat1_recipe2");
+      saveRecipeToList("cat1", "cat1_recipe3");
+      saveRecipeToList("cat2", "cat2_recipe1");
+      saveRecipeToList("cat2", "cat2_recipe2");
+      //remove non exist recipe from existing list
+      removeRecipeFromList("cat1", "cake");
+      console.log("remove non exist recipe from existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //remove existing recipes from existing list
+      removeRecipeFromList("cat1", "cat1_recipe1");
+      removeRecipeFromList("cat2", "cat2_recipe1");
+      removeRecipeFromList("cat1", "cat1_recipe3");
+      console.log("remove existing recipes from existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //remove all existing recipes from existing list
+      removeRecipeFromList("cat1", "cat1_recipe2");
+      removeRecipeFromList("cat2", "cat2_recipe2");
+      console.log("remove all existing recipes from existing list");
+      console.log(getAllSavedRecipeId()); 
+
+      //add recipe after all recipes removed
+      saveRecipeToList("cat1", "cat1_recipe1");
+      saveRecipeToList("cat1", "cat1_recipe2");
+      saveRecipeToList("cat2", "cat2_recipe1");
+      saveRecipeToList("cat2", "cat2_recipe2");
+      console.log("add recipe after all recipes removed");
+      console.log(getAllSavedRecipeId()); 
+
+      //===TEST getAllRecipes function & getAllCategoryRecipeId======================================================
+      localStorage.clear();
+      console.log();
+      console.log("===TEST getAllRecipes function===");
+      //init data
+      storeRecipeData("cat1", [
+        { id:1, title: "cat1_recipe1" },
+        { id:2, title: "cat1_recipe2" },
+      ]);
+      storeRecipeData("cat2", [
+        { id:1, title: "cat2_recipe1" },
+        { id:2, title: "cat2_recipe2" },
+      ]);
+      storeRecipeData("cat3", [
+        { id:1, title: "cat3_recipe1" },
+        { id:2, title: "cat3_recipe2" },
+        { id:3, title: "cat3_recipe3" },
+        { id:4, title: "cat3_recipe4" }
+      ]);
+      console.log("getAllRecipes");
+      console.log(getAllRecipes()); 
+
+      saveRecipeToList("cat1", "cat1_recipe1");
+      console.log("save a recipe to list then call getAllRecipes");
+      console.log(getAllRecipes()); 
+
+
+      console.log("getAllCategoryRecipe: ");
+      console.log(getAllCategoryRecipe());
+
+      console.log("getSingleRecipe(2)");
+      console.log(getSingleRecipe(2)); 
+
+    </script>
+  </body>
+</html>

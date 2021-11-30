@@ -1,35 +1,41 @@
-/* eslint-disable no-unused-vars */
 // helper functions for Spoonacular API
-// all these functions fetch for most popular recipes
 
-// eslint-disable-next-line import/no-unresolved
 import { getAllRecipes, getSingleRecipe } from './storage/fetcher.js';
-require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const { API_KEY } = process.env;// prevent exposing api key
+// require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
+const API_KEY = '857b051abfmsh018f07c4f390b41p1547b1jsn64ae2598745b';// prevent exposing api key
 
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**
  * Get detailed info from recipe ID's
- * @param {Object} idsToFetch - list of recipe ID's to fetch from API
- * @returns {Object} list of recipe JSONs
+ * @param {Object} ids - list of ids of recipes
+ * @returns {Array} Array of recipe Objects where each object contains detailed info
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
   return new Promise((resolve, reject) => {
-    // fetch from API
-    if (idsToFetch.length == 0) {
+    if (idsToFetch.length === 0) {
       resolve([]);
     } else {
       const idsFormatted = idsToFetch.join(',');
-      fetch(`https://${HOST}/recipes/informationBulk?&ids=${idsFormatted}`, {
+      const url = new URL(`https://${HOST}/recipes/informationBulk`);
+      url.searchParams.append('ids', idsFormatted);
+      url.searchParams.append('includeNutrition', 'true');
+      fetch(url.href, {
         method: 'GET',
         headers: {
           'x-rapidapi-host': HOST,
           'x-rapidapi-key': API_KEY,
         },
       })
-        .then((response) => {
-          resolve(response.json());
+        .then((response) => response.json())
+        .then((data) => {
+          resolve(data.map((recipe) => {
+            const recipeInfo = recipe;
+            const { nutrients } = recipe.nutrition;
+            delete recipeInfo.nutrition;
+            recipeInfo.nutrients = nutrients;
+            return recipeInfo;
+          }));
         })
         .catch((err) => {
           console.log('Error getting detailed recipe info');
@@ -54,7 +60,7 @@ export function extractIDs(data) {
   const recipeData = getAllRecipes();
   results.forEach((result) => {
     const { id } = result;
-    if (recipeData[id] == undefined) {
+    if (recipeData[id] === undefined) {
       idsToFetch.push(id);
     } else {
       recipesInLocalStorage.push(recipeData[id]);
@@ -68,14 +74,31 @@ export function extractIDs(data) {
  * @param {String} query - Keywords to search for
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
- *  (use random number so we dont get same results everytime)
+ * @param {Object} [sortFilterParams = {sort:'popularity', sortDirection:'desc'}]
+ *                 - dictionary of sort/filter parameters
+ * The key is any parameter listed here https://spoonacular.com/food-api/docs#Search-Recipes-Complex
+ * The value is whatever you set to the parameter. Ex (key:value) = (diet:'vegetarian')
+ * Options for sort parameter here https://spoonacular.com/food-api/docs#Recipe-Sorting-Options
+ * Make sure include (sortDirection: 'asc' or 'desc).
+ *
+ * It seems like you can only sort by one thing per call,
+ * so you can't sort by calories and popularity together(at least I havent figure out how to)
  * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
-export async function getRecipesByName(query, num = 5, offset = 0) {
+export async function getRecipesByName(query, num = 5, offset = 0, sortFilterParams = { sort: 'popularity', sortDirection: 'desc' }) {
   return new Promise((resolve, reject) => {
+    const url = new URL(`https://${HOST}/recipes/complexSearch`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/complexSearch?&query=${queryFormatted}&number=${num}&sort=popularity&offset=${offset}`, {
+    url.searchParams.append('query', queryFormatted);
+    url.searchParams.append('number', num);
+    url.searchParams.append('offset', offset);
+
+    // add sort and filter params to search
+    Object.keys(sortFilterParams).forEach((key) => {
+      url.searchParams.append(key, sortFilterParams[key]);
+    });
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -85,7 +108,7 @@ export async function getRecipesByName(query, num = 5, offset = 0) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if (ids.length == 0) {
+        if (ids.length === 0) {
           console.log('No search results');
           resolve([]);
         } else {
@@ -112,8 +135,11 @@ export async function getRecipesByName(query, num = 5, offset = 0) {
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByAutocomplete(query, num = 5) {
   return new Promise((resolve, reject) => {
+    const url = new URL(`https://${HOST}/recipes/autocomplete`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    fetch(`https://${HOST}/recipes/autocomplete?query=${queryFormatted}&number=${num}`, {
+    url.searchParams.append('query', queryFormatted);
+    url.searchParams.append('number', num);
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -130,7 +156,7 @@ export async function getRecipesByAutocomplete(query, num = 5) {
           const passToExtractID = {};
           passToExtractID.results = data;
           const ids = extractIDs(passToExtractID);
-          if (ids.length == 0) {
+          if (ids.length === 0) {
             console.log('No search results');
             resolve([]);
           } else {
@@ -154,12 +180,16 @@ export async function getRecipesByAutocomplete(query, num = 5) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 // eslint-disable-next-line no-unused-vars
 export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?cuisine=${cuisine}&number=${num}&sort=popularity&offset=${offset}`, {
+    const url = new URL(`https://${HOST}/recipes/complexSearch`);
+    url.searchParams.append('cuisine', cuisine);
+    url.searchParams.append('number', num);
+    url.searchParams.append('offset', offset);
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -169,7 +199,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if (ids.length == 0) {
+        if (ids.length === 0) {
           console.log('No search results');
           resolve([]);
         } else {
@@ -192,11 +222,15 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  * @param {Number} [num=5] - max number of recipes to get
  * @param {Number} [offset=0] - number of recipes to skip
  *  (use random number so we dont get same results everytime)
- * @returns {Object} [list of feteched recipes, ids of recipes in LocalStorage]
+ * @returns {Object} list of recipe JSONs
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
   return new Promise((resolve, reject) => {
-    fetch(`https://${HOST}/recipes/complexSearch?&type=${type}&number=${num}&sort=popularity&offset=${offset}`, {
+    const url = new URL(`https://${HOST}/recipes/complexSearch`);
+    url.searchParams.append('type', type);
+    url.searchParams.append('number', num);
+    url.searchParams.append('offset', offset);
+    fetch(url.href, {
       method: 'GET',
       headers: {
         'x-rapidapi-host': HOST,
@@ -206,7 +240,7 @@ export async function getRecipesByType(type, num = 5, offset = 0) {
       .then((response) => response.json())
       .then((data) => {
         const ids = extractIDs(data);
-        if (ids.length == 0) {
+        if (ids.length === 0) {
           console.log('No search results');
           resolve([]);
         } else {
