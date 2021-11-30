@@ -546,12 +546,6 @@ async function populateExplore() {
   // storageFuncs.storeRecipeData('trending', trendingArrRecipe);
   // ********* //
 
-  
-  //get recipe by name with sort: 'popularity' must come with a query
-  const trendingResult = await apiFuncs.getRecipesByName('pizza', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('trending', trendingResult);
-
-
   const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS);
   storageFuncs.storeRecipeData('breakfast', breakfastResult);
   const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS);
@@ -560,7 +554,6 @@ async function populateExplore() {
   storageFuncs.storeRecipeData('sideDish', sideDishResult);
   const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS);
   storageFuncs.storeRecipeData('salad', saladResult);
-
 
   //Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
