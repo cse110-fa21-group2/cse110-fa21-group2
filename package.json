@@ -8,7 +8,7 @@
     "lintjs": "npx eslint \"./source/js/**/*.js\"",
     "lintcss": "npx stylelint \"**/*.css\"",
     "lint": "npm run lintjs && npm run lintcss",
-    "doc": "jsdoc -d out \"./source/js\""
+    "doc": "jsdoc -d out ./source/js"
   },
   "jest": {
     "preset": "jest-puppeteer",
