@@ -10,7 +10,7 @@ import { returnDummyData } from '../demo-code/exampleData.js';
 
 const tempData = returnDummyData();
 
-const DEFAULT_NUM_CARDS = 10;
+const DEFAULT_NUM_CARDS = 5;
 
 const sections = [
   'landing',
@@ -256,7 +256,7 @@ const openSearchResults = async () => {
   // Don't navigate if query is blank
   if (!query) return;
 
-  const numOfRecipe = 4;
+  const numOfRecipe = DEFAULT_NUM_CARDS;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
@@ -457,8 +457,9 @@ async function showMoreClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
 
   const numOfCardExist = searchResultsContainer.childElementCount;
-  const numOfAdditionRecipeCards = 4;
+  const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
 
+  //TODO show more must apply FilterSort
   const searchResult = await apiFuncs.getRecipesByName(
     query,
     numOfAdditionRecipeCards,
@@ -473,6 +474,24 @@ async function showMoreClicked() {
     const singleResultRecipeId = localCategories[query][i];
     createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
   }
+}
+
+async function searchWithFilterSort() {
+  const query = getSearchQuery();
+  const searchResultsContainer = document.getElementById('search-results-container');
+  //TODO: get filter and sort info from interface
+
+  //{Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+  const searchResult = await apiFuncs.getRecipesByName(
+    query,
+    DEFAULT_NUM_CARDS,
+    0,
+    {Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+  );
+  //TODO: don't store filter sort recipe, bc store function store unique ID event in diff cat  
+  // storageFuncs.storeRecipeData(query, searchResult);
+
+
 }
 
 /**
