@@ -2,7 +2,7 @@
  * Populates the ExpandedRecipeCard with data
  * @param {Object} data - JSON object to use for page data
  */
-function openRecipeInfo(data) {
+function openRecipeInfoTest(data) {
   // Header section
   const title = document.querySelector('.info-title');
   title.innerHTML = data.title;
