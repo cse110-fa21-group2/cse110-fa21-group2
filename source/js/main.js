@@ -519,33 +519,6 @@ function bindPopState() {
 async function populateExplore() {
   const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
 
-  // TODO: PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
-  // const breakfastArrRecipe = [
-  //   tempData[0],
-  //   tempData[1],
-  // ];
-  // storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
-
-  // const lunchArrRecipe = [
-  //   tempData[2],
-  //   tempData[3],
-  // ];
-  // storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
-
-  // const dinnerArrRecipe = [
-  //   tempData[4],
-  //   tempData[5],
-  // ];
-  // storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
-
-  // const trendingArrRecipe = [
-  //   tempData[6],
-  //   tempData[7],
-  //   tempData[8],
-  // ];
-  // storageFuncs.storeRecipeData('trending', trendingArrRecipe);
-  // ********* //
-
   const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS);
   storageFuncs.storeRecipeData('breakfast', breakfastResult);
   const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS);
@@ -555,10 +528,10 @@ async function populateExplore() {
   const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS);
   storageFuncs.storeRecipeData('salad', saladResult);
 
-  //Get IDs from localStorage using fetcher functions
+  // Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
 
-  //Iterate through each category in explore IDs and add recipe cards using their IDs
+  // Iterate through each category in explore IDs and add recipe cards using their IDs
   exploreSections.forEach((section) => {
     Object.keys(allCategoriesIds).forEach((category) => {
       if (section.id === category) {
