@@ -565,17 +565,36 @@ function populateSavedRecipes() {
   // storageFuncs.saveRecipeToList('favorites', 1987);
   // storageFuncs.saveRecipeToList('favorites', 5981);
   // ******* //
-
   // Location where recipe cards are to be added
   const grid = document.querySelector('.saved-recipes .results-grid');
 
   // Get IDs from localStorage using fetcher functions
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
-  // Iterate through each "list" in saved lists and add recipe cards using their IDs
-  Object.keys(allSavedIds).forEach((category) => {
-    // TODO: Only populate cards for the active category
-    createRecipeCards(allSavedIds[category], grid, DEFAULT_NUM_CARDS);
-  });
+  // initialization
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'List 1' && 'favorites' in allSavedIds) {
+    // add favorites cards to grid
+    createRecipeCards(allSavedIds.favorites, grid, DEFAULT_NUM_CARDS);
+  } else if (currSavedPageSelect === 'List 2' && 'created' in allSavedIds) {
+    // add created recipe cards to grid
+    createRecipeCards(allSavedIds.created, grid, DEFAULT_NUM_CARDS);
+  }
+}
+
+function savedRecipePageDropDown() {
+  // Location where recipe cards are to be added
+  const grid = document.querySelector('.saved-recipes .results-grid');
+  // Get IDs from localStorage using fetcher functions
+  const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  removeAllChildNodes(grid);
+  if (currSavedPageSelect === 'List 1' && 'favorites' in allSavedIds) {
+    // add favorites cards to grid
+    createRecipeCards(allSavedIds.favorites, grid, DEFAULT_NUM_CARDS);
+  } else if (currSavedPageSelect === 'List 2' && 'created' in allSavedIds) {
+    // add created recipe cards to grid
+    createRecipeCards(allSavedIds.created, grid, DEFAULT_NUM_CARDS);
+  }
 }
 
 function initializeButtons() {
@@ -603,6 +622,10 @@ function initializeButtons() {
   /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
+
+  /* Saved Recipe Page */
+  const savedPageSelect = document.querySelector('select.list-dropdown');
+  savedPageSelect.addEventListener('change', savedRecipePageDropDown);
 }
 
 function initializeLocalStorage() {
