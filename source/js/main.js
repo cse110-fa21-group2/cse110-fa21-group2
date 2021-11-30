@@ -10,7 +10,7 @@ import { returnDummyData } from '../demo-code/exampleData.js';
 
 const tempData = returnDummyData();
 
-const DEFAULT_NUM_CARDS = 10;
+const DEFAULT_NUM_CARDS = 5;
 
 const sections = [
   'landing',
@@ -256,7 +256,7 @@ const openSearchResults = async () => {
   // Don't navigate if query is blank
   if (!query) return;
 
-  const numOfRecipe = 4;
+  const numOfRecipe = DEFAULT_NUM_CARDS;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
@@ -457,7 +457,7 @@ async function showMoreClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
 
   const numOfCardExist = searchResultsContainer.childElementCount;
-  const numOfAdditionRecipeCards = 4;
+  const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
 
   const searchResult = await apiFuncs.getRecipesByName(
     query,
@@ -516,40 +516,56 @@ function bindPopState() {
   });
 }
 
-function populateExplore() {
+async function populateExplore() {
   const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
 
   // TODO: PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
-  const breakfastArrRecipe = [
-    tempData[0],
-    tempData[1],
-  ];
-  storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
+  // const breakfastArrRecipe = [
+  //   tempData[0],
+  //   tempData[1],
+  // ];
+  // storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
 
-  const lunchArrRecipe = [
-    tempData[2],
-    tempData[3],
-  ];
-  storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
+  // const lunchArrRecipe = [
+  //   tempData[2],
+  //   tempData[3],
+  // ];
+  // storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
 
-  const dinnerArrRecipe = [
-    tempData[4],
-    tempData[5],
-  ];
-  storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
+  // const dinnerArrRecipe = [
+  //   tempData[4],
+  //   tempData[5],
+  // ];
+  // storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
 
-  const trendingArrRecipe = [
-    tempData[6],
-    tempData[7],
-    tempData[8],
-  ];
-  storageFuncs.storeRecipeData('trending', trendingArrRecipe);
+  // const trendingArrRecipe = [
+  //   tempData[6],
+  //   tempData[7],
+  //   tempData[8],
+  // ];
+  // storageFuncs.storeRecipeData('trending', trendingArrRecipe);
   // ********* //
 
-  // Get IDs from localStorage using fetcher functions
+  
+  //get recipe by name with sort: 'popularity' must come with a query
+  const trendingResult = await apiFuncs.getRecipesByName('pizza', DEFAULT_NUM_CARDS);
+  storageFuncs.storeRecipeData('trending', trendingResult);
+
+
+  const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS);
+  storageFuncs.storeRecipeData('breakfast', breakfastResult);
+  const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS);
+  storageFuncs.storeRecipeData('mainCourse', mainCourseResult);
+  const sideDishResult = await apiFuncs.getRecipesByType('side dish', DEFAULT_NUM_CARDS);
+  storageFuncs.storeRecipeData('sideDish', sideDishResult);
+  const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS);
+  storageFuncs.storeRecipeData('salad', saladResult);
+
+
+  //Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
 
-  // Iterate through each category in explore IDs and add recipe cards using their IDs
+  //Iterate through each category in explore IDs and add recipe cards using their IDs
   exploreSections.forEach((section) => {
     Object.keys(allCategoriesIds).forEach((category) => {
       if (section.id === category) {
