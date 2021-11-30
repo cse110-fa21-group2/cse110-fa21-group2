@@ -36,9 +36,5 @@ jobs:
         run: npm run lint
         
       # Runs JSDoc 
-      - name: Build
-        uses: andstor/jsdoc-action@v1
-        with:
-          source_dir: ./src
-          output_dir: ./out
-          config_file: conf.json
+      - name: JSDoc Generation
+        run: npm run doc
