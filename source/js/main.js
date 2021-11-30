@@ -367,6 +367,7 @@ const createRecipeClicked = () => {
         unitLong: ingredientUnits[i].value,
       },
     };
+    ingObject.originalString = `${ingredientAmount[i].value} ${ingredientUnits[i].value} ${ingredientNames[i].value}`;
     ingredientArray.push(ingObject);
   }
   finalObject.extendedIngredients = ingredientArray;
@@ -379,10 +380,10 @@ const createRecipeClicked = () => {
     stepObject.step = steps[i].value;
     stepArray.push(stepObject);
   }
-  finalObject.analyzedInstructions = {
+  finalObject.analyzedInstructions = [{
     name: '',
     steps: stepArray,
-  };
+  }];
 
   // format summary
   const summary = document.querySelector(
@@ -408,6 +409,8 @@ const createRecipeClicked = () => {
   );
   finalObject.cookingMinutes = cooktime.value;
 
+  finalObject.readyInMinutes = parseInt(preptime.value, 10) + parseInt(cooktime.value, 10);
+
   // format image URL
   const imageUrl = document.querySelector(
     '.recipe-image-url',
@@ -419,6 +422,7 @@ const createRecipeClicked = () => {
     '.recipe-rating',
   );
   finalObject.averageRating = rating.value;
+  finalObject.spoonacularScore = rating.value * 20;
 
   // format name:
   const recipeName = document.querySelector(
