@@ -264,7 +264,7 @@
                                 </div>
                                 <div class="filters-diet-body">
                                 <div class="filter-diet-input">
-                                    <select name="sorts" id="sorts" value="">
+                                    <select name="diets" id="diets" value="">
                                         <option value="">None selected</option>
                                         <option value="Gluten Free">Gluten Free</option>
                                         <option value="Ketogenic">Ketogenic</option>
@@ -287,7 +287,7 @@
                                     </div>
                                     <div class="filters-max-time-body">
                                     <div class="filter-max-time-input">
-                                        <input type="range" value="" min="0" max="1440" step="10" oninput="this.nextElementSibling.nextElementSibling.value = this.value + ' min (roughly ' + (this.value/60).toFixed(2) + ' hr)'"><br>
+                                        <input type="range" id='max-time' value="" min="0" max="1440" step="10" oninput="this.nextElementSibling.nextElementSibling.value = this.value + ' min (roughly ' + (this.value/60).toFixed(2) + ' hr)'"><br>
                                         <output>Default</output>
                                     </div>
                                     </div>
@@ -330,7 +330,7 @@
                         </div>
                         <hr class="solid">
                         <div class="sort-filters-bottom">
-                            <button id="submit" class="sort-filter">Apply</button>
+                          <button id="submit" class="submit-FS" type="button">APPLY</button>
                         </div>
                       </div>
                     </div>

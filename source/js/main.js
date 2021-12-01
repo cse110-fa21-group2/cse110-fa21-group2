@@ -481,35 +481,82 @@ async function applyClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
 
   //TODO: get filter and sort info from interface
-  const sorts = $('#sorts option:selected').filter(':selected').text(); 
-  const ordering = $('#ordering option:selected').filter(':selected').text();
+  let sorts = $('#sorts option:selected').filter(':selected').text().toLowerCase(); 
+  let ordering = $('#ordering option:selected').filter(':selected').text().toLowerCase();
+  let mealType = $('#meal-type option:selected').filter(':selected').text().toLowerCase();
+  let dietS = $('#diets option:selected').filter(':selected').text();
+  if(sorts == 'none selected'){
+    sorts = 'popularity';
+  }
+  if(ordering == 'none selected'){
+    ordering = 'desc';
+  }
+  if(mealType == 'none selected'){
+    mealType = '';
+  }
+  if(dietS == 'none selected'){
+    dietS = '';
+  }
   console.log(sorts);
   console.log(ordering)
-  let cuisineArr = [];
+  console.log(mealType);
+  console.log(dietS);
+
+  const maxPrepTime = document.getElementById("max-time").value;
+  console.log(maxPrepTime);
+
+  //get cuisines
+  let cuisineString = '';
+  let firstTime = true;
   $('.filters-cuisine-body :checkbox').each(function(){
     //var name = $(this).attr('name'); // grab name of original
-    // var value = $(this).attr('value'); // grab value of original
     var ischecked = $(this).is(":checked"); //check if checked
     if(ischecked){
       var value = $(this).attr('value');
-      cuisineArr.push(value);
+      if(firstTime){
+        cuisineString += value;
+        firstTime = false;
+      }
+      else{
+        cuisineString += ',' + value;
+      }
     }
   });
-  console.log(cuisineArr);
-  //{Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
-  // const searchResult = await apiFuncs.getRecipesByName(
-  //   query,
-  //   DEFAULT_NUM_CARDS,
-  //   0,
-  //   {Sort:sorts, sortDirection:ordering, cuisine: cuisineArr}
-  // );
-  // console.log(searchResult);
-  //TODO: don't store filter sort recipe, bc store function store unique ID event in diff cat  
-  // storageFuncs.storeRecipeData(query, searchResult);
-  // removeAllChildNodes(searchResultsContainer);
-  // let resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
-  // createRecipeCards(resultRecipeId, searchResultsContainer, 4);
+  firstTime = true; //reset
+  let intoleranceString = '';
+  //get intolerances
+  $('.filters-intolerance-body :checkbox').each(function(){
+    var ischecked = $(this).is(":checked"); //check if checked
+    if(ischecked){
+      var value = $(this).attr('value');
+      if(firstTime){
+        intoleranceString += value;
+        firstTime = false;
+      }
+      else{
+        intoleranceString += ',' + value;
+      }
+    }
+  });
 
+  console.log(cuisineString);
+  console.log(intoleranceString);
+  // {Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+  const searchResult = await apiFuncs.getRecipesByName(
+    query,
+    DEFAULT_NUM_CARDS,
+    0,
+    {Sort:sorts, sortDirection:ordering, cuisine: cuisineString, type: mealType,
+       diet: dietS, intolerances: intoleranceString, maxReadyTime: maxPrepTime}
+  );
+  console.log(searchResult);
+
+  const storeName = query+sorts+ordering+cuisineString+mealType+dietS+intoleranceString+maxPrepTime;
+  console.log(storeName);
+  storageFuncs.storeRecipeData(storeName, searchResult);
+  removeAllChildNodes(searchResultsContainer);
+  let resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
+  createRecipeCards(resultRecipeId, searchResultsContainer, DEFAULT_NUM_CARDS);
 }
 
 /**
