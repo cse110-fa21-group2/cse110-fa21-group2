@@ -131,17 +131,16 @@
     </main>
     <div class="timer">
         <div id="timeInput" class="timeInput">
-            <input type="number" name ="hours" id ="hours" placeholder="Hours" min="0" max="23" size = "5" maxlength="2" value="0">
-            <input type="number" name="minutes" id="minutes" placeholder="Minutes" min="0" max="59" size = "5" maxlength="2" value="0">
-            <input type="number" name="seconds" id="seconds" placeholder="Seconds" min="0" max="59" size = "5" maxlength="2" value="0">
+            <input type="number" name ="hours" id ="hours" placeholder="hr" min="0" max="23" size = "5" maxlength="2">
+            <input type="number" name="minutes" id="minutes" placeholder="min" min="0" max="59" size = "5" maxlength="2">
+            <input type="number" name="seconds" id="seconds" placeholder="sec" min="0" max="59" size = "5" maxlength="2">
             <button href="javascript:void(0);" class="setTime" id="setTime" onclick="setTimer()">Set Timer</button>
         </div>
         
-        <p id="timer">Begin Timer</p>
+        <p class="showTimer" id="timer">Begin Timer</p>
         <button id="pause" onclick="pauseTimer()">Pause</button>
         <button id="reset" onclick="resetTimer()">Reset</button>
         <button id="shown" onclick="displayTimer()">Minimize</button>
-        <audio class="hidden" src=""></audio>
     </div>
 </body>
 </html>

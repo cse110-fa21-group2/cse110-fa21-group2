@@ -31,9 +31,8 @@ function updateTimer() {
     document.getElementById('timer').innerHTML = `${hours}h ${minutes}m ${seconds}s `;
     if (distance < 0) {
       clearInterval(timerID);
-      const timerAudio = document.querySelector('audio');
-      timerAudio.src = 'Gentle-wake-alarm-clock.mp3';
-      timerAudio.play();
+      const audioElement = new Audio('Gentle-wake-alarm-clock.mp3');
+      audioElement.play();
       document.getElementById('timer').innerHTML = 'Done!';
     }
     distance -= 1000;
