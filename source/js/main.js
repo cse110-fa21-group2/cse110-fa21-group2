@@ -582,6 +582,7 @@ async function applyClicked() {
   
   console.log(sorts);
   console.log(ordering)
+<<<<<<< Updated upstream
   console.log(mealType);
   console.log(dietS);
   console.log(maxPrepTime);
@@ -589,14 +590,39 @@ async function applyClicked() {
   console.log(intoleranceString);
 
   //example: {sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+=======
+  let cuisineArr = [];
+  $('.filters-cuisine-body :checkbox').each(function(){
+    //var name = $(this).attr('name'); // grab name of original
+    // var value = $(this).attr('value'); // grab value of original
+    var ischecked = $(this).is(":checked"); //check if checked
+    if(ischecked){
+      var value = $(this).attr('value');
+      cuisineArr.push(value);
+    }
+  });
+  console.log(cuisineArr);
+  // {Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+>>>>>>> Stashed changes
   const searchResult = await apiFuncs.getRecipesByName(
     query,
     DEFAULT_NUM_CARDS,
     0,
+<<<<<<< Updated upstream
     {sort: sorts, sortDirection: ordering, cuisine: cuisineString, type: mealType,
        diet: dietS, intolerances: intoleranceString, maxReadyTime: maxPrepTime}
   );
   console.log(searchResult);
+=======
+    {Sort:sorts, sortDirection:ordering, cuisine: cuisineArr, type:'lunch'}
+  );
+  console.log(searchResult);
+  //TODO: don't store filter sort recipe, bc store function store unique ID event in diff cat  
+  // storageFuncs.storeRecipeData(query, searchResult);
+  // removeAllChildNodes(searchResultsContainer);
+  // let resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
+  // createRecipeCards(resultRecipeId, searchResultsContainer, 4);
+>>>>>>> Stashed changes
 
   const storeName = query+sorts+ordering+cuisineString+mealType+dietS+intoleranceString+maxPrepTime;
   console.log(storeName);
@@ -754,8 +780,8 @@ function initializeButtons() {
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
   
-  const applyButton = document.getElementById('submit');
-  applyButton.addEventListener('click', applyClicked);
+  // const applyButton = document.getElementById('submit');
+  // applyButton.addEventListener('click', applyClicked);
 
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
