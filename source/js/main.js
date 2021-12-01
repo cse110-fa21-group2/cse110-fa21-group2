@@ -340,7 +340,7 @@ const openSearchResults = async () => {
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
 
-  const storeName = `${query}popularity` + 'desc';
+  const storeName = `${query}popularitydesc1440`;
   storageFuncs.storeRecipeData(storeName, searchResult);
 
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
