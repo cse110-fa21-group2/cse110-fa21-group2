@@ -170,6 +170,7 @@ export function deleteCreatedRecipe(recipeId) {
 
     if (saveData && 'created' in saveData && saveData.created.includes(recipeId)) {
       saveData.created = saveData.created.filter((id) => id !== recipeId);
+      saveData.favorites = saveData.favorites.filter((id) => id !== recipeId);
       catData.created = catData.created.filter((id) => id !== recipeId);
       delete allData[recipeId];
 
