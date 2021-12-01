@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lintjs": "npx eslint \"./source/js/**/*.js\"",
-    "lintcss": "npx stylelint \"**/*.css\"",
+    "lintcss": "npx stylelint \"./source/**/*.css\"",
     "lint": "npm run lintjs && npm run lintcss"
   },
   "jest": {
@@ -38,6 +38,8 @@
     "stylelint-order": "^5.0.0"
   },
   "dependencies": {
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "jsdoc": "^3.6.7",
+    "lint": "^0.7.0"
   }
 }
