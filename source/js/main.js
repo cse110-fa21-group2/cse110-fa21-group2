@@ -623,6 +623,9 @@ function initializeButtons() {
   const createButton = document.querySelector('.create-recipe-button');
   createButton.addEventListener('click', createRecipeClicked);
 
+  const createModalButton = document.querySelector('.create-modal-button');
+  createModalButton.addEventListener('click', openSavedRecipes);
+
   /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
