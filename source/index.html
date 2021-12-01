@@ -84,30 +84,30 @@
 
       <section class="explore hidden">
         <div class="explore-section">
-          <h1 class="row-title">Trending Recipes</h1>
+          <h1 class="row-title">Main Course</h1>
           <hr class="line">
-          <div class="recipe-row" id="trending">
+          <div class="recipe-row" id="mainCourse">
               <!-- TODO: Populate recipe cards -->
+          </div>
+        </div>
+        <div class="explore-section">
+          <h1 class="row-title">Top Side Dish Recipes</h1>
+          <hr class="line">
+          <div class="recipe-row" id="sideDish">
+              <!-- TODO: Populate recipe cards -->
+          </div>
+        </div>
+        <div class="explore-section">
+          <h1 class="row-title">Top Salad Recipes</h1>
+          <hr class="line">
+          <div class="recipe-row" id="salad">
+            <!-- TODO: Populate recipe cards -->
           </div>
         </div>
         <div class="explore-section">
           <h1 class="row-title">Top Breakfast Recipes</h1>
           <hr class="line">
           <div class="recipe-row" id="breakfast">
-              <!-- TODO: Populate recipe cards -->
-          </div>
-        </div>
-        <div class="explore-section">
-          <h1 class="row-title">Top Lunch Recipes</h1>
-          <hr class="line">
-          <div class="recipe-row" id="lunch">
-            <!-- TODO: Populate recipe cards -->
-          </div>
-        </div>
-        <div class="explore-section">
-          <h1 class="row-title">Top Dinner Recipes</h1>
-          <hr class="line">
-          <div class="recipe-row" id="dinner">
             <!-- TODO: Populate recipe cards -->
           </div>
         </div>
@@ -248,6 +248,20 @@
       </section>
 
       <section class="create-recipe-page container hidden">
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Successfully created new recipe</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-dark create-modal-button" data-dismiss="modal">Done</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <form class="create-recipe-page-form">
           <h2 class="create-title">Name:</h2>
           <input
@@ -404,7 +418,7 @@
             </div>
           </div>
           <div class="create-recipe-button-wrapper">
-            <button type="button" class="btn btn-dark create-recipe-button">
+            <button type="button" class="btn btn-dark create-recipe-button" data-toggle="modal" data-target="#exampleModalCenter">
               Create Recipe
             </button>
           </div>
