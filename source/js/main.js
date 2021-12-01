@@ -39,6 +39,85 @@ const openSection = (active) => () => {
 
 const getSearchQuery = () => document.querySelector('.form-control').value;
 
+const getSortKey = () => {
+  let sorts = $('#sorts option:selected').filter(':selected').text().toLowerCase();
+  if(sorts == 'none selected'){
+    sorts = 'popularity';
+  }
+  return sorts;
+};
+
+const getOrderingKey = () => {
+  let ordering = $('#ordering option:selected').filter(':selected').text();
+  if (ordering == 'Ascending'){
+    return 'asc';
+  }
+  else{
+    return 'desc';
+  }
+};
+
+const getMealTypeKey = () => {
+  let mealType = $('#meal-type option:selected').filter(':selected').text().toLowerCase();
+  if(mealType == 'none selected'){
+    mealType = '';
+  }
+  return mealType;
+};
+
+const getDietKey = () => {
+  let dietS = $('#diets option:selected').filter(':selected').text();
+  if(dietS == 'None selected'){
+    dietS = '';
+  }
+  return dietS;
+};
+
+const getMaxPrepTime = () => {
+  return document.getElementById("max-time").value;
+};
+
+const getCuisinesKeys = () => {
+  let cuisineString = '';
+  let firstTime = true;
+  $('.filters-cuisine-body :checkbox').each(function(){
+    //var name = $(this).attr('name'); // grab name of original
+    var ischecked = $(this).is(":checked"); //check if checked
+    if(ischecked){
+      var value = $(this).attr('value');
+      if(firstTime){
+        cuisineString += value;
+        firstTime = false;
+      }
+      else{
+        cuisineString += ',' + value;
+      }
+    }
+  });
+  return cuisineString;
+};
+
+const geIntolerances = () => {
+  let intoleranceString = '';
+  let firstTime = true;
+  $('.filters-intolerance-body :checkbox').each(function(){
+    var ischecked = $(this).is(":checked"); //check if checked
+    if(ischecked){
+      var value = $(this).attr('value');
+      if(firstTime){
+        intoleranceString += value;
+        firstTime = false;
+      }
+      else{
+        intoleranceString += ',' + value;
+      }
+    }
+  });
+  return intoleranceString;
+};
+
+
+
 const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
@@ -262,9 +341,10 @@ const openSearchResults = async () => {
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
 
-  storageFuncs.storeRecipeData(query, searchResult);
+  const storeName = query+'popularity'+'desc';
+  storageFuncs.storeRecipeData(storeName, searchResult);
 
-  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
+  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
   const searchResultsContainer = document.getElementById('search-results-container');
   removeAllChildNodes(searchResultsContainer);
   createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
@@ -455,23 +535,34 @@ const createRecipeClicked = () => {
 async function showMoreClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
-
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
 
-  //TODO show more must apply FilterSort
+  const sorts = getSortKey();
+  const ordering = getOrderingKey();
+  const mealType = getMealTypeKey();
+  const dietS = getDietKey();
+  const maxPrepTime = getMaxPrepTime();
+  const cuisineString = getCuisinesKeys();
+  const intoleranceString = geIntolerances();
+
   const searchResult = await apiFuncs.getRecipesByName(
     query,
-    numOfAdditionRecipeCards,
+    DEFAULT_NUM_CARDS,
     numOfCardExist,
+    {sort: sorts, sortDirection: ordering, cuisine: cuisineString, type: mealType,
+       diet: dietS, intolerances: intoleranceString, maxReadyTime: maxPrepTime}
   );
-  storageFuncs.storeRecipeData(query, searchResult);
+  console.log(searchResult);
+  
+  const storeName = query+sorts+ordering+cuisineString+mealType+dietS+intoleranceString+maxPrepTime;
+  storageFuncs.storeRecipeData(storeName, searchResult);
 
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
   const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
-  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
-    const singleResultRecipeId = localCategories[query][i];
+  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[storeName].length); i += 1) {
+    const singleResultRecipeId = localCategories[storeName][i];
     createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
   }
 }
@@ -480,73 +571,29 @@ async function applyClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
 
-  //TODO: get filter and sort info from interface
-  let sorts = $('#sorts option:selected').filter(':selected').text().toLowerCase(); 
-  let ordering = $('#ordering option:selected').filter(':selected').text().toLowerCase();
-  let mealType = $('#meal-type option:selected').filter(':selected').text().toLowerCase();
-  let dietS = $('#diets option:selected').filter(':selected').text();
-  if(sorts == 'none selected'){
-    sorts = 'popularity';
-  }
-  if(ordering == 'none selected'){
-    ordering = 'desc';
-  }
-  if(mealType == 'none selected'){
-    mealType = '';
-  }
-  if(dietS == 'none selected'){
-    dietS = '';
-  }
+  //get filter and sort info from interface
+  const sorts = getSortKey();
+  const ordering = getOrderingKey();
+  const mealType = getMealTypeKey();
+  const dietS = getDietKey();
+  const maxPrepTime = getMaxPrepTime();
+  const cuisineString = getCuisinesKeys();
+  const intoleranceString = geIntolerances();
+  
   console.log(sorts);
   console.log(ordering)
   console.log(mealType);
   console.log(dietS);
-
-  const maxPrepTime = document.getElementById("max-time").value;
   console.log(maxPrepTime);
-
-  //get cuisines
-  let cuisineString = '';
-  let firstTime = true;
-  $('.filters-cuisine-body :checkbox').each(function(){
-    //var name = $(this).attr('name'); // grab name of original
-    var ischecked = $(this).is(":checked"); //check if checked
-    if(ischecked){
-      var value = $(this).attr('value');
-      if(firstTime){
-        cuisineString += value;
-        firstTime = false;
-      }
-      else{
-        cuisineString += ',' + value;
-      }
-    }
-  });
-  firstTime = true; //reset
-  let intoleranceString = '';
-  //get intolerances
-  $('.filters-intolerance-body :checkbox').each(function(){
-    var ischecked = $(this).is(":checked"); //check if checked
-    if(ischecked){
-      var value = $(this).attr('value');
-      if(firstTime){
-        intoleranceString += value;
-        firstTime = false;
-      }
-      else{
-        intoleranceString += ',' + value;
-      }
-    }
-  });
-
   console.log(cuisineString);
   console.log(intoleranceString);
-  // {Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+
+  //example: {sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
   const searchResult = await apiFuncs.getRecipesByName(
     query,
     DEFAULT_NUM_CARDS,
     0,
-    {Sort:sorts, sortDirection:ordering, cuisine: cuisineString, type: mealType,
+    {sort: sorts, sortDirection: ordering, cuisine: cuisineString, type: mealType,
        diet: dietS, intolerances: intoleranceString, maxReadyTime: maxPrepTime}
   );
   console.log(searchResult);
