@@ -103,8 +103,12 @@ function openRecipeInfo(data) {
   const servings = document.getElementById('info-servings');
   servings.innerHTML = `Servings: ${data.servings}`;
 
-  // TODO: Scale ingredients
+  // Measurements
+  // Base serving size for recipe
+  const scaleServings = document.querySelector('.serving-size');
+  scaleServings.innerHTML = data.servings;
 
+  // TODO: Scale ingredients
   const stepsDiv = document.getElementById('step-list');
   removeAllChildNodes(stepsDiv);
 
