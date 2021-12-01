@@ -159,6 +159,30 @@ class RecipeCard extends HTMLElement {
 
     recipeBody.appendChild(saveButton);
 
+    if (this.created) {
+      const deleteRecipe = document.createElement('button');
+      deleteRecipe.classList.add('card-btn');
+      deleteRecipe.classList.add('card-btn-outline');
+      deleteRecipe.classList.add('card-delete-button');
+
+      const clickDelete = (e) => {
+        e.stopPropagation();
+        storageFuncs.deleteCreatedRecipe(this.json.id);
+        const currentCards = document.querySelectorAll(`.id_${this.json.id}`);
+        for (let i = 0; i < currentCards.length; i++) {
+          currentCards[i].remove();
+        }
+      };
+
+      deleteRecipe.addEventListener('click', clickDelete);
+
+      const deleteIcon = document.createElement('i');
+      deleteIcon.classList.add('fas');
+      deleteIcon.classList.add('fa-trash-alt');
+      deleteRecipe.appendChild(deleteIcon);
+      recipeBody.appendChild(deleteRecipe);
+    }
+
     recipeCard.appendChild(recipeBody);
     recipeCard.addEventListener('click', () => {
       this.populate(data);
