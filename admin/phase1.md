@@ -1,5 +1,5 @@
 ## Current State
-Currently the steps of our pipeline proceed as followed after a programmer begins working on an issue
+Currently the steps of our pipeline proceed as follows after a programmer begins working on an issue
 1. code, actually programming a solution to an issue
  
 ### Continuous Integration
