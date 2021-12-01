@@ -10,7 +10,7 @@ import { returnDummyData } from '../demo-code/exampleData.js';
 
 const tempData = returnDummyData();
 
-const DEFAULT_NUM_CARDS = 5;
+const DEFAULT_NUM_CARDS = 10;
 
 const sections = [
   'landing',
@@ -256,7 +256,7 @@ const openSearchResults = async () => {
   // Don't navigate if query is blank
   if (!query) return;
 
-  const numOfRecipe = DEFAULT_NUM_CARDS;
+  const numOfRecipe = 4;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
@@ -367,7 +367,6 @@ const createRecipeClicked = () => {
         unitLong: ingredientUnits[i].value,
       },
     };
-    ingObject.originalString = `${ingredientAmount[i].value} ${ingredientUnits[i].value} ${ingredientNames[i].value}`;
     ingredientArray.push(ingObject);
   }
   finalObject.extendedIngredients = ingredientArray;
@@ -380,10 +379,10 @@ const createRecipeClicked = () => {
     stepObject.step = steps[i].value;
     stepArray.push(stepObject);
   }
-  finalObject.analyzedInstructions = [{
+  finalObject.analyzedInstructions = {
     name: '',
     steps: stepArray,
-  }];
+  };
 
   // format summary
   const summary = document.querySelector(
@@ -409,8 +408,6 @@ const createRecipeClicked = () => {
   );
   finalObject.cookingMinutes = cooktime.value;
 
-  finalObject.readyInMinutes = parseInt(preptime.value, 10) + parseInt(cooktime.value, 10);
-
   // format image URL
   const imageUrl = document.querySelector(
     '.recipe-image-url',
@@ -422,7 +419,6 @@ const createRecipeClicked = () => {
     '.recipe-rating',
   );
   finalObject.averageRating = rating.value;
-  finalObject.spoonacularScore = rating.value * 20;
 
   // format name:
   const recipeName = document.querySelector(
@@ -461,7 +457,7 @@ async function showMoreClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
 
   const numOfCardExist = searchResultsContainer.childElementCount;
-  const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
+  const numOfAdditionRecipeCards = 4;
 
   const searchResult = await apiFuncs.getRecipesByName(
     query,
@@ -520,17 +516,35 @@ function bindPopState() {
   });
 }
 
-async function populateExplore() {
+function populateExplore() {
   const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
 
-  const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('breakfast', breakfastResult);
-  const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('mainCourse', mainCourseResult);
-  const sideDishResult = await apiFuncs.getRecipesByType('side dish', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('sideDish', sideDishResult);
-  const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('salad', saladResult);
+  // TODO: PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
+  const breakfastArrRecipe = [
+    tempData[0],
+    tempData[1],
+  ];
+  storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
+
+  const lunchArrRecipe = [
+    tempData[2],
+    tempData[3],
+  ];
+  storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
+
+  const dinnerArrRecipe = [
+    tempData[4],
+    tempData[5],
+  ];
+  storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
+
+  const trendingArrRecipe = [
+    tempData[6],
+    tempData[7],
+    tempData[8],
+  ];
+  storageFuncs.storeRecipeData('trending', trendingArrRecipe);
+  // ********* //
 
   // Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();

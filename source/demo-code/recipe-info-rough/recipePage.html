@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./recipe-page.css">
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
     <script src="recipePage.js"></script>
-    <script src="recipeTimer.js" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -129,18 +128,5 @@
             </div>
         </section>
     </main>
-    <div class="timer">
-        <div id="timeInput" class="timeInput">
-            <input type="number" name ="hours" id ="hours" placeholder="hr" min="0" max="23" size = "5" maxlength="2">
-            <input type="number" name="minutes" id="minutes" placeholder="min" min="0" max="59" size = "5" maxlength="2">
-            <input type="number" name="seconds" id="seconds" placeholder="sec" min="0" max="59" size = "5" maxlength="2">
-            <button href="javascript:void(0);" class="setTime" id="setTime" onclick="setTimer()">Set Timer</button>
-        </div>
-        
-        <p class="showTimer" id="timer">Begin Timer</p>
-        <button id="pause" onclick="pauseTimer()">Pause</button>
-        <button id="reset" onclick="resetTimer()">Reset</button>
-        <button id="shown" onclick="displayTimer()">Minimize</button>
-    </div>
 </body>
 </html>
