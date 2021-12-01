@@ -7,9 +7,130 @@ body {
   padding: 0;
 }
 
-/* Recipe info page CSS */
+/* nav bar CSS style */
 
-.recipe-info-page {
+.nav {
+  background-color: white;
+  border-bottom: 2px solid black;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.nav a {
+  align-items: center;
+  color: black;
+  display: block;
+  float: left;
+  font-size: 17px;
+  height: 1.5rem;
+  margin: auto;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nav a.icon {
+  display: none;
+  float: right !important;
+}
+
+a.nav-logo {
+  align-items: center;
+  display: flex;
+  height: 1.5rem;
+}
+
+.nav-title {
+  font-size: 1.5em;
+}
+
+.nav-icon {
+  height: 3rem;
+}
+
+.nav .search {
+  float: right;
+}
+
+.nav input[type="text"] {
+  border: 1px solid grey;
+  border-radius: 0.2rem;
+  font-size: 17px;
+  margin-bottom: 0.5rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem;
+}
+
+.nav .search button {
+  background: #ddd;
+  border: 1px solid grey;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  float: right;
+  font-size: 17px;
+  margin: 0.6rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.nav .search button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 800px) {
+  .nav {
+    border-bottom: 2px solid black;
+    overflow: hidden;
+  }
+
+  div.links {
+    display: none;
+  }
+
+  .nav a.icon {
+    display: flex;
+    float: right !important;
+    position: fixed !important;
+    right: 0 !important;
+    top: 0 !important;
+  }
+
+  a.nav-logo {
+    align-items: center;
+    display: flex !important;
+    height: 1.5rem;
+  }
+
+  .nav a,
+  .nav input[type="text"],
+  .nav .search button {
+    border: none;
+    float: none;
+    margin: 0;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  .nav input[type="text"] {
+    border: 1px solid #ccc;
+  }
+
+  .nav .search {
+    display: none;
+    float: left;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+/* main CSS style */
+
+main {
   background-color: white;
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
   margin: 5rem;
@@ -24,7 +145,8 @@ body {
 
 /* generic button CSS style */
 
-.info-page-btn {
+/* stylelint-disable-next-line no-descending-specificity */
+button {
   border: 1px solid rgb(0 0 0);
   color: rgb(0 0 0);
   cursor: pointer;
@@ -52,16 +174,23 @@ body {
   width: 100%;
 }
 
-.measurement-btn {
+.minus-btn {
   background-color: #f1f7f7;
   font-size: large;
   margin-left: auto;
   width: 50%;
 }
 
-/* div wrappers */
+.plus-btn {
+  background-color: #f1f7f7;
+  font-size: large;
+  margin-right: auto;
+  width: 50%;
+}
 
-.title-edit-wrapper {
+/* header CSS style */
+
+div.title-edit-wrapper {
   align-items: center;
   display: flex;
   height: 2rem;
@@ -69,7 +198,7 @@ body {
   margin-top: 1rem;
 }
 
-.rating-favorite-wrapper {
+div.rating-favorite-wrapper {
   align-items: center;
   display: flex;
   height: 2rem;
@@ -78,50 +207,9 @@ body {
   margin-top: 0.5rem;
 }
 
-.steps-wrapper {
-  display: grid;
-  height: auto;
-  margin-bottom: 0.5rem;
-  margin-top: 1.25rem;
-  outline: 1px solid rgb(0 0 0);
-  overflow: scroll;
-  padding: 1rem;
-}
-
-.videos-wrapper {
-  display: grid;
-  margin-bottom: 0.5rem;
-  margin-top: 1.25rem;
-  outline: 1px solid rgb(0 0 0);
-  padding: 1rem;
-}
-
-.nutrition-wrapper {
-  display: grid;
-  margin-bottom: 0.5rem;
-  margin-top: 1.25rem;
-  outline: 1px solid rgb(0 0 0);
-  padding: 1rem;
-}
-
-.recipe-description-wrapper {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
-  outline: 1px solid rgb(0 0 0);
-  padding: 2rem;
-}
-
-/* Ratings */
-
-.rating {
+div.rating {
   align-items: center;
   display: inline-flex;
-}
-
-.rating-stars {
-  align-items: center;
-  display: flex;
-  height: 1rem;
 }
 
 .divider {
@@ -134,16 +222,23 @@ body {
   width: 1px;
 }
 
+div.recipe-description-wrapper {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 2rem;
+}
+
 /* sub-header CSS style */
 
-.recipe-info-body {
+#sub-header {
   display: flex;
   margin-top: 0.75rem;
   outline: 1px solid rgb(0 0 0);
   padding: 0.5rem;
 }
 
-.info-body-section {
+div.sub-header {
   display: grid;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
@@ -152,23 +247,23 @@ body {
   width: 100%;
 }
 
-.ingredients-wrapper {
+div.ingredients-wrapper {
   border-right: 1px solid rgb(0 0 0);
   height: 26pc;
   overflow: scroll;
 }
 
-.quick-facts-wrapper {
+div.quick-facts-wrapper {
   border-bottom: 1px solid rgb(0 0 0);
   height: 13pc;
 }
 
-.measurements-wrapper {
+div.measurements-wrapper {
   height: 8pc;
   padding-top: 1rem;
 }
 
-.serving-adjust {
+div.serving-adjust {
   align-items: center;
   display: flex;
   margin: auto;
@@ -177,9 +272,41 @@ body {
 
 /* body CSS style */
 
+div.steps-wrapper {
+  display: grid;
+  height: auto;
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  overflow: scroll;
+  padding: 1rem;
+}
+
+div.videos-wrapper {
+  display: grid;
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 1rem;
+}
+
+div.nutrition-wrapper {
+  display: grid;
+  margin-bottom: 0.5rem;
+  margin-top: 1.25rem;
+  outline: 1px solid rgb(0 0 0);
+  padding: 1rem;
+}
+
 /* image CSS style */
 
-.recipe-img {
+img.rating {
+  align-items: center;
+  display: flex;
+  height: 1rem;
+}
+
+img.main-recipe-image {
   height: auto;
   margin: 0;
   max-height: 27rem;
@@ -190,11 +317,17 @@ body {
 
 /* text CSS style */
 
-.info-title {
+/* stylelint-disable-next-line no-descending-specificity */
+a {
+  color: black;
+  text-decoration: none;
+}
+
+p.title {
   font-size: 24px;
 }
 
-.info-subtitle {
+p.subtitle {
   font-size: 20px;
   margin: 0;
   padding: 0;
@@ -204,32 +337,46 @@ body {
   text-underline-position: under;
 }
 
-.description {
+p.description {
   font-size: 16px;
   margin: 0;
 }
 
-.serving-size {
-  margin: 1rem 2rem;
+p.quick-fact {
+  margin-bottom: 1rem;
+  padding-left: 1.75rem;
 }
 
-.subtitle.measure-title {
+p.step {
+  margin-bottom: 0.5rem;
+}
+
+.serving-size {
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+  margin-top: 1rem;
+}
+
+#measure-title {
   margin-bottom: 1rem;
 }
 
 /* list CSS style */
 
-.info-list {
-  padding: 0 1rem;
+ul {
+  padding-left: 1rem;
+  padding-right: 2rem;
 }
 
-.rating-box {
+ul.rating-stats {
   align-items: center;
   display: flex;
   padding-left: 1rem;
 }
 
-.rating-stats {
+li.rating-stats {
   align-items: center;
   color: rgb(121 121 121);
   display: flex;
@@ -238,12 +385,35 @@ body {
   padding: 0;
 }
 
-.info-facts,
-.info-ingredient {
+li.item {
   list-style: none;
   margin-bottom: 1rem;
 }
 
-.steps {
+li.steps {
   margin-top: 0.5rem;
+}
+
+div.timer {
+  align-items: center;
+  background-color: white;
+  border: 1px solid black;
+  bottom: 0;
+  display: block;
+  float: right;
+  margin: 1rem;
+  padding: 1rem;
+  position: fixed;
+  right: 0;
+  width: auto;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+div.timeInput {
+  display: inline-flex;
+}
+
+#timer {
+  font-size: 24px;
+  text-align: center;
 }
