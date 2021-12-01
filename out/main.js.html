@@ -1,4 +1,32 @@
-import Router from './Router.js';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
@@ -10,7 +38,7 @@ import { returnDummyData } from '../demo-code/exampleData.js';
 
 const tempData = returnDummyData();
 
-const DEFAULT_NUM_CARDS = 5;
+const DEFAULT_NUM_CARDS = 10;
 
 const sections = [
   'landing',
@@ -139,12 +167,12 @@ function openRecipeInfo(data) {
   const saveBtn = document.getElementById('info-save-btn');
 
   const categories = fetcherFuncs.getAllSavedRecipeId();
-  const saved = categories.favorites && categories.favorites.includes(data.id);
+  const saved = categories.favorites &amp;&amp; categories.favorites.includes(data.id);
   saveBtn.innerHTML = saved ? 'Remove Recipe' : 'Save Recipe';
 
   const flipSaved = () => {
     // categories = fetcherFuncs.getAllSavedRecipeId();
-    // saved = categories.favorites && categories.favorites.includes(data.id);
+    // saved = categories.favorites &amp;&amp; categories.favorites.includes(data.id);
     // console.log(`Saved: ${saved}`);
     // if (saved) {
     //   // Remove from saved recipes
@@ -165,7 +193,7 @@ function openRecipeInfo(data) {
     //     // remove card in saved recipe page
     //     const grid = document.querySelector('.saved-recipes .results-grid');
     //     const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
-    //     for (let i = 0; i < currentCardsSaved.length; i++) {
+    //     for (let i = 0; i &lt; currentCardsSaved.length; i++) {
     //       currentCardsSaved[i].remove();
     //     }
     //   }
@@ -183,7 +211,7 @@ function openRecipeInfo(data) {
     //     grid.appendChild(recipeCardNew);
     //   }
     // }
-    // for (let i = 0; i < currCards.length; i++) {
+    // for (let i = 0; i &lt; currCards.length; i++) {
     //   const { shadowRoot } = currCards[i];
     //   const element = shadowRoot
     //     .querySelector('.card-save-button')
@@ -205,7 +233,7 @@ function openRecipeInfo(data) {
 }
 
 /**
- * Populates index.html with <recipe-card> elements, as defined in
+ * Populates index.html with &lt;recipe-card> elements, as defined in
  * RecipeCard.js. This function is meant to be called for each section that needs
  * to be populated with recipe cards.
  * @param arrData an array of recipe ids (currently). example input:
@@ -222,7 +250,7 @@ const createRecipeCards = (arrData, location, numRecipesPopd = 5) => {
   let i = 0;
   // Checks to make sure only populate as many as requested by numRecipesPopd or
   // until reach the end of the array of recipe ids i.e. ran out of recipes
-  while (i < numRecipesPopd && i < arrData.length) {
+  while (i &lt; numRecipesPopd &amp;&amp; i &lt; arrData.length) {
     const recipeCard = document.createElement('recipe-card');
     recipeCard.setAttribute('class', `id_${arrData[i]}`);
     // work-in-progress by Fred for populating recipe cards.
@@ -256,7 +284,7 @@ const openSearchResults = async () => {
   // Don't navigate if query is blank
   if (!query) return;
 
-  const numOfRecipe = DEFAULT_NUM_CARDS;
+  const numOfRecipe = 4;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
@@ -350,7 +378,7 @@ const createRecipeClicked = () => {
 
   // format all the ingredients:
   const ingredientArray = [];
-  for (let i = 0; i < ingredientNames.length; i += 1) {
+  for (let i = 0; i &lt; ingredientNames.length; i += 1) {
     const ingObject = {};
     ingObject.name = ingredientNames[i].value;
     ingObject.amount = ingredientAmount[i].value;
@@ -367,23 +395,22 @@ const createRecipeClicked = () => {
         unitLong: ingredientUnits[i].value,
       },
     };
-    ingObject.originalString = `${ingredientAmount[i].value} ${ingredientUnits[i].value} ${ingredientNames[i].value}`;
     ingredientArray.push(ingObject);
   }
   finalObject.extendedIngredients = ingredientArray;
 
   // format step array
   const stepArray = [];
-  for (let i = 0; i < steps.length; i += 1) {
+  for (let i = 0; i &lt; steps.length; i += 1) {
     const stepObject = {};
     stepObject.number = i + 1;
     stepObject.step = steps[i].value;
     stepArray.push(stepObject);
   }
-  finalObject.analyzedInstructions = [{
+  finalObject.analyzedInstructions = {
     name: '',
     steps: stepArray,
-  }];
+  };
 
   // format summary
   const summary = document.querySelector(
@@ -409,8 +436,6 @@ const createRecipeClicked = () => {
   );
   finalObject.cookingMinutes = cooktime.value;
 
-  finalObject.readyInMinutes = parseInt(preptime.value, 10) + parseInt(cooktime.value, 10);
-
   // format image URL
   const imageUrl = document.querySelector(
     '.recipe-image-url',
@@ -422,7 +447,6 @@ const createRecipeClicked = () => {
     '.recipe-rating',
   );
   finalObject.averageRating = rating.value;
-  finalObject.spoonacularScore = rating.value * 20;
 
   // format name:
   const recipeName = document.querySelector(
@@ -461,7 +485,7 @@ async function showMoreClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
 
   const numOfCardExist = searchResultsContainer.childElementCount;
-  const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
+  const numOfAdditionRecipeCards = 4;
 
   const searchResult = await apiFuncs.getRecipesByName(
     query,
@@ -473,7 +497,7 @@ async function showMoreClicked() {
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
   const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
-  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
+  for (let i = numOfCardExist; (i &lt; numOfRecipe) &amp;&amp; (i &lt; localCategories[query].length); i += 1) {
     const singleResultRecipeId = localCategories[query][i];
     createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
   }
@@ -496,7 +520,7 @@ function scaleRecipeUp(recipe) {
 
 function scaleRecipeDown(recipe) {
   const servingSize = document.querySelector('.serving-size');
-  if (servingSize.innerHTML <= 1) {
+  if (servingSize.innerHTML &lt;= 1) {
     return;
   }
   servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) - 1;
@@ -520,17 +544,35 @@ function bindPopState() {
   });
 }
 
-async function populateExplore() {
+function populateExplore() {
   const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
 
-  const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('breakfast', breakfastResult);
-  const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('mainCourse', mainCourseResult);
-  const sideDishResult = await apiFuncs.getRecipesByType('side dish', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('sideDish', sideDishResult);
-  const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS);
-  storageFuncs.storeRecipeData('salad', saladResult);
+  // TODO: PRE-API IMPLEMENTATION | COMMENT/DELETE ONCE LOCALSTORAGE POPULATED BY API
+  const breakfastArrRecipe = [
+    tempData[0],
+    tempData[1],
+  ];
+  storageFuncs.storeRecipeData('breakfast', breakfastArrRecipe);
+
+  const lunchArrRecipe = [
+    tempData[2],
+    tempData[3],
+  ];
+  storageFuncs.storeRecipeData('lunch', lunchArrRecipe);
+
+  const dinnerArrRecipe = [
+    tempData[4],
+    tempData[5],
+  ];
+  storageFuncs.storeRecipeData('dinner', dinnerArrRecipe);
+
+  const trendingArrRecipe = [
+    tempData[6],
+    tempData[7],
+    tempData[8],
+  ];
+  storageFuncs.storeRecipeData('trending', trendingArrRecipe);
+  // ********* //
 
   // Get IDs from localStorage using fetcher functions
   const allCategoriesIds = fetcherFuncs.getAllCategoryRecipeId();
@@ -551,36 +593,17 @@ function populateSavedRecipes() {
   // storageFuncs.saveRecipeToList('favorites', 1987);
   // storageFuncs.saveRecipeToList('favorites', 5981);
   // ******* //
+
   // Location where recipe cards are to be added
   const grid = document.querySelector('.saved-recipes .results-grid');
 
   // Get IDs from localStorage using fetcher functions
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
-  // initialization
-  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-  if (currSavedPageSelect === 'List 1' && 'favorites' in allSavedIds) {
-    // add favorites cards to grid
-    createRecipeCards(allSavedIds.favorites, grid, DEFAULT_NUM_CARDS);
-  } else if (currSavedPageSelect === 'List 2' && 'created' in allSavedIds) {
-    // add created recipe cards to grid
-    createRecipeCards(allSavedIds.created, grid, DEFAULT_NUM_CARDS);
-  }
-}
-
-function savedRecipePageDropDown() {
-  // Location where recipe cards are to be added
-  const grid = document.querySelector('.saved-recipes .results-grid');
-  // Get IDs from localStorage using fetcher functions
-  const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
-  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-  removeAllChildNodes(grid);
-  if (currSavedPageSelect === 'List 1' && 'favorites' in allSavedIds) {
-    // add favorites cards to grid
-    createRecipeCards(allSavedIds.favorites, grid, DEFAULT_NUM_CARDS);
-  } else if (currSavedPageSelect === 'List 2' && 'created' in allSavedIds) {
-    // add created recipe cards to grid
-    createRecipeCards(allSavedIds.created, grid, DEFAULT_NUM_CARDS);
-  }
+  // Iterate through each "list" in saved lists and add recipe cards using their IDs
+  Object.keys(allSavedIds).forEach((category) => {
+    // TODO: Only populate cards for the active category
+    createRecipeCards(allSavedIds[category], grid, DEFAULT_NUM_CARDS);
+  });
 }
 
 function initializeButtons() {
@@ -608,10 +631,6 @@ function initializeButtons() {
   /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
-
-  /* Saved Recipe Page */
-  const savedPageSelect = document.querySelector('select.list-dropdown');
-  savedPageSelect.addEventListener('change', savedRecipePageDropDown);
 }
 
 function initializeLocalStorage() {
@@ -636,3 +655,26 @@ async function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addPage">addPage</a></li><li><a href="global.html#createRecipeCards">createRecipeCards</a></li><li><a href="global.html#extractIDs">extractIDs</a></li><li><a href="global.html#getDetailedRecipeInfoBulk">getDetailedRecipeInfoBulk</a></li><li><a href="global.html#getRecipesByAutocomplete">getRecipesByAutocomplete</a></li><li><a href="global.html#getRecipesByCuisine">getRecipesByCuisine</a></li><li><a href="global.html#getRecipesByName">getRecipesByName</a></li><li><a href="global.html#getRecipesByType">getRecipesByType</a></li><li><a href="global.html#navigate">navigate</a></li><li><a href="global.html#openRecipeInfo">openRecipeInfo</a></li><li><a href="global.html#scaleRecipeUp">scaleRecipeUp</a></li><li><a href="global.html#showMoreClicked">showMoreClicked</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Nov 29 2021 17:25:24 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
