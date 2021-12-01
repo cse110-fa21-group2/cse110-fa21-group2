@@ -74,7 +74,12 @@ const getDietKey = () => {
 };
 
 const getMaxPrepTime = () => {
-  return document.getElementById("max-time").value;
+  const prepTime = document.getElementById("max-time").value;
+  console.log(prepTime);
+  if(prepTime == '0'){
+    return '1440';
+  }
+  return prepTime;
 };
 
 const getCuisinesKeys = () => {
