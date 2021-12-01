@@ -453,44 +453,62 @@ const createRecipeClicked = () => {
  * populate more recipe cards
  */
 async function showMoreClicked() {
-  const query = getSearchQuery();
-  const searchResultsContainer = document.getElementById('search-results-container');
+  // const query = getSearchQuery();
+  // const searchResultsContainer = document.getElementById('search-results-container');
 
-  const numOfCardExist = searchResultsContainer.childElementCount;
-  const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
+  // const numOfCardExist = searchResultsContainer.childElementCount;
+  // const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
 
-  //TODO show more must apply FilterSort
-  const searchResult = await apiFuncs.getRecipesByName(
-    query,
-    numOfAdditionRecipeCards,
-    numOfCardExist,
-  );
-  storageFuncs.storeRecipeData(query, searchResult);
+  // //TODO show more must apply FilterSort
+  // const searchResult = await apiFuncs.getRecipesByName(
+  //   query,
+  //   numOfAdditionRecipeCards,
+  //   numOfCardExist,
+  // );
+  // storageFuncs.storeRecipeData(query, searchResult);
 
-  const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
-  const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
+  // const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
+  // const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
-  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
-    const singleResultRecipeId = localCategories[query][i];
-    createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
-  }
+  // for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
+  //   const singleResultRecipeId = localCategories[query][i];
+  //   createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
+  // }
+  searchFilterSortApply();
 }
 
-async function searchWithFilterSort() {
+async function searchFilterSortApply() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
-  //TODO: get filter and sort info from interface
 
+  //TODO: get filter and sort info from interface
+  const sorts = $('#sorts option:selected').filter(':selected').text(); 
+  const ordering = $('#ordering option:selected').filter(':selected').text();
+  console.log(sorts);
+  console.log(ordering)
+  let cuisineArr = [];
+  $('.filters-cuisine-body :checkbox').each(function(){
+    var name = $(this).attr('name'); // grab name of original
+    var value = $(this).attr('value'); // grab value of original
+    var ischecked = $(this).is(":checked"); //check if checked
+    if(ischecked){
+      cuisineArr.push(name + ',');
+    }
+  });
+  // console.log(cuisineArr);
   //{Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
   const searchResult = await apiFuncs.getRecipesByName(
     query,
     DEFAULT_NUM_CARDS,
     0,
-    {Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+    {Sort:sorts, sortDirection:ordering, cuisine: cuisineArr}
   );
+  console.log(searchResult);
   //TODO: don't store filter sort recipe, bc store function store unique ID event in diff cat  
   // storageFuncs.storeRecipeData(query, searchResult);
-
+  removeAllChildNodes(searchResultsContainer);
+  let resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
+  createRecipeCards(resultRecipeId, searchResultsContainer, 4);
 
 }
 
