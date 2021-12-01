@@ -34,3 +34,11 @@ jobs:
       # Runs linters
       - name: Lint
         run: npm run lint
+        
+      # Runs JSDoc 
+      - name: JSDoc Generation
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./source
+          recurse: true
+          output_dir: ./out
