@@ -453,31 +453,30 @@ const createRecipeClicked = () => {
  * populate more recipe cards
  */
 async function showMoreClicked() {
-  // const query = getSearchQuery();
-  // const searchResultsContainer = document.getElementById('search-results-container');
+  const query = getSearchQuery();
+  const searchResultsContainer = document.getElementById('search-results-container');
 
-  // const numOfCardExist = searchResultsContainer.childElementCount;
-  // const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
+  const numOfCardExist = searchResultsContainer.childElementCount;
+  const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
 
-  // //TODO show more must apply FilterSort
-  // const searchResult = await apiFuncs.getRecipesByName(
-  //   query,
-  //   numOfAdditionRecipeCards,
-  //   numOfCardExist,
-  // );
-  // storageFuncs.storeRecipeData(query, searchResult);
+  //TODO show more must apply FilterSort
+  const searchResult = await apiFuncs.getRecipesByName(
+    query,
+    numOfAdditionRecipeCards,
+    numOfCardExist,
+  );
+  storageFuncs.storeRecipeData(query, searchResult);
 
-  // const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
-  // const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
+  const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
+  const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
-  // for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
-  //   const singleResultRecipeId = localCategories[query][i];
-  //   createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
-  // }
-  searchFilterSortApply();
+  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
+    const singleResultRecipeId = localCategories[query][i];
+    createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
+  }
 }
 
-async function searchFilterSortApply() {
+async function applyClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
 
@@ -488,27 +487,28 @@ async function searchFilterSortApply() {
   console.log(ordering)
   let cuisineArr = [];
   $('.filters-cuisine-body :checkbox').each(function(){
-    var name = $(this).attr('name'); // grab name of original
-    var value = $(this).attr('value'); // grab value of original
+    //var name = $(this).attr('name'); // grab name of original
+    // var value = $(this).attr('value'); // grab value of original
     var ischecked = $(this).is(":checked"); //check if checked
     if(ischecked){
-      cuisineArr.push(name + ',');
+      var value = $(this).attr('value');
+      cuisineArr.push(value);
     }
   });
-  // console.log(cuisineArr);
+  console.log(cuisineArr);
   //{Sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
-  const searchResult = await apiFuncs.getRecipesByName(
-    query,
-    DEFAULT_NUM_CARDS,
-    0,
-    {Sort:sorts, sortDirection:ordering, cuisine: cuisineArr}
-  );
-  console.log(searchResult);
+  // const searchResult = await apiFuncs.getRecipesByName(
+  //   query,
+  //   DEFAULT_NUM_CARDS,
+  //   0,
+  //   {Sort:sorts, sortDirection:ordering, cuisine: cuisineArr}
+  // );
+  // console.log(searchResult);
   //TODO: don't store filter sort recipe, bc store function store unique ID event in diff cat  
   // storageFuncs.storeRecipeData(query, searchResult);
-  removeAllChildNodes(searchResultsContainer);
-  let resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
-  createRecipeCards(resultRecipeId, searchResultsContainer, 4);
+  // removeAllChildNodes(searchResultsContainer);
+  // let resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
+  // createRecipeCards(resultRecipeId, searchResultsContainer, 4);
 
 }
 
@@ -659,6 +659,9 @@ function initializeButtons() {
   /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
+  
+  const applyButton = document.getElementById('submit');
+  applyButton.addEventListener('click', applyClicked);
 
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
