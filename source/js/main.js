@@ -8,8 +8,6 @@ import { returnDummyData } from '../demo-code/exampleData.js';
 
 // Constant variables (reduce magic numbers)
 
-const tempData = returnDummyData();
-
 const DEFAULT_NUM_CARDS = 5;
 
 const sections = [
@@ -58,7 +56,7 @@ function openRecipeInfo(data) {
   const roundedStars = Math.round(starValue);
 
   const stars = document.getElementById('recipe-info-stars');
-  stars.src = `./source/images/${roundedStars}-star.svg`;
+  stars.src = `./images/${roundedStars}-star.svg`;
 
   const line = document.createElement('span');
   line.classList.add('divider');
@@ -68,10 +66,15 @@ function openRecipeInfo(data) {
   rating.appendChild(line);
 
   const likes = document.getElementById('recipe-info-likes');
-  likes.innerHTML = `${data.aggregateLikes} likes`;
+  likes.innerHTML = `${data.aggregateLikes ?? 0} likes`;
 
   const image = document.getElementById('recipe-info-image');
   image.src = data.image;
+  if (data.image) {
+    document.getElementById('recipe-info-image').classList.remove('hidden');
+  } else {
+    document.getElementById('recipe-info-image').classList.add('hidden');
+  }
 
   const desc = document.getElementById('info-description');
   desc.innerHTML = data.summary;
@@ -87,9 +90,9 @@ function openRecipeInfo(data) {
   });
 
   // Quick Facts
-  const prepMinutes = data.preparationMinutes ?? 0;
-  const totalMinutes = data.readyInMinutes ?? 0;
-  const cookMinutes = data.cookingMinutes ?? 0;
+  const prepMinutes = data.preparationMinutes || 0;
+  const totalMinutes = data.readyInMinutes || 0;
+  const cookMinutes = data.cookingMinutes || 0;
 
   const prepTime = document.getElementById('prep-time');
   prepTime.innerHTML = `Prep Time: ${prepMinutes} minutes`;
@@ -101,7 +104,7 @@ function openRecipeInfo(data) {
   totalTime.innerHTML = `Total Time: ${totalMinutes} minutes`;
 
   const servings = document.getElementById('info-servings');
-  servings.innerHTML = `Servings: ${data.servings}`;
+  servings.innerHTML = `Servings: ${data.servings || 0}`;
 
   // Measurements
   // Base serving size for recipe
