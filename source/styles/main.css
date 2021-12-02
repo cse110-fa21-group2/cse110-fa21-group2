@@ -232,7 +232,7 @@ h2.sort-filters-heading {
 
 button.sort-filter {
   border: 1px solid grey;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   color: rgb(0 0 0);
   cursor: pointer;
   display: inline-block;
@@ -245,21 +245,21 @@ button.sort-filter {
 
 button.cuisine-collapse {
   border: 1px solid grey;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   color: rgb(0 0 0);
   height: 2rem;
 }
 
 button.intolerance-collapse {
   border: 1px solid grey;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   color: rgb(0 0 0);
   height: 2rem;
 }
 
 button#show-more-button {
   border: 1px solid grey;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   color: rgb(0 0 0);
   margin-top: 1.5rem;
 }
