@@ -185,8 +185,8 @@ main {
 
 /* Search Results CSS */
 h1.search-results-title {
-  margin-top: 1rem;
   margin-left: 16rem;
+  margin-top: 1rem;
 }
 
 .search-results {
