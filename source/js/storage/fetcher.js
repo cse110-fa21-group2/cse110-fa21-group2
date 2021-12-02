@@ -35,7 +35,7 @@
 
 /**
  *
- * @returns {uid:recipe json,uid:recipe json} all recipes
+ * @returns {Object} all recipes {uid:recipe json,uid:recipe json}
  */
 export function getAllRecipes() {
   return JSON.parse(localStorage.getItem('recipeData'));
