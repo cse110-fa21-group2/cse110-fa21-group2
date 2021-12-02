@@ -68,7 +68,7 @@ main {
 
 .landing-container {
   grid-column: 2;
-  margin-top: 25%;
+  margin-top: 10vh;
   padding: 5rem;
 }
 
