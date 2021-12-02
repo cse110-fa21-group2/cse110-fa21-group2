@@ -478,6 +478,11 @@ const createRecipeClicked = () => {
   if (currSavedPageSelect === 'List 2') {
     // add card to saved recipe page
     const grid = document.querySelector('.saved-recipes .results-grid');
+    const possibleRepeatCard = grid.querySelectorAll(`.id_${finalObject.id}`);
+    for (let i = 0; i < possibleRepeatCard.length; i++) {
+      possibleRepeatCard[i].remove();
+    }
+
     const recipeCardNew = document.createElement('recipe-card');
     recipeCardNew.setAttribute('class', `id_${finalObject.id}`);
     recipeCardNew.populateFunc = openRecipeInfo;
