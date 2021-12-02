@@ -321,8 +321,7 @@ const addIngredientClicked = () => {
 const addStepClicked = () => {
   const createStepRoot = document.querySelector('.step-input-list');
   const allStepInput = document.querySelectorAll('.recipe-step-input');
-  const stepInput = document.createElement('input');
-  stepInput.setAttribute('type', 'text');
+  const stepInput = document.createElement('textarea');
   stepInput.setAttribute('class', 'form-control recipe-step-input');
   stepInput.setAttribute('id', `step-${allStepInput.length}`);
   stepInput.setAttribute('placeholder', `Step ${allStepInput.length + 1}`);
