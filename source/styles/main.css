@@ -184,6 +184,10 @@ main {
 }
 
 /* Search Results CSS */
+h1.search-results-title {
+  margin-top: 1rem;
+  margin-left: 16rem;
+}
 
 .search-results {
   margin-left: 5%;
@@ -210,7 +214,7 @@ div.sort-filter {
   margin-bottom: 2rem;
   margin-right: 1rem;
   margin-top: 1.5rem;
-  width: min-content;
+  width: 15rem;
 }
 
 div.sort-filter-body {
@@ -257,7 +261,7 @@ button.intolerance-collapse {
   height: 2rem;
 }
 
-button#show-more-button {
+button.show-more-button {
   border: 1px solid grey;
   border-radius: 0.25rem;
   color: rgb(0 0 0);
@@ -288,7 +292,7 @@ div.filters-intolerances-header {
   justify-content: space-between;
 }
 
-output {
+output.max-time-output {
   text-align: center;
 }
 
