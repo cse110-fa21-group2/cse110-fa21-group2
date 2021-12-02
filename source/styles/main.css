@@ -161,6 +161,7 @@ main {
   border-radius: 0.25em;
   display: flex;
   height: 3em;
+  margin: 0 1.5rem;
   overflow: hidden;
   position: relative;
   width: 20em;
@@ -180,7 +181,7 @@ main {
 
 /* Transition */
 .dropdown-wrapper:hover::after {
-  color: rgb(84 221 255);
+  color: var(--primary);
 }
 
 /* Search Results CSS */
