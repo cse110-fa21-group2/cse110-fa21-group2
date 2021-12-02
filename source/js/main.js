@@ -276,6 +276,40 @@ const openSearchResults = async () => {
   router.navigate('search-results', false);
 };
 
+/* Sort and filtering event handlers */
+function displaySortFilter() {
+  const displayLabel = document.getElementById('display-sort-filter').innerHTML;
+  if (displayLabel === 'Show Sort and Filter') {
+    document.getElementById('sort-filter-body').style.display = 'block';
+    document.getElementById('display-sort-filter').innerHTML = 'Hide Sort and Filter';
+  } else if (displayLabel === 'Hide Sort and Filter') {
+    document.getElementById('sort-filter-body').style.display = 'none';
+    document.getElementById('display-sort-filter').innerHTML = 'Show Sort and Filter';
+  }
+}
+
+function displayCuisine() {
+  const displayLabel = document.getElementById('cuisine-collapse').innerHTML;
+  if (displayLabel === '↓') {
+    document.getElementById('cuisine-collapse-body').style.display = 'flex';
+    document.getElementById('cuisine-collapse').innerHTML = '↑';
+  } else if (displayLabel === '↑') {
+    document.getElementById('cuisine-collapse-body').style.display = 'none';
+    document.getElementById('cuisine-collapse').innerHTML = '↓';
+  }
+}
+
+function displayIntolerance() {
+  const displayLabel = document.getElementById('intolerance-collapse').innerHTML;
+  if (displayLabel === '↓') {
+    document.getElementById('intolerance-collapse-body').style.display = 'flex';
+    document.getElementById('intolerance-collapse').innerHTML = '↑';
+  } else if (displayLabel === '↑') {
+    document.getElementById('intolerance-collapse-body').style.display = 'none';
+    document.getElementById('intolerance-collapse').innerHTML = '↓';
+  }
+}
+
 /* Other event handlers */
 
 const addIngredientClicked = () => {
@@ -614,6 +648,15 @@ function initializeButtons() {
   /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');
   showMoreButton.addEventListener('click', showMoreClicked);
+
+  const displaySortFilterButton = document.getElementById('display-sort-filter');
+  displaySortFilterButton.addEventListener('click', displaySortFilter);
+
+  const cuisineCollapse = document.getElementById('cuisine-collapse');
+  cuisineCollapse.addEventListener('click', displayCuisine);
+
+  const intoleranceCollapse = document.getElementById('intolerance-collapse');
+  intoleranceCollapse.addEventListener('click', displayIntolerance);
 
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');

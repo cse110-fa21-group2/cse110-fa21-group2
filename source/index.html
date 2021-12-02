@@ -129,11 +129,214 @@
 
       <section class="search-results hidden">
         <!-- TODO: Populate query field -->
-        <h1 id="search-results-title">Top recipes for "bread"</h1>
-        <div class="results-grid" id="search-results-container">
-          <!-- TODO: Populate recipe cards -->
+        <h1 class="search-results-title" id="search-results-title">Top recipes for "bread"</h1>
+        <div class="results-sort-wrapper">
+          <div class="search-wrapper">
+            <div class="sort-filter">
+                <form id="sort-filter-form" class="sort-filter-form">
+                    <div id="sort-filters" class="sort-filters">
+                      <div class="sort-filters-wrapper">
+                        <div class="sort-filters-top">
+                          <h2 class="sort-filters-heading">Sort and Filter</h2>
+                          <hr class="solid">
+                          <button id="display-sort-filter" class="sort-filter" type="button">Hide Sort and Filter</button>
+                        </div>
+                        <div class="sort-filter-body" id="sort-filter-body">
+                            <hr class="solid">
+                            <button id="clear-sort-filter" class="sort-filter" type="button">Clear all sorting and filtering</button>
+                            <hr class="solid">
+                            <div class="sort">
+                                <div class="sort-header">
+                                    <label class="sort-filter-label">Sort by:</label><br>
+                                    <select name="sorts" id="sorts" value="">
+                                        <option value="">None selected</option>
+                                        <option value="popularity">Popularity</option>
+                                        <option value="healthiness">Healthiness</option>
+                                        <option value="price">Price</option>
+                                        <option value="time">Time</option>
+                                    </select>
+                                    <select name="ordering" id="ordering" value="">
+                                        <option value="">None selected</option>
+                                        <option value="descending">Descending</option>
+                                        <option value="ascending">Ascending</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-meal-type">
+                                <div class="filters-meal-type">
+                                <div class="filter-meal-type-input">
+                                    <label class="sort-filter-label">Meal Type:</label><br>
+                                    <select name="meal-type" id="meal-type" value="">
+                                        <option value="">None selected</option>
+                                        <option value="main course">Main course</option>
+                                        <option value="side dish">Side dish</option>
+                                        <option value="dessert">Dessert</option>
+                                        <option value="appetizer">Appetizer</option>
+                                        <option value="salad">Salad</option>
+                                        <option value="bread">Bread</option>
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="soup">Soup</option>
+                                        <option value="beverage">Beverage</option>
+                                        <option value="sauce">Sauce</option>
+                                        <option value="marinade">Marinade</option>
+                                        <option value="fingerfood">Fingerfood</option>
+                                        <option value="snack">Snack</option>
+                                        <option value="drink">Drink</option>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-cuisine">
+                            <div class="filters-cuisine-header">
+                                <label class="sort-filter-label">Filter by cuisine:</label>
+                                <button class="cuisine-collapse" id="cuisine-collapse" type="button">↑</button>
+                            </div>
+                            <div class="filters-cuisine-body" id="cuisine-collapse-body">
+                                <div class="filter-cuisine-input">
+                                <input type="checkbox" id="cuisine1" name="African" value="African">
+                                <label for="cuisine1">African</label><br>
+                                <input type="checkbox" id="cuisine2" name="American" value="American">
+                                <label for="cuisine2">American</label><br>
+                                <input type="checkbox" id="cuisine3" name="British" value="British">
+                                <label for="cuisine3">British</label><br>
+                                <input type="checkbox" id="cuisine4" name="Cajun" value="Cajun">
+                                <label for="cuisine4">Cajun</label><br>
+                                <input type="checkbox" id="cuisine5" name="Caribbean" value="Caribbean">
+                                <label for="cuisine5">Caribbean</label><br>
+                                <input type="checkbox" id="cuisine6" name="Chinese" value="Chinese">
+                                <label for="cuisine6">Chinese</label><br>
+                                <input type="checkbox" id="cuisine7" name="Eastern European" value="Eastern European">
+                                <label for="cuisine7">Eastern European</label><br>
+                                <input type="checkbox" id="cuisine8" name="European" value="European">
+                                <label for="cuisine8">European</label><br>
+                                <input type="checkbox" id="cuisine9" name="French" value="French">
+                                <label for="cuisine9">French</label><br>
+                                <input type="checkbox" id="cuisine10" name="German" value="German">
+                                <label for="cuisine10">German</label><br>
+                                <input type="checkbox" id="cuisine11" name="Greek" value="Greek">
+                                <label for="cuisine11">Greek</label><br>
+                                <input type="checkbox" id="cuisine12" name="Indian" value="Indian">
+                                <label for="cuisine12">Indian</label><br>
+                                <input type="checkbox" id="cuisine13" name="Irish" value="Irish">
+                                <label for="cuisine13">Irish</label><br>
+                                <input type="checkbox" id="cuisine14" name="Italian" value="Italian">
+                                <label for="cuisine14">Italian</label><br>
+                                <input type="checkbox" id="cuisine15" name="Japanese" value="Japanese">
+                                <label for="cuisine15">Japanese</label><br>
+                                <input type="checkbox" id="cuisine16" name="Jewish" value="Jewish">
+                                <label for="cuisine16">Jewish</label><br>
+                                <input type="checkbox" id="cuisine17" name="Korean" value="Korean">
+                                <label for="cuisine17">Korean</label><br>
+                                <input type="checkbox" id="cuisine18" name="Latin American" value="Latin American">
+                                <label for="cuisine18">Latin American</label><br>
+                                <input type="checkbox" id="cuisine19" name="Mediterranean" value="Mediterranean">
+                                <label for="cuisine19">Mediterranean</label><br>
+                                <input type="checkbox" id="cuisine20" name="Mexican" value="Mexican">
+                                <label for="cuisine20">Mexican</label><br>
+                                <input type="checkbox" id="cuisine21" name="Middle Eastern" value="Middle Eastern">
+                                <label for="cuisine21">Middle Eastern</label><br>
+                                <input type="checkbox" id="cuisine22" name="Nordic" value="Nordic">
+                                <label for="cuisine22">Nordic</label><br>
+                                <input type="checkbox" id="cuisine23" name="Southern" value="Southern">
+                                <label for="cuisine23">Southern</label><br>
+                                <input type="checkbox" id="cuisine24" name="Spanish" value="Spanish">
+                                <label for="cuisine24">Spanish</label><br>
+                                <input type="checkbox" id="cuisine25" name="Thai" value="Thai">
+                                <label for="cuisine25">Thai</label><br>
+                                <input type="checkbox" id="cuisine26" name="Vietnamese" value="Vietnamese">
+                                <label for="cuisine26">Vietnamese</label><br>
+                                </div>
+                            </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-diet">
+                                <div class="filters-diet-header">
+                                    <label class="sort-filter-label">Dietary restrictions:</label>
+                                </div>
+                                <div class="filters-diet-body">
+                                <div class="filter-diet-input">
+                                    <select name="diets" id="diets" value="">
+                                        <option value="">None selected</option>
+                                        <option value="Gluten Free">Gluten Free</option>
+                                        <option value="Ketogenic">Ketogenic</option>
+                                        <option value="Vegetarian">Vegetarian</option>
+                                        <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+                                        <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                                        <option value="Vegan">Vegan</option>
+                                        <option value="Pescetarian">Pescetarian</option>
+                                        <option value="Paleo">Paleo</option>
+                                        <option value="Primal">Primal</option>
+                                        <option value="Low FODMAP">Low FODMAP</option>
+                                        <option value="Whole30">Whole30</option>
+                                    </select>
+                                </div>
+                                </div>
+                                <hr class="solid">
+                                <div class="filters-max-time">
+                                    <div class="filters-max-time-header">
+                                    <label class="sort-filter-label">Max prep time:</label>
+                                    </div>
+                                    <div class="filters-max-time-body">
+                                    <div class="filter-max-time-input">
+                                        <input type="range" value="" min="0" max="1440" step="10" oninput="this.nextElementSibling.nextElementSibling.value = this.value + ' min (roughly ' + (this.value/60).toFixed(2) + ' hr)'"><br>
+                                        <output class="max-time-output">Default</output>
+                                    </div>
+                                    </div>
+                            </div>
+                            <hr class="solid">
+                            <div class="filters-intolerances">
+                                <div class="filters-intolerances-header">
+                                    <label class="sort-filter-label">Filter by intolerances:</label>
+                                    <button class="intolerance-collapse" id="intolerance-collapse" type="button">↑</button>
+                                </div>
+                                <div class="filters-intolerance-body" id="intolerance-collapse-body">
+                                    <div class="filter-intolerance-input">
+                                        <input type="checkbox" id="intolerance1" name="Dairy" value="Dairy">
+                                        <label for="intolerance1">Dairy Free</label><br>
+                                        <input type="checkbox" id="intolerance2" name="Egg" value="Egg">
+                                        <label for="intolerance2">Egg Free</label><br>
+                                        <input type="checkbox" id="intolerance3" name="Gluten" value="Gluten">
+                                        <label for="intolerance3">Gluten Free</label><br>
+                                        <input type="checkbox" id="intolerance4" name="Grain" value="Grain">
+                                        <label for="intolerance4">Grain Free</label><br>
+                                        <input type="checkbox" id="intolerance5" name="Peanut" value="Peanut">
+                                        <label for="intolerance5">Peanut Free</label><br>
+                                        <input type="checkbox" id="intolerance6" name="Seafood" value="Seafood">
+                                        <label for="intolerance7">Seafood Free</label><br>
+                                        <input type="checkbox" id="intolerance7" name="Sesame" value="Sesame">
+                                        <label for="intolerance7">Sesame Free</label><br>
+                                        <input type="checkbox" id="intolerance8" name="Shellfish" value="Shellfish">
+                                        <label for="intolerance8">Shellfish Free</label><br>
+                                        <input type="checkbox" id="intolerance9" name="Soy" value="Soy">
+                                        <label for="intolerance9">Soy Free</label><br>
+                                        <input type="checkbox" id="intolerance10" name="Sulfite" value="Sulfite">
+                                        <label for="intolerance10">Sulfite Free</label><br>
+                                        <input type="checkbox" id="intolerance11" name="Tree Nut" value="Tree Nut">
+                                        <label for="intolerance11">Tree Nut Free</label><br>
+                                        <input type="checkbox" id="intolerance12" name="Wheat" value="Wheat">
+                                        <label for="intolerance12">Wheat Free</label><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="solid">
+                        <div class="sort-filters-bottom">
+                          <button id="apply-sort-filter" class="sort-filter" type="button">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+            </div>
+          </div>
+          <div class="results-body" id="results-body-container">
+            <div class="results-grid" id="search-results-container">
+              <!-- TODO: Populate recipe cards -->
+            </div>
+            <button class="show-more-button" id="show-more-button">Show more</button>
+          </div>
         </div>
-        <button id="show-more-button">Show more</button>
       </section>
 
       <section class="recipe-info hidden">

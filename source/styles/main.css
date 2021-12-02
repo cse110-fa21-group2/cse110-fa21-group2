@@ -139,13 +139,13 @@ main {
 
 .list-dropdown {
   appearance: none;
-  background-color: #ddd;
+  background-color: white;
   background-image: none;
+  border: 1px solid white;
   border: 0;
   box-shadow: none;
   cursor: pointer;
   flex: 1;
-  margin: 0 1.5rem;
   outline: 0;
   padding: 0 1em;
 }
@@ -157,6 +157,7 @@ main {
 
 /* Custom Select wrapper */
 .dropdown-wrapper {
+  border: 1px solid #ddd;
   border-radius: 0.25em;
   display: flex;
   height: 3em;
@@ -183,6 +184,10 @@ main {
 }
 
 /* Search Results CSS */
+h1.search-results-title {
+  margin-left: 16rem;
+  margin-top: 1rem;
+}
 
 .search-results {
   margin-left: 5%;
@@ -192,6 +197,114 @@ main {
 
 .row-title {
   margin: 2rem 0 0;
+}
+
+div.results-sort-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+div.search-wrapper {
+  display: flex;
+  right: 2rem;
+}
+
+div.sort-filter {
+  height: min-content;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  margin-top: 1.5rem;
+  width: 15rem;
+}
+
+div.sort-filter-body {
+  display: block;
+}
+
+form.sort-filter-form {
+  background-color: white;
+  box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+  padding: 15px;
+  transition: all 0.2s ease;
+}
+
+h2.sort-filters-heading {
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  text-align: center;
+}
+
+button.sort-filter {
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  color: rgb(0 0 0);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  width: 13rem;
+}
+
+button.cuisine-collapse {
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  color: rgb(0 0 0);
+  height: 2rem;
+}
+
+button.intolerance-collapse {
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  color: rgb(0 0 0);
+  height: 2rem;
+}
+
+button.show-more-button {
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  color: rgb(0 0 0);
+  margin-top: 1.5rem;
+}
+
+hr.solid {
+  border-top: 2px solid black;
+  margin: 0.5rem;
+}
+
+label.sort-filter-label {
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+select {
+  margin-top: 0.5rem;
+}
+
+div.filters-cuisine-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+div.filters-intolerances-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+output.max-time-output {
+  text-align: center;
+}
+
+@media only screen and (max-width: 530px) {
+  div.results-sort-wrapper {
+    display: block;
+  }
+
+  div.search-wrapper {
+    display: block;
+    right: 2rem;
+  }
 }
 
 /* Create Recipe CSS */
