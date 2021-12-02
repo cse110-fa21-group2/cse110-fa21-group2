@@ -231,18 +231,36 @@ h2.sort-filters-heading {
 }
 
 button.sort-filter {
+  border: 1px solid grey;
+  border-radius: .25rem;
+  color: rgb(0 0 0);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
   width: 13rem;
 }
 
 button.cuisine-collapse {
+  border: 1px solid grey;
+  border-radius: .25rem;
+  color: rgb(0 0 0);
   height: 2rem;
 }
 
 button.intolerance-collapse {
+  border: 1px solid grey;
+  border-radius: .25rem;
+  color: rgb(0 0 0);
   height: 2rem;
 }
 
 button#show-more-button {
+  border: 1px solid grey;
+  border-radius: .25rem;
+  color: rgb(0 0 0);
   margin-top: 1.5rem;
 }
 
