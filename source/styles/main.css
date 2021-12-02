@@ -92,7 +92,6 @@ main {
 
 .landing-buttons button:hover {
   background-color: var(--primary);
-  border: none;
   color: var(--secondary);
 }
 
@@ -307,7 +306,6 @@ main {
 .back-btn:hover,
 .org-btn:hover {
   background-color: var(--primary);
-  border: none;
   color: var(--secondary);
 }
 
@@ -333,7 +331,7 @@ main {
   display: flex;
   height: 2rem;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .rating-favorite-wrapper {
@@ -463,6 +461,7 @@ main {
 
 .info-title {
   font-size: 24px;
+  margin: 0;
 }
 
 .info-subtitle {
