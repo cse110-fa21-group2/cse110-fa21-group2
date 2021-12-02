@@ -42,12 +42,13 @@ class RecipeCard extends HTMLElement {
       white-space: normal;
       width: 15rem;
     }
-    
+
     .custom-body {
       background-color: white;
       bottom: 0;
       display: grid;
       grid-template-columns: 8fr 1fr;
+      grid-template-rows: 1fr 1fr;
       height: 25%;
       left: 0;
       max-width: 100%;
@@ -56,12 +57,13 @@ class RecipeCard extends HTMLElement {
       position: absolute;
       right: 0;
     }
-    
+
     .custom-title {
       align-items: center;
       display: flex;
       font-size: 14px;
       grid-column: 1;
+      grid-row: 1 / span 2;
       margin: 0;
       max-height: 100%;
       max-width: 100%;
@@ -69,7 +71,7 @@ class RecipeCard extends HTMLElement {
       text-overflow: clip;
       white-space: normal;
     }
-    
+
     .save-btn {
       background: white;
       border: none;
@@ -77,8 +79,19 @@ class RecipeCard extends HTMLElement {
       color: black;
       cursor: pointer;
       grid-column: 2;
+      grid-row: 1;
     }
-    
+
+    .delete-btn {
+      background: white;
+      border: none;
+      border-radius: 0.25em;
+      color: black;
+      cursor: pointer;
+      grid-column: 2;
+      grid-row: 2;
+    }
+
     .fa-heart {
       color: red;
       font-size: 20px;
@@ -161,9 +174,7 @@ class RecipeCard extends HTMLElement {
 
     if (this.created) {
       const deleteRecipe = document.createElement('button');
-      deleteRecipe.classList.add('card-btn');
-      deleteRecipe.classList.add('card-btn-outline');
-      deleteRecipe.classList.add('card-delete-button');
+      deleteRecipe.classList.add('delete-btn');
 
       const clickDelete = (e) => {
         e.stopPropagation();
@@ -190,105 +201,6 @@ class RecipeCard extends HTMLElement {
     });
 
     this.shadowRoot.append(recipeCard);
-
-    // const cardBody = document.createElement('div');
-    // cardBody.setAttribute('class', 'card-body');
-    // const expandRecipe = document.createElement('button');
-    // expandRecipe.setAttribute('class', 'astext');
-    // expandRecipe.innerText = this.json.title;
-    // cardBody.appendChild(expandRecipe);
-
-    // const favDiv = document.createElement('div');
-    // favDiv.setAttribute('class', 'favorite');
-    // const favButton = document.createElement('button');
-    // favButton.setAttribute('class', 'card-btn card-btn-outline card-save-button');
-
-    // const flipSaved = (e) => {
-    //   e.stopPropagation();
-    //   const currCards = document.querySelectorAll(`.id_${this.json.id}`);
-    //   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-    //   if (this.saved) {
-    //     storageFuncs.removeRecipeFromList('favorites', this.json.id);
-    //     if (currSavedPageSelect === 'List 1') {
-    //       // remove card in saved recipe page
-    //       const grid = document.querySelector('.saved-recipes .results-grid');
-    //       const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
-    //       for (let i = 0; i < currentCardsSaved.length; i++) {
-    //         currentCardsSaved[i].remove();
-    //       }
-    //     }
-    //   } else {
-    //     storageFuncs.saveRecipeToList('favorites', this.json.id);
-    //     if (currSavedPageSelect === 'List 1') {
-    //       // add card to saved recipe page
-    //       const grid = document.querySelector('.saved-recipes .results-grid');
-    //       const recipeCardNew = document.createElement('recipe-card');
-    //       recipeCardNew.setAttribute('class', `id_${this.json.id}`);
-    //       recipeCardNew.data = this.json;
-    //       grid.appendChild(recipeCardNew);
-    //     }
-    //   }
-    //   for (let i = 0; i < currCards.length; i++) {
-    //     const { shadowRoot } = currCards[i];
-    //     const element = shadowRoot
-    //       .querySelector('.card-save-button')
-    //       .querySelector('i');
-    //     if (currCards[i].saved) {
-    //       element.classList.add('far');
-    //       element.classList.remove('fas');
-    //     } else {
-    //       element.classList.remove('far');
-    //       element.classList.add('fas');
-    //     }
-    //     currCards[i].saved = !currCards[i].saved;
-    //   }
-    // };
-
-    // favButton.addEventListener('click', flipSaved);
-
-    // const saveIcon = document.createElement('i');
-    // if (this.saved) {
-    //   saveIcon.classList.add('fas');
-    // } else {
-    //   saveIcon.classList.add('far');
-    // }
-    // saveIcon.classList.add('fa-heart');
-    // favButton.appendChild(saveIcon);
-    // favDiv.appendChild(favButton);
-
-    // if (this.created) {
-    //   const deleteRecipe = document.createElement('button');
-    //   deleteRecipe.classList.add('card-btn');
-    //   deleteRecipe.classList.add('card-btn-outline');
-    //   deleteRecipe.classList.add('card-delete-button');
-
-    //   const clickDelete = () => {
-    //     storageFuncs.deleteCreatedRecipe(this.json.id);
-    //     const currentCards = document.querySelectorAll(`.id_${this.json.id}`);
-    //     for (let i = 0; i < currentCards.length; i++) {
-    //       currentCards[i].remove();
-    //     }
-    //   };
-
-    //   deleteRecipe.addEventListener('click', clickDelete);
-
-    //   const deleteIcon = document.createElement('i');
-    //   deleteIcon.classList.add('fas');
-    //   deleteIcon.classList.add('fa-trash-alt');
-    //   deleteRecipe.appendChild(deleteIcon);
-    //   favDiv.appendChild(deleteRecipe);
-    // }
-
-    // cardBody.appendChild(favDiv);
-
-    // card.appendChild(cardBody);
-
-    // card.addEventListener('click', () => {
-    //   console.log(this.json);
-    //   this.populate(this.json);
-    // });
-
-    // this.shadowRoot.append(card);
   }
 }
 
