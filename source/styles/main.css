@@ -110,6 +110,7 @@ main {
 }
 
 .line {
+  background-color: var(--orange);
   border: 2px solid var(--orange);
   border-radius: 10px;
   height: 10px;
