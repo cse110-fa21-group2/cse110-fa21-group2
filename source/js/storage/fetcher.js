@@ -44,7 +44,7 @@ export function getAllRecipes() {
 /**
  *
  * @param {*} recipeid
- * @returns {json} object of the recipe
+ * @returns {Object} object of the recipe
  */
 export function getSingleRecipe(recipeid) {
   const recipes = getAllRecipes();
@@ -53,7 +53,7 @@ export function getSingleRecipe(recipeid) {
 
 /**
  *
- * @return {category1:[recipe ids],category2:[recipe ids]} recipe id in categories
+ * @return {Object} recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
  */
 export function getAllCategoryRecipeId() {
   return JSON.parse(localStorage.getItem('explore-categories'));
@@ -61,7 +61,7 @@ export function getAllCategoryRecipeId() {
 
 /**
  * Gets all recipes sorted by categories where key=category and value=recipeJSON
- * @return {category1:[recipe json],category2:[recipe json]} Object recipe in categories
+ * @return {Object} Object recipe in categories {category1:[recipe json],category2:[recipe json]}
  */
 export function getAllCategoryRecipe() {
   const categoryId = getAllCategoryRecipeId();
@@ -81,7 +81,7 @@ export function getAllCategoryRecipe() {
 
 /**
  *
- * @returns {list1:[recipe ids],list2:[recipe ids]} recipe id in saved lists
+ * @returns {Object} recipe id in saved lists {list1:[recipe ids],list2:[recipe ids]}
  */
 export function getAllSavedRecipeId() {
   return JSON.parse(localStorage.getItem('savedLists'));
@@ -89,7 +89,7 @@ export function getAllSavedRecipeId() {
 
 /**
  *
- * @returns {list1:[recipe json],list2:[recipe json]} recipe in saved lists
+ * @returns {Object} recipe in saved lists {list1:[recipe json],list2:[recipe json]}
  */
 export function getAllSavedRecipe() {
   const savedId = getAllSavedRecipeId();
