@@ -68,7 +68,7 @@ main {
 
 .landing-container {
   grid-column: 2;
-  margin-top: 25%;
+  margin-top: 10vh;
   padding: 5rem;
 }
 
@@ -92,7 +92,6 @@ main {
 
 .landing-buttons button:hover {
   background-color: var(--primary);
-  border: none;
   color: var(--secondary);
 }
 
@@ -110,6 +109,7 @@ main {
 }
 
 .line {
+  background-color: var(--orange);
   border: 2px solid var(--orange);
   border-radius: 10px;
   height: 10px;
@@ -132,16 +132,54 @@ main {
   width: 75%;
 }
 
-.list-dropdown {
-  float: left;
-  height: 1.5rem;
-  margin-right: 1rem;
-  min-width: 7rem;
-}
-
 .edit-btn {
   height: 1.5rem;
   min-width: 7rem;
+}
+
+.list-dropdown {
+  appearance: none;
+  background-color: #ddd;
+  background-image: none;
+  border: 0;
+  box-shadow: none;
+  cursor: pointer;
+  flex: 1;
+  margin: 0 1.5rem;
+  outline: 0;
+  padding: 0 1em;
+}
+
+/* Remove IE arrow */
+.list-dropdown::-ms-expand {
+  display: none;
+}
+
+/* Custom Select wrapper */
+.dropdown-wrapper {
+  border-radius: 0.25em;
+  display: flex;
+  height: 3em;
+  overflow: hidden;
+  position: relative;
+  width: 20em;
+}
+
+/* Arrow */
+.dropdown-wrapper::after {
+  background-color: #eee;
+  content: "\25BC";
+  padding: 1em;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.25s all ease;
+}
+
+/* Transition */
+.dropdown-wrapper:hover::after {
+  color: rgb(84 221 255);
 }
 
 /* Search Results CSS */
@@ -268,7 +306,6 @@ main {
 .back-btn:hover,
 .org-btn:hover {
   background-color: var(--primary);
-  border: none;
   color: var(--secondary);
 }
 
@@ -294,7 +331,7 @@ main {
   display: flex;
   height: 2rem;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .rating-favorite-wrapper {
@@ -424,6 +461,7 @@ main {
 
 .info-title {
   font-size: 24px;
+  margin: 0;
 }
 
 .info-subtitle {

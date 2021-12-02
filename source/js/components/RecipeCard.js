@@ -67,9 +67,7 @@ class RecipeCard extends HTMLElement {
       margin: 0;
       max-height: 100%;
       max-width: 100%;
-      overflow-y: scroll;
-      text-overflow: clip;
-      white-space: normal;
+      overflow-y: hidden;
     }
 
     .save-btn {

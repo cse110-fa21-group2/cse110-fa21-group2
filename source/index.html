@@ -115,11 +115,12 @@
 
       <section class="saved-recipes hidden">
         <div class="saved-recipe-header">
-          <select name="savedLists" class="list-dropdown">
-            <option value="List 1" >Saved Recipes</option>
-            <option value="List 2">Created Recipes</option>
-          </select>
-          <button class="edit-btn">Manage Lists</button>
+          <div class="dropdown-wrapper">
+            <select name="savedLists" class="list-dropdown">
+              <option value="List 1" >Saved Recipes</option>
+              <option value="List 2">Created Recipes</option>
+            </select>
+          </div>
         </div>
         <div class="results-grid">
 
@@ -329,30 +330,6 @@
                     />
                   </div>
                 </div>
-
-                <div class="row create-ingredient-fact">
-                  <div class="col">
-                    <input
-                      type="text"
-                      class="form-control recipe-ingredient-name"
-                      placeholder="Name"
-                    />
-                  </div>
-                  <div class="col">
-                    <input
-                      type="number"
-                      class="form-control recipe-ingredient-amount"
-                      placeholder="Amount"
-                    />
-                  </div>
-                  <div class="col">
-                    <input
-                      type="text"
-                      class="form-control recipe-ingredient-unit"
-                      placeholder="Unit"
-                    />
-                  </div>
-                </div>
               </div>
               <div class="add-ingredient-button-wrapper">
                 <button
@@ -366,25 +343,25 @@
             <div class="col-6">
               <h2 class="create-title">Facts:</h2>
 
-              <p class="create-title-fact">Prep Time (minutes):</p>
+              <p class="create-title-fact">Prep Time</p>
               <input
                 type="number"
                 class="form-control recipe-preptime"
-                placeholder="preptime"
+                placeholder="15 minutes"
               />
-              <p class="create-title-fact">Cook Time (minutes):</p>
+              <p class="create-title-fact">Cook Time</p>
               <input
                 type="number"
                 class="form-control recipe-cooktime"
-                placeholder="cooktime"
+                placeholder="30 minutes"
               />
-              <p class="create-title-fact">Recipe Image URL:</p>
+              <p class="create-title-fact">Recipe Image (URL)</p>
               <input
                 type="text"
                 class="form-control recipe-image-url"
-                placeholder="Url"
+                placeholder="website.com/pic.jpg"
               />
-              <p class="create-title-fact">Rating(0-5):</p>
+              <p class="create-title-fact">Rating (0-5):</p>
               <input
                 type="number"
                 class="form-control recipe-rating"
@@ -398,18 +375,11 @@
           <div class="row">
             <h2 class="create-title">Instructions:</h2>
             <div class="step-input-list">
-              <input
-                type="text"
-                class="form-control recipe-step-input"
-                id="0"
-                placeholder="Step 1"
-              />
-              <input
-                type="text"
-                class="form-control recipe-step-input"
-                id="1"
-                placeholder="Step 2"
-              />
+                <textarea
+                  class="form-control recipe-step-input"
+                  placeholder="Step 1"
+                ></textarea>
+
             </div>
             <div class="add-step-button-wrapper">
               <button type="button" class="btn btn-dark add-step-button">
