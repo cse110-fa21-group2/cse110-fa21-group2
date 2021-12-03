@@ -349,6 +349,10 @@ const openSearchResults = async () => {
   const searchResultPageTitle = document.getElementById('search-results-title');
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
+  
+  if (searchResult.length === 0) {
+    searchResultPageTitle.innerHTML = `No results found for "${query}"`;
+  }
 
   const storeName = `${query}popularitydesc1440`;
   storageFuncs.storeRecipeData(storeName, searchResult);
