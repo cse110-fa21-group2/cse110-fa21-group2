@@ -43,6 +43,83 @@ const removeAllChildNodes = (parent) => {
   }
 };
 
+const getSortKey = () => {
+  let sorts = $('#sorts option:selected').filter(':selected').text().toLowerCase();
+  if (sorts === 'none selected') {
+    sorts = 'popularity';
+  }
+  return sorts;
+};
+
+const getOrderingKey = () => {
+  const ordering = $('#ordering option:selected').filter(':selected').text();
+  if (ordering === 'Ascending') {
+    return 'asc';
+  }
+  return 'desc';
+};
+
+const getMealTypeKey = () => {
+  let mealType = $('#meal-type option:selected').filter(':selected').text().toLowerCase();
+  if (mealType === 'none selected') {
+    mealType = '';
+  }
+  return mealType;
+};
+
+const getDietKey = () => {
+  let dietS = $('#diets option:selected').filter(':selected').text();
+  if (dietS === 'None selected') {
+    dietS = '';
+  }
+  return dietS;
+};
+
+const getMaxPrepTime = () => {
+  const prepTime = document.getElementById('max-time').value;
+  console.log(prepTime);
+  if (prepTime === '720') {
+    return '1440';
+  }
+  return prepTime;
+};
+
+const getCuisinesKeys = () => {
+  let cuisineString = '';
+  let firstTime = true;
+  $('.filters-cuisine-body :checkbox').each(function () {
+    const ischecked = $(this).is(':checked'); // check if checked
+    if (ischecked) {
+      const value = $(this).attr('value');
+      if (firstTime) {
+        cuisineString += value;
+        firstTime = false;
+      } else {
+        cuisineString += `,${value}`;
+      }
+    }
+  });
+  return cuisineString;
+};
+
+const geIntolerances = () => {
+  let intoleranceString = '';
+  let firstTime = true;
+  $('.filters-intolerance-body :checkbox').each(function () {
+    const ischecked = $(this).is(':checked'); // check if checked
+    if (ischecked) {
+      const value = $(this).attr('value');
+      if (firstTime) {
+        intoleranceString += value;
+        firstTime = false;
+      } else {
+        intoleranceString += `,${value}`;
+      }
+    }
+  });
+  return intoleranceString;
+};
+
 /**
  * Populates the ExpandedRecipeCard with data
  * @param {Object} data - JSON object to use for page data
@@ -269,9 +346,10 @@ const openSearchResults = async () => {
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
 
-  storageFuncs.storeRecipeData(query, searchResult);
+  const storeName = `${query}popularitydesc1440`;
+  storageFuncs.storeRecipeData(storeName, searchResult);
 
-  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[query];
+  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
   const searchResultsContainer = document.getElementById('search-results-container');
   removeAllChildNodes(searchResultsContainer);
   createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
@@ -496,32 +574,95 @@ const createRecipeClicked = () => {
   console.log(finalObject);
 };
 
-/**
- * active when show more button click
- * add # more recipe cards by fetch # more recipe from API with offset
- * populate more recipe cards
- */
 async function showMoreClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
-
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
 
+  const sorts = getSortKey();
+  const ordering = getOrderingKey();
+  const mealType = getMealTypeKey();
+  const dietS = getDietKey();
+  const maxPrepTime = getMaxPrepTime();
+  const cuisineString = getCuisinesKeys();
+  const intoleranceString = geIntolerances();
+
   const searchResult = await apiFuncs.getRecipesByName(
     query,
-    numOfAdditionRecipeCards,
+    DEFAULT_NUM_CARDS,
     numOfCardExist,
+    {
+      sort: sorts,
+      sortDirection: ordering,
+      cuisine: cuisineString,
+      type: mealType,
+      diet: dietS,
+      intolerances: intoleranceString,
+      maxReadyTime: maxPrepTime,
+    },
   );
-  storageFuncs.storeRecipeData(query, searchResult);
+  console.log(searchResult);
+
+  const storeName = query + sorts + ordering + cuisineString + mealType + dietS
+  + intoleranceString + maxPrepTime;
+  storageFuncs.storeRecipeData(storeName, searchResult);
 
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
   const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
-  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[query].length); i += 1) {
-    const singleResultRecipeId = localCategories[query][i];
+  for (let i = numOfCardExist; (i < numOfRecipe) && (i < localCategories[storeName].length);
+    i += 1) {
+    const singleResultRecipeId = localCategories[storeName][i];
     createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
   }
+}
+
+async function applyClicked() {
+  const query = getSearchQuery();
+  const searchResultsContainer = document.getElementById('search-results-container');
+
+  // get filter and sort info from interface
+  const sorts = getSortKey();
+  const ordering = getOrderingKey();
+  const mealType = getMealTypeKey();
+  const dietS = getDietKey();
+  const maxPrepTime = getMaxPrepTime();
+  const cuisineString = getCuisinesKeys();
+  const intoleranceString = geIntolerances();
+
+  console.log(sorts);
+  console.log(ordering);
+  console.log(mealType);
+  console.log(dietS);
+  console.log(maxPrepTime);
+  console.log(cuisineString);
+  console.log(intoleranceString);
+
+  // example: {sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
+  const searchResult = await apiFuncs.getRecipesByName(
+    query,
+    DEFAULT_NUM_CARDS,
+    0,
+    {
+      sort: sorts,
+      sortDirection: ordering,
+      cuisine: cuisineString,
+      type: mealType,
+      diet: dietS,
+      intolerances: intoleranceString,
+      maxReadyTime: maxPrepTime,
+    },
+  );
+  console.log(searchResult);
+
+  const storeName = query + sorts + ordering + cuisineString + mealType + dietS
+  + intoleranceString + maxPrepTime;
+  console.log(storeName);
+  storageFuncs.storeRecipeData(storeName, searchResult);
+  removeAllChildNodes(searchResultsContainer);
+  const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
+  createRecipeCards(resultRecipeId, searchResultsContainer, DEFAULT_NUM_CARDS);
 }
 
 /**
@@ -665,6 +806,9 @@ function initializeButtons() {
 
   const intoleranceCollapse = document.getElementById('intolerance-collapse');
   intoleranceCollapse.addEventListener('click', displayIntolerance);
+
+  const applyButton = document.getElementById('apply-sort-filter');
+  applyButton.addEventListener('click', applyClicked);
 
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
