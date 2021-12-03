@@ -2,9 +2,9 @@
 // main.js
 
 // Import requried modules
-import * as storageFuncs from "../js/storage/storage.js";
-import * as fetcherFuncs from "../js/storage/fetcher.js";
-import {returnDummyData} from "./exampleData.js"
+import * as storageFuncs from "../source/js/storage/storage.js";
+import * as fetcherFuncs from "../source/js/storage/fetcher.js";
+import {returnDummyData} from "./exampleData.js.js"
 
 async function init() {
   // TODO

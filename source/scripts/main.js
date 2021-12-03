@@ -1,41 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: main.js</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-</head>
-
-<body>
-
-<div id="main">
-
-    <h1 class="page-title">Source: main.js</h1>
-
-    
-
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import Router from './Router.js';
+import Router from './Router.js';
 import * as storageFuncs from './storage/storage.js';
 import * as fetcherFuncs from './storage/fetcher.js';
 import * as apiFuncs from './apiHelpers.js';
 
 // Constant variables (reduce magic numbers)
 
+/**
+ * Number of items to fetch per search query
+ */
 const DEFAULT_NUM_CARDS = 5;
 
-// Dont touch
+/**
+ * Don't touch
+ */
 const SECTIONS = [
   'landing',
   'explore',
@@ -45,7 +22,9 @@ const SECTIONS = [
   'create-recipe-page',
 ];
 
-// Can change to anything and will repopulate explore page automatically
+/**
+ * Can change to anything and will repopulate explore page automatically
+ */
 const EXPLORE_SECTIONS = [
   'Main Course',
   'Side Dish',
@@ -53,8 +32,14 @@ const EXPLORE_SECTIONS = [
   'Breakfast',
 ];
 
+/**
+ * SPA router component to navigate pages and handle history
+ */
 const router = new Router();
 
+/**
+ * Needs to be global for recipe info page to update saved recipe status in event handler
+ */
 let ACTIVE_INFO_DATA = null;
 
 /* DOM Manipulation helper functions */
@@ -77,7 +62,7 @@ const removeAllChildNodes = (parent) => {
 };
 
 /**
- * Populates index.html with &lt;recipe-card> elements, as defined in
+ * Populates index.html with <recipe-card> elements, as defined in
  * RecipeCard.js. This function is meant to be called for each section that needs
  * to be populated with recipe cards.
  * @param {String[]} arrData an array of recipe ids (currently). example input:
@@ -91,7 +76,7 @@ const removeAllChildNodes = (parent) => {
  */
 const createRecipeCards = (arrData, location, maxCards = 5) => {
   const bound = maxCards === -1 ? arrData.length : Math.min(arrData.length, maxCards);
-  for (let i = 0; i &lt; bound; i++) {
+  for (let i = 0; i < bound; i++) {
     const recipeCard = document.createElement('recipe-card');
     recipeCard.setAttribute('class', `id_${arrData[i]}`);
     // eslint-disable-next-line no-use-before-define
@@ -177,9 +162,11 @@ function openRecipeInfo(data) {
 
   const prepTime = document.getElementById('prep-time');
   prepTime.innerHTML = `Prep Time: ${prepMinutes} minutes`;
+  prepTime.classList.toggle('hidden', prepTime === 0);
 
   const cookTime = document.getElementById('cook-time');
   cookTime.innerHTML = `Cook Time: ${cookMinutes} minutes`;
+  cookTime.classList.toggle('hidden', cookTime === 0);
 
   const totalTime = document.getElementById('total-time');
   totalTime.innerHTML = `Total Time: ${totalMinutes} minutes`;
@@ -214,7 +201,7 @@ function openRecipeInfo(data) {
   const nutritionContainer = document.querySelector('.nutrition-wrapper');
   nutritionContainer.classList.toggle('hidden', !nutrition);
   nutrition?.forEach((item) => {
-    console.log(item);
+    // console.log(item);
   });
 
   const categories = fetcherFuncs.getAllSavedRecipeId();
@@ -224,45 +211,6 @@ function openRecipeInfo(data) {
 
   router.navigate('recipe-info', false);
 }
-
-const recipeInfoSaveClicked = () => {
-  const data = ACTIVE_INFO_DATA;
-  const categories = fetcherFuncs.getAllSavedRecipeId();
-  const saved = categories.favorites.includes(data.id);
-  console.log(saved);
-
-  document.getElementById('info-save-btn').innerHTML = saved ? 'Save Recipe' : 'Remove Recipe';
-
-  if (saved) {
-    storageFuncs.removeRecipeFromList('favorites', data.id);
-  } else {
-    storageFuncs.saveRecipeToList('favorites', data.id);
-  }
-
-  // If the favorites page is active, update in background, otherwise ignore
-  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-  if (currSavedPageSelect === 'favorites') {
-    const savedRecipeGrid = document.querySelector('.saved-recipes .results-grid');
-    if (saved) {
-      savedRecipeGrid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
-    } else {
-      const recipeCardNew = document.createElement('recipe-card');
-      recipeCardNew.setAttribute('class', `id_${data.id}`);
-      recipeCardNew.populateFunc = openRecipeInfo;
-      recipeCardNew.data = data;
-      recipeCardNew.saved = saved;
-      savedRecipeGrid.appendChild(recipeCardNew);
-    }
-  }
-  const currCards = document.querySelectorAll(`.id_${data.id}`);
-  for (let i = 0; i &lt; currCards.length; i++) {
-    const { shadowRoot } = currCards[i];
-    const element = shadowRoot.querySelector('.fa-heart');
-    element.classList.toggle('far', currCards[i].saved);
-    element.classList.toggle('fas', !currCards[i].saved);
-    currCards[i].saved = !currCards[i].saved;
-  }
-};
 
 /**
  * Perform router navigation to open home page
@@ -290,13 +238,23 @@ const openSavedRecipes = () => {
  * @param {JSON} - optional JSON object data to populate page with
  */
 const openCreateRecipe = (data) => {
-  // TODO: Take in an object that prefills the fields on the create recipe page
+  console.log(data);
+
+  const nameField = document.getElementById('create-name-field');
+  const name = data?.title;
+  nameField.value = name || '';
+
+  const descField = document.getElementById('create-desc-field');
+  console.log(descField);
+  const desc = data?.summary;
+  descField.innerHTML = desc;
+
   router.navigate('create-recipe-page', false);
 };
 
 /**
  * Populates the search results page with query results and navigates there
- * @returns {Promise&lt;void>}
+ * @returns {Promise<void>}
  */
 const openSearchResults = async () => {
   const query = getSearchQuery();
@@ -452,13 +410,13 @@ function clearSortingAndFiltering() {
 
   const cuisineFilter = document.querySelector('.filter-cuisine-input');
   const cuisineList = cuisineFilter.getElementsByTagName('input');
-  for (let i = 0; i &lt; cuisineList.length; i++) {
+  for (let i = 0; i < cuisineList.length; i++) {
     cuisineList[i].checked = false;
   }
 
   const intolerancesFilter = document.querySelector('.filter-intolerance-input');
   const intolerancesList = intolerancesFilter.getElementsByTagName('input');
-  for (let i = 0; i &lt; intolerancesList.length; i++) {
+  for (let i = 0; i < intolerancesList.length; i++) {
     intolerancesList[i].checked = false;
   }
 }
@@ -571,7 +529,7 @@ const createRecipeClicked = () => {
 
   // format all the ingredients:
   const ingredientArray = [];
-  for (let i = 0; i &lt; ingredientNames.length; i += 1) {
+  for (let i = 0; i < ingredientNames.length; i += 1) {
     const ingObject = {};
     ingObject.name = ingredientNames[i].value;
     ingObject.amount = ingredientAmount[i].value;
@@ -595,7 +553,7 @@ const createRecipeClicked = () => {
 
   // format step array
   const stepArray = [];
-  for (let i = 0; i &lt; steps.length; i += 1) {
+  for (let i = 0; i < steps.length; i += 1) {
     const stepObject = {};
     stepObject.number = i + 1;
     stepObject.step = steps[i].value;
@@ -627,6 +585,48 @@ const createRecipeClicked = () => {
 };
 
 /* Recipe info page event handlers */
+
+/**
+ * Event handler for save recipe button on recipe info page
+ */
+const infoSaveClicked = () => {
+  const data = ACTIVE_INFO_DATA;
+  const categories = fetcherFuncs.getAllSavedRecipeId();
+  const saved = categories.favorites.includes(data.id);
+
+  document.getElementById('info-save-btn').innerHTML = saved ? 'Save Recipe' : 'Remove Recipe';
+
+  if (saved) {
+    storageFuncs.removeRecipeFromList('favorites', data.id);
+  } else {
+    storageFuncs.saveRecipeToList('favorites', data.id);
+  }
+
+  // If the favorites page is active, update in background, otherwise ignore
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'favorites') {
+    const savedRecipeGrid = document.querySelector('.saved-recipes .results-grid');
+    if (saved) {
+      savedRecipeGrid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+    } else {
+      const recipeCardNew = document.createElement('recipe-card');
+      recipeCardNew.setAttribute('class', `id_${data.id}`);
+      recipeCardNew.populateFunc = openRecipeInfo;
+      recipeCardNew.data = data;
+      recipeCardNew.saved = saved;
+      savedRecipeGrid.appendChild(recipeCardNew);
+    }
+  }
+  const currCards = document.querySelectorAll(`.id_${data.id}`);
+  for (let i = 0; i < currCards.length; i++) {
+    const { shadowRoot } = currCards[i];
+    const element = shadowRoot.querySelector('.fa-heart');
+    element.classList.toggle('far', currCards[i].saved);
+    element.classList.toggle('fas', !currCards[i].saved);
+    currCards[i].saved = !currCards[i].saved;
+  }
+};
+
 // TODO
 function scaleRecipeUp(recipe) {
   const servingSize = document.querySelector('.serving-size');
@@ -635,7 +635,7 @@ function scaleRecipeUp(recipe) {
 // TODO:
 function scaleRecipeDown(recipe) {
   const servingSize = document.querySelector('.serving-size');
-  if (servingSize.innerHTML &lt;= 1) {
+  if (servingSize.innerHTML <= 1) {
     return;
   }
   servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) - 1;
@@ -685,7 +685,7 @@ async function showMoreClicked() {
   const numOfRecipe = numOfAdditionRecipeCards + numOfCardExist;
   const localCategories = JSON.parse(localStorage.getItem('explore-categories'));
 
-  for (let i = numOfCardExist; i &lt; numOfRecipe &amp;&amp; i &lt; localCategories[storeName].length; i++) {
+  for (let i = numOfCardExist; i < numOfRecipe && i < localCategories[storeName].length; i++) {
     const singleResultRecipeId = localCategories[storeName][i];
     createRecipeCards([singleResultRecipeId], searchResultsContainer, 1);
   }
@@ -752,7 +752,7 @@ function initializeRoutes() {
   document.getElementById('landing-nav').addEventListener('click', openHome);
   document.getElementById('explore-nav').addEventListener('click', openExplore);
   document.getElementById('saved-recipes-nav').addEventListener('click', openSavedRecipes);
-  document.getElementById('create-recipe-nav').addEventListener('click', openCreateRecipe);
+  document.getElementById('create-recipe-nav').addEventListener('click', () => openCreateRecipe({}));
   document.getElementById('search-results-nav').addEventListener('click', openSearchResults);
 }
 
@@ -828,7 +828,6 @@ function onDropdownChange() {
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
   removeAllChildNodes(grid);
-  console.log(allSavedIds.favorites);
   if (currSavedPageSelect === 'favorites') {
     createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
@@ -852,7 +851,10 @@ function initializeButtons() {
   backBtn.addEventListener('click', () => history.back());
 
   const saveBtn = document.getElementById('info-save-btn');
-  saveBtn.addEventListener('click', recipeInfoSaveClicked);
+  saveBtn.addEventListener('click', infoSaveClicked);
+
+  const editBtn = document.getElementById('info-edit-btn');
+  editBtn.addEventListener('click', () => openCreateRecipe(ACTIVE_INFO_DATA));
 
   /* Create Recipe Page */
   const addIngredientButton = document.querySelector('.add-ingredient-button');
@@ -909,26 +911,3 @@ async function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
-</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addIngredientClicked">addIngredientClicked</a></li><li><a href="global.html#addPage">addPage</a></li><li><a href="global.html#addStepClicked">addStepClicked</a></li><li><a href="global.html#applyClicked">applyClicked</a></li><li><a href="global.html#bindPopState">bindPopState</a></li><li><a href="global.html#clearSortingAndFiltering">clearSortingAndFiltering</a></li><li><a href="global.html#createCardsFromData">createCardsFromData</a></li><li><a href="global.html#createRecipeCards">createRecipeCards</a></li><li><a href="global.html#createRecipeClicked">createRecipeClicked</a></li><li><a href="global.html#displayCuisine">displayCuisine</a></li><li><a href="global.html#displayIntolerance">displayIntolerance</a></li><li><a href="global.html#displaySortFilter">displaySortFilter</a></li><li><a href="global.html#extractIDs">extractIDs</a></li><li><a href="global.html#geIntolerances">geIntolerances</a></li><li><a href="global.html#getCuisinesKeys">getCuisinesKeys</a></li><li><a href="global.html#getDetailedRecipeInfoBulk">getDetailedRecipeInfoBulk</a></li><li><a href="global.html#getDietKey">getDietKey</a></li><li><a href="global.html#getMaxPrepTime">getMaxPrepTime</a></li><li><a href="global.html#getMealTypeKey">getMealTypeKey</a></li><li><a href="global.html#getOrderingKey">getOrderingKey</a></li><li><a href="global.html#getRecipesByAutocomplete">getRecipesByAutocomplete</a></li><li><a href="global.html#getRecipesByCuisine">getRecipesByCuisine</a></li><li><a href="global.html#getRecipesByName">getRecipesByName</a></li><li><a href="global.html#getRecipesByType">getRecipesByType</a></li><li><a href="global.html#getSearchQuery">getSearchQuery</a></li><li><a href="global.html#getSortKey">getSortKey</a></li><li><a href="global.html#initializeButtons">initializeButtons</a></li><li><a href="global.html#initializeRoutes">initializeRoutes</a></li><li><a href="global.html#navigate">navigate</a></li><li><a href="global.html#onDropdownChange">onDropdownChange</a></li><li><a href="global.html#openCreateRecipe">openCreateRecipe</a></li><li><a href="global.html#openExplore">openExplore</a></li><li><a href="global.html#openHome">openHome</a></li><li><a href="global.html#openRecipeInfo">openRecipeInfo</a></li><li><a href="global.html#openSavedRecipes">openSavedRecipes</a></li><li><a href="global.html#openSearchResults">openSearchResults</a></li><li><a href="global.html#openSection">openSection</a></li><li><a href="global.html#populateExplore">populateExplore</a></li><li><a href="global.html#populateSavedRecipes">populateSavedRecipes</a></li><li><a href="global.html#removeAllChildNodes">removeAllChildNodes</a></li><li><a href="global.html#showMoreClicked">showMoreClicked</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 03 2021 05:01:00 GMT-0800 (Pacific Standard Time)
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
-</body>
-</html>

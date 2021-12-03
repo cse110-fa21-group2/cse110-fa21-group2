@@ -2,8 +2,8 @@
 
 import { getAllRecipes } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-const API_KEY = '857b051abfmsh018f07c4f390b41p1547b1jsn64ae2598745b';// prevent exposing api key
-
+// const API_KEY = '857b051abfmsh018f07c4f390b41p1547b1jsn64ae2598745b';// prevent exposing api key
+const API_KEY = '555471dabemsh486b3ba95fa5568p18f5f2jsn3328cc4e94d5'; // free api key
 const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
 
 /**

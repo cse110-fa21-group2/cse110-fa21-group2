@@ -1,38 +1,3 @@
-// localStorage = {
-//   explore-categories: { // Used to populate explore page (only ids to reduce storage size)
-//       "breakfast": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//       "lunch": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//   },
-//   savedRecipes: { // Saved recipe page categories (only ids to reduce storage size)
-//       "favorites": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//       "created": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//   },
-//   recipeData: { // Complete storage of available recipes we can query without fetching
-//       "111": "full recipe json object", // these are api results so we never have to modify them
-//       "123": "full recipe json object",
-//       "444": "full recipe json object",
-//       "555": "full recipe json object",
-//       "715": "full recipe json object",
-//       "892": "full recipe json object"
-//   }
-// }
-
 /**
  *
  * @returns {Object} all recipes {uid:recipe json,uid:recipe json}
@@ -43,12 +8,12 @@ export function getAllRecipes() {
 
 /**
  *
- * @param {*} recipeid
+ * @param {String} id to query for data
  * @returns {Object} object of the recipe
  */
-export function getSingleRecipe(recipeid) {
-  const recipes = getAllRecipes();
-  return recipes[recipeid];
+export function getSingleRecipe(id) {
+  const recipeData = getAllRecipes();
+  return recipeData[id];
 }
 
 /**

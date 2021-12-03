@@ -19,11 +19,7 @@ main {
 }
 
 .hidden {
-  display: none;
-}
-
-.landing.hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Navbar CSS */
@@ -59,7 +55,7 @@ main {
 /* Landing Page CSS */
 
 .landing {
-  background-image: url("../images/background.jpg");
+  background-image: url("../assets/background.jpg");
   background-size: cover;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -108,6 +104,10 @@ main {
   white-space: nowrap;
 }
 
+.row-title {
+  margin: 2rem 0 0;
+}
+
 .line {
   background-color: var(--orange);
   border: 2px solid var(--orange);
@@ -124,12 +124,6 @@ main {
   min-height: calc(100vh - 4rem);
   position: relative;
   width: 90%;
-}
-
-.saved-recipe-header {
-  height: 2rem;
-  margin: 2rem 0;
-  width: 75%;
 }
 
 .edit-btn {
@@ -161,7 +155,7 @@ main {
   border-radius: 0.25em;
   display: flex;
   height: 3em;
-  margin: 0 1.5rem;
+  margin: 2rem 1.5rem;
   overflow: hidden;
   position: relative;
   width: 20em;
@@ -185,10 +179,6 @@ main {
 }
 
 /* Search Results CSS */
-h1.search-results-title {
-  margin-left: 16rem;
-  margin-top: 1rem;
-}
 
 .search-results {
   margin-left: 5%;
@@ -196,28 +186,17 @@ h1.search-results-title {
   width: 90%;
 }
 
-.row-title {
-  margin: 2rem 0 0;
-}
-
-div.results-sort-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
 div.search-wrapper {
-  display: flex;
-  right: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  margin: 2rem 0;
 }
 
-div.sort-filter {
-  height: min-content;
-  margin-bottom: 2rem;
-  margin-right: 1rem;
-  margin-top: 1.5rem;
-  width: 15rem;
+h1.search-results-title {
+  margin: 0 1.5rem;
 }
 
+/* FILTERING FORM */
 div.sort-filter-body {
   display: block;
 }
@@ -262,11 +241,8 @@ button.intolerance-collapse {
   height: 2rem;
 }
 
-button.show-more-button {
-  border: 1px solid grey;
-  border-radius: 0.25rem;
-  color: rgb(0 0 0);
-  margin-top: 1.5rem;
+button.show-more-btn {
+  margin: 2rem 1.5rem;
 }
 
 hr.solid {
@@ -300,11 +276,6 @@ output.max-time-output {
 @media only screen and (max-width: 530px) {
   div.results-sort-wrapper {
     display: block;
-  }
-
-  div.search-wrapper {
-    display: block;
-    right: 2rem;
   }
 }
 
@@ -438,6 +409,20 @@ output.max-time-output {
   width: 50%;
 }
 
+.create-btn {
+  background-color: var(--secondary);
+  border: 2px solid var(--primary);
+  height: 2.5rem;
+  margin-right: 1rem;
+  transition: 0.3s ease-in-out;
+  width: 10rem;
+}
+
+.create-btn:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
 /* div wrappers */
 
 .title-edit-wrapper {
@@ -472,11 +457,6 @@ output.max-time-output {
   margin-top: 1.25rem;
   outline: 1px solid rgb(0 0 0);
   padding: 1rem;
-}
-
-.videos-wrapper.hidden,
-.nutrition-wrapper.hidden {
-  display: none;
 }
 
 .nutrition-wrapper {
