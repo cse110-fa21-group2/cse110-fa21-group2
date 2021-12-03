@@ -576,7 +576,7 @@ function bindPopState() {
 
 async function populateExplore() {
   const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
-  const randOffset = Math.floor(Math.random()*990);
+  const randOffset = Math.floor(Math.random() * 990);
   const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS, randOffset);
   storageFuncs.storeRecipeData('breakfast', breakfastResult);
   const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS, randOffset);
