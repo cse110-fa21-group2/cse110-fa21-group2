@@ -8,12 +8,12 @@ export function getAllRecipes() {
 
 /**
  *
- * @param {*} recipeid
+ * @param {String} id to query for data
  * @returns {Object} object of the recipe
  */
-export function getSingleRecipe(recipeid) {
-  const recipes = getAllRecipes();
-  return recipes[recipeid];
+export function getSingleRecipe(id) {
+  const recipeData = getAllRecipes();
+  return recipeData[id];
 }
 
 /**

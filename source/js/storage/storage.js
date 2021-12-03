@@ -1,9 +1,11 @@
-function getRecipeData() {
-  return JSON.parse(localStorage.getItem('recipeData'));
-}
+import * as fetcherFuncs from './fetcher.js';
 
 function setRecipeData(data) {
   localStorage.setItem('recipeData', JSON.stringify(data));
+}
+
+function getSavedLists() {
+  return JSON.parse(localStorage.getItem('savedLists'));
 }
 
 /**
@@ -12,7 +14,7 @@ function setRecipeData(data) {
  */
 export function saveRecipeData(data) {
   const { id } = data;
-  const recipeData = getRecipeData();
+  const recipeData = fetcherFuncs.getAllRecipes();
   if (!recipeData[id]) {
     recipeData[id] = data;
   }

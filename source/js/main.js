@@ -5,9 +5,14 @@ import * as apiFuncs from './apiHelpers.js';
 
 // Constant variables (reduce magic numbers)
 
+/**
+ * Number of items to fetch per search query
+ */
 const DEFAULT_NUM_CARDS = 5;
 
-// Dont touch
+/**
+ * Don't touch
+ */
 const SECTIONS = [
   'landing',
   'explore',
@@ -17,7 +22,9 @@ const SECTIONS = [
   'create-recipe-page',
 ];
 
-// Can change to anything and will repopulate explore page automatically
+/**
+ * Can change to anything and will repopulate explore page automatically
+ */
 const EXPLORE_SECTIONS = [
   'Main Course',
   'Side Dish',
@@ -25,8 +32,14 @@ const EXPLORE_SECTIONS = [
   'Breakfast',
 ];
 
+/**
+ * SPA router component to navigate pages and handle history
+ */
 const router = new Router();
 
+/**
+ * Needs to be global for recipe info page to update saved recipe status in event handler
+ */
 let ACTIVE_INFO_DATA = null;
 
 /* DOM Manipulation helper functions */
@@ -182,9 +195,12 @@ function openRecipeInfo(data) {
   videoContainer.classList.toggle('hidden', !video);
 
   // TODO: Nutritional Info
-  const nutrition = null;
+  const nutrition = data?.nutrients;
   const nutritionContainer = document.querySelector('.nutrition-wrapper');
   nutritionContainer.classList.toggle('hidden', !nutrition);
+  nutrition?.forEach((item) => {
+    console.log(item);
+  });
 
   const categories = fetcherFuncs.getAllSavedRecipeId();
   const saved = categories.favorites.includes(data.id);
@@ -787,6 +803,9 @@ function populateSavedRecipes() {
   }
 }
 
+/**
+ * Toggled when saved recipe page dropdown is clicked (to repopulate cards)
+ */
 function onDropdownChange() {
   // Location where recipe cards are to be added
   const grid = document.querySelector('.saved-recipes .results-grid');
