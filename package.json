@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lintjs": "npx eslint \"./source/js/**/*.js\"",
+    "lintjs": "npx eslint \"./source/scripts/**/*.js\"",
     "lintcss": "npx stylelint \"./source/**/*.css\"",
     "lint": "npm run lintjs && npm run lintcss",
-    "doc": "jsdoc -d out ./source/js"
+    "doc": "jsdoc -d out ./source/scripts"
   },
   "jest": {
     "preset": "jest-puppeteer",
