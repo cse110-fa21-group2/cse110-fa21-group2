@@ -77,7 +77,6 @@ const getDietKey = () => {
 
 const getMaxPrepTime = () => {
   const prepTime = document.getElementById('max-time').value;
-  console.log(prepTime);
   if (prepTime === '720') {
     return '1440';
   }
@@ -570,8 +569,6 @@ const createRecipeClicked = () => {
     recipeCardNew.data = finalObject;
     grid.appendChild(recipeCardNew);
   }
-
-  console.log(finalObject);
 };
 
 async function showMoreClicked() {
@@ -602,7 +599,6 @@ async function showMoreClicked() {
       maxReadyTime: maxPrepTime,
     },
   );
-  console.log(searchResult);
 
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
@@ -631,14 +627,6 @@ async function applyClicked() {
   const cuisineString = getCuisinesKeys();
   const intoleranceString = geIntolerances();
 
-  console.log(sorts);
-  console.log(ordering);
-  console.log(mealType);
-  console.log(dietS);
-  console.log(maxPrepTime);
-  console.log(cuisineString);
-  console.log(intoleranceString);
-
   // example: {sort:'calories', sortDirection:'desc', cuisine: 'Mexican,Asian', type:'lunch'}
   const searchResult = await apiFuncs.getRecipesByName(
     query,
@@ -654,11 +642,9 @@ async function applyClicked() {
       maxReadyTime: maxPrepTime,
     },
   );
-  console.log(searchResult);
 
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
-  console.log(storeName);
   storageFuncs.storeRecipeData(storeName, searchResult);
   removeAllChildNodes(searchResultsContainer);
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
