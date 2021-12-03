@@ -1,6 +1,6 @@
 // helper functions for Spoonacular API
 
-import { getAllRecipes} from './storage/fetcher.js';
+import { getAllRecipes } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
 const API_KEY = '857b051abfmsh018f07c4f390b41p1547b1jsn64ae2598745b';// prevent exposing api key
 
