@@ -335,7 +335,6 @@ const addIngredientClicked = () => {
     'form-control recipe-ingredient-amount',
   );
   ingAmountInput.setAttribute('placeholder', 'Amount');
-  ingAmountInput.required = true;
   ingAmountDiv.appendChild(ingAmountInput);
 
   const ingUnitDiv = document.createElement('div');
@@ -344,7 +343,6 @@ const addIngredientClicked = () => {
   ingUnitInput.setAttribute('type', 'text');
   ingUnitInput.setAttribute('class', 'form-control recipe-ingredient-unit');
   ingUnitInput.setAttribute('placeholder', 'Unit');
-  ingUnitInput.required = true;
 
   ingUnitDiv.appendChild(ingUnitInput);
 
