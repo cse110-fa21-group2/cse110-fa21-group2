@@ -47,25 +47,6 @@ const removeAllChildNodes = (parent) => {
 };
 
 /**
- * Shuffle data elements so we don't always get the same first 5 cards
- * @param {Object[]} array
- * @returns {Object[]} array of mixed up values
- */
-function shuffle(array) {
-  const arr = array;
-  let currentIndex = arr.length;
-  let randomIndex;
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [arr[currentIndex], arr[randomIndex]] = [
-      arr[randomIndex], arr[currentIndex]];
-  }
-
-  return arr;
-}
-
-/**
  * Populates index.html with <recipe-card> elements, as defined in
  * RecipeCard.js. This function is meant to be called for each section that needs
  * to be populated with recipe cards.
@@ -252,6 +233,8 @@ const openSearchResults = async () => {
   const query = getSearchQuery();
   // Don't navigate if query is blank
   if (!query) return;
+  const searchResultsContainer = document.getElementById('search-results-container');
+  removeAllChildNodes(searchResultsContainer);
 
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
@@ -260,16 +243,18 @@ const openSearchResults = async () => {
   router.navigate('search-results', false);
 
   const searchResult = await apiFuncs.getRecipesByName(query, DEFAULT_NUM_CARDS, pageOffset);
+  const resultsFound = searchResult.length !== 0;
 
-  console.info(searchResult);
-  searchResultPageTitle.innerHTML = searchResult.length !== 0 ? `Top recipes for "${query}"` : `No results found for "${query}"`;
+  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for "${query}"` : `No results found for "${query}"`;
   const storeName = `${query}popularitydesc1440`;
   storageFuncs.storeRecipeData(storeName, searchResult);
 
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
-  const searchResultsContainer = document.getElementById('search-results-container');
-  removeAllChildNodes(searchResultsContainer);
   createRecipeCards(resultRecipeId, searchResultsContainer);
+
+  document.getElementById('show-more-button').classList.toggle('hidden', !resultsFound);
+
+  router.navigate('search-results', false);
 };
 
 /* Sort and filtering functions */
@@ -573,12 +558,12 @@ const createRecipeClicked = () => {
 };
 
 /* Recipe info page event handlers */
-
+// TODO
 function scaleRecipeUp(recipe) {
   const servingSize = document.querySelector('.serving-size');
   servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) + 1;
 }
-
+// TODO:
 function scaleRecipeDown(recipe) {
   const servingSize = document.querySelector('.serving-size');
   if (servingSize.innerHTML <= 1) {
@@ -596,6 +581,8 @@ async function showMoreClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = `Loading results for "${query}"`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -620,6 +607,8 @@ async function showMoreClicked() {
     },
   );
 
+  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
   storageFuncs.storeRecipeData(storeName, searchResult);
@@ -639,6 +628,8 @@ async function showMoreClicked() {
 async function applyClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = `Loading recipes for "${query}"`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -670,6 +661,9 @@ async function applyClicked() {
     },
   );
 
+  const resultsFound = searchResult.length !== 0;
+  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for "${query}"` : `No results found for "${query}"`;
+  document.getElementById('show-more-button').classList.toggle('hidden', !resultsFound);
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
   storageFuncs.storeRecipeData(storeName, searchResult);
