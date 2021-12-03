@@ -434,6 +434,20 @@ output.max-time-output {
   width: 50%;
 }
 
+.create-btn {
+  background-color: var(--secondary);
+  border: 2px solid var(--primary);
+  height: 2.5rem;
+  margin-right: 1rem;
+  transition: 0.3s ease-in-out;
+  width: 10rem;
+}
+
+.create-btn:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
 /* div wrappers */
 
 .title-edit-wrapper {

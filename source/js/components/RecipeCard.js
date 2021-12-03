@@ -127,41 +127,36 @@ class RecipeCard extends HTMLElement {
     saveButton.appendChild(saveIcon);
     const flipSaved = (e) => {
       e.stopPropagation();
-      const currCards = document.querySelectorAll(`.id_${this.json.id}`);
-      const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+
       if (this.saved) {
         storageFuncs.removeRecipeFromList('favorites', this.json.id);
-        if (currSavedPageSelect === 'favorites') {
-          // remove card in saved recipe page
-          const grid = document.querySelector('.saved-recipes .results-grid');
-          const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
-          for (let i = 0; i < currentCardsSaved.length; i++) {
-            currentCardsSaved[i].remove();
-          }
-        }
       } else {
         storageFuncs.saveRecipeToList('favorites', this.json.id);
-        if (currSavedPageSelect === 'favorites') {
-          // add card to saved recipe page
-          const grid = document.querySelector('.saved-recipes .results-grid');
+      }
+
+      // If the favorites page is active, update in background, otherwise ignore
+      const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+      if (currSavedPageSelect === 'favorites') {
+        const grid = document.querySelector('.saved-recipes .results-grid');
+        if (this.saved) {
+          grid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+        } else {
           const recipeCardNew = document.createElement('recipe-card');
           recipeCardNew.setAttribute('class', `id_${this.json.id}`);
           recipeCardNew.populateFunc = this.populate;
-
           recipeCardNew.data = this.json;
+          recipeCardNew.saved = this.saved;
           grid.appendChild(recipeCardNew);
         }
       }
+
+      // update heart icon on all cards
+      const currCards = document.querySelectorAll(`.id_${this.json.id}`);
       for (let i = 0; i < currCards.length; i++) {
         const { shadowRoot } = currCards[i];
         const element = shadowRoot.querySelector('.fa-heart');
-        if (currCards[i].saved) {
-          element.classList.add('far');
-          element.classList.remove('fas');
-        } else {
-          element.classList.remove('far');
-          element.classList.add('fas');
-        }
+        element.classList.toggle('far', currCards[i].saved);
+        element.classList.toggle('fas', !currCards[i].saved);
         currCards[i].saved = !currCards[i].saved;
       }
     };
@@ -177,10 +172,9 @@ class RecipeCard extends HTMLElement {
       const clickDelete = (e) => {
         e.stopPropagation();
         storageFuncs.deleteCreatedRecipe(this.json.id);
-        const currentCards = document.querySelectorAll(`.id_${this.json.id}`);
-        for (let i = 0; i < currentCards.length; i++) {
-          currentCards[i].remove();
-        }
+        document.querySelectorAll(`.id_${this.json.id}`).forEach((card) => {
+          card.remove();
+        });
       };
 
       deleteRecipe.addEventListener('click', clickDelete);
@@ -195,7 +189,6 @@ class RecipeCard extends HTMLElement {
     recipeCard.appendChild(recipeBody);
     recipeCard.addEventListener('click', () => {
       this.populate(data);
-      console.log(data);
     });
 
     this.shadowRoot.append(recipeCard);

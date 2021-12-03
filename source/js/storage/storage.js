@@ -1,3 +1,24 @@
+function getRecipeData() {
+  return JSON.parse(localStorage.getItem('recipeData'));
+}
+
+function setRecipeData(data) {
+  localStorage.setItem('recipeData', JSON.stringify(data));
+}
+
+/**
+ * Given the JSON for a single recipe, save it in recipeData list in localStorage
+ * @param {*} data
+ */
+export function saveRecipeData(data) {
+  const { id } = data;
+  const recipeData = getRecipeData();
+  if (!recipeData[id]) {
+    recipeData[id] = data;
+  }
+  setRecipeData(recipeData);
+}
+
 /**
  *
  * @param {*} category
@@ -110,22 +131,6 @@ export function createList(listName) {
   }
   // Put back in localStorage
   localStorage.setItem('savedLists', JSON.stringify(lists));
-}
-
-/**
- * delete all the stored info of the list.
- * @param {*} listName
- */
-export function deleteList(listName) {
-  try {
-    const listData = JSON.parse(localStorage.getItem('savedLists'));
-    if (listData != null && listName in listData) {
-      delete listData[listName];
-      localStorage.setItem('savedLists', JSON.stringify(listData));
-    }
-  } catch (e) {
-    console.error(e);
-  }
 }
 
 /**

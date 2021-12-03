@@ -27,6 +27,8 @@ const EXPLORE_SECTIONS = [
 
 const router = new Router();
 
+let ACTIVE_INFO_DATA = null;
+
 /* DOM Manipulation helper functions */
 
 /**
@@ -100,6 +102,7 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
  * @param {Object} data - JSON object to use for page data
  */
 function openRecipeInfo(data) {
+  ACTIVE_INFO_DATA = data;
   // Header section
   const title = document.querySelector('.info-title');
   title.innerHTML = data.title;
@@ -182,18 +185,44 @@ function openRecipeInfo(data) {
   const nutritionContainer = document.querySelector('.nutrition-wrapper');
   nutritionContainer.classList.toggle('hidden', !nutrition);
 
-  const saveBtn = document.getElementById('info-save-btn');
-
   const categories = fetcherFuncs.getAllSavedRecipeId();
-  const saved = categories.favorites && categories.favorites.includes(data.id);
+  const saved = categories.favorites.includes(data.id);
+  const saveBtn = document.getElementById('info-save-btn');
   saveBtn.innerHTML = saved ? 'Remove Recipe' : 'Save Recipe';
-
-  saveBtn.addEventListener('click', () => {
-    // TODO: Implement save button on recipe info page
-  });
 
   router.navigate('recipe-info', false);
 }
+
+const recipeInfoSaveClicked = () => {
+  const data = ACTIVE_INFO_DATA;
+  const categories = fetcherFuncs.getAllSavedRecipeId();
+  const saved = categories.favorites.includes(data.id);
+  console.log(saved);
+
+  document.getElementById('info-save-btn').innerHTML = saved ? 'Save Recipe' : 'Remove Recipe';
+
+  if (saved) {
+    storageFuncs.removeRecipeFromList('favorites', data.id);
+  } else {
+    storageFuncs.saveRecipeToList('favorites', data.id);
+  }
+
+  // If the favorites page is active, update in background, otherwise ignore
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'favorites') {
+    const grid = document.querySelector('.saved-recipes .results-grid');
+    if (saved) {
+      grid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+    } else {
+      const recipeCardNew = document.createElement('recipe-card');
+      recipeCardNew.setAttribute('class', `id_${data.id}`);
+      recipeCardNew.populateFunc = openRecipeInfo;
+      recipeCardNew.data = data;
+      recipeCardNew.saved = !saved;
+      grid.appendChild(recipeCardNew);
+    }
+  }
+};
 
 /**
  * Perform router navigation to open home page
@@ -718,7 +747,7 @@ async function populateExplore() {
 
     const exploreResults = await apiFuncs.getRecipesByType(section, DEFAULT_NUM_CARDS, randOffset);
     // TODO: just store the data in localStorage and ignore the list
-    storageFuncs.storeRecipeData(section, exploreResults);
+    exploreResults.forEach((item) => storageFuncs.saveRecipeData(item));
     createCardsFromData(exploreResults, rowContainer);
 
     const exploreDiv = document.createElement('div');
@@ -778,6 +807,9 @@ function initializeButtons() {
   /* Recipe Info Page */
   const backBtn = document.getElementById('info-back-btn');
   backBtn.addEventListener('click', () => history.back());
+
+  const saveBtn = document.getElementById('info-save-btn');
+  saveBtn.addEventListener('click', recipeInfoSaveClicked);
 
   /* Create Recipe Page */
   const addIngredientButton = document.querySelector('.add-ingredient-button');
