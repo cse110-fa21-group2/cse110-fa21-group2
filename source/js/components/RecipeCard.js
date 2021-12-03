@@ -131,7 +131,7 @@ class RecipeCard extends HTMLElement {
       const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
       if (this.saved) {
         storageFuncs.removeRecipeFromList('favorites', this.json.id);
-        if (currSavedPageSelect === 'List 1') {
+        if (currSavedPageSelect === 'favorites') {
           // remove card in saved recipe page
           const grid = document.querySelector('.saved-recipes .results-grid');
           const currentCardsSaved = grid.querySelectorAll(`.id_${this.json.id}`);
@@ -141,7 +141,7 @@ class RecipeCard extends HTMLElement {
         }
       } else {
         storageFuncs.saveRecipeToList('favorites', this.json.id);
-        if (currSavedPageSelect === 'List 1') {
+        if (currSavedPageSelect === 'favorites') {
           // add card to saved recipe page
           const grid = document.querySelector('.saved-recipes .results-grid');
           const recipeCardNew = document.createElement('recipe-card');

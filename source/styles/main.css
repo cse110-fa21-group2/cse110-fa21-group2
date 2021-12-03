@@ -19,11 +19,7 @@ main {
 }
 
 .hidden {
-  display: none;
-}
-
-.landing.hidden {
-  display: none;
+  display: none !important;
 }
 
 /* Navbar CSS */
@@ -472,11 +468,6 @@ output.max-time-output {
   margin-top: 1.25rem;
   outline: 1px solid rgb(0 0 0);
   padding: 1rem;
-}
-
-.videos-wrapper.hidden,
-.nutrition-wrapper.hidden {
-  display: none;
 }
 
 .nutrition-wrapper {

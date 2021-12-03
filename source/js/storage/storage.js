@@ -1,38 +1,3 @@
-// localStorage = {
-//   explore-categories: { // Used to populate explore page (only ids to reduce storage size)
-//       "breakfast": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//       "lunch": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//   },
-//   savedRecipes: { // Saved recipe page categories (only ids to reduce storage size)
-//       "favorites": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//       "created": [
-//           "123", // recipe id
-//           "111", // recipe id
-//           "444", // recipe id
-//       ],
-//   },
-//   recipeData: { // Complete storage of available recipes we can query without fetching
-//       "111": "full recipe json object", // these are api results so we never have to modify them
-//       "123": "full recipe json object",
-//       "444": "full recipe json object",
-//       "555": "full recipe json object",
-//       "715": "full recipe json object",
-//       "892": "full recipe json object"
-//   }
-// }
-
 /**
  *
  * @param {*} category
@@ -121,25 +86,30 @@ export function removeRecipeFromList(listName, recipeId) {
 }
 
 /**
+ * Add key to localStorage if not currently there
+ * @param {String} key to add to localStorage
+ */
+export function createKey(key) {
+  if (!window.localStorage.getItem(key)) {
+    window.localStorage.setItem(key, JSON.stringify({}));
+  }
+}
+
+/**
  * if list already exist, do nothing. else create list in savedLists
  * @param {*} listName
  */
 export function createList(listName) {
-  try {
-    let listData = JSON.parse(localStorage.getItem('savedLists'));
-    if (listData == null) {
-      listData = {};
-      listData[listName] = [];
-      localStorage.setItem('savedLists', JSON.stringify(listData));
-    } else if (!(listName in listData)) {
-      // if (!(listName in listData)) {
-      listData[listName] = [];
-      localStorage.setItem('savedLists', JSON.stringify(listData));
-      // }
-    }
-  } catch (e) {
-    console.error(e);
+  // Initialize key in case it doesn't exist
+  createKey('savedLists');
+  // Get JSON object of lists
+  const lists = JSON.parse(localStorage.getItem('savedLists'));
+  // Initialize value to blank if missing
+  if (!lists[listName]) {
+    lists[listName] = [];
   }
+  // Put back in localStorage
+  localStorage.setItem('savedLists', JSON.stringify(lists));
 }
 
 /**
