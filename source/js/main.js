@@ -724,14 +724,14 @@ function bindPopState() {
 
 async function populateExplore() {
   const exploreSections = document.querySelectorAll('.explore-section .recipe-row');
-
-  const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS);
+  const randOffset = Math.floor(Math.random() * 990);
+  const breakfastResult = await apiFuncs.getRecipesByType('breakfast', DEFAULT_NUM_CARDS, randOffset);
   storageFuncs.storeRecipeData('breakfast', breakfastResult);
-  const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS);
+  const mainCourseResult = await apiFuncs.getRecipesByType('main course', DEFAULT_NUM_CARDS, randOffset);
   storageFuncs.storeRecipeData('mainCourse', mainCourseResult);
-  const sideDishResult = await apiFuncs.getRecipesByType('side dish', DEFAULT_NUM_CARDS);
+  const sideDishResult = await apiFuncs.getRecipesByType('side dish', DEFAULT_NUM_CARDS, randOffset);
   storageFuncs.storeRecipeData('sideDish', sideDishResult);
-  const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS);
+  const saladResult = await apiFuncs.getRecipesByType('salad', DEFAULT_NUM_CARDS, randOffset);
   storageFuncs.storeRecipeData('salad', saladResult);
 
   // Get IDs from localStorage using fetcher functions
