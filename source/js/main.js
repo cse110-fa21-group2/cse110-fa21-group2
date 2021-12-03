@@ -687,11 +687,12 @@ async function applyClicked() {
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
   createRecipeCards(resultRecipeId, searchResultsContainer, DEFAULT_NUM_CARDS);
 
+  const searchResultPageTitle = document.getElementById('search-results-title');
   if (searchResult.length === 0) {
-    const searchResultPageTitle = document.getElementById('search-results-title');
     searchResultPageTitle.innerHTML = `No results found for "${query}"`;
     document.getElementById('show-more-button').style.display = 'none';
   } else {
+    searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
     document.getElementById('show-more-button').style.display = 'block';
   }
 }
