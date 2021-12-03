@@ -347,7 +347,7 @@ const openSearchResults = async () => {
   const numOfRecipe = DEFAULT_NUM_CARDS;
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
 
   const storeName = `${query}popularitydesc1440`;
@@ -357,6 +357,14 @@ const openSearchResults = async () => {
   const searchResultsContainer = document.getElementById('search-results-container');
   removeAllChildNodes(searchResultsContainer);
   createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
+
+  if (searchResult.length === 0) {
+    searchResultPageTitle.innerHTML = `No results found for "${query}"`;
+    document.getElementById('show-more-button').style.display = 'none';
+  } else {
+    searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+    document.getElementById('show-more-button').style.display = 'block';
+  }
 
   router.navigate('search-results', false);
 };
@@ -606,6 +614,8 @@ async function showMoreClicked() {
   const searchResultsContainer = document.getElementById('search-results-container');
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = `Loading recipes for "${query}"`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -630,6 +640,8 @@ async function showMoreClicked() {
     },
   );
 
+  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
   storageFuncs.storeRecipeData(storeName, searchResult);
@@ -647,6 +659,8 @@ async function showMoreClicked() {
 async function applyClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
+  const searchResultPageTitle = document.getElementById('search-results-title');
+  searchResultPageTitle.innerHTML = `Loading recipes for "${query}"`;
 
   // get filter and sort info from interface
   const sorts = getSortKey();
@@ -679,6 +693,14 @@ async function applyClicked() {
   removeAllChildNodes(searchResultsContainer);
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
   createRecipeCards(resultRecipeId, searchResultsContainer, DEFAULT_NUM_CARDS);
+
+  if (searchResult.length === 0) {
+    searchResultPageTitle.innerHTML = `No results found for "${query}"`;
+    document.getElementById('show-more-button').style.display = 'none';
+  } else {
+    searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+    document.getElementById('show-more-button').style.display = 'block';
+  }
 }
 
 /**
