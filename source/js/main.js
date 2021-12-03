@@ -350,10 +350,6 @@ const openSearchResults = async () => {
   searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
   const searchResult = await apiFuncs.getRecipesByName(query, numOfRecipe, pageOffset);
 
-  if (searchResult.length === 0) {
-    searchResultPageTitle.innerHTML = `No results found for "${query}"`;
-  }
-
   const storeName = `${query}popularitydesc1440`;
   storageFuncs.storeRecipeData(storeName, searchResult);
 
@@ -361,6 +357,13 @@ const openSearchResults = async () => {
   const searchResultsContainer = document.getElementById('search-results-container');
   removeAllChildNodes(searchResultsContainer);
   createRecipeCards(resultRecipeId, searchResultsContainer, numOfRecipe);
+
+  if (searchResult.length === 0) {
+    searchResultPageTitle.innerHTML = `No results found for "${query}"`;
+    document.getElementById('show-more-button').style.display = 'none';
+  } else {
+    document.getElementById('show-more-button').style.display = 'block';
+  }
 
   router.navigate('search-results', false);
 };
@@ -683,6 +686,14 @@ async function applyClicked() {
   removeAllChildNodes(searchResultsContainer);
   const resultRecipeId = JSON.parse(localStorage.getItem('explore-categories'))[storeName];
   createRecipeCards(resultRecipeId, searchResultsContainer, DEFAULT_NUM_CARDS);
+
+  if (searchResult.length === 0) {
+    const searchResultPageTitle = document.getElementById('search-results-title');
+    searchResultPageTitle.innerHTML = `No results found for "${query}"`;
+    document.getElementById('show-more-button').style.display = 'none';
+  } else {
+    document.getElementById('show-more-button').style.display = 'block';
+  }
 }
 
 /**
