@@ -395,6 +395,26 @@ function displayIntolerance() {
   }
 }
 
+function clearSortingAndFiltering() {
+  document.getElementById('sorts').selectedIndex = 0;
+  document.getElementById('ordering').selectedIndex = 0;
+  document.getElementById('meal-type').selectedIndex = 0;
+  document.getElementById('diets').selectedIndex = 0;
+  document.querySelector('.filter-max-time-input > input').value = '';
+  document.querySelector('.filter-max-time-input > output').value = 'Default';
+
+  const cuisineFilter = document.querySelector('.filter-cuisine-input');
+  const cuisineList = cuisineFilter.getElementsByTagName('input');
+  for (let i = 0; i < cuisineList.length; i++) {
+    cuisineList[i].checked = false;
+  }
+
+  const intolerancesFilter = document.querySelector('.filter-intolerance-input');
+  const intolerancesList = intolerancesFilter.getElementsByTagName('input');
+  for (let i = 0; i < intolerancesList.length; i++) {
+    intolerancesList[i].checked = false;
+  }
+}
 /* Other event handlers */
 
 const addIngredientClicked = () => {
@@ -802,6 +822,9 @@ function initializeButtons() {
 
   const intoleranceCollapse = document.getElementById('intolerance-collapse');
   intoleranceCollapse.addEventListener('click', displayIntolerance);
+
+  const clearSortingAndFilteringButton = document.getElementById('clear-sort-filter');
+  clearSortingAndFilteringButton.addEventListener('click', clearSortingAndFiltering);
 
   const applyButton = document.getElementById('apply-sort-filter');
   applyButton.addEventListener('click', applyClicked);
