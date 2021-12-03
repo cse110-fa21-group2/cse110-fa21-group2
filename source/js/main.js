@@ -62,7 +62,8 @@ const removeAllChildNodes = (parent) => {
  * @param {number} numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
  */
 const createRecipeCards = (arrData, location, maxCards = 5) => {
-  for (let i = 0; i < maxCards && i < arrData.length; i++) {
+  const bound = maxCards === -1 ? arrData.length : Math.min(arrData.length, maxCards);
+  for (let i = 0; i < bound; i++) {
     const recipeCard = document.createElement('recipe-card');
     recipeCard.setAttribute('class', `id_${arrData[i]}`);
     // eslint-disable-next-line no-use-before-define
@@ -210,17 +211,25 @@ const recipeInfoSaveClicked = () => {
   // If the favorites page is active, update in background, otherwise ignore
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
   if (currSavedPageSelect === 'favorites') {
-    const grid = document.querySelector('.saved-recipes .results-grid');
+    const savedRecipeGrid = document.querySelector('.saved-recipes .results-grid');
     if (saved) {
-      grid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+      savedRecipeGrid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
     } else {
       const recipeCardNew = document.createElement('recipe-card');
       recipeCardNew.setAttribute('class', `id_${data.id}`);
       recipeCardNew.populateFunc = openRecipeInfo;
       recipeCardNew.data = data;
-      recipeCardNew.saved = !saved;
-      grid.appendChild(recipeCardNew);
+      recipeCardNew.saved = saved;
+      savedRecipeGrid.appendChild(recipeCardNew);
     }
+  }
+  const currCards = document.querySelectorAll(`.id_${data.id}`);
+  for (let i = 0; i < currCards.length; i++) {
+    const { shadowRoot } = currCards[i];
+    const element = shadowRoot.querySelector('.fa-heart');
+    element.classList.toggle('far', currCards[i].saved);
+    element.classList.toggle('fas', !currCards[i].saved);
+    currCards[i].saved = !currCards[i].saved;
   }
 };
 
@@ -571,7 +580,7 @@ const createRecipeClicked = () => {
   storageFuncs.saveRecipeToList('created', recipeId);
 
   const currSavedPageSelect = dropdown.value;
-  if (currSavedPageSelect === 'List 2') {
+  if (currSavedPageSelect === 'created') {
     const grid = document.querySelector('.saved-recipes .results-grid');
     // Remove all existing cards with matching id
     grid.querySelectorAll(`.id_${finalObject.id}`).forEach((card) => card.remove());
@@ -746,7 +755,6 @@ async function populateExplore() {
     rowContainer.classList.add('recipe-row');
 
     const exploreResults = await apiFuncs.getRecipesByType(section, DEFAULT_NUM_CARDS, randOffset);
-    // TODO: just store the data in localStorage and ignore the list
     exploreResults.forEach((item) => storageFuncs.saveRecipeData(item));
     createCardsFromData(exploreResults, rowContainer);
 
@@ -786,10 +794,11 @@ function onDropdownChange() {
   const allSavedIds = fetcherFuncs.getAllSavedRecipeId();
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
   removeAllChildNodes(grid);
+  console.log(allSavedIds.favorites);
   if (currSavedPageSelect === 'favorites') {
-    createRecipeCards(allSavedIds.favorites, grid);
+    createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
-    createRecipeCards(allSavedIds.created, grid);
+    createRecipeCards(allSavedIds.created, grid, -1);
   }
 }
 
