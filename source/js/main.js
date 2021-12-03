@@ -78,6 +78,11 @@ function openRecipeInfo(data) {
 
   const desc = document.getElementById('info-description');
   desc.innerHTML = data.summary;
+  if (data.summary) {
+    document.querySelector('.recipe-description-wrapper').classList.remove('hidden');
+  } else {
+    document.querySelector('.recipe-description-wrapper').classList.add('hidden');
+  }
 
   const list = document.getElementById('info-ingredients-list');
   removeAllChildNodes(list);
@@ -330,6 +335,7 @@ const addIngredientClicked = () => {
     'form-control recipe-ingredient-amount',
   );
   ingAmountInput.setAttribute('placeholder', 'Amount');
+  ingAmountInput.required = true;
   ingAmountDiv.appendChild(ingAmountInput);
 
   const ingUnitDiv = document.createElement('div');
@@ -338,6 +344,8 @@ const addIngredientClicked = () => {
   ingUnitInput.setAttribute('type', 'text');
   ingUnitInput.setAttribute('class', 'form-control recipe-ingredient-unit');
   ingUnitInput.setAttribute('placeholder', 'Unit');
+  ingUnitInput.required = true;
+
   ingUnitDiv.appendChild(ingUnitInput);
 
   const ingNameDiv = document.createElement('div');
@@ -346,6 +354,7 @@ const addIngredientClicked = () => {
   ingNameInput.setAttribute('type', 'text');
   ingNameInput.setAttribute('class', 'form-control recipe-ingredient-name');
   ingNameInput.setAttribute('placeholder', 'Name');
+  ingNameInput.required = true;
   ingNameDiv.appendChild(ingNameInput);
 
   ingRow.appendChild(ingNameDiv);
@@ -362,6 +371,7 @@ const addStepClicked = () => {
   stepInput.setAttribute('class', 'form-control recipe-step-input');
   stepInput.setAttribute('id', `step-${allStepInput.length}`);
   stepInput.setAttribute('placeholder', `Step ${allStepInput.length + 1}`);
+  stepInput.required = true;
   createStepRoot.appendChild(stepInput);
 };
 
@@ -492,6 +502,7 @@ const createRecipeClicked = () => {
     recipeCardNew.data = finalObject;
     grid.appendChild(recipeCardNew);
   }
+  openRecipeInfo(finalObject);
 
   console.log(finalObject);
 };
@@ -647,11 +658,11 @@ function initializeButtons() {
   const addStepButton = document.querySelector('.add-step-button');
   addStepButton.addEventListener('click', addStepClicked);
 
-  const createButton = document.querySelector('.create-recipe-button');
-  createButton.addEventListener('click', createRecipeClicked);
-
-  const createModalButton = document.querySelector('.create-modal-button');
-  createModalButton.addEventListener('click', openSavedRecipes);
+  const form = document.querySelector('.create-recipe-page-form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    createRecipeClicked();
+  });
 
   /* Search Results Page */
   const showMoreButton = document.getElementById('show-more-button');

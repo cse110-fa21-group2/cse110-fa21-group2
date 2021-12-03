@@ -452,32 +452,19 @@
       </section>
 
       <section class="create-recipe-page container hidden">
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Successfully created new recipe</h5>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-dark create-modal-button" data-dismiss="modal">Done</button>
-              </div>
-            </div>
-          </div>
-        </div>
         <form class="create-recipe-page-form">
           <h2 class="create-title">Name:</h2>
           <input
             type="text"
             class="form-control recipe-input-name"
             placeholder="name of recipe"
+            required
           />
 
-          <h2 class="create-title">Summary:</h2>
+          <h2 class="create-title">Description:</h2>
           <textarea
             class="form-control recipe-input-summary"
-            placeholder="Summary of recipe"
+            placeholder="Recipe description"
           ></textarea>
 
           <h2 class="create-title">Nutrition Facts:</h2>
@@ -496,6 +483,7 @@
                 class="form-control ingredient-serving-input"
                 placeholder="serving size"
                 min="1"
+                required
               />
 
               <div class="row ingredient-title">
@@ -517,6 +505,7 @@
                       type="text"
                       class="form-control recipe-ingredient-name"
                       placeholder="Name"
+                      required
                     />
                   </div>
                   <div class="col">
@@ -524,6 +513,7 @@
                       type="number"
                       class="form-control recipe-ingredient-amount"
                       placeholder="Amount"
+                      required
                     />
                   </div>
                   <div class="col">
@@ -531,6 +521,7 @@
                       type="text"
                       class="form-control recipe-ingredient-unit"
                       placeholder="Unit"
+                      required
                     />
                   </div>
                 </div>
@@ -584,6 +575,7 @@
                 <textarea
                   class="form-control recipe-step-input"
                   placeholder="Step 1"
+                  required
                 ></textarea>
 
             </div>
@@ -594,7 +586,7 @@
             </div>
           </div>
           <div class="create-recipe-button-wrapper">
-            <button type="button" class="btn btn-dark create-recipe-button" data-toggle="modal" data-target="#exampleModalCenter">
+            <button type="submit" class="btn btn-dark create-recipe-button">
               Create Recipe
             </button>
           </div>
