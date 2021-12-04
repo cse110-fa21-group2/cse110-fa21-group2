@@ -2,9 +2,8 @@
 
 import { getAllRecipes } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
-// const API_KEY = '857b051abfmsh018f07c4f390b41p1547b1jsn64ae2598745b';// prevent exposing api key
-const API_KEY = '555471dabemsh486b3ba95fa5568p18f5f2jsn3328cc4e94d5'; // free api key
-const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
+import { API_KEY, HOST, DEV_MODE } from './constants.js';
+import TEST_DATA from './storage/sampleData.js';
 
 /**
  * Get detailed info from recipe ID's
@@ -12,6 +11,7 @@ const HOST = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
  * @returns {Array} Array of recipe Objects where each object contains detailed info
  */
 export async function getDetailedRecipeInfoBulk(idsToFetch) {
+  if (DEV_MODE) return TEST_DATA;
   return new Promise((resolve, reject) => {
     if (idsToFetch.length === 0) {
       resolve([]);
@@ -85,8 +85,8 @@ export function extractIDs(data) {
  * so you can't sort by calories and popularity together(at least I havent figure out how to)
  * @returns {Object} list of recipe JSONs
  */
-// eslint-disable-next-line no-unused-vars
 export async function getRecipesByName(query, num = 5, offset = 0, sortFilterParams = { sort: 'popularity', sortDirection: 'desc' }) {
+  if (DEV_MODE) return TEST_DATA;
   return new Promise((resolve, reject) => {
     const url = new URL(`https://${HOST}/recipes/complexSearch`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
@@ -132,8 +132,8 @@ export async function getRecipesByName(query, num = 5, offset = 0, sortFilterPar
  * @param {Number} [num=5] - max number of recipes to get
  * @returns {Object} list of recipe JSONs
  */
-// eslint-disable-next-line no-unused-vars
 export async function getRecipesByAutocomplete(query, num = 5) {
+  if (DEV_MODE) return TEST_DATA;
   return new Promise((resolve, reject) => {
     const url = new URL(`https://${HOST}/recipes/autocomplete`);
     const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
@@ -182,8 +182,8 @@ export async function getRecipesByAutocomplete(query, num = 5) {
  *  (use random number so we dont get same results everytime)
  * @returns {Object} list of recipe JSONs
  */
-// eslint-disable-next-line no-unused-vars
 export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
+  if (DEV_MODE) return TEST_DATA;
   return new Promise((resolve, reject) => {
     const url = new URL(`https://${HOST}/recipes/complexSearch`);
     url.searchParams.append('cuisine', cuisine);
@@ -225,6 +225,7 @@ export async function getRecipesByCuisine(cuisine, num = 5, offset = 0) {
  * @returns {Object} list of recipe JSONs
  */
 export async function getRecipesByType(type, num = 5, offset = 0) {
+  if (DEV_MODE) return TEST_DATA;
   return new Promise((resolve, reject) => {
     const url = new URL(`https://${HOST}/recipes/complexSearch`);
     url.searchParams.append('type', type);
