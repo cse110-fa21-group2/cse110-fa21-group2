@@ -309,13 +309,22 @@ function openRecipeInfo(data) {
   const videoContainer = document.querySelector('.videos-wrapper');
   videoContainer.classList.toggle('hidden', !video);
 
-  // TODO: Nutritional Info
+  // Nutritional Info
   const nutrition = data?.nutrients;
   const nutritionContainer = document.querySelector('.nutrition-wrapper');
   nutritionContainer.classList.toggle('hidden', !nutrition);
+  const nutritionField = document.getElementById('info-text');
+  nutrition?.sort((a, b) => a.name - b.name);
+  let nutritionText = 'Per Serving: ';
   nutrition?.forEach((item) => {
     // console.log(item);
+    if (item.amount / data.servings !== 0) {
+      nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
+    }
   });
+  nutritionText = nutritionText?.substr(0, nutritionText.length - 2);
+  nutritionText = nutritionText?.concat('.');
+  nutritionField.innerHTML = nutritionText;
 
   const categories = fetcherFuncs.getAllSavedRecipeId();
   const saved = categories.favorites.includes(data.id);
