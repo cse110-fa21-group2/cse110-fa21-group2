@@ -42,6 +42,118 @@ const router = new Router();
  */
 let ACTIVE_INFO_DATA = null;
 
+let setTime;
+let timerID;
+
+const updateTimer = () => {
+  let distance = setTime;
+  const timer = document.getElementById('timer');
+
+  timerID = setInterval(() => {
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    timer.innerHTML = `${hours}h ${minutes}m ${seconds}s `;
+    if (distance < 0) {
+      clearInterval(timerID);
+      const audioElement = new Audio('./assets/timer.mp3');
+      audioElement.play();
+      timer.innerHTML = 'Done!';
+    }
+    distance -= 1000;
+  }, 1000);
+};
+
+/* Set btn */
+
+const setTimer = () => {
+  if (timerID !== 'undefined') {
+    clearInterval(timerID);
+    document.getElementById('pause').innerHTML = 'Pause';
+  }
+  const hours = document.getElementById('hours').value;
+  const minutes = document.getElementById('minutes').value;
+  const seconds = document.getElementById('seconds').value;
+  if (!(hours <= -1 || hours > 23 || minutes <= -1 || minutes > 59 || seconds <= -1
+    || seconds > 59) && !(hours === 0 && minutes === 0 && seconds === 0)) {
+    setTime = hours * 1000 * 60 * 60 + minutes * 1000 * 60 + seconds * 1000;
+    updateTimer();
+  } else {
+    document.getElementById('timer').innerHTML = 'Invalid Timer';
+    clearInterval(timerID);
+  }
+};
+
+/* Reset btn */
+
+const resetTimer = () => {
+  clearInterval(timerID);
+  document.getElementById('timer').innerHTML = 'Begin Timer';
+  document.getElementById('hours').value = 0;
+  document.getElementById('minutes').value = 0;
+  document.getElementById('seconds').value = 0;
+};
+
+/* Pause btn */
+const pauseTimer = () => {
+  const timerInfo = document.getElementById('timer').innerHTML;
+  if (!(timerInfo === 'Done!' || timerInfo === 'Begin Timer' || timerInfo === 'Invalid Timer')) {
+    const label = document.getElementById('pause').innerHTML;
+    const str = document.getElementById('timer').innerHTML;
+    if (label === 'Pause') {
+      document.getElementById('timer').innerHTML = `${str} (Paused)`;
+      document.getElementById('pause').innerHTML = 'Resume';
+      clearInterval(timerID);
+    } else {
+      const [hrs, min, sec] = str.match(/\d+/g);
+      document.getElementById('hours').value = hrs;
+      document.getElementById('minutes').value = min;
+      document.getElementById('seconds').value = sec;
+      document.getElementById('timer').innerHTML = `${hrs}h ${min}m ${sec}s `;
+      setTimer();
+    }
+  }
+};
+
+/* Minimize btn */
+
+const displayTimer = () => {
+  const container = document.getElementById('timer-container');
+  const displayLabel = document.getElementById('shown');
+  const timeInput = document.getElementById('time-input');
+  const pauseBtn = document.getElementById('pause');
+  const resetBtn = document.getElementById('reset');
+
+  const minimizing = displayLabel.innerHTML === 'Minimize';
+
+  timeInput.classList.toggle('hidden', minimizing);
+  pauseBtn.classList.toggle('hidden', minimizing);
+  resetBtn.classList.toggle('hidden', minimizing);
+  displayLabel.innerHTML = minimizing ? 'Maximize' : 'Minimize';
+  container.style.height = minimizing ? '8.5rem' : '10rem';
+};
+
+/* Drag event */
+const onTimerDragged = (e) => {
+  const timer = document.getElementById('timer-container');
+  const rect = timer.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left + 10;
+  const offsetY = e.clientY - rect.top + 15;
+
+  function mousemove(e1) {
+    timer.style.left = `${e1.clientX - offsetX}px`;
+    timer.style.top = `${e1.clientY - offsetY}px`;
+  }
+
+  function mouseup() {
+    window.removeEventListener('mousemove', mousemove);
+    window.removeEventListener('mouseup', mouseup);
+  }
+
+  window.addEventListener('mousemove', mousemove);
+  window.addEventListener('mouseup', mouseup);
+};
+
 /* DOM Manipulation helper functions */
 
 /**
@@ -116,6 +228,7 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
  * @param {Object} data - JSON object to use for page data
  */
 function openRecipeInfo(data) {
+  resetTimer();
   ACTIVE_INFO_DATA = data;
   // Header section
   const title = document.querySelector('.info-title');
@@ -811,10 +924,10 @@ function populateSavedRecipes() {
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
   if (currSavedPageSelect === 'favorites') {
     // add favorites cards to grid
-    createRecipeCards(allSavedIds.favorites, grid);
+    createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
     // add created recipe cards to grid
-    createRecipeCards(allSavedIds.created, grid);
+    createRecipeCards(allSavedIds.created, grid, -1);
   }
 }
 
@@ -855,6 +968,23 @@ function initializeButtons() {
 
   const editBtn = document.getElementById('info-edit-btn');
   editBtn.addEventListener('click', () => openCreateRecipe(ACTIVE_INFO_DATA));
+
+  /* Timer buttons */
+
+  const setButton = document.getElementById('setTime');
+  setButton.addEventListener('click', setTimer);
+
+  const resetButton = document.getElementById('reset');
+  resetButton.addEventListener('click', resetTimer);
+
+  const pauseButton = document.getElementById('pause');
+  pauseButton.addEventListener('click', pauseTimer);
+
+  const minimizeButton = document.getElementById('shown');
+  minimizeButton.addEventListener('click', displayTimer);
+
+  const timer = document.getElementById('timer-container');
+  timer.addEventListener('mousedown', onTimerDragged);
 
   /* Create Recipe Page */
   const addIngredientButton = document.querySelector('.add-ingredient-button');
