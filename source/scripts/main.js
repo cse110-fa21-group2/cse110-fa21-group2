@@ -276,6 +276,9 @@ function openRecipeInfo(data) {
   const prepTime = document.getElementById('prep-time');
   prepTime.innerHTML = `Prep Time: ${prepMinutes} minutes`;
   prepTime.classList.toggle('hidden', prepTime === 0);
+  if (prepMinutes === 0) {
+    prepTime.hidden = true;
+  }
 
   const cookTime = document.getElementById('cook-time');
   cookTime.innerHTML = `Cook Time: ${cookMinutes} minutes`;
