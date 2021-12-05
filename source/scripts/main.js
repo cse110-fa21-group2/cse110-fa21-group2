@@ -337,7 +337,6 @@ function openRecipeInfo(data) {
   nutrition?.sort((a, b) => a.name - b.name);
   let nutritionText = 'Per Serving: ';
   nutrition?.forEach((item) => {
-    // console.log(item);
     if (item.amount / data.servings !== 0) {
       nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
     }
@@ -380,8 +379,6 @@ const openSavedRecipes = () => {
  * @param {JSON} - optional JSON object data to populate page with
  */
 const openCreateRecipe = (data) => {
-  console.log(data);
-
   const nameField = document.getElementById('create-name-field');
   const name = data?.title;
   nameField.value = name || '';
