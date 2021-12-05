@@ -200,6 +200,7 @@ function openRecipeInfo(data) {
   const nutrition = data?.nutrients;
   const nutritionContainer = document.querySelector('.nutrition-wrapper');
   nutritionContainer.classList.toggle('hidden', !nutrition);
+  const nutritionField = document.getElementById('info-text');
   nutrition?.sort((a, b) => a.name - b.name);
   let nutritionText = 'Per Serving: ';
   nutrition?.forEach((item) => {
@@ -210,7 +211,7 @@ function openRecipeInfo(data) {
   });
   nutritionText = nutritionText?.substr(0, nutritionText.length - 2);
   nutritionText = nutritionText?.concat('.');
-  nutritionContainer.innerHTML = nutritionText;
+  nutritionField.innerHTML = nutritionText;
 
   const categories = fetcherFuncs.getAllSavedRecipeId();
   const saved = categories.favorites.includes(data.id);
