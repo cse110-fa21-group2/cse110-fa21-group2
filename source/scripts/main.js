@@ -230,6 +230,19 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
 function openRecipeInfo(data) {
   resetTimer();
   storageFuncs.saveRecipeToList('recent', data.id);
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'recent') {
+    const grid = document.querySelector('.saved-recipes .results-grid');
+    // Remove all existing cards with matching id
+    grid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+
+    // add card to saved recipe page
+    const recipeCardNew = document.createElement('recipe-card');
+    recipeCardNew.classList.add(`id_${data.id}`);
+    recipeCardNew.populateFunc = openRecipeInfo;
+    recipeCardNew.data = data;
+    grid.appendChild(recipeCardNew);
+  }
   ACTIVE_INFO_DATA = data;
   // Header section
   const title = document.querySelector('.info-title');
@@ -1087,6 +1100,8 @@ function populateSavedRecipes() {
   } else if (currSavedPageSelect === 'created') {
     // add created recipe cards to grid
     createRecipeCards(allSavedIds.created, grid, -1);
+  } else if (currSavedPageSelect === 'recent') {
+    createRecipeCards(allSavedIds.recent, grid, -1);
   }
 }
 
