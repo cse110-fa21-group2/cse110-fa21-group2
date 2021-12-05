@@ -229,6 +229,20 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
  */
 function openRecipeInfo(data) {
   resetTimer();
+  storageFuncs.saveRecipeToList('recent', data.id);
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'recent') {
+    const grid = document.querySelector('.saved-recipes .results-grid');
+    // Remove all existing cards with matching id
+    grid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+
+    // add card to saved recipe page
+    const recipeCardNew = document.createElement('recipe-card');
+    recipeCardNew.classList.add(`id_${data.id}`);
+    recipeCardNew.populateFunc = openRecipeInfo;
+    recipeCardNew.data = data;
+    grid.appendChild(recipeCardNew);
+  }
   ACTIVE_INFO_DATA = data;
   // Header section
   const title = document.querySelector('.info-title');
@@ -323,7 +337,6 @@ function openRecipeInfo(data) {
   nutrition?.sort((a, b) => a.name - b.name);
   let nutritionText = 'Per Serving: ';
   nutrition?.forEach((item) => {
-    // console.log(item);
     if (item.amount / data.servings !== 0) {
       nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
     }
@@ -366,8 +379,6 @@ const openSavedRecipes = () => {
  * @param {JSON} - optional JSON object data to populate page with
  */
 const openCreateRecipe = (data) => {
-  console.log(data);
-
   const nameField = document.getElementById('create-name-field');
   const name = data?.title;
   nameField.value = name || '';
@@ -1086,6 +1097,8 @@ function populateSavedRecipes() {
   } else if (currSavedPageSelect === 'created') {
     // add created recipe cards to grid
     createRecipeCards(allSavedIds.created, grid, -1);
+  } else if (currSavedPageSelect === 'recent') {
+    createRecipeCards(allSavedIds.recent, grid, -1);
   }
 }
 
@@ -1103,6 +1116,8 @@ function onDropdownChange() {
     createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
     createRecipeCards(allSavedIds.created, grid, -1);
+  } else if (currSavedPageSelect === 'recent') {
+    createRecipeCards(allSavedIds.recent, grid, -1);
   }
 }
 
@@ -1187,6 +1202,7 @@ function initializeLocalStorage() {
   storageFuncs.createKey('explore-categories');
   storageFuncs.createList('favorites');
   storageFuncs.createList('created');
+  storageFuncs.createList('recent');
 }
 
 async function init() {
