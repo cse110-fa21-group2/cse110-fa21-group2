@@ -367,9 +367,152 @@ const openCreateRecipe = (data) => {
   nameField.value = name || '';
 
   const descField = document.getElementById('create-desc-field');
-  console.log(descField);
   const desc = data?.summary;
-  descField.innerHTML = desc;
+  descField.value = desc || '';
+
+  const nutrition = data?.nutrients;
+  const nutritionField = document.getElementById('create-nutrition-field');
+  nutrition?.sort((a, b) => a.name - b.name);
+  let nutritionText = 'Per Serving: ';
+  nutrition?.forEach((item) => {
+    if (item.amount / data.servings !== 0) {
+      nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
+    }
+  });
+  nutritionText = nutritionText?.substr(0, nutritionText.length - 2);
+  nutritionText = nutritionText?.concat('.');
+  nutritionField.value = nutrition ? nutritionText : '';
+
+  const servingField = document.getElementById('serving-input');
+  const servings = data?.servings;
+  servingField.value = servings || '';
+
+  const prepField = document.getElementById('prep-time-input');
+  const prepMinutes = data?.preparationMinutes;
+  prepField.value = prepMinutes || '';
+
+  const cookField = document.getElementById('cook-time-input');
+  const cookMinutes = data?.cookMinutes;
+  cookField.value = cookMinutes || '';
+
+  const urlField = document.getElementById('url-input');
+  const url = data?.image;
+  urlField.value = url || '';
+
+  const ratingField = document.getElementById('rating-input');
+  const rating = data?.spoonacularScore;
+  ratingField.value = rating ? rating / 20 : '';
+
+  const ingredientDiv = document.getElementById('ingredient-input-list');
+  removeAllChildNodes(ingredientDiv);
+  const ingredients = data?.extendedIngredients;
+  if (ingredients) {
+    ingredients.forEach((item) => {
+      const ingName = document.createElement('div');
+      ingName.className = 'col';
+
+      const ingNameInput = document.createElement('input');
+      ingNameInput.type = 'text';
+      ingNameInput.className = 'form-control recipe-ingredient-name';
+      ingNameInput.placeholder = 'Name';
+      ingNameInput.required = true;
+      ingNameInput.value = item?.name || '';
+
+      ingName.appendChild(ingNameInput);
+
+      const ingAmount = document.createElement('div');
+      ingAmount.className = 'col';
+
+      const ingAmountInput = document.createElement('input');
+      ingAmountInput.type = 'text';
+      ingAmountInput.className = 'form-control recipe-ingredient-name';
+      ingAmountInput.placeholder = 'Amount';
+      ingAmountInput.required = true;
+      ingAmountInput.value = item?.amount || '';
+
+      ingAmount.appendChild(ingAmountInput);
+
+      const ingUnit = document.createElement('div');
+      ingUnit.className = 'col';
+
+      const ingUnitInput = document.createElement('input');
+      ingUnitInput.type = 'text';
+      ingUnitInput.className = 'form-control recipe-ingredient-name';
+      ingUnitInput.placeholder = 'Amount';
+      ingUnitInput.required = true;
+      ingUnitInput.value = item?.unit || '';
+
+      ingUnit.appendChild(ingUnitInput);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.appendChild(ingName);
+      row.appendChild(ingAmount);
+      row.appendChild(ingUnit);
+      ingredientDiv.appendChild(row);
+    });
+  } else {
+    const ingName = document.createElement('div');
+    ingName.className = 'col';
+
+    const ingNameInput = document.createElement('input');
+    ingNameInput.type = 'text';
+    ingNameInput.className = 'form-control recipe-ingredient-name';
+    ingNameInput.placeholder = 'Name';
+    ingNameInput.required = true;
+
+    ingName.appendChild(ingNameInput);
+
+    const ingAmount = document.createElement('div');
+    ingAmount.className = 'col';
+
+    const ingAmountInput = document.createElement('input');
+    ingAmountInput.type = 'text';
+    ingAmountInput.className = 'form-control recipe-ingredient-name';
+    ingAmountInput.placeholder = 'Amount';
+    ingAmountInput.required = true;
+
+    ingAmount.appendChild(ingAmountInput);
+
+    const ingUnit = document.createElement('div');
+    ingUnit.className = 'col';
+
+    const ingUnitInput = document.createElement('input');
+    ingUnitInput.type = 'text';
+    ingUnitInput.className = 'form-control recipe-ingredient-name';
+    ingUnitInput.placeholder = 'Amount';
+    ingUnitInput.required = true;
+
+    ingUnit.appendChild(ingUnitInput);
+
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.appendChild(ingName);
+    row.appendChild(ingAmount);
+    row.appendChild(ingUnit);
+    ingredientDiv.appendChild(row);
+  }
+
+  const stepsDiv = document.getElementById('create-step-div');
+  removeAllChildNodes(stepsDiv);
+  let stepsList = data?.analyzedInstructions;
+  if (stepsList) {
+    stepsList = stepsList[0]?.steps;
+    stepsList?.forEach((item, i) => {
+      const listElement = document.createElement('textarea');
+      listElement.className = 'form-control recipe-step-input';
+      listElement.value = item.step;
+      listElement.placeholder = `Step ${i + 1}`;
+      listElement.required = true;
+      stepsDiv.appendChild(listElement);
+    });
+  } else {
+    const blank = document.createElement('textarea');
+    blank.className = 'form-control recipe-step-input';
+    blank.placeholder = 'Step 1';
+    blank.required = true;
+    stepsDiv.appendChild(blank);
+  }
 
   router.navigate('create-recipe-page', false);
 };
