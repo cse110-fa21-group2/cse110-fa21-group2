@@ -170,6 +170,9 @@ function openRecipeInfo(data) {
   const cookTime = document.getElementById('cook-time');
   cookTime.innerHTML = `Cook Time: ${cookMinutes} minutes`;
   cookTime.classList.toggle('hidden', cookTime === 0);
+  if(cookMinutes == 0) {
+    cookTime.hidden = true;
+  }
 
   const totalTime = document.getElementById('total-time');
   totalTime.innerHTML = `Total Time: ${totalMinutes} minutes`;
