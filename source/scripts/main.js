@@ -206,7 +206,7 @@ function openRecipeInfo(data) {
   nutrition?.forEach((item) => {
     // console.log(item);
     if (item.amount / data.servings !== 0) {
-      nutritionText = nutritionText.concat(item.name, ' ', item.amount / data.servings, item.unit, '; ');
+      nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
     }
   });
   nutritionText = nutritionText?.substr(0, nutritionText.length - 2);
