@@ -621,8 +621,6 @@ div.timer {
   border: 3px solid gold;
   border-radius: 25px;
   bottom: 0;
-
-  /* box-shadow: 0 1px 4px #000c; */
   display: block;
   float: left;
   height: 10rem;
