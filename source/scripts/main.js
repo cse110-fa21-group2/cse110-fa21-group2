@@ -229,6 +229,7 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
  */
 function openRecipeInfo(data) {
   resetTimer();
+  storageFuncs.saveRecipeToList('recent', data.id);
   ACTIVE_INFO_DATA = data;
   // Header section
   const title = document.querySelector('.info-title');
@@ -1103,6 +1104,8 @@ function onDropdownChange() {
     createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
     createRecipeCards(allSavedIds.created, grid, -1);
+  } else if (currSavedPageSelect === 'recent') {
+    createRecipeCards(allSavedIds.recent, grid, -1);
   }
 }
 
@@ -1187,6 +1190,7 @@ function initializeLocalStorage() {
   storageFuncs.createKey('explore-categories');
   storageFuncs.createList('favorites');
   storageFuncs.createList('created');
+  storageFuncs.createList('recent');
 }
 
 async function init() {
