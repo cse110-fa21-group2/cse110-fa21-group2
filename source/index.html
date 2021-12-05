@@ -434,14 +434,14 @@
                 <textarea class="form-control recipe-input-summary" id='create-desc-field' placeholder="Recipe description"></textarea>
 
                 <h2 class="create-title">Nutrition Facts:</h2>
-                <textarea class="form-control recipe-input-nutrition" placeholder="Nutrition Facts"></textarea>
+                <textarea class="form-control recipe-input-nutrition" id='create-nutrition-field' placeholder="Nutrition Facts"></textarea>
 
                 <div class="row">
                     <div class="col-6">
                         <h2 class="create-title">Ingredients:</h2>
 
                         <p class="create-title-fact">Servings:</p>
-                        <input type="number" class="form-control ingredient-serving-input" placeholder="serving size" min="1" required />
+                        <input type="number" id='serving-input' class="form-control ingredient-serving-input" placeholder="serving size" min="1" required />
 
                         <div class="row ingredient-title">
                             <div class="col">
@@ -455,7 +455,7 @@
                             </div>
                         </div>
 
-                        <div class="ingredient-input-list">
+                        <div class="ingredient-input-list" id='ingredient-input-list'>
                             <div class="row">
                                 <div class="col">
                                     <input type="text" class="form-control recipe-ingredient-name" placeholder="Name" required />
@@ -478,19 +478,19 @@
                         <h2 class="create-title">Facts:</h2>
 
                         <p class="create-title-fact">Prep Time</p>
-                        <input type="number" class="form-control recipe-preptime" placeholder="15 minutes" min="0" />
+                        <input type="number" id='prep-time-input' class="form-control recipe-preptime" placeholder="15 minutes" min="0" />
                         <p class="create-title-fact">Cook Time</p>
-                        <input type="number" class="form-control recipe-cooktime" placeholder="30 minutes" min="0" />
+                        <input type="number" id='cook-time-input' class="form-control recipe-cooktime" placeholder="30 minutes" min="0" />
                         <p class="create-title-fact">Recipe Image (URL)</p>
-                        <input type="text" class="form-control recipe-image-url" placeholder="website.com/pic.jpg" />
+                        <input type="text" id='url-input' class="form-control recipe-image-url" placeholder="website.com/pic.jpg" />
                         <p class="create-title-fact">Rating (0-5):</p>
-                        <input type="number" class="form-control recipe-rating" placeholder="Rating" min=0 max=5 />
+                        <input type="number" id='rating-input' class="form-control recipe-rating" placeholder="Rating" min=0 max=5 />
                     </div>
                 </div>
 
                 <div class="row">
                     <h2 class="create-title">Instructions:</h2>
-                    <div class="step-input-list">
+                    <div class="step-input-list" id='create-step-div'>
                         <textarea class="form-control recipe-step-input" placeholder="Step 1" required></textarea>
 
                     </div>
