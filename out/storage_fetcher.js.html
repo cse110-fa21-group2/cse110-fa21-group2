@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Router.js</title>
+    <title>JSDoc: Source: storage/fetcher.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: Router.js</h1>
+    <h1 class="page-title">Source: storage/fetcher.js</h1>
 
     
 
@@ -26,39 +26,78 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>export default class Router {
-  /**
-   * Adds a page name &amp; function so to the router so that the function
-   * can be called later when the page is passed in
-   * @param {String} page The name of the page to route to (this is used
-   *                      as the page's hash as well in the URL)
-   * @param {Function} pageFunc The function to run when the page is called
-   */
-  addPage(page, pageFunc) {
-    this[page] = pageFunc;
+            <pre class="prettyprint source linenums"><code>/**
+ *
+ * @returns {Object} all recipes {uid:recipe json,uid:recipe json}
+ */
+export function getAllRecipes() {
+  return JSON.parse(localStorage.getItem('recipeData'));
+}
+
+/**
+ *
+ * @param {String} id to query for data
+ * @returns {Object} object of the recipe
+ */
+export function getSingleRecipe(id) {
+  const recipeData = getAllRecipes();
+  return recipeData[id];
+}
+
+/**
+ *
+ * @return {Object} recipe id in categories {category1:[recipe ids],category2:[recipe ids]}
+ */
+export function getAllCategoryRecipeId() {
+  return JSON.parse(localStorage.getItem('explore-categories'));
+}
+
+/**
+ * Gets all recipes sorted by categories where key=category and value=recipeJSON
+ * @return {Object} Object recipe in categories {category1:[recipe json],category2:[recipe json]}
+ */
+export function getAllCategoryRecipe() {
+  const categoryId = getAllCategoryRecipeId();
+  const recipes = getAllRecipes();
+  const output = {};
+  if (categoryId == null || recipes == null) {
+    return null;
   }
+  Object.keys(categoryId).forEach((category) => {
+    output[category] = [];
+    categoryId[category].forEach((id) => {
+      output[category].push(recipes[id]);
+    });
+  });
+  return output;
+}
 
-  /**
-   * Changes the page visually to the page that has been passed in. statePopped
-   * is used to avoid pushing a new history state on back/forward button presses
-   * @param {String} page The name of the page to route to
-   * @param {Boolean} statePopped True if this function is being called from a
-   *                              'popstate' event instead of a normal card click
-   */
-  navigate(page, statePopped) {
-    if (this[page] === undefined) {
-      console.error('Page not found');
-      return;
-    }
+/**
+ *
+ * @returns {Object} recipe id in saved lists {list1:[recipe ids],list2:[recipe ids]}
+ */
+export function getAllSavedRecipeId() {
+  return JSON.parse(localStorage.getItem('savedLists'));
+}
 
-    const hash = page === 'landing' ? '' : `#${page}`;
-
-    if (!statePopped &amp;&amp; window.location.hash !== hash) {
-      history.pushState({ page }, document.title, `/${hash}`);
-    }
-
-    this[page]();
+/**
+ *
+ * @returns {Object} recipe in saved lists {list1:[recipe json],list2:[recipe json]}
+ */
+export function getAllSavedRecipe() {
+  const savedId = getAllSavedRecipeId();
+  const recipes = getAllRecipes();
+  const output = {};
+  if (savedId == null || recipes == null) {
+    return null;
   }
+  Object.keys(savedId).forEach((category) => {
+    output[category] = [];
+    savedId[category].forEach((id) => {
+      output[category].push(recipes[id]);
+    });
+  });
+  return output;
 }
 </code></pre>
         </article>
