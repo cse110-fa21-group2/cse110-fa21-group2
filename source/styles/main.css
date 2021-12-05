@@ -12,6 +12,11 @@ main {
   width: 100%;
 }
 
+/* stylelint-disable-next-line selector-no-vendor-prefix */
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: smaller;
+}
+
 :root {
   --primary: #006090;
   --secondary: white;
@@ -359,7 +364,7 @@ output.max-time-output {
 
 /* Recipe Info Page */
 
-.recipe-info {
+.info-page-wrapper {
   background-color: white;
   box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
   margin: 2rem auto;
@@ -607,4 +612,45 @@ output.max-time-output {
 
 .steps {
   margin-top: 0.5rem;
+}
+
+/* Style for timer */
+div.timer {
+  align-items: center;
+  background-color: white;
+  border-radius: 25px;
+  bottom: 0;
+  box-shadow: 0 1px 4px #000c;
+  display: block;
+  float: left;
+  height: 10rem;
+  left: 0;
+  margin: 1rem;
+  overflow: auto;
+  padding: 1rem;
+  position: fixed;
+  width: auto;
+}
+
+div.timer:hover {
+  cursor: grab;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+div.timer button {
+  background-color: #fff0d4;
+  border-radius: 10px;
+}
+
+div.time-input {
+  display: inline-flex;
+}
+
+p.show-timer {
+  font-size: 24px;
+  text-align: center;
+}
+
+button.set-time {
+  margin-left: 0.2rem;
 }

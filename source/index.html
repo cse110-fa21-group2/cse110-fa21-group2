@@ -299,114 +299,129 @@
         </section>
 
         <section class="recipe-info hidden">
-            <div>
-                <button class="info-page-btn back-btn" id='info-back-btn'>Return</button>
-                <div class="title-edit-wrapper">
-                    <p class="info-title">Chicken Salad</p>
-                    <button class="info-page-btn back-btn" id="info-edit-btn">Edit</button>
-                </div>
-                <div class="rating-favorite-wrapper">
-                    <div class="rating">
-                        <img src="./assets/5-star.svg" class="rating-stars" alt="" id='recipe-info-stars'>
-                        <ul class="info-list rating-box">
-                            <li class="rating-stats" id='recipe-info-rating'>
-                                4.65 stars
-                                <span class="divider"></span>
-                            </li>
-                            <li class="rating-stats" id='recipe-info-likes'>
-                                55 reviews
-                            </li>
-                        </ul>
+            <div class="info-page-wrapper">
+                <div>
+                    <button class="info-page-btn back-btn" id='info-back-btn'>Return</button>
+                    <div class="title-edit-wrapper">
+                        <p class="info-title">Chicken Salad</p>
+                        <button class="info-page-btn back-btn" id="info-edit-btn">Edit</button>
                     </div>
-                    <button class="info-page-btn org-btn" id='info-save-btn'>Save Recipe <i class="far fa-heart"></i></button>
+                    <div class="rating-favorite-wrapper">
+                        <div class="rating">
+                            <img src="./assets/5-star.svg" class="rating-stars" alt="" id='recipe-info-stars'>
+                            <ul class="info-list rating-box">
+                                <li class="rating-stats" id='recipe-info-rating'>
+                                    4.65 stars
+                                    <span class="divider"></span>
+                                </li>
+                                <li class="rating-stats" id='recipe-info-likes'>
+                                    55 reviews
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="info-page-btn org-btn" id='info-save-btn'>Save Recipe <i class="far fa-heart"></i></button>
+                    </div>
+                    <img id="recipe-info-image" src="" class="recipe-img">
+                    <div class="recipe-description-wrapper">
+                        <p class="description" id='info-description'>
+                            This chicken salad comes together fast using rotisserie chicken breasts. The herbs, along with the pecans, help to make this chicken salad flavorful. Serve on top of toasted croissants, or butter lettuce.
+                        </p>
+                    </div>
                 </div>
-                <img id="recipe-info-image" src="" class="recipe-img">
-                <div class="recipe-description-wrapper">
-                    <p class="description" id='info-description'>
-                        This chicken salad comes together fast using rotisserie chicken breasts. The herbs, along with the pecans, help to make this chicken salad flavorful. Serve on top of toasted croissants, or butter lettuce.
-                    </p>
-                </div>
-            </div>
 
-            <div class="recipe-info-body">
-                <div class="info-body-section">
-                    <div class="ingredients-wrapper">
-                        <p class="info-subtitle">Ingredients</p>
-                        <ul class="info-list ingredients" id='info-ingredients-list'>
-                            <li class="info-ingredient">1/2 cup mayonnaise</li>
-                            <li class="info-ingredient">1/2 cup plain Greek yogurt</li>
-                            <li class="info-ingredient">2 teaspoons white wine vinegar</li>
-                            <li class="info-ingredient">1/2 teaspoon garlic powder</li>
-                            <li class="info-ingredient">1/4 teaspoon dried thyme</li>
-                            <li class="info-ingredient">2 cups chopped cooked chicken</li>
-                            <li class="info-ingredient">2 stalks celery, sliced</li>
-                            <li class="info-ingredient">1/2 cup mayonnaise</li>
-                            <li class="info-ingredient">1/2 cup plain Greek yogurt</li>
-                            <li class="info-ingredient">2 teaspoons white wine vinegar</li>
-                            <li class="info-ingredient">1/2 teaspoon garlic powder</li>
-                            <li class="info-ingredient">1/4 teaspoon dried thyme</li>
-                            <li class="info-ingredient">2 cups chopped cooked chicken</li>
-                            <li class="info-ingredient">2 stalks celery, sliced</li>
-                        </ul>
+                <div class="recipe-info-body">
+                    <div class="info-body-section">
+                        <div class="ingredients-wrapper">
+                            <p class="info-subtitle">Ingredients</p>
+                            <ul class="info-list ingredients" id='info-ingredients-list'>
+                                <li class="info-ingredient">1/2 cup mayonnaise</li>
+                                <li class="info-ingredient">1/2 cup plain Greek yogurt</li>
+                                <li class="info-ingredient">2 teaspoons white wine vinegar</li>
+                                <li class="info-ingredient">1/2 teaspoon garlic powder</li>
+                                <li class="info-ingredient">1/4 teaspoon dried thyme</li>
+                                <li class="info-ingredient">2 cups chopped cooked chicken</li>
+                                <li class="info-ingredient">2 stalks celery, sliced</li>
+                                <li class="info-ingredient">1/2 cup mayonnaise</li>
+                                <li class="info-ingredient">1/2 cup plain Greek yogurt</li>
+                                <li class="info-ingredient">2 teaspoons white wine vinegar</li>
+                                <li class="info-ingredient">1/2 teaspoon garlic powder</li>
+                                <li class="info-ingredient">1/4 teaspoon dried thyme</li>
+                                <li class="info-ingredient">2 cups chopped cooked chicken</li>
+                                <li class="info-ingredient">2 stalks celery, sliced</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="info-body-section">
-                    <div class="quick-facts-wrapper">
-                        <p class="info-subtitle">Quick Facts</p>
-                        <ul class="info-list facts">
-                            <li class="info-facts" id='prep-time'>Prep: 20 minutes</li>
-                            <li class="info-facts" id='cook-time'>Cook: N/A</li>
-                            <li class="info-facts" id='total-time'>Total: 20 minutes</li>
-                            <li class="info-facts" id='info-servings'>Yield: 4 servings</li>
-                        </ul>
-                    </div>
-                    <div class="measurements-wrapper">
-                        <p class="info-subtitle">Measurements</p>
-                        <button class="info-page-btn unit-btn">Units: Imperial</button>
-                        <div class="serving-adjust">
-                            <button class="info-page-btn measurement-btn">-</button>
-                            <div class="serving-size">4</div>
-                            <button class="info-page-btn measurement-btn">+</button>
+                    <div class="info-body-section">
+                        <div class="quick-facts-wrapper">
+                            <p class="info-subtitle">Quick Facts</p>
+                            <ul class="info-list facts">
+                                <li class="info-facts" id='prep-time'>Prep: 20 minutes</li>
+                                <li class="info-facts" id='cook-time'>Cook: N/A</li>
+                                <li class="info-facts" id='total-time'>Total: 20 minutes</li>
+                                <li class="info-facts" id='info-servings'>Yield: 4 servings</li>
+                            </ul>
+                        </div>
+                        <div class="measurements-wrapper">
+                            <p class="info-subtitle">Measurements</p>
+                            <button class="info-page-btn unit-btn">Units: Imperial</button>
+                            <div class="serving-adjust">
+                                <button class="info-page-btn measurement-btn">-</button>
+                                <div class="serving-size">4</div>
+                                <button class="info-page-btn measurement-btn">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <div class="steps-wrapper">
+                        <p class="info-subtitle">Steps</p>
+                        <ol id='step-list'>
+                            <li class="steps">
+                                Mix mayonnaise, Greek yogurt, vinegar, garlic powder, thyme, and maple pepper together in a bowl until well combined. Add chicken, celery, pecans, and red onion; stir well to incorporate.
+                            </li>
+                            <li class="steps">
+                                Serve immediately or refrigerate for up to 3 days.
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="videos-wrapper">
+                        <p class="info-subtitle">Video</p>
+                        <!-- Include videos if any :D -->
+                    </div>
+
+                  <div class="nutrition-wrapper">
+                      <p class="info-subtitle">Nutrition Facts</p>
+                      <p id="info-text">Per Serving: 458 calories; protein 20.2g; carbohydrates 4.6g; fat 40.3g; cholesterol 70.7mg; sodium 236mg.</p>
+                      <button class="info-page-btn org-btn">Full Nutrition</button>
+                  </div>
+
+                    <div class="recipe-tags-wrapper">
+                        <!-- Tags // Possible extra feature- see related recipes by tag-->
+                    </div>
+
+                    <div class="recipe-related-tags-wrapper">
+                        <!-- Related tags EXTRA FEATURE -->
+                    </div>
+
+                    <div class="related-recipes-wrapper">
+                        <!-- Related recipes EXTRA FEATURE -->
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <div class="steps-wrapper">
-                    <p class="info-subtitle">Steps</p>
-                    <ol id='step-list'>
-                        <li class="steps">
-                            Mix mayonnaise, Greek yogurt, vinegar, garlic powder, thyme, and maple pepper together in a bowl until well combined. Add chicken, celery, pecans, and red onion; stir well to incorporate.
-                        </li>
-                        <li class="steps">
-                            Serve immediately or refrigerate for up to 3 days.
-                        </li>
-                    </ol>
+            <div class="timer" id='timer-container'>
+                <div id="time-input" class="timeInput">
+                    <input type="number" name ="hours" id ="hours" placeholder="hr" min="0" max="23" size = "5" maxlength="2">
+                    <input type="number" name="minutes" id="minutes" placeholder="min" min="0" max="59" size = "5" maxlength="2">
+                    <input type="number" name="seconds" id="seconds" placeholder="sec" min="0" max="59" size = "5" maxlength="2">
+                    <button href="javascript:void(0);" class="set-time" id="setTime">Set Timer</button>
                 </div>
-
-                <div class="videos-wrapper">
-                    <p class="info-subtitle">Video</p>
-                    <!-- Include videos if any :D -->
-                </div>
-
-                <div class="nutrition-wrapper">
-                    <p class="info-subtitle">Nutrition Facts</p>
-                    <p id="info-text">Per Serving: 458 calories; protein 20.2g; carbohydrates 4.6g; fat 40.3g; cholesterol 70.7mg; sodium 236mg.</p>
-                    <button class="info-page-btn org-btn">Full Nutrition</button>
-                </div>
-
-                <div class="recipe-tags-wrapper">
-                    <!-- Tags // Possible extra feature- see related recipes by tag-->
-                </div>
-
-                <div class="recipe-related-tags-wrapper">
-                    <!-- Related tags EXTRA FEATURE -->
-                </div>
-
-                <div class="related-recipes-wrapper">
-                    <!-- Related recipes EXTRA FEATURE -->
-                </div>
+                <p class="show-timer" id="timer">Begin Timer</p>
+                <button id="pause">Pause</button>
+                <button id="reset">Reset</button>
+                <button id="shown">Minimize</button>
             </div>
         </section>
 
