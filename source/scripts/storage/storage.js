@@ -1,10 +1,10 @@
 import * as fetcherFuncs from './fetcher.js';
 
-function setRecipeData(data) {
+export function setRecipeData(data) {
   localStorage.setItem('recipeData', JSON.stringify(data));
 }
 
-function getSavedLists() {
+export function getSavedLists() {
   return JSON.parse(localStorage.getItem('savedLists'));
 }
 
@@ -14,7 +14,10 @@ function getSavedLists() {
  */
 export function saveRecipeData(data) {
   const { id } = data;
-  const recipeData = fetcherFuncs.getAllRecipes();
+  let recipeData = fetcherFuncs.getAllRecipes();
+  if (recipeData === null) {
+    recipeData = {};
+  }
   if (!recipeData[id]) {
     recipeData[id] = data;
   }
