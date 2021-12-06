@@ -445,7 +445,7 @@ const openCreateRecipe = (data) => {
       ingAmountInput.type = 'text';
       ingAmountInput.className = 'form-control recipe-ingredient-amount';
       ingAmountInput.placeholder = 'Amount';
-      ingAmountInput.required = true;
+      ingAmountInput.required = false;
       ingAmountInput.value = item?.amount || '';
 
       ingAmount.appendChild(ingAmountInput);
@@ -457,7 +457,7 @@ const openCreateRecipe = (data) => {
       ingUnitInput.type = 'text';
       ingUnitInput.className = 'form-control recipe-ingredient-unit';
       ingUnitInput.placeholder = 'Amount';
-      ingUnitInput.required = true;
+      ingUnitInput.required = false;
       ingUnitInput.value = item?.unit || '';
 
       ingUnit.appendChild(ingUnitInput);
@@ -488,7 +488,7 @@ const openCreateRecipe = (data) => {
     ingAmountInput.type = 'text';
     ingAmountInput.className = 'form-control recipe-ingredient-amount';
     ingAmountInput.placeholder = 'Amount';
-    ingAmountInput.required = true;
+    ingAmountInput.required = false;
 
     ingAmount.appendChild(ingAmountInput);
 
@@ -499,7 +499,7 @@ const openCreateRecipe = (data) => {
     ingUnitInput.type = 'text';
     ingUnitInput.className = 'form-control recipe-ingredient-unit';
     ingUnitInput.placeholder = 'Amount';
-    ingUnitInput.required = true;
+    ingUnitInput.required = false;
 
     ingUnit.appendChild(ingUnitInput);
 
