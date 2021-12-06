@@ -75,6 +75,10 @@ main {
 
 .landing-title {
   font-size: 5em;
+  text-shadow:
+    0 0 10px white,
+    0 0 20px white,
+    0 0 30px white;
 }
 
 .landing-buttons {
