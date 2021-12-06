@@ -27,8 +27,8 @@ const SECTIONS = [
  */
 const EXPLORE_SECTIONS = [
   'Main Course',
-  'Side Dish',
-  'Salad',
+  'Holiday',
+  'Drink',
   'Breakfast',
 ];
 
