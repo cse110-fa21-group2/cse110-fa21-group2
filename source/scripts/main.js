@@ -786,7 +786,7 @@ const createRecipeClicked = () => {
 
   const finalObject = {};
 
-  const recipeId = recipeName.value.split(' ').join('_');
+  const recipeId = recipeName.value.split(' ').join('_').replace(/[^A-Za-z0-9]/g, '');
 
   // format serving
   finalObject.servings = serving.value;
