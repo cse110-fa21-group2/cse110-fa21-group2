@@ -1,5 +1,5 @@
 # Fall 2021 Group 2 (Team H2O)
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e6e17e7d-0e36-4f97-80a4-e41d5fda2020/deploy-status)](https://app.netlify.com/sites/wateryoucooking/deploys)
 ## Overview
 
 We are a team of students taking Thomas Powell's CSE110 Software Engineering class. Our project for the quarter is to create a recipe manager (EzPzRecipez)
