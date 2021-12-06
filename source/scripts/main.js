@@ -228,6 +228,7 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
  * @param {Object} data - JSON object to use for page data
  */
 function openRecipeInfo(data) {
+  window.scrollTo(0, 0);
   resetTimer();
   storageFuncs.saveRecipeToList('recent', data.id);
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
