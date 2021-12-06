@@ -14,7 +14,7 @@ Currently the steps of our pipeline proceed as follows after a programmer begins
 
 ### Image of our current workflow
  
-![Team H2O Pipeline Diagram](https://github.com/cse110-fa21-group2/cse110-fa21-group2/blob/167-CICD-Pipeline/admin/PipelineDiagram.JPG)
+![Team H2O Pipeline Diagram](https://github.com/cse110-fa21-group2/cse110-fa21-group2/blob/main/admin/phase1.JPG)
  
 # In Progress
 Currently we are working on:
