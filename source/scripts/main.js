@@ -918,6 +918,9 @@ const infoSaveClicked = () => {
   }
 };
 
+/**
+ * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
+ */
 function bindServSizeButtons() {
   // bind plus and minus button
   let plusButton = document.querySelector('button.plus-btn');
@@ -930,6 +933,9 @@ function bindServSizeButtons() {
   })
 }
 
+/**
+ * Scales recipe ingredients up by one (one greater serving size).
+ */
 function scaleRecipeUp() {
   const BASE_TEN = 10;
   // get curr serving size
@@ -945,6 +951,9 @@ function scaleRecipeUp() {
   scaleIngreds(toScaleBy);
 }
 
+/**
+ * Scales recipe ingredients down by one (one less serving size)
+ */
 function scaleRecipeDown() {
   const BASE_TEN = 10;
   const servingSize = document.querySelector('.serving-size');
@@ -965,7 +974,9 @@ function scaleRecipeDown() {
 
 }
 
-// scales ingredients of current expanded recipe by toScaleBy:
+/** scales ingredients of current expanded recipe by toScaleBy
+ * @param {float} toScaleBy the amount to scale ingredients by
+ */
 function scaleIngreds(toScaleBy) {
   const BASE_TEN = 10;
   // get list/arr of ingreds (to hide):
