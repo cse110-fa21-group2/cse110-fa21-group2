@@ -915,24 +915,9 @@ const infoSaveClicked = () => {
 };
 
 /**
- * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
- */
-function bindServSizeButtons() {
-  // bind plus and minus button
-  const plusButton = document.querySelector('button.plus-btn');
-  const minusButton = document.querySelector('button.minus-btn');
-  plusButton.addEventListener('click', function () {
-    scaleRecipeUp();
-  });
-  minusButton.addEventListener('click', function () {
-    scaleRecipeDown();
-  })
-}
-
-/**
  * Scales recipe ingredients up by one (one greater serving size).
  */
-function scaleRecipeUp() {
+ function scaleRecipeUp() {
   const BASE_TEN = 10;
   // get curr serving size
   const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
@@ -1019,6 +1004,23 @@ function scaleIngreds(toScaleBy) {
     }
   })
 }
+
+/**
+ * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
+ */
+function bindServSizeButtons() {
+  // bind plus and minus button
+  const plusButton = document.querySelector('button.plus-btn');
+  const minusButton = document.querySelector('button.minus-btn');
+  plusButton.addEventListener('click', function () {
+    scaleRecipeUp();
+  });
+  minusButton.addEventListener('click', function () {
+    scaleRecipeDown();
+  })
+}
+
+
 
 /* Search results page event handlers */
 

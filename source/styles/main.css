@@ -609,7 +609,7 @@ output.max-time-output {
 }
 
 .info-facts,
-.info-ingredient {
+.info-ingredient, .info-ingredient-next {
   list-style: none;
   margin-bottom: 1rem;
 }
