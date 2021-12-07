@@ -4,6 +4,7 @@ import { getAllRecipes } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
 import { API_KEY, HOST, DEV_MODE } from './constants.js';
 import TEST_DATA from './storage/sampleData.js';
+import fetch from 'node-fetch';
 
 /**
  * Get detailed info from recipe ID's
@@ -120,55 +121,6 @@ export async function getRecipesByName(query, num = 5, offset = 0, sortFilterPar
       })
       .catch((err) => {
         console.log('Error in searching for recipes by name.');
-        reject(err);
-      });
-  });
-}
-
-/**
- * Get recipes by autocompleting keywords
- * (Use this if searching by query returned not enough results)
- * @param {String} query - Query to autocomplete
- * @param {Number} [num=5] - max number of recipes to get
- * @returns {Object} list of recipe JSONs
- */
-export async function getRecipesByAutocomplete(query, num = 5) {
-  if (DEV_MODE) return TEST_DATA;
-  return new Promise((resolve, reject) => {
-    const url = new URL(`https://${HOST}/recipes/autocomplete`);
-    const queryFormatted = query.trim().replace(/\s+/g, '-').toLowerCase();
-    url.searchParams.append('query', queryFormatted);
-    url.searchParams.append('number', num);
-    fetch(url.href, {
-      method: 'GET',
-      headers: {
-        'x-rapidapi-host': HOST,
-        'x-rapidapi-key': API_KEY,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data) {
-          console.log('No search results');
-          resolve([]);
-        } else {
-          // data is different format from complex search
-          const passToExtractID = {};
-          passToExtractID.results = data;
-          const ids = extractIDs(passToExtractID);
-          if (ids.length === 0) {
-            console.log('No search results');
-            resolve([]);
-          } else {
-            getDetailedRecipeInfoBulk(ids[0])
-              .then((fetchedRecipes) => {
-                resolve(fetchedRecipes.concat(ids[1]));
-              });
-          }
-        }
-      })
-      .catch((err) => {
-        console.log('Error in searching for recipes by autocomplete.');
         reject(err);
       });
   });
