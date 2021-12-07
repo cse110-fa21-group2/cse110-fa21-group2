@@ -8,9 +8,7 @@
  *  npm test apiHelpers.test.js
  */
 import * as helpers from '../source/scripts/apiHelpers.js';
-import { saveRecipeData, setRecipeData, storeRecipeData } from '../source/scripts/storage/storage.js';
-import TEST_DATA from '../source/scripts/storage/sampleData.js';
-import { getAllRecipes } from '../source/scripts/storage/fetcher.js';
+import { setRecipeData } from '../source/scripts/storage/storage.js';
 
 // set mock local storage so api functions wont break
 setRecipeData('{}');
