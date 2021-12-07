@@ -179,9 +179,9 @@ const removeAllChildNodes = (parent) => {
  * to be populated with recipe cards.
  * @param {String[]} arrData an array of recipe ids (currently). example input:
  * [
- *    "123", // recipe id
- *    "111", // recipe id
- *    "444", // recipe id
+ *    '123', // recipe id
+ *    '111', // recipe id
+ *    '444', // recipe id
  *  ]
  * @param {HTMLElement} location HTML container to populate cards into
  * @param {number} numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
@@ -277,17 +277,13 @@ function openRecipeInfo(data) {
   removeAllChildNodes(list);
 
   data.extendedIngredients.forEach((item) => {
-    // const listElement = document.createElement('li');
-    // listElement.classList.add('info-ingredient');
-    // listElement.innerHTML = item.originalString;
-    // list.appendChild(listElement);
     const listElement = document.createElement('li');
     listElement.classList.add('info-ingredient');
     listElement.innerHTML = item.originalString;
     const listElementHidden = document.createElement('li');
     listElementHidden.classList.add('info-ingredient-next');
-    listElementHidden.classList.add("hidden");
-    listElementHidden.innerHTML = item.amount + " " + item.unit + " " + item.nameClean;
+    listElementHidden.classList.add('hidden');
+    listElementHidden.innerHTML = item.amount + ' ' + item.unit + ' ' + item.nameClean;
     list.appendChild(listElement);
     list.appendChild(listElementHidden);
   });
@@ -556,14 +552,14 @@ const openSearchResults = async () => {
 
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Loading results for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading results for '${query}'`;
 
   router.navigate('search-results', false);
 
   const searchResult = await apiFuncs.getRecipesByName(query, DEFAULT_NUM_CARDS, pageOffset);
   const resultsFound = searchResult.length !== 0;
 
-  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for "${query}"` : `No results found for "${query}"`;
+  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for '${query}'` : `No results found for '${query}'`;
   const storeName = `${query}popularitydesc1440`;
   storageFuncs.storeRecipeData(storeName, searchResult);
 
@@ -895,9 +891,9 @@ const infoSaveClicked = () => {
 
   // If the favorites page is active, update in background, otherwise ignore
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-  if (currSavedPageSelect === 'favorites') {
+  if(currSavedPageSelect === 'favorites') {
     const savedRecipeGrid = document.querySelector('.saved-recipes .results-grid');
-    if (saved) {
+    if(saved) {
       savedRecipeGrid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
     } else {
       const recipeCardNew = document.createElement('recipe-card');
@@ -909,7 +905,7 @@ const infoSaveClicked = () => {
     }
   }
   const currCards = document.querySelectorAll(`.id_${data.id}`);
-  for (let i = 0; i < currCards.length; i++) {
+  for(let i = 0; i < currCards.length; i++) {
     const { shadowRoot } = currCards[i];
     const element = shadowRoot.querySelector('.fa-heart');
     element.classList.toggle('far', currCards[i].saved);
@@ -923,12 +919,12 @@ const infoSaveClicked = () => {
  */
 function bindServSizeButtons() {
   // bind plus and minus button
-  let plusButton = document.querySelector('button.plus-btn');
-  let minusButton = document.querySelector('button.minus-btn');
-  plusButton.addEventListener("click", function () {
+  const plusButton = document.querySelector('button.plus-btn');
+  const minusButton = document.querySelector('button.minus-btn');
+  plusButton.addEventListener('click', function () {
     scaleRecipeUp();
   });
-  minusButton.addEventListener("click", function () {
+  minusButton.addEventListener('click', function () {
     scaleRecipeDown();
   })
 }
@@ -939,14 +935,14 @@ function bindServSizeButtons() {
 function scaleRecipeUp() {
   const BASE_TEN = 10;
   // get curr serving size
-  let servingEl = document.querySelector("div.serving-adjust > div.serving-size");
-  let quickFactServEl = document.querySelector("ul.info-list > li#info-servings");
-  let origScale = parseInt(servingEl.innerHTML, BASE_TEN);
-  let newScale = origScale + 1;
+  const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
+  const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
+  const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  const newScale = origScale + 1;
   // set new curr serving size
   servingEl.innerHTML = newScale;
-  quickFactServEl.innerHTML = "Servings: " + newScale;
-  let toScaleBy = newScale / origScale;
+  quickFactServEl.innerHTML = 'Servings: ' + newScale;
+  const toScaleBy = newScale / origScale;
   // scale ingredients by new scale:
   scaleIngreds(toScaleBy);
 }
@@ -957,18 +953,18 @@ function scaleRecipeUp() {
 function scaleRecipeDown() {
   const BASE_TEN = 10;
   const servingSize = document.querySelector('.serving-size');
-  if (servingSize.innerHTML <= 1) {
+  if(servingSize.innerHTML <= 1) {
     return;
   }
   // get curr serving size
-  let servingEl = document.querySelector("div.serving-adjust > div.serving-size");
-  let quickFactServEl = document.querySelector("ul.info-list > li#info-servings");
-  let origScale = parseInt(servingEl.innerHTML, BASE_TEN);
-  let newScale = origScale - 1;
+  const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
+  const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
+  const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  const newScale = origScale - 1;
   // set new curr serving size
   servingEl.innerHTML = newScale;
-  quickFactServEl.innerHTML = "Servings: " + newScale;
-  let toScaleBy = newScale / origScale;
+  quickFactServEl.innerHTML = 'Servings: ' + newScale;
+  const toScaleBy = newScale / origScale;
   // scale ingredients by new scale:
   scaleIngreds(toScaleBy);
 
@@ -980,16 +976,16 @@ function scaleRecipeDown() {
 function scaleIngreds(toScaleBy) {
   const BASE_TEN = 10;
   // get list/arr of ingreds (to hide):
-  let ingredArr = document.querySelectorAll(".info-ingredient");
+  const ingredArr = document.querySelectorAll('.info-ingredient');
 
   // get list/arr of ingreds (to show):
-  let ingredArrToShow = document.querySelectorAll(".info-ingredient-next");
+  const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
 
   // fill new ingredients to show:
-  for (let ingred of ingredArrToShow) {
+  for(const ingred of ingredArrToShow) {
     // get ingred measurement num (first word of its content):
-    let currIngredUnit = "";
-    let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(" ");
+    let currIngredUnit = '';
+    let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(' ');
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
     // then leave unchanged
@@ -1003,27 +999,26 @@ function scaleIngreds(toScaleBy) {
     // if curr ingred has trailing unit, set its unit:
     if(currIngred1stWordArr.length > 1) {
       let currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
-      let currIngredUnitInfoStr = currIngredUnitInfoArr.join(" ");
+      let currIngredUnitInfoStr = currIngredUnitInfoArr.join(' ');
       currIngredUnit = currIngredUnitInfoStr;
     }
-    const restIngredInfoStr = restIngredInfo.join(" ");
+    const restIngredInfoStr = restIngredInfo.join(' ');
     currIngredSize = parseFloat(currIngredSize, BASE_TEN);
     // round new ingredients to two decimal places:
     let newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
     // set new ingred
-    ingred.innerHTML = String(newIngredSize) + currIngredUnit + " " + restIngredInfoStr;
+    ingred.innerHTML = String(newIngredSize) + currIngredUnit + ' ' + restIngredInfoStr;
   }
   // hide previous, lengthy ingredient descriptions if not already hidden:
   ingredArr.forEach((item) => {
-    item.classList.add("hidden");
+    item.classList.add('hidden');
  });
   ingredArrToShow.forEach((item) => {
-    if(item.classList.contains("hidden")) {
-      item.classList.remove("hidden");
+    if(item.classList.contains('hidden')) {
+      item.classList.remove('hidden');
     }
   })
 }
-
 
 /* Search results page event handlers */
 
@@ -1036,7 +1031,7 @@ async function showMoreClicked() {
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Loading results for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading results for '${query}'`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -1061,7 +1056,7 @@ async function showMoreClicked() {
     },
   );
 
-  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+  searchResultPageTitle.innerHTML = `Top recipes for '${query}'`;
 
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
@@ -1083,7 +1078,7 @@ async function applyClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Loading recipes for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading recipes for '${query}'`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -1116,7 +1111,7 @@ async function applyClicked() {
   );
 
   const resultsFound = searchResult.length !== 0;
-  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for "${query}"` : `No results found for "${query}"`;
+  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for '${query}'` : `No results found for '${query}'`;
   document.getElementById('show-more-button').classList.toggle('hidden', !resultsFound);
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
