@@ -252,8 +252,12 @@ function openRecipeInfo(data) {
   const starValue = data.spoonacularScore / 20;
   const roundedStars = Math.round(starValue);
 
+  console.log("Before rounded stars.");
+
   const stars = document.getElementById('recipe-info-stars');
   stars.src = `./assets/${roundedStars}-star.svg`;
+
+  console.log("after rounded stars.");
 
   const line = document.createElement('span');
   line.classList.add('divider');
@@ -277,10 +281,19 @@ function openRecipeInfo(data) {
   removeAllChildNodes(list);
 
   data.extendedIngredients.forEach((item) => {
+    // const listElement = document.createElement('li');
+    // listElement.classList.add('info-ingredient');
+    // listElement.innerHTML = item.originalString;
+    // list.appendChild(listElement);
     const listElement = document.createElement('li');
     listElement.classList.add('info-ingredient');
     listElement.innerHTML = item.originalString;
+    const listElementHidden = document.createElement('li');
+    listElementHidden.classList.add('info-ingredient-next');
+    listElementHidden.classList.add("hidden");
+    listElementHidden.innerHTML = item.amount + " " + item.unit + " " + item.nameClean;
     list.appendChild(listElement);
+    list.appendChild(listElementHidden);
   });
 
   // Quick Facts
@@ -313,7 +326,22 @@ function openRecipeInfo(data) {
   const scaleServings = document.querySelector('.serving-size');
   scaleServings.innerHTML = data.servings;
 
+  /*
   // TODO: Scale ingredients
+  data.extendedIngredients.forEach((item) => {
+    const listElement = document.createElement('li');
+    listElement.classList.add('info-ingredient');
+    listElement.innerHTML = item.originalString;
+    // const listElementHidden = document.createElement('li');
+    // listElementHidden.classList.add('info-ingredient-hidden');
+    // listElementHidden.classList.add("hidden");
+    // listElementHidden.innerHTML = item.amount + " " + item.nameClean + " " + item.unit;
+    list.appendChild(listElement);
+    // list.appendChild(listElementHidden);
+  });
+  */ 
+
+
   const stepsDiv = document.getElementById('step-list');
   removeAllChildNodes(stepsDiv);
 
@@ -910,19 +938,172 @@ const infoSaveClicked = () => {
   }
 };
 
-// TODO
-function scaleRecipeUp(recipe) {
-  const servingSize = document.querySelector('.serving-size');
-  servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) + 1;
+function bindServSizeButtons() {
+  // bind plus and minus button
+  console.log("");
+  console.log("");
+  console.log("**********");
+  console.log("bindServSizeButtons(recipe) called.");
+  let plusButton = document.querySelector('button.plus-btn');
+  console.log("after plusButton.");
+  let minusButton = document.querySelector('button.minus-btn');
+  plusButton.addEventListener("click", function () {
+    console.log("plus button clicked.");
+    scaleRecipeUp();
+  });
+  minusButton.addEventListener("click", function () {
+    console.log("minus button clicked.");
+    scaleRecipeDown();
+  })
+  // minusButton.addEventListener("onclick", scaleRecipeDown(recipe));
+  console.log("after plus and minus buttons in bindServSizeButtons().");
 }
-// TODO:
-function scaleRecipeDown(recipe) {
+
+function scaleRecipeUp() {
+  const BASE_TEN = 10;
+  // get curr serving size
+  let servingEl = document.querySelector("div.serving-adjust > div.serving-size");
+  let quickFactServEl = document.querySelector("ul.info-list > li#info-servings");
+  let origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  console.log("orig scale: " + origScale);
+  let newScale = origScale + 1;
+  console.log("new scale: " + newScale);
+  // set new curr serving size
+  servingEl.innerHTML = newScale;
+  quickFactServEl.innerHTML = "Servings: " + newScale;
+  let toScaleBy = newScale / origScale;
+  console.log("to scale by: " + newScale);
+  // scale ingredients by new scale:
+  scaleIngreds(toScaleBy);
+}
+
+function scaleRecipeDown() {
+  const BASE_TEN = 10;
   const servingSize = document.querySelector('.serving-size');
   if (servingSize.innerHTML <= 1) {
     return;
   }
-  servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) - 1;
+  // get curr serving size
+  let servingEl = document.querySelector("div.serving-adjust > div.serving-size");
+  let quickFactServEl = document.querySelector("ul.info-list > li#info-servings");
+  let origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  console.log("orig scale: " + origScale);
+  let newScale = origScale - 1;
+  console.log("new scale: " + newScale);
+  // set new curr serving size
+  servingEl.innerHTML = newScale;
+  quickFactServEl.innerHTML = "Servings: " + newScale;
+  let toScaleBy = newScale / origScale;
+  console.log("to scale by: " + newScale);
+  // scale ingredients by new scale:
+  scaleIngreds(toScaleBy);
+
 }
+
+// scales ingredients of current expanded recipe by curr scale:
+function scaleIngreds(toScaleBy) {
+  // const BASE_TEN = 10;
+  // // get list/arr of ingreds (to hide):
+  // let ingredArr = document.querySelectorAll(".info-ingredient");
+
+  // // get list/arr of ingreds (to show):
+  // //let ingredArrToShow = document.querySelectorAll("info-ingredient-hidden");
+
+  // // fill new ingredients to show:
+  // for (let ingred of ingredArr) {
+  //   // get ingred measurement num (first word of its content):
+  //   let currIngredUnit = "";
+  //   let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(" ");
+  //   console.log("currIngredSize as str: " + currIngredSize);
+
+  //   // if first word of ingred isn't a number (i.e., ingred is just a description),
+  //   // then leave unchanged
+  //   if(isNaN(parseFloat(currIngredSize, BASE_TEN))) {
+  //     continue;
+  //   }
+
+  //   // handle case where unit is part of same word as leading number for ingredient
+  //   // (so that it does not get lost with parseFloat()):
+  //   // get if curr ingred has trailing unit as part of first word:
+  //   let currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
+  //   console.log("currIngred1stWordArr: ");
+  //   console.log(currIngred1stWordArr);
+  //   // if curr ingred has trailing unit, set its unit:
+  //   if(currIngred1stWordArr.length > 1) {
+  //     let currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
+  //     let currIngredUnitInfoStr = currIngredUnitInfoArr.join(" ");
+  //     currIngredUnit = currIngredUnitInfoStr;
+  //   }
+
+  //   const restIngredInfoStr = restIngredInfo.join(" ");
+  //   console.log("restIngedInfo: " + restIngredInfoStr);
+  //   currIngredSize = parseFloat(currIngredSize, BASE_TEN);
+  //   console.log("currIngredSize: " + currIngredSize);
+  //   // round new ingredients to two decimal places:
+  //   let newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
+  //   // set new ingred
+  //   ingred.innerHTML = String(newIngredSize) + currIngredUnit + " " + restIngredInfoStr;
+  const BASE_TEN = 10;
+  // get list/arr of ingreds (to hide):
+  let ingredArr = document.querySelectorAll(".info-ingredient");
+
+  // get list/arr of ingreds (to show):
+  let ingredArrToShow = document.querySelectorAll(".info-ingredient-next");
+  console.log(ingredArrToShow);
+
+  // fill new ingredients to show:
+  for (let ingred of ingredArrToShow) {
+    // get ingred measurement num (first word of its content):
+    let currIngredUnit = "";
+    let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(" ");
+    console.log("currIngredSize as str: " + currIngredSize);
+
+    // if first word of ingred isn't a number (i.e., ingred is just a description),
+    // then leave unchanged
+    if(isNaN(parseFloat(currIngredSize, BASE_TEN))) {
+      continue;
+    }
+
+    // handle case where unit is part of same word as leading number for ingredient
+    // (so that it does not get lost with parseFloat()):
+    // get if curr ingred has trailing unit as part of first word:
+    let currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
+    console.log("currIngred1stWordArr: ");
+    console.log(currIngred1stWordArr);
+    // if curr ingred has trailing unit, set its unit:
+    if(currIngred1stWordArr.length > 1) {
+      let currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
+      let currIngredUnitInfoStr = currIngredUnitInfoArr.join(" ");
+      currIngredUnit = currIngredUnitInfoStr;
+    }
+
+    const restIngredInfoStr = restIngredInfo.join(" ");
+    console.log("restIngedInfo: " + restIngredInfoStr);
+    currIngredSize = parseFloat(currIngredSize, BASE_TEN);
+    console.log("currIngredSize: " + currIngredSize);
+    // round new ingredients to two decimal places:
+    let newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
+    // set new ingred
+    ingred.innerHTML = String(newIngredSize) + currIngredUnit + " " + restIngredInfoStr;
+  }
+  // hide previous, lengthy ingredient descriptions if not already hidden:
+  ingredArr.forEach((item) => {
+    item.classList.add("hidden");
+ });
+  ingredArrToShow.forEach((item) => {
+    if(item.classList.contains("hidden")) {
+      item.classList.remove("hidden");
+      console.log("removing hidden");
+    }
+  })
+
+//   // hide previous, lengthy ingredient descriptions if not already hidden:
+//   ingredArrToShow.forEach((item) => {
+//     item.classList.remove("hidden");
+//   })
+}
+
+
 /* Search results page event handlers */
 
 /**
@@ -1126,6 +1307,7 @@ function onDropdownChange() {
  * Link event handlers to proper buttons
  */
 function initializeButtons() {
+  console.log("in initializeButtons.");
   /* Landing Page */
   const landingExplore = document.getElementById('landing-explore-btn');
   landingExplore.addEventListener('click', openExplore);
@@ -1195,6 +1377,10 @@ function initializeButtons() {
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
   savedPageSelect.addEventListener('change', onDropdownChange);
+
+  /* Expanded Recipe Page */
+  console.log("binding serv size butons.");
+  bindServSizeButtons();
 }
 
 function initializeLocalStorage() {
@@ -1213,6 +1399,7 @@ async function init() {
   populateExplore();
   populateSavedRecipes();
   initializeButtons();
+  console.log("after initializeButtons().");
 }
 
 window.addEventListener('DOMContentLoaded', init);
