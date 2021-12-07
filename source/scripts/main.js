@@ -27,8 +27,8 @@ const SECTIONS = [
  */
 const EXPLORE_SECTIONS = [
   'Main Course',
-  'Side Dish',
-  'Salad',
+  'Holiday',
+  'Drink',
   'Breakfast',
 ];
 
@@ -41,6 +41,118 @@ const router = new Router();
  * Needs to be global for recipe info page to update saved recipe status in event handler
  */
 let ACTIVE_INFO_DATA = null;
+
+let setTime;
+let timerID;
+
+const updateTimer = () => {
+  let distance = setTime;
+  const timer = document.getElementById('timer');
+
+  timerID = setInterval(() => {
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    timer.innerHTML = `${hours}h ${minutes}m ${seconds}s `;
+    if (distance < 0) {
+      clearInterval(timerID);
+      const audioElement = new Audio('./assets/timer.mp3');
+      audioElement.play();
+      timer.innerHTML = 'Done!';
+    }
+    distance -= 1000;
+  }, 1000);
+};
+
+/* Set btn */
+
+const setTimer = () => {
+  if (timerID !== 'undefined') {
+    clearInterval(timerID);
+    document.getElementById('pause').innerHTML = 'Pause';
+  }
+  const hours = document.getElementById('hours').value;
+  const minutes = document.getElementById('minutes').value;
+  const seconds = document.getElementById('seconds').value;
+  if (!(hours <= -1 || hours > 23 || minutes <= -1 || minutes > 59 || seconds <= -1
+    || seconds > 59) && !(hours === 0 && minutes === 0 && seconds === 0)) {
+    setTime = hours * 1000 * 60 * 60 + minutes * 1000 * 60 + seconds * 1000;
+    updateTimer();
+  } else {
+    document.getElementById('timer').innerHTML = 'Invalid Timer';
+    clearInterval(timerID);
+  }
+};
+
+/* Reset btn */
+
+const resetTimer = () => {
+  clearInterval(timerID);
+  document.getElementById('timer').innerHTML = 'Begin Timer';
+  document.getElementById('hours').value = 0;
+  document.getElementById('minutes').value = 0;
+  document.getElementById('seconds').value = 0;
+};
+
+/* Pause btn */
+const pauseTimer = () => {
+  const timerInfo = document.getElementById('timer').innerHTML;
+  if (!(timerInfo === 'Done!' || timerInfo === 'Begin Timer' || timerInfo === 'Invalid Timer')) {
+    const label = document.getElementById('pause').innerHTML;
+    const str = document.getElementById('timer').innerHTML;
+    if (label === 'Pause') {
+      document.getElementById('timer').innerHTML = `${str} (Paused)`;
+      document.getElementById('pause').innerHTML = 'Resume';
+      clearInterval(timerID);
+    } else {
+      const [hrs, min, sec] = str.match(/\d+/g);
+      document.getElementById('hours').value = hrs;
+      document.getElementById('minutes').value = min;
+      document.getElementById('seconds').value = sec;
+      document.getElementById('timer').innerHTML = `${hrs}h ${min}m ${sec}s `;
+      setTimer();
+    }
+  }
+};
+
+/* Minimize btn */
+
+const displayTimer = () => {
+  const container = document.getElementById('timer-container');
+  const displayLabel = document.getElementById('shown');
+  const timeInput = document.getElementById('time-input');
+  const pauseBtn = document.getElementById('pause');
+  const resetBtn = document.getElementById('reset');
+
+  const minimizing = displayLabel.innerHTML === 'Minimize';
+
+  timeInput.classList.toggle('hidden', minimizing);
+  pauseBtn.classList.toggle('hidden', minimizing);
+  resetBtn.classList.toggle('hidden', minimizing);
+  displayLabel.innerHTML = minimizing ? 'Maximize' : 'Minimize';
+  container.style.height = minimizing ? '8.5rem' : '10rem';
+};
+
+/* Drag event */
+const onTimerDragged = (e) => {
+  const timer = document.getElementById('timer-container');
+  const rect = timer.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left + 10;
+  const offsetY = e.clientY - rect.top + 15;
+
+  function mousemove(e1) {
+    timer.style.left = `${e1.clientX - offsetX}px`;
+    timer.style.top = `${e1.clientY - offsetY}px`;
+  }
+
+  function mouseup() {
+    window.removeEventListener('mousemove', mousemove);
+    window.removeEventListener('mouseup', mouseup);
+  }
+
+  window.addEventListener('mousemove', mousemove);
+  window.addEventListener('mouseup', mouseup);
+};
 
 /* DOM Manipulation helper functions */
 
@@ -116,6 +228,22 @@ const getSearchQuery = () => document.querySelector('.form-control').value;
  * @param {Object} data - JSON object to use for page data
  */
 function openRecipeInfo(data) {
+  window.scrollTo(0, 0);
+  resetTimer();
+  storageFuncs.saveRecipeToList('recent', data.id);
+  const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
+  if (currSavedPageSelect === 'recent') {
+    const grid = document.querySelector('.saved-recipes .results-grid');
+    // Remove all existing cards with matching id
+    grid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
+
+    // add card to saved recipe page
+    const recipeCardNew = document.createElement('recipe-card');
+    recipeCardNew.classList.add(`id_${data.id}`);
+    recipeCardNew.populateFunc = openRecipeInfo;
+    recipeCardNew.data = data;
+    grid.appendChild(recipeCardNew);
+  }
   ACTIVE_INFO_DATA = data;
   // Header section
   const title = document.querySelector('.info-title');
@@ -163,10 +291,16 @@ function openRecipeInfo(data) {
   const prepTime = document.getElementById('prep-time');
   prepTime.innerHTML = `Prep Time: ${prepMinutes} minutes`;
   prepTime.classList.toggle('hidden', prepTime === 0);
+  if (prepMinutes === 0) {
+    prepTime.hidden = true;
+  }
 
   const cookTime = document.getElementById('cook-time');
   cookTime.innerHTML = `Cook Time: ${cookMinutes} minutes`;
   cookTime.classList.toggle('hidden', cookTime === 0);
+  if (cookMinutes === 0) {
+    cookTime.hidden = true;
+  }
 
   const totalTime = document.getElementById('total-time');
   totalTime.innerHTML = `Total Time: ${totalMinutes} minutes`;
@@ -196,13 +330,21 @@ function openRecipeInfo(data) {
   const videoContainer = document.querySelector('.videos-wrapper');
   videoContainer.classList.toggle('hidden', !video);
 
-  // TODO: Nutritional Info
+  // Nutritional Info
   const nutrition = data?.nutrients;
   const nutritionContainer = document.querySelector('.nutrition-wrapper');
   nutritionContainer.classList.toggle('hidden', !nutrition);
+  const nutritionField = document.getElementById('info-text');
+  nutrition?.sort((a, b) => a.name - b.name);
+  let nutritionText = 'Per Serving: ';
   nutrition?.forEach((item) => {
-    // console.log(item);
+    if (item.amount / data.servings !== 0) {
+      nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
+    }
   });
+  nutritionText = nutritionText?.substr(0, nutritionText.length - 2);
+  nutritionText = nutritionText?.concat('.');
+  nutritionField.innerHTML = nutritionText;
 
   const categories = fetcherFuncs.getAllSavedRecipeId();
   const saved = categories.favorites.includes(data.id);
@@ -238,16 +380,157 @@ const openSavedRecipes = () => {
  * @param {JSON} - optional JSON object data to populate page with
  */
 const openCreateRecipe = (data) => {
-  console.log(data);
-
   const nameField = document.getElementById('create-name-field');
   const name = data?.title;
   nameField.value = name || '';
 
   const descField = document.getElementById('create-desc-field');
-  console.log(descField);
   const desc = data?.summary;
-  descField.innerHTML = desc;
+  descField.value = desc || '';
+
+  const nutrition = data?.nutrients;
+  const nutritionField = document.getElementById('create-nutrition-field');
+  nutrition?.sort((a, b) => a.name - b.name);
+  let nutritionText = 'Per Serving: ';
+  nutrition?.forEach((item) => {
+    if (item.amount / data.servings !== 0) {
+      nutritionText = nutritionText.concat(item.name, ' ', Math.round((item.amount / data.servings) * 100) / 100, item.unit, '; ');
+    }
+  });
+  nutritionText = nutritionText?.substr(0, nutritionText.length - 2);
+  nutritionText = nutritionText?.concat('.');
+  nutritionField.value = nutrition ? nutritionText : '';
+
+  const servingField = document.getElementById('serving-input');
+  const servings = data?.servings;
+  servingField.value = servings || '';
+
+  const prepField = document.getElementById('prep-time-input');
+  const prepMinutes = data?.preparationMinutes;
+  prepField.value = prepMinutes || '';
+
+  const cookField = document.getElementById('cook-time-input');
+  const cookMinutes = data?.cookMinutes;
+  cookField.value = cookMinutes || '';
+
+  const urlField = document.getElementById('url-input');
+  const url = data?.image;
+  urlField.value = url || '';
+
+  const ratingField = document.getElementById('rating-input');
+  const rating = data?.spoonacularScore;
+  ratingField.value = rating ? rating / 20 : '';
+
+  const ingredientDiv = document.getElementById('ingredient-input-list');
+  removeAllChildNodes(ingredientDiv);
+  const ingredients = data?.extendedIngredients;
+  if (ingredients) {
+    ingredients.forEach((item) => {
+      const ingName = document.createElement('div');
+      ingName.className = 'col';
+
+      const ingNameInput = document.createElement('input');
+      ingNameInput.type = 'text';
+      ingNameInput.className = 'form-control recipe-ingredient-name';
+      ingNameInput.placeholder = 'Name';
+      ingNameInput.required = true;
+      ingNameInput.value = item?.name || '';
+
+      ingName.appendChild(ingNameInput);
+
+      const ingAmount = document.createElement('div');
+      ingAmount.className = 'col';
+
+      const ingAmountInput = document.createElement('input');
+      ingAmountInput.type = 'text';
+      ingAmountInput.className = 'form-control recipe-ingredient-amount';
+      ingAmountInput.placeholder = 'Amount';
+      ingAmountInput.required = false;
+      ingAmountInput.value = item?.amount || '';
+
+      ingAmount.appendChild(ingAmountInput);
+
+      const ingUnit = document.createElement('div');
+      ingUnit.className = 'col';
+
+      const ingUnitInput = document.createElement('input');
+      ingUnitInput.type = 'text';
+      ingUnitInput.className = 'form-control recipe-ingredient-unit';
+      ingUnitInput.placeholder = 'Amount';
+      ingUnitInput.required = false;
+      ingUnitInput.value = item?.unit || '';
+
+      ingUnit.appendChild(ingUnitInput);
+
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.appendChild(ingName);
+      row.appendChild(ingAmount);
+      row.appendChild(ingUnit);
+      ingredientDiv.appendChild(row);
+    });
+  } else {
+    const ingName = document.createElement('div');
+    ingName.className = 'col';
+
+    const ingNameInput = document.createElement('input');
+    ingNameInput.type = 'text';
+    ingNameInput.className = 'form-control recipe-ingredient-name';
+    ingNameInput.placeholder = 'Name';
+    ingNameInput.required = true;
+
+    ingName.appendChild(ingNameInput);
+
+    const ingAmount = document.createElement('div');
+    ingAmount.className = 'col';
+
+    const ingAmountInput = document.createElement('input');
+    ingAmountInput.type = 'text';
+    ingAmountInput.className = 'form-control recipe-ingredient-amount';
+    ingAmountInput.placeholder = 'Amount';
+    ingAmountInput.required = false;
+
+    ingAmount.appendChild(ingAmountInput);
+
+    const ingUnit = document.createElement('div');
+    ingUnit.className = 'col';
+
+    const ingUnitInput = document.createElement('input');
+    ingUnitInput.type = 'text';
+    ingUnitInput.className = 'form-control recipe-ingredient-unit';
+    ingUnitInput.placeholder = 'Amount';
+    ingUnitInput.required = false;
+
+    ingUnit.appendChild(ingUnitInput);
+
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.appendChild(ingName);
+    row.appendChild(ingAmount);
+    row.appendChild(ingUnit);
+    ingredientDiv.appendChild(row);
+  }
+
+  const stepsDiv = document.getElementById('create-step-div');
+  removeAllChildNodes(stepsDiv);
+  let stepsList = data?.analyzedInstructions;
+  if (stepsList) {
+    stepsList = stepsList[0]?.steps;
+    stepsList?.forEach((item, i) => {
+      const listElement = document.createElement('textarea');
+      listElement.className = 'form-control recipe-step-input';
+      listElement.value = item.step;
+      listElement.placeholder = `Step ${i + 1}`;
+      listElement.required = true;
+      stepsDiv.appendChild(listElement);
+    });
+  } else {
+    const blank = document.createElement('textarea');
+    blank.className = 'form-control recipe-step-input';
+    blank.placeholder = 'Step 1';
+    blank.required = true;
+    stepsDiv.appendChild(blank);
+  }
 
   router.navigate('create-recipe-page', false);
 };
@@ -504,7 +787,7 @@ const createRecipeClicked = () => {
 
   const finalObject = {};
 
-  const recipeId = recipeName.value.split(' ').join('_');
+  const recipeId = recipeName.value.split(' ').join('_').replace(/[^A-Za-z0-9]/g, '');
 
   // format serving
   finalObject.servings = serving.value;
@@ -811,10 +1094,12 @@ function populateSavedRecipes() {
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
   if (currSavedPageSelect === 'favorites') {
     // add favorites cards to grid
-    createRecipeCards(allSavedIds.favorites, grid);
+    createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
     // add created recipe cards to grid
-    createRecipeCards(allSavedIds.created, grid);
+    createRecipeCards(allSavedIds.created, grid, -1);
+  } else if (currSavedPageSelect === 'recent') {
+    createRecipeCards(allSavedIds.recent, grid, -1);
   }
 }
 
@@ -832,6 +1117,8 @@ function onDropdownChange() {
     createRecipeCards(allSavedIds.favorites, grid, -1);
   } else if (currSavedPageSelect === 'created') {
     createRecipeCards(allSavedIds.created, grid, -1);
+  } else if (currSavedPageSelect === 'recent') {
+    createRecipeCards(allSavedIds.recent, grid, -1);
   }
 }
 
@@ -855,6 +1142,23 @@ function initializeButtons() {
 
   const editBtn = document.getElementById('info-edit-btn');
   editBtn.addEventListener('click', () => openCreateRecipe(ACTIVE_INFO_DATA));
+
+  /* Timer buttons */
+
+  const setButton = document.getElementById('setTime');
+  setButton.addEventListener('click', setTimer);
+
+  const resetButton = document.getElementById('reset');
+  resetButton.addEventListener('click', resetTimer);
+
+  const pauseButton = document.getElementById('pause');
+  pauseButton.addEventListener('click', pauseTimer);
+
+  const minimizeButton = document.getElementById('shown');
+  minimizeButton.addEventListener('click', displayTimer);
+
+  const timer = document.getElementById('timer-container');
+  timer.addEventListener('mousedown', onTimerDragged);
 
   /* Create Recipe Page */
   const addIngredientButton = document.querySelector('.add-ingredient-button');
@@ -899,6 +1203,7 @@ function initializeLocalStorage() {
   storageFuncs.createKey('explore-categories');
   storageFuncs.createList('favorites');
   storageFuncs.createList('created');
+  storageFuncs.createList('recent');
 }
 
 async function init() {
