@@ -1,10 +1,19 @@
-
-
-
+/**
+ * Unit test for API Helper functions.
+ * Setup steps:
+ *  npm i --save-dev jest-localstorage-mock // to mock local storage
+ *  npm install node-fetch
+ *  In apiHelpers.js, import fetch from 'node-fetch';
+ * To Run:
+ *  npm test apiHelpers.test.js
+ */
 import * as helpers from '../source/scripts/apiHelpers.js';
+import { saveRecipeData, setRecipeData, storeRecipeData } from '../source/scripts/storage/storage.js';
+import TEST_DATA from '../source/scripts/storage/sampleData.js';
+import { getAllRecipes } from '../source/scripts/storage/fetcher.js';
 
 // set mock local storage so api functions wont break
-localStorage.setItem('recipeData', '{}');
+setRecipeData('{}');
 
 // getDetailedRecipeInfoBulk
 test('check getDetailedRecipeInfoBulk with empty list input', () => helpers.getDetailedRecipeInfoBulk([]).then((data) => {
@@ -23,11 +32,21 @@ test('Check getRecipesByName with filtering options', () => {
   filter.cuisine = 'mexican';
   return helpers.getRecipesByName('rice', 1, 0, filter).then((data) => {
     const recipe = data[0];
-    console.log(recipe.vegetarian, recipe.cuisines, recipe.veryPopular);
     expect(recipe.vegetarian).toBe(true);
     expect(recipe.cuisines.includes('Mexican')).toBe(true);
     expect(recipe.veryPopular).toBe(true);
   });
+});
+
+// extractIDs
+test('Check that extractIDs is checking for local storage', () => {
+  const dummyRecipeData = { 776505: 'awoogabooga' };
+  setRecipeData(dummyRecipeData);
+  //console.log(getAllRecipes);
+  const dummyComplexSearch = { results: [{ id: 776505 }, { id: 123 }] };
+  const ids = helpers.extractIDs(dummyComplexSearch);
+  expect(ids[0]).toEqual([123]);
+  expect(ids[1]).toEqual(['awoogabooga']);
 });
 
 // getRecipesByCuisine

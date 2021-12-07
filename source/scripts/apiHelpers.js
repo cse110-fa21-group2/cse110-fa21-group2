@@ -4,7 +4,7 @@ import { getAllRecipes } from './storage/fetcher.js';
 // require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
 import { API_KEY, HOST, DEV_MODE } from './constants.js';
 import TEST_DATA from './storage/sampleData.js';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 
 /**
  * Get detailed info from recipe ID's
@@ -47,7 +47,9 @@ export async function getDetailedRecipeInfoBulk(idsToFetch) {
 }
 
 /**
- * Helper function to extract recipe ids from complex search ONLY
+ * Helper function to extract recipe ids from complex search ONLY.
+ * This will grab all recipe ids and return ids not in local storage that
+ * need to be fetched and recipes already in local storage.
  * @param {Object} - list of recipes search results from complex search
  * @returns {Object} - [Recipes IDs to fetch, Recipe JSONs already in local storage]
  */
