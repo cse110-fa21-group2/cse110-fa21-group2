@@ -282,7 +282,7 @@ function openRecipeInfo(data) {
     const listElementHidden = document.createElement('li');
     listElementHidden.classList.add('info-ingredient-next');
     listElementHidden.classList.add('hidden');
-    listElementHidden.innerHTML = item.amount + ' ' + item.unit + ' ' + item.nameClean;
+    listElementHidden.innerHTML = item.amount.toString() + ' ' + item.unit.toString() + ' ' + item.nameClean.toString();
     list.appendChild(listElement);
     list.appendChild(listElementHidden);
   });
@@ -916,7 +916,7 @@ const infoSaveClicked = () => {
 /** scales ingredients of current expanded recipe by toScaleBy
  * @param {float} toScaleBy the amount to scale ingredients by
  */
- function scaleIngreds(toScaleBy) {
+function scaleIngreds(toScaleBy) {
   const BASE_TEN = 10;
   // get list/arr of ingreds (to hide):
   const ingredArr = document.querySelectorAll('.info-ingredient');
@@ -925,10 +925,10 @@ const infoSaveClicked = () => {
   const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
 
   // fill new ingredients to show:
-  for (const ingred of ingredArrToShow) {
+  ingredArrToShow.forEach((ingred) => {
     // get ingred measurement num (first word of its content):
     let currIngredUnit = '';
-    let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(' ');
+    let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ');
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
     // then leave unchanged
@@ -950,17 +950,17 @@ const infoSaveClicked = () => {
     // round new ingredients to two decimal places:
     const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
     // set new ingred
-    ingred.innerHTML = String(newIngredSize) + currIngredUnit + ' ' + restIngredInfoStr;
-  }
+    ingred.innerHTML = String(newIngredSize) + currIngredUnit.toString() + ' ' + restIngredInfoStr.toString();
+  })
   // hide previous, lengthy ingredient descriptions if not already hidden:
   ingredArr.forEach((item) => {
     item.classList.add('hidden');
- });
+  });
   ingredArrToShow.forEach((item) => {
     if (item.classList.contains('hidden')) {
       item.classList.remove('hidden');
     }
-  })
+  });
 }
 
 /**
