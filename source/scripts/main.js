@@ -116,7 +116,6 @@ const pauseTimer = () => {
 };
 
 /* Minimize btn */
-
 const displayTimer = () => {
   const container = document.getElementById('timer-container');
   const displayLabel = document.getElementById('shown');
@@ -891,9 +890,9 @@ const infoSaveClicked = () => {
 
   // If the favorites page is active, update in background, otherwise ignore
   const currSavedPageSelect = document.querySelector('select.list-dropdown').value;
-  if(currSavedPageSelect === 'favorites') {
+  if (currSavedPageSelect === 'favorites') {
     const savedRecipeGrid = document.querySelector('.saved-recipes .results-grid');
-    if(saved) {
+    if (saved) {
       savedRecipeGrid.querySelectorAll(`.id_${data.id}`).forEach((card) => card.remove());
     } else {
       const recipeCardNew = document.createElement('recipe-card');
@@ -905,7 +904,7 @@ const infoSaveClicked = () => {
     }
   }
   const currCards = document.querySelectorAll(`.id_${data.id}`);
-  for(let i = 0; i < currCards.length; i++) {
+  for (let i = 0; i < currCards.length; i++) {
     const { shadowRoot } = currCards[i];
     const element = shadowRoot.querySelector('.fa-heart');
     element.classList.toggle('far', currCards[i].saved);
@@ -914,22 +913,73 @@ const infoSaveClicked = () => {
   }
 };
 
+
+/** scales ingredients of current expanded recipe by toScaleBy
+ * @param {float} toScaleBy the amount to scale ingredients by
+ */
+ function scaleIngreds(toScaleBy) {
+  const BASE_TEN = 10;
+  // get list/arr of ingreds (to hide):
+  const ingredArr = document.querySelectorAll('.info-ingredient');
+
+  // get list/arr of ingreds (to show):
+  const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
+
+  // fill new ingredients to show:
+  for (const ingred of ingredArrToShow) {
+    // get ingred measurement num (first word of its content):
+    let currIngredUnit = '';
+    let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(' ');
+
+    // if first word of ingred isn't a number (i.e., ingred is just a description),
+    // then leave unchanged
+    if (isNaN(parseFloat(currIngredSize, BASE_TEN))) {
+      continue;
+    }
+    // handle case where unit is part of same word as leading number for ingredient
+    // (so that it does not get lost with parseFloat()):
+    // get if curr ingred has trailing unit as part of first word:
+    const currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
+    // if curr ingred has trailing unit, set its unit:
+    if (currIngred1stWordArr.length > 1) {
+      const currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
+      const currIngredUnitInfoStr = currIngredUnitInfoArr.join(' ');
+      currIngredUnit = currIngredUnitInfoStr;
+    }
+    const restIngredInfoStr = restIngredInfo.join(' ');
+    currIngredSize = parseFloat(currIngredSize, BASE_TEN);
+    // round new ingredients to two decimal places:
+    const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
+    // set new ingred
+    ingred.innerHTML = String(newIngredSize) + currIngredUnit + ' ' + restIngredInfoStr;
+  }
+  // hide previous, lengthy ingredient descriptions if not already hidden:
+  ingredArr.forEach((item) => {
+    item.classList.add('hidden');
+ });
+  ingredArrToShow.forEach((item) => {
+    if (item.classList.contains('hidden')) {
+      item.classList.remove('hidden');
+    }
+  })
+}
+
 /**
  * Scales recipe ingredients up by one (one greater serving size).
  */
  function scaleRecipeUp() {
-  const BASE_TEN = 10;
-  // get curr serving size
-  const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
-  const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
-  const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
-  const newScale = origScale + 1;
-  // set new curr serving size
-  servingEl.innerHTML = newScale;
-  quickFactServEl.innerHTML = 'Servings: ' + newScale;
-  const toScaleBy = newScale / origScale;
-  // scale ingredients by new scale:
-  scaleIngreds(toScaleBy);
+   const BASE_TEN = 10;
+   // get curr serving size
+   const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
+   const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
+   const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+   const newScale = origScale + 1;
+   // set new curr serving size
+   servingEl.innerHTML = newScale;
+   quickFactServEl.innerHTML = 'Servings: ' + newScale;
+   const toScaleBy = newScale / origScale;
+   // scale ingredients by new scale:
+   scaleIngreds(toScaleBy);
 }
 
 /**
@@ -938,7 +988,7 @@ const infoSaveClicked = () => {
 function scaleRecipeDown() {
   const BASE_TEN = 10;
   const servingSize = document.querySelector('.serving-size');
-  if(servingSize.innerHTML <= 1) {
+  if (servingSize.innerHTML <= 1) {
     return;
   }
   // get curr serving size
@@ -955,55 +1005,6 @@ function scaleRecipeDown() {
 
 }
 
-/** scales ingredients of current expanded recipe by toScaleBy
- * @param {float} toScaleBy the amount to scale ingredients by
- */
-function scaleIngreds(toScaleBy) {
-  const BASE_TEN = 10;
-  // get list/arr of ingreds (to hide):
-  const ingredArr = document.querySelectorAll('.info-ingredient');
-
-  // get list/arr of ingreds (to show):
-  const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
-
-  // fill new ingredients to show:
-  for(const ingred of ingredArrToShow) {
-    // get ingred measurement num (first word of its content):
-    let currIngredUnit = '';
-    let [currIngredSize, ...restIngredInfo] =  ingred.innerHTML.split(' ');
-
-    // if first word of ingred isn't a number (i.e., ingred is just a description),
-    // then leave unchanged
-    if(isNaN(parseFloat(currIngredSize, BASE_TEN))) {
-      continue;
-    }
-    // handle case where unit is part of same word as leading number for ingredient
-    // (so that it does not get lost with parseFloat()):
-    // get if curr ingred has trailing unit as part of first word:
-    let currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
-    // if curr ingred has trailing unit, set its unit:
-    if(currIngred1stWordArr.length > 1) {
-      let currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
-      let currIngredUnitInfoStr = currIngredUnitInfoArr.join(' ');
-      currIngredUnit = currIngredUnitInfoStr;
-    }
-    const restIngredInfoStr = restIngredInfo.join(' ');
-    currIngredSize = parseFloat(currIngredSize, BASE_TEN);
-    // round new ingredients to two decimal places:
-    let newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
-    // set new ingred
-    ingred.innerHTML = String(newIngredSize) + currIngredUnit + ' ' + restIngredInfoStr;
-  }
-  // hide previous, lengthy ingredient descriptions if not already hidden:
-  ingredArr.forEach((item) => {
-    item.classList.add('hidden');
- });
-  ingredArrToShow.forEach((item) => {
-    if(item.classList.contains('hidden')) {
-      item.classList.remove('hidden');
-    }
-  })
-}
 
 /**
  * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
