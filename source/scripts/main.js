@@ -1005,30 +1005,14 @@ function scaleRecipeDown() {
 }
 
 /**
- * Event handler for plus-btn for serving scaling:
- * @param {float} toScaleBy scales ingredients up by toScaleBy
- */
-function onClickScaleRecipeUp() {
-  scaleRecipeUp();
-}
-
-/**
- * Event handler for minus-btn for serving scaling:
- * @param {float} toScaleBy scales ingredients down by toScaleBy
- */
-function onClickScaleRecipeDown() {
-  scaleRecipeDown();
-}
-
-/**
  * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
  */
 function bindServSizeButtons() {
   // bind plus and minus button
-  const plusButton = document.querySelector('button.plus-btn');
-  const minusButton = document.querySelector('button.minus-btn');
-  plusButton.addEventListener('click', onClickScaleRecipeUp);
-  minusButton.addEventListener('click', onClickScaleRecipeDown);
+  const plusButton = document.querySelector('button#plus-btn');
+  const minusButton = document.querySelector('button#minus-btn');
+  plusButton.addEventListener('click', scaleRecipeUp);
+  minusButton.addEventListener('click', scaleRecipeDown);
 }
 
 /* Search results page event handlers */
