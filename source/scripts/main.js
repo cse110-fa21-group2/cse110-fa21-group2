@@ -282,7 +282,7 @@ function openRecipeInfo(data) {
     const listElementHidden = document.createElement('li');
     listElementHidden.classList.add('info-ingredient-next');
     listElementHidden.classList.add('hidden');
-    listElementHidden.innerHTML = item.amount.toString() + ' ' + item.unit.toString() + ' ' + item.nameClean.toString();
+    listElementHidden.innerHTML = `${item.amount} ${item.unit} ${item.nameClean}`;
     list.appendChild(listElement);
     list.appendChild(listElementHidden);
   });
@@ -947,7 +947,7 @@ function scaleIngreds(toScaleBy) {
       // round new ingredients to two decimal places:
       const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
       // set new ingred
-      ingred.innerHTML = String(newIngredSize) + currIngredUnit.toString() + ' ' + restIngredInfoStr.toString();
+      ingred.innerHTML = `${String(newIngredSize)} ${currIngredUnit} ${restIngredInfoStr}`;
     }
   });
   // hide previous, lengthy ingredient descriptions if not already hidden:
@@ -973,7 +973,7 @@ function scaleRecipeUp() {
   const newScale = origScale + 1;
   // set new curr serving size
   servingEl.innerHTML = newScale;
-  quickFactServEl.innerHTML = 'Servings: ' + newScale.toString();
+  quickFactServEl.innerHTML = `Servings: ${newScale}`;
   const toScaleBy = newScale / origScale;
   // scale ingredients by new scale:
   scaleIngreds(toScaleBy);
@@ -995,7 +995,7 @@ function scaleRecipeDown() {
   const newScale = origScale - 1;
   // set new curr serving size
   servingEl.innerHTML = newScale;
-  quickFactServEl.innerHTML = 'Servings: ' + newScale.toString();
+  quickFactServEl.innerHTML = `Servings: ${newScale}`;
   const toScaleBy = newScale / origScale;
   // scale ingredients by new scale:
   scaleIngreds(toScaleBy);
