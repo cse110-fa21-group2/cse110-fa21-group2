@@ -233,7 +233,7 @@ button.sort-filter {
   padding: 5px 10px;
   text-align: center;
   text-decoration: none;
-  width: 13rem;
+  width: 100%;
 }
 
 button.cuisine-collapse {
