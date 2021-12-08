@@ -21,7 +21,7 @@ const URL = 'https://wateryoucooking.netlify.app/';
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 // Avoid timeout error due to default low timeout limit
-jest.setTimeout(600000);
+jest.setTimeout(300);
 describe('Basic user flow for Website', () => {
   // Check timer initial value
   it('Test initial timer setting', async () => {
