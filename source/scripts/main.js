@@ -913,7 +913,6 @@ const infoSaveClicked = () => {
   }
 };
 
-
 /** scales ingredients of current expanded recipe by toScaleBy
  * @param {float} toScaleBy the amount to scale ingredients by
  */
@@ -967,19 +966,19 @@ const infoSaveClicked = () => {
 /**
  * Scales recipe ingredients up by one (one greater serving size).
  */
- function scaleRecipeUp() {
-   const BASE_TEN = 10;
-   // get curr serving size
-   const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
-   const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
-   const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
-   const newScale = origScale + 1;
-   // set new curr serving size
-   servingEl.innerHTML = newScale;
-   quickFactServEl.innerHTML = 'Servings: ' + newScale;
-   const toScaleBy = newScale / origScale;
-   // scale ingredients by new scale:
-   scaleIngreds(toScaleBy);
+function scaleRecipeUp() {
+  const BASE_TEN = 10;
+  // get curr serving size
+  const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
+  const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
+  const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  const newScale = origScale + 1;
+  // set new curr serving size
+  servingEl.innerHTML = newScale;
+  quickFactServEl.innerHTML = 'Servings: ' + newScale.toString();
+  const toScaleBy = newScale / origScale;
+  // scale ingredients by new scale:
+  scaleIngreds(toScaleBy);
 }
 
 /**
@@ -998,13 +997,27 @@ function scaleRecipeDown() {
   const newScale = origScale - 1;
   // set new curr serving size
   servingEl.innerHTML = newScale;
-  quickFactServEl.innerHTML = 'Servings: ' + newScale;
+  quickFactServEl.innerHTML = 'Servings: ' + newScale.toString();
   const toScaleBy = newScale / origScale;
   // scale ingredients by new scale:
   scaleIngreds(toScaleBy);
-
 }
 
+/**
+ * Event handler for plus-btn for serving scaling:
+ * @param {float} toScaleBy scales ingredients up by toScaleBy
+ */
+function onClickScaleRecipeUp() {
+  scaleRecipeUp();
+}
+
+/**
+ * Event handler for minus-btn for serving scaling:
+ * @param {float} toScaleBy scales ingredients down by toScaleBy
+ */
+function onClickScaleRecipeDown() {
+  scaleRecipeDown();
+}
 
 /**
  * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
@@ -1013,15 +1026,9 @@ function bindServSizeButtons() {
   // bind plus and minus button
   const plusButton = document.querySelector('button.plus-btn');
   const minusButton = document.querySelector('button.minus-btn');
-  plusButton.addEventListener('click', function () {
-    scaleRecipeUp();
-  });
-  minusButton.addEventListener('click', function () {
-    scaleRecipeDown();
-  })
+  plusButton.addEventListener('click', onClickScaleRecipeUp());
+  minusButton.addEventListener('click', onClickScaleRecipeDown());
 }
-
-
 
 /* Search results page event handlers */
 
