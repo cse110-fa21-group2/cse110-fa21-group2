@@ -928,7 +928,9 @@ function scaleIngreds(toScaleBy) {
   ingredArrToShow.forEach((ingred) => {
     // get ingred measurement num (first word of its content):
     let currIngredUnit = '';
-    let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ');
+    const b = ingred.innerHTML.split(' ');  //let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ');
+    let currIngredSize = b[0];
+    const restIngredInfo = b.slice(1);
     // if first word of ingred isn't a number (i.e., ingred is just a description),
     // then leave unchanged
     if (!isNaN(parseFloat(currIngredSize, BASE_TEN))) {
@@ -947,7 +949,8 @@ function scaleIngreds(toScaleBy) {
       // round new ingredients to two decimal places:
       const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
       // set new ingred
-      ingred.innerHTML = `${String(newIngredSize)} ${currIngredUnit} ${restIngredInfoStr}`;
+      const a = ingred;
+      a.innerHTML = `${String(newIngredSize)} ${currIngredUnit} ${restIngredInfoStr}`;
     }
   });
   // hide previous, lengthy ingredient descriptions if not already hidden:
