@@ -16,7 +16,7 @@
 const puppeteer = require('puppeteer');
 
 // TODO: replace with the correct web link
-const URL = 'http://127.0.0.1:5500/source/index.html';
+const URL = 'https://wateryoucooking.netlify.app/';
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
