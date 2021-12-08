@@ -15,35 +15,12 @@
  */
 const puppeteer = require('puppeteer');
 
-// TODO: replace with the correct web link
 const URL = 'http://127.0.0.1:5500/source/index.html';
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 // Avoid timeout error due to default low timeout limit
 jest.setTimeout(600000);
 describe('Basic user flow for Website', () => {
-  // Check timer initial value
-  it('Test initial timer setting', async () => {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(URL);
-    // console.log('Go to explore page');
-    const button = await page.$('#explore-nav');
-    await button.click();
-    // console.log(button);
-    await page.waitForTimeout(3000);
-    const cardItem = await page.$('recipe-card');
-    const shadow = await cardItem.getProperty('shadowRoot');
-    const card = await shadow.$('div.custom-card');
-    await card.click();
-    // console.log('go to recipe page');
-    await page.waitForTimeout(1000);
-    const timer = await page.$('#timer');
-    const initialText = await page.evaluate((el) => el.innerText, timer);
-    // console.log(initialText);
-    expect(initialText).toBe('Begin Timer');
-    await browser.close();
-  });
   it('Searching a recipe', async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
