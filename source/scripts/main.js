@@ -929,7 +929,8 @@ function scaleIngreds(toScaleBy) {
     // get ingred measurement num (first word of its content):
     let currIngredUnit = '';
     const restIngredInfo = '';
-    let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ');
+    let currIngredSize = '';
+    [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ');
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
     // then leave unchanged
