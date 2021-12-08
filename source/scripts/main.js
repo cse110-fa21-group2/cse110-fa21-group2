@@ -932,26 +932,25 @@ function scaleIngreds(toScaleBy) {
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
     // then leave unchanged
-    if (isNaN(parseFloat(currIngredSize, BASE_TEN))) {
-      continue;
+    if (!isNaN(parseFloat(currIngredSize, BASE_TEN))) {
+      // handle case where unit is part of same word as leading number for ingredient
+      // (so that it does not get lost with parseFloat()):
+      // get if curr ingred has trailing unit as part of first word:
+      const currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
+      // if curr ingred has trailing unit, set its unit:
+      if (currIngred1stWordArr.length > 1) {
+        const currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
+        const currIngredUnitInfoStr = currIngredUnitInfoArr.join(' ');
+        currIngredUnit = currIngredUnitInfoStr;
+      }
+      const restIngredInfoStr = restIngredInfo.join(' ');
+      currIngredSize = parseFloat(currIngredSize, BASE_TEN);
+      // round new ingredients to two decimal places:
+      const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
+      // set new ingred
+      ingred.innerHTML = String(newIngredSize) + currIngredUnit.toString() + ' ' + restIngredInfoStr.toString();
     }
-    // handle case where unit is part of same word as leading number for ingredient
-    // (so that it does not get lost with parseFloat()):
-    // get if curr ingred has trailing unit as part of first word:
-    const currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
-    // if curr ingred has trailing unit, set its unit:
-    if (currIngred1stWordArr.length > 1) {
-      const currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
-      const currIngredUnitInfoStr = currIngredUnitInfoArr.join(' ');
-      currIngredUnit = currIngredUnitInfoStr;
-    }
-    const restIngredInfoStr = restIngredInfo.join(' ');
-    currIngredSize = parseFloat(currIngredSize, BASE_TEN);
-    // round new ingredients to two decimal places:
-    const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
-    // set new ingred
-    ingred.innerHTML = String(newIngredSize) + currIngredUnit.toString() + ' ' + restIngredInfoStr.toString();
-  })
+  });
   // hide previous, lengthy ingredient descriptions if not already hidden:
   ingredArr.forEach((item) => {
     item.classList.add('hidden');
@@ -1026,8 +1025,8 @@ function bindServSizeButtons() {
   // bind plus and minus button
   const plusButton = document.querySelector('button.plus-btn');
   const minusButton = document.querySelector('button.minus-btn');
-  plusButton.addEventListener('click', onClickScaleRecipeUp());
-  minusButton.addEventListener('click', onClickScaleRecipeDown());
+  plusButton.addEventListener('click', onClickScaleRecipeUp);
+  minusButton.addEventListener('click', onClickScaleRecipeDown);
 }
 
 /* Search results page event handlers */
