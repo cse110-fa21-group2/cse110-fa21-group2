@@ -23,10 +23,10 @@ test('check getDetailedRecipeInfoBulk with ids', () => helpers.getDetailedRecipe
 test('check getDetailedRecipeInfoBulk with ids', () => helpers.getDetailedRecipeInfoBulk([547775, 547899]).then((data) => {
   expect(data.length).toBe(2);
 }));
-test('check getDetailedRecipeInfoBulk with ids', () => helpers.getDetailedRecipeInfoBulk([123456, 654321, 145682, 423784]).then((data) => {
+test('check getDetailedRecipeInfoBulk with ids', () => helpers.getDetailedRecipeInfoBulk([547775, 547899, 15123, 442940]).then((data) => {
   expect(data.length).toBe(4);
 }));
-test('check getDetailedRecipeInfoBulk with ids', () => helpers.getDetailedRecipeInfoBulk([123456, 654321, 145682, 423784, 54894, 54955]).then((data) => {
+test('check getDetailedRecipeInfoBulk with ids', () => helpers.getDetailedRecipeInfoBulk([547775, 547899, 15123, 442940, 515839, 519397]).then((data) => {
   expect(data.length).toBe(6);
 }));
 
@@ -49,11 +49,11 @@ test('Check getRecipesByName with filtering options', () => {
   const filter = {};
   filter.sort = 'popularity';
   filter.sortDirection = 'asc';
-  filter.diet = 'Vegan';
+  filter.diet = 'vegan';
   filter.cuisine = 'Italian';
   return helpers.getRecipesByName('pizza', 1, 0, filter).then((data) => {
     const recipe = data[0];
-    expect(recipe.Vegan).toBe(true);
+    expect(recipe.vegan).toBe(true);
     expect(recipe.cuisines.includes('Italian')).toBe(true);
     expect(recipe.veryPopular).toBe(true);
   });
@@ -63,11 +63,11 @@ test('Check getRecipesByName with filtering options', () => {
   const filter = {};
   filter.sort = 'popularity';
   filter.sortDirection = 'asc';
-  filter.diet = 'Vegan';
+  filter.diet = 'vegan';
   filter.cuisine = 'Italian';
   return helpers.getRecipesByName('Pasta', 1, 0, filter).then((data) => {
     const recipe = data[0];
-    expect(recipe.Vegan).toBe(true);
+    expect(recipe.vegan).toBe(true);
     expect(recipe.cuisines.includes('Italian')).toBe(true);
     expect(recipe.veryPopular).toBe(true);
   });
