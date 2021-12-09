@@ -1189,8 +1189,11 @@ function initializeButtons() {
   const clearSortingAndFilteringButton = document.getElementById('clear-sort-filter');
   clearSortingAndFilteringButton.addEventListener('click', clearSortingAndFiltering);
 
-  const applyButton = document.getElementById('apply-sort-filter');
-  applyButton.addEventListener('click', applyClicked);
+  const applyButtonTop = document.getElementById('apply-sort-filter-top');
+  applyButtonTop.addEventListener('click', applyClicked);
+
+  const applyButtonBot = document.getElementById('apply-sort-filter-bot');
+  applyButtonBot.addEventListener('click', applyClicked);
 
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
