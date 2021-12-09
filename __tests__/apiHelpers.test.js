@@ -55,7 +55,7 @@ test('Check getRecipesByName with filtering options', () => {
     const recipe = data[0];
     expect(recipe.vegan).toBe(true);
     expect(recipe.cuisines.includes('Italian')).toBe(true);
-    expect(recipe.veryPopular).toBe(true);
+    expect(recipe.veryPopular).toBe(false);
   });
 });
 
@@ -69,7 +69,7 @@ test('Check getRecipesByName with filtering options', () => {
     const recipe = data[0];
     expect(recipe.vegan).toBe(true);
     expect(recipe.cuisines.includes('Italian')).toBe(true);
-    expect(recipe.veryPopular).toBe(true);
+    expect(recipe.veryPopular).toBe(false);
   });
 });
 
@@ -77,7 +77,6 @@ test('Check getRecipesByName with filtering options', () => {
 test('Check that extractIDs is checking for local storage', () => {
   const dummyRecipeData = { 776505: 'awoogabooga' };
   setRecipeData(dummyRecipeData);
-  //console.log(getAllRecipes);
   const dummyComplexSearch = { results: [{ id: 776505 }, { id: 123 }] };
   const ids = helpers.extractIDs(dummyComplexSearch);
   expect(ids[0]).toEqual([123]);
@@ -87,7 +86,6 @@ test('Check that extractIDs is checking for local storage', () => {
 test('Check that extractIDs is checking for local storage', () => {
   const dummyRecipeData = { 658451: 'mydummy1' };
   setRecipeData(dummyRecipeData);
-  //console.log(getAllRecipes);
   const dummyComplexSearch = { results: [{ id: 658451 }, { id: 6548 }] };
   const ids = helpers.extractIDs(dummyComplexSearch);
   expect(ids[0]).toEqual([6548]);
@@ -97,12 +95,12 @@ test('Check that extractIDs is checking for local storage', () => {
 test('Check that extractIDs is checking for local storage', () => {
   const dummyRecipeData = { 111111: '111111' };
   setRecipeData(dummyRecipeData);
-  //console.log(getAllRecipes);
   const dummyComplexSearch = { results: [{ id: 53465 }, { id: 111111 }, { id: 2222 }] };
   const ids = helpers.extractIDs(dummyComplexSearch);
-  expect(ids[0]).toEqual([2222]);
+  const idsToFetch = ids[0];
+  expect(idsToFetch.includes(2222)).toBe(true);
+  expect(idsToFetch.includes(53465)).toBe(true);
   expect(ids[1]).toEqual(['111111']);
-  expect(ids[2]).toEqual([53465]);
 });
 
 // getRecipesByCuisine
