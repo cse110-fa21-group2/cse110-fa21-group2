@@ -925,15 +925,25 @@ function scaleIngreds(toScaleBy) {
   const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
 
   // fill new ingredients to show:
-  ingredArrToShow.forEach((ingred) => {
+  //let i = 0;
+  //ingredArrToShow.forEach((ingred) => {
+  for(let i = 0; i < ingredArrToShow.length; i++) {
+    let ingred = ingredArrToShow[i];
+    let priorIngred = ingredArr[i];
     // get ingred measurement num (first word of its content):
-    let currIngredUnit = '';
-    const b = ingred.innerHTML.split(' '); // let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ')
+    let currIngredUnit = ''; 
+    const b = priorIngred.innerHTML.split(' '); // let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ')
     let currIngredSize = b[0];
-    const restIngredInfo = b.slice(1);
+
+    // less detailed ingredient:
+    const c = ingred.innerHTML.split(' ');
+    const nextIngredSize = c[0];
+    const restIngredInfo = c.slice(1);
+
     // if first word of ingred isn't a number (i.e., ingred is just a description),
-    // then leave unchanged
-    if (!isNaN(parseFloat(currIngredSize, BASE_TEN))) {
+    // then leave unchanged (the && ... part catches if ingred begins with just a fraction character)
+    if (!isNaN(parseFloat(currIngredSize, BASE_TEN)) || !isNaN(parseFloat(nextIngredSize, BASE_TEN))) {
+      currIngredSize = nextIngredSize;
       // handle case where unit is part of same word as leading number for ingredient
       // (so that it does not get lost with parseFloat()):
       // get if curr ingred has trailing unit as part of first word:
@@ -951,17 +961,14 @@ function scaleIngreds(toScaleBy) {
       // set new ingred
       const a = ingred;
       a.innerHTML = `${String(newIngredSize)} ${currIngredUnit} ${restIngredInfoStr}`;
+
+      // hide previous full description, show shortened but scaled description
+      if(ingred.classList.contains('hidden')) {
+        ingred.classList.remove('hidden');
+        priorIngred.classList.add('hidden');
+      }
     }
-  });
-  // hide previous, lengthy ingredient descriptions if not already hidden:
-  ingredArr.forEach((item) => {
-    item.classList.add('hidden');
-  });
-  ingredArrToShow.forEach((item) => {
-    if (item.classList.contains('hidden')) {
-      item.classList.remove('hidden');
-    }
-  });
+  }
 }
 
 /**
