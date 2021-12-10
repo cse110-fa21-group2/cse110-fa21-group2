@@ -925,11 +925,9 @@ function scaleIngreds(toScaleBy) {
   const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
 
   // fill new ingredients to show:
-  //let i = 0;
-  //ingredArrToShow.forEach((ingred) => {
-  for(let i = 0; i < ingredArrToShow.length; i++) {
-    let ingred = ingredArrToShow[i];
-    let priorIngred = ingredArr[i];
+  for (let i = 0; i < ingredArrToShow.length; i++) {
+    const ingred = ingredArrToShow[i];
+    const priorIngred = ingredArr[i];
     // get ingred measurement num (first word of its content):
     let currIngredUnit = ''; 
     const b = priorIngred.innerHTML.split(' '); // let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ')
@@ -942,9 +940,10 @@ function scaleIngreds(toScaleBy) {
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
     // then leave unchanged (the && ... part catches if ingred begins with just a fraction character)
-    if (!isNaN(parseFloat(currIngredSize, BASE_TEN)) || !isNaN(parseFloat(nextIngredSize, BASE_TEN))) {
+    if (!isNaN(parseFloat(currIngredSize, BASE_TEN)) 
+      || !isNaN(parseFloat(nextIngredSize, BASE_TEN))) {
       currIngredSize = nextIngredSize;
-      // handle case where unit is part of same word as leading number for ingredient
+      // handle case where unit is part of same word as leading number for ingred
       // (so that it does not get lost with parseFloat()):
       // get if curr ingred has trailing unit as part of first word:
       const currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
@@ -963,7 +962,7 @@ function scaleIngreds(toScaleBy) {
       a.innerHTML = `${String(newIngredSize)} ${currIngredUnit} ${restIngredInfoStr}`;
 
       // hide previous full description, show shortened but scaled description
-      if(ingred.classList.contains('hidden')) {
+      if (ingred.classList.contains('hidden')) {
         ingred.classList.remove('hidden');
         priorIngred.classList.add('hidden');
       }
