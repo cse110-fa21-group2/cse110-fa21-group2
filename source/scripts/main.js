@@ -939,7 +939,7 @@ function scaleIngreds(toScaleBy) {
     const restIngredInfo = c.slice(1);
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
-    // then leave unchanged (the && ... part catches 
+    // then leave unchanged (the && ... part catches
     // if ingred begins with just a fraction character)
     if (!isNaN(parseFloat(currIngredSize, BASE_TEN))
       || !isNaN(parseFloat(nextIngredSize, BASE_TEN))) {
