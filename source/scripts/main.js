@@ -116,7 +116,6 @@ const pauseTimer = () => {
 };
 
 /* Minimize btn */
-
 const displayTimer = () => {
   const container = document.getElementById('timer-container');
   const displayLabel = document.getElementById('shown');
@@ -179,9 +178,9 @@ const removeAllChildNodes = (parent) => {
  * to be populated with recipe cards.
  * @param {String[]} arrData an array of recipe ids (currently). example input:
  * [
- *    "123", // recipe id
- *    "111", // recipe id
- *    "444", // recipe id
+ *    '123', // recipe id
+ *    '111', // recipe id
+ *    '444', // recipe id
  *  ]
  * @param {HTMLElement} location HTML container to populate cards into
  * @param {number} numRecipesPopd how many recipes are being populated (used with fetcherFuncs)
@@ -280,7 +279,12 @@ function openRecipeInfo(data) {
     const listElement = document.createElement('li');
     listElement.classList.add('info-ingredient');
     listElement.innerHTML = item.originalString;
+    const listElementHidden = document.createElement('li');
+    listElementHidden.classList.add('info-ingredient-next');
+    listElementHidden.classList.add('hidden');
+    listElementHidden.innerHTML = `${item.amount} ${item.unit} ${item.nameClean}`;
     list.appendChild(listElement);
+    list.appendChild(listElementHidden);
   });
 
   // Quick Facts
@@ -313,7 +317,6 @@ function openRecipeInfo(data) {
   const scaleServings = document.querySelector('.serving-size');
   scaleServings.innerHTML = data.servings;
 
-  // TODO: Scale ingredients
   const stepsDiv = document.getElementById('step-list');
   removeAllChildNodes(stepsDiv);
 
@@ -548,14 +551,14 @@ const openSearchResults = async () => {
 
   const pageOffset = 0;
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Loading results for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading results for '${query}'`;
 
   router.navigate('search-results', false);
 
   const searchResult = await apiFuncs.getRecipesByName(query, DEFAULT_NUM_CARDS, pageOffset);
   const resultsFound = searchResult.length !== 0;
 
-  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for "${query}"` : `No results found for "${query}"`;
+  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for '${query}'` : `No results found for '${query}'`;
   const storeName = `${query}popularitydesc1440`;
   storageFuncs.storeRecipeData(storeName, searchResult);
 
@@ -910,19 +913,115 @@ const infoSaveClicked = () => {
   }
 };
 
-// TODO
-function scaleRecipeUp(recipe) {
-  const servingSize = document.querySelector('.serving-size');
-  servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) + 1;
+/** scales ingredients of current expanded recipe by toScaleBy
+ * @param {float} toScaleBy the amount to scale ingredients by
+ */
+function scaleIngreds(toScaleBy) {
+  const BASE_TEN = 10;
+  // get list/arr of ingreds (to hide):
+  const ingredArr = document.querySelectorAll('.info-ingredient');
+
+  // get list/arr of ingreds (to show):
+  const ingredArrToShow = document.querySelectorAll('.info-ingredient-next');
+
+  // fill new ingredients to show:
+  for (let i = 0; i < ingredArrToShow.length; i++) {
+    const ingred = ingredArrToShow[i];
+    const priorIngred = ingredArr[i];
+    // get ingred measurement num (first word of its content):
+    let currIngredUnit = '';
+    const b = priorIngred.innerHTML.split(' '); // let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ')
+    let currIngredSize = b[0];
+
+    // less detailed ingredient:
+    const c = ingred.innerHTML.split(' ');
+    const nextIngredSize = c[0];
+    const restIngredInfo = c.slice(1);
+
+    // if first word of ingred isn't a number (i.e., ingred is just a description),
+    // then leave unchanged (the && ... part catches
+    // if ingred begins with just a fraction character)
+    if (!isNaN(parseFloat(currIngredSize, BASE_TEN))
+      || !isNaN(parseFloat(nextIngredSize, BASE_TEN))) {
+      currIngredSize = nextIngredSize;
+      // handle case where unit is part of same word as leading number for ingred
+      // (so that it does not get lost with parseFloat()):
+      // get if curr ingred has trailing unit as part of first word:
+      const currIngred1stWordArr = currIngredSize.split(/([A-Za-z]+)/);
+      // if curr ingred has trailing unit, set its unit:
+      if (currIngred1stWordArr.length > 1) {
+        const currIngredUnitInfoArr = currIngred1stWordArr.slice(1);
+        const currIngredUnitInfoStr = currIngredUnitInfoArr.join(' ');
+        currIngredUnit = currIngredUnitInfoStr;
+      }
+      const restIngredInfoStr = restIngredInfo.join(' ');
+      currIngredSize = parseFloat(currIngredSize, BASE_TEN);
+      // round new ingredients to two decimal places:
+      const newIngredSize = Math.round((toScaleBy * currIngredSize) * 100) / 100;
+      // set new ingred
+      const a = ingred;
+      a.innerHTML = `${String(newIngredSize)} ${currIngredUnit} ${restIngredInfoStr}`;
+
+      // hide previous full description, show shortened but scaled description
+      if (ingred.classList.contains('hidden')) {
+        ingred.classList.remove('hidden');
+        priorIngred.classList.add('hidden');
+      }
+    }
+  }
 }
-// TODO:
-function scaleRecipeDown(recipe) {
+
+/**
+ * Scales recipe ingredients up by one (one greater serving size).
+ */
+function scaleRecipeUp() {
+  const BASE_TEN = 10;
+  // get curr serving size
+  const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
+  const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
+  const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  const newScale = origScale + 1;
+  // set new curr serving size
+  servingEl.innerHTML = newScale;
+  quickFactServEl.innerHTML = `Servings: ${newScale}`;
+  const toScaleBy = newScale / origScale;
+  // scale ingredients by new scale:
+  scaleIngreds(toScaleBy);
+}
+
+/**
+ * Scales recipe ingredients down by one (one less serving size)
+ */
+function scaleRecipeDown() {
+  const BASE_TEN = 10;
   const servingSize = document.querySelector('.serving-size');
   if (servingSize.innerHTML <= 1) {
     return;
   }
-  servingSize.innerHTML = parseInt(servingSize.innerHTML, 10) - 1;
+  // get curr serving size
+  const servingEl = document.querySelector('div.serving-adjust > div.serving-size');
+  const quickFactServEl = document.querySelector('ul.info-list > li#info-servings');
+  const origScale = parseInt(servingEl.innerHTML, BASE_TEN);
+  const newScale = origScale - 1;
+  // set new curr serving size
+  servingEl.innerHTML = newScale;
+  quickFactServEl.innerHTML = `Servings: ${newScale}`;
+  const toScaleBy = newScale / origScale;
+  // scale ingredients by new scale:
+  scaleIngreds(toScaleBy);
 }
+
+/**
+ * Binds plus and minus buttons to adjusting serving size and ingredient scaling.
+ */
+function bindServSizeButtons() {
+  // bind plus and minus button
+  const plusButton = document.querySelector('button#plus-btn');
+  const minusButton = document.querySelector('button#minus-btn');
+  plusButton.addEventListener('click', scaleRecipeUp);
+  minusButton.addEventListener('click', scaleRecipeDown);
+}
+
 /* Search results page event handlers */
 
 /**
@@ -934,7 +1033,7 @@ async function showMoreClicked() {
   const numOfCardExist = searchResultsContainer.childElementCount;
   const numOfAdditionRecipeCards = DEFAULT_NUM_CARDS;
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Loading results for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading results for '${query}'`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -959,7 +1058,7 @@ async function showMoreClicked() {
     },
   );
 
-  searchResultPageTitle.innerHTML = `Top recipes for "${query}"`;
+  searchResultPageTitle.innerHTML = `Top recipes for '${query}'`;
 
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
@@ -981,7 +1080,7 @@ async function applyClicked() {
   const query = getSearchQuery();
   const searchResultsContainer = document.getElementById('search-results-container');
   const searchResultPageTitle = document.getElementById('search-results-title');
-  searchResultPageTitle.innerHTML = `Loading recipes for "${query}"`;
+  searchResultPageTitle.innerHTML = `Loading recipes for '${query}'`;
 
   const sorts = getSortKey();
   const ordering = getOrderingKey();
@@ -1014,7 +1113,7 @@ async function applyClicked() {
   );
 
   const resultsFound = searchResult.length !== 0;
-  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for "${query}"` : `No results found for "${query}"`;
+  searchResultPageTitle.innerHTML = resultsFound ? `Top recipes for '${query}'` : `No results found for '${query}'`;
   document.getElementById('show-more-button').classList.toggle('hidden', !resultsFound);
   const storeName = query + sorts + ordering + cuisineString + mealType + dietS
   + intoleranceString + maxPrepTime;
@@ -1195,6 +1294,9 @@ function initializeButtons() {
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
   savedPageSelect.addEventListener('change', onDropdownChange);
+
+  /* Expanded Recipe Page */
+  bindServSizeButtons();
 }
 
 function initializeLocalStorage() {
