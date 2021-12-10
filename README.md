@@ -15,4 +15,4 @@ This GitHub serves as the single-source-of-truth for the project. All documentat
 3. [Miro Planning Board](https://miro.com/app/board/o9J_lpl-XMA=/)
 4. [Project Pitch](https://docs.google.com/presentation/d/11jF1oKp75DLx46tuGD6EQLSZYdLSG2OP50iHBZg_Hf0/edit?usp=sharing)
 5. [Netlify Deployment](https://wateryoucooking.netlify.app/)
-6. [Documentation](./out/index.html)
+6. [Documentation](https://cse110-fa21-group2.github.io/cse110-fa21-group2/out/index.html)
