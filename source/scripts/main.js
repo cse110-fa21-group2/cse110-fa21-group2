@@ -321,6 +321,8 @@ function openRecipeInfo(data) {
   removeAllChildNodes(stepsDiv);
 
   const stepsList = data?.analyzedInstructions[0]?.steps;
+  const wrapper = document.querySelector('.steps-wrapper');
+  wrapper.classList.toggle('hidden', !stepsList);
   stepsList?.forEach((item) => {
     const listElement = document.createElement('li');
     listElement.classList.add('steps');
@@ -916,7 +918,7 @@ const infoSaveClicked = () => {
 /** scales ingredients of current expanded recipe by toScaleBy
  * @param {float} toScaleBy the amount to scale ingredients by
  */
-export function scaleIngreds(toScaleBy) {
+function scaleIngreds(toScaleBy) {
   const BASE_TEN = 10;
   // get list/arr of ingreds (to hide):
   const ingredArr = document.querySelectorAll('.info-ingredient');
@@ -1288,8 +1290,11 @@ function initializeButtons() {
   const clearSortingAndFilteringButton = document.getElementById('clear-sort-filter');
   clearSortingAndFilteringButton.addEventListener('click', clearSortingAndFiltering);
 
-  const applyButton = document.getElementById('apply-sort-filter');
-  applyButton.addEventListener('click', applyClicked);
+  const applyButtonTop = document.getElementById('apply-sort-filter-top');
+  applyButtonTop.addEventListener('click', applyClicked);
+
+  const applyButtonBot = document.getElementById('apply-sort-filter-bot');
+  applyButtonBot.addEventListener('click', applyClicked);
 
   /* Saved Recipe Page */
   const savedPageSelect = document.querySelector('select.list-dropdown');
