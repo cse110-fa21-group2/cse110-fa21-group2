@@ -1,7 +1,9 @@
 // helper functions for Spoonacular API
 
 import { getAllRecipes } from './storage/fetcher.js';
-// require('dotenv').config();// REQUIRE DOES NOT WORK ON BROWSER HOW TO FIX?
+// eslint doesnt like the next line because API_KEY is currently not yet
+// in constants.js and will get populated once deployed on netlify
+// eslint-disable-next-line import/named
 import { API_KEY, HOST, DEV_MODE } from './constants.js';
 import TEST_DATA from './storage/sampleData.js';
 
