@@ -1,4 +1,8 @@
 /**
+ * @jest-environment jsdom
+ */
+
+/**
  * Unit test for API Helper functions.
  * Setup steps:
  *  npm i --save-dev jest-localstorage-mock // to mock local storage
@@ -7,12 +11,12 @@
  * To Run:
  *  npm test apiHelpers.test.js
  */
+
 import * as helpers from '../source/scripts/apiHelpers.js';
 import { setRecipeData } from '../source/scripts/storage/storage.js';
 
 // set mock local storage so api functions wont break
 setRecipeData('{}');
-
 // getDetailedRecipeInfoBulk
 test('check getDetailedRecipeInfoBulk with empty list input', () => helpers.getDetailedRecipeInfoBulk([]).then((data) => {
   expect(data).toEqual([]);

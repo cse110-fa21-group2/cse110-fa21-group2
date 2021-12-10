@@ -12,9 +12,7 @@
   },
   "jest": {
     "preset": "jest-puppeteer",
-    "verbose": true,
-    "resetMocks": false,
-    "setupFiles": ["jest-localstorage-mock"]
+    "verbose": true
   },
   "repository": {
     "type": "git",
