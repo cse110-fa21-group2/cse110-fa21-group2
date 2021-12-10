@@ -265,6 +265,21 @@ button.apply-sort-filter:hover {
   width: 100%;
 }
 
+button.apply {
+  background-color: #dee051;
+  border: 1px solid grey;
+  border-radius: 0.25rem;
+  color: rgb(0 0 0);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 1px;
+  text-align: center;
+  text-decoration: none;
+  width: 13rem;
+}
+
 button.cuisine-collapse {
   border: 1px solid grey;
   border-radius: 0.25rem;
@@ -641,7 +656,8 @@ output.max-time-output {
 }
 
 .info-facts,
-.info-ingredient {
+.info-ingredient,
+.info-ingredient-next {
   list-style: none;
   margin-bottom: 1rem;
 }
