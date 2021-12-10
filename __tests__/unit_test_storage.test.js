@@ -101,3 +101,33 @@ test('test deleteCreatedRecipe', async () => {
   // eslint-disable-next-line no-undef
   expect(result).toStrictEqual(expectedData);
 });
+
+// eslint-disable-next-line no-undef
+test('test removeRecipeFromList', async () => {
+  window.localStorage.clear();
+  const expectedData = {"somelist": []};
+  storageFuncs.saveRecipeToList('somelist', '12345');
+
+  storageFuncs.removeRecipeFromList('somelist', '12345');
+
+  var result = JSON.parse(localStorage.getItem('savedLists'));
+
+  console.log(result);
+  // eslint-disable-next-line no-undef
+  expect(result).toStrictEqual(expectedData);
+});
+
+// eslint-disable-next-line no-undef
+test('test removeRecipeFromList on empty list', async () => {
+  window.localStorage.clear();
+  const expectedData = {"somelist": []};
+  storageFuncs.saveRecipeToList('somelist', '12345');
+
+  storageFuncs.removeRecipeFromList('somelist', '12345');
+
+  var result = JSON.parse(localStorage.getItem('savedLists'));
+
+  console.log(result);
+  // eslint-disable-next-line no-undef
+  expect(result).toStrictEqual(expectedData);
+});
