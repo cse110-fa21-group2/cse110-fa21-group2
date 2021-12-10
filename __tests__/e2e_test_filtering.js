@@ -18,6 +18,8 @@ const puppeteer = require('puppeteer');
 const URL = 'https://wateryoucooking.netlify.app/';
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
+// Avoid timeout error due to default low timeout limit
+jest.setTimeout(600000);
 describe('Basic user flow for Website', () => {
   it('Searching a recipe', async () => {
     const browser = await puppeteer.launch();
