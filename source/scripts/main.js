@@ -321,6 +321,8 @@ function openRecipeInfo(data) {
   removeAllChildNodes(stepsDiv);
 
   const stepsList = data?.analyzedInstructions[0]?.steps;
+  const wrapper = document.querySelector('.steps-wrapper');
+  wrapper.classList.toggle('hidden', !stepsList);
   stepsList?.forEach((item) => {
     const listElement = document.createElement('li');
     listElement.classList.add('steps');
