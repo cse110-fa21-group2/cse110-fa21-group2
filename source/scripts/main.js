@@ -929,7 +929,7 @@ function scaleIngreds(toScaleBy) {
     const ingred = ingredArrToShow[i];
     const priorIngred = ingredArr[i];
     // get ingred measurement num (first word of its content):
-    let currIngredUnit = ''; 
+    let currIngredUnit = '';
     const b = priorIngred.innerHTML.split(' '); // let [currIngredSize, ...restIngredInfo] = ingred.innerHTML.split(' ')
     let currIngredSize = b[0];
 
@@ -939,8 +939,9 @@ function scaleIngreds(toScaleBy) {
     const restIngredInfo = c.slice(1);
 
     // if first word of ingred isn't a number (i.e., ingred is just a description),
-    // then leave unchanged (the && ... part catches if ingred begins with just a fraction character)
-    if (!isNaN(parseFloat(currIngredSize, BASE_TEN)) 
+    // then leave unchanged (the && ... part catches 
+    // if ingred begins with just a fraction character)
+    if (!isNaN(parseFloat(currIngredSize, BASE_TEN))
       || !isNaN(parseFloat(nextIngredSize, BASE_TEN))) {
       currIngredSize = nextIngredSize;
       // handle case where unit is part of same word as leading number for ingred
