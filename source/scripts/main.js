@@ -916,7 +916,7 @@ const infoSaveClicked = () => {
 /** scales ingredients of current expanded recipe by toScaleBy
  * @param {float} toScaleBy the amount to scale ingredients by
  */
-function scaleIngreds(toScaleBy) {
+export function scaleIngreds(toScaleBy) {
   const BASE_TEN = 10;
   // get list/arr of ingreds (to hide):
   const ingredArr = document.querySelectorAll('.info-ingredient');
