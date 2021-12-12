@@ -11,7 +11,7 @@ import * as apiFuncs from './apiHelpers.js';
 const DEFAULT_NUM_CARDS = 5;
 
 /**
- * Don't touch
+ * Don't touch.
  */
 const SECTIONS = [
   'landing',
